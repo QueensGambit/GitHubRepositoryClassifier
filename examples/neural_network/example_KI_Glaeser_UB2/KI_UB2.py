@@ -78,3 +78,5 @@ plt.title('perceptron-example\n y = ' + str(dM)  + 'x + ' + str(dC))
 
 # export the plot as a .pdf
 #plt.savefig("perceptron_data_points.pdf")
+
+plt.show()
