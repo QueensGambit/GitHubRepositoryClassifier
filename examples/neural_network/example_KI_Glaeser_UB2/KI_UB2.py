@@ -58,7 +58,6 @@ iMax = 100
 print("------> trainPerceptron")
 perceptronAction.trainPerceptron(net, myStraight, iN, iMax)
 
-
 iNumTestPts =25
 print("------> testLearningResults")
 perceptronAction.testLearningResults(net, myStraight, iNumTestPts, iMax)
@@ -67,6 +66,8 @@ perceptronAction.testLearningResults(net, myStraight, iNumTestPts, iMax)
 legend = ax.legend(loc='upper right', shadow=True)
 
 plt.title('perceptron-example\n y = ' + str(dM)  + 'x + ' + str(dC))
+
+plt.show()
 
 # draw the axis-lines
 #plt.axhline(0, color='gray')
