@@ -3,40 +3,80 @@ from os import path
 from bs4 import BeautifulSoup
 import re
 import nltk
+from nltk.corpus import stopwords   # Import the stop word list
+from sklearn.feature_extraction.text import CountVectorizer
+# http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer
+import sys
+
+
+# refine the input string
+def prepare_words(raw_text):
+    beautiful = BeautifulSoup(raw_text, "lxml")                         # remove all html tags
+    letters = re.sub("[^a-zA-Z]", " ", beautiful.get_text())            # remove everything that isn't a letter
+    words = letters.lower().split()                                     # write words into array
+    words = [w for w in words if not w in stopwords.words("english")]   # remove "filler" words
+
+    return " ".join(words)                                              # return the words as a string, separator: space
+
+# define the amount of data we want (max 50.000)
+trainSize = 200
 
 d = path.dirname(__file__)
-train = pd.read_csv(d + "/unlabeledTrainData.tsv", header=0, \
-                    delimiter="\t", quoting=3, nrows=5000)
+train = pd.read_csv(d + "/unlabeledTrainData.tsv", header=0,            # get data to read, the first nrows
+                    delimiter="\t", quoting=3, nrows=trainSize)
 
 print(train["review"][0])
 
-example1 = BeautifulSoup(train["review"][0], "lxml")
-print(example1.text)
+# download stopwords
+print(">>> Wir brauchen ausschließlich die \"Corpora > Stopwords\" Datei!\n"
+      ">>> Wenn ihr die schonmal runtergeladen habt, einfach das Fenster wieder schließen")
+nltk.download()  # TODO: download Corpora > Stopwords: at runtime a window opens, just run the script
 
-letters_only = re.sub("[^a-zA-Z]",
-                      " ",
-                      example1.get_text())
-
-print(letters_only)
-
-lower_case = letters_only.lower()
-words = lower_case.split()
-
-print(words)
-
-print("Wir brauchen ausschließlich die \"Corpora > Stopwords\" Datei!")
-
-nltk.download()  # TODO: download Corpora > Stopwords only at runtime
+prepared = prepare_words(train["review"][0])
+print(prepared)
 
 
-from nltk.corpus import stopwords   # Import the stop word list
-print(stopwords.words("english"))
+# prepare all read data
 
-words = [w for w in words if not w in stopwords.words("english")]
+preparedTrain = []
+barLength = 20
 
-print(words)
+for i in range(trainSize):
+    preparedTrain.append(prepare_words(train["review"][i]))
+
+    text = "\rStatus: %d of %d [" % (i+1, trainSize)                    #fucking fancy output
+    for j in range(barLength):
+        if i >= ((trainSize / barLength) * (j+1) - 1):
+            text += "#"
+        else:
+            text += "="
+    text += "]"
+    sys.stdout.write(text)
+
+# bag of words
+print("\ncreating bag of words....")
+
+vecto = CountVectorizer(analyzer="word", max_features=5000)
+
+train_data_features = vecto.fit_transform(preparedTrain).toarray()  # create the array
+vocab = vecto.get_feature_names()                                   # the complete vocabulary
+
+print(train_data_features)
+print(vocab)
 
 
+
+
+
+
+
+'''                                                                     # WORDCLOUD
+from wordcloud import WordCloud
+wordcloud = WordCloud(max_font_size=30).generate(prepared)
+import matplotlib.pyplot as plt
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.show() '''
 
 
 ''''#!/usr/bin/env python
