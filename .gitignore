@@ -91,3 +91,4 @@ ENV/
 
 # ~~~~ addtion for pychar ~~~~~
 .idea/
+.idea/workspace.xml
