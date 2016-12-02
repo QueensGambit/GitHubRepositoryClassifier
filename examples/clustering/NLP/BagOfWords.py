@@ -6,6 +6,7 @@ import nltk
 from nltk.corpus import stopwords   # Import the stop word list
 from sklearn.feature_extraction.text import CountVectorizer
 # http://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer
+import sys
 
 
 # refine the input string
@@ -36,14 +37,21 @@ print(prepared)
 
 
 # prepare all read data
-preparedTrain = []
 
-print("Status: 0 of %d" % trainSize)
+preparedTrain = []
+barLength = 20
+
 for i in range(trainSize):
     preparedTrain.append(prepare_words(train["review"][i]))
-    if (i+1) % (trainSize/10) == 0:
-        print("Status: %d of %d" % (i+1, trainSize))
 
+    text = "\rStatus: %d of %d [" % (i+1, trainSize)                    #fucking fancy output
+    for j in range(barLength):
+        if i >= ((trainSize / barLength) * (j+1) - 1):
+            text += "#"
+        else:
+            text += "="
+    text += "]"
+    sys.stdout.write(text)
 
 # bag of words
 print("\ncreating bag of words....")
