@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 
 from wordcloud import WordCloud, STOPWORDS
 
-# TODO change path!
 d = path.dirname(__file__)
+d += '\\examples\\'
 text = open(path.join(d, 'alice.txt')).read()
 
 # read the mask image
