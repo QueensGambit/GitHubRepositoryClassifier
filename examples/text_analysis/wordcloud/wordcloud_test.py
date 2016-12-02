@@ -2,8 +2,9 @@
 from os import path
 from wordcloud import WordCloud
 
-# TODO change path!
+
 d = path.dirname(__file__)
+d += '\\examples'
 text = open(path.join(d, 'alice.txt')).read()
 
 # Generate a word cloud image
