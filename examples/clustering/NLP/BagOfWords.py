@@ -70,13 +70,13 @@ print(vocab)
 
 
 
-'''                                                                     # WORDCLOUD
+                                                                     # WORDCLOUD
 from wordcloud import WordCloud
 wordcloud = WordCloud(max_font_size=30).generate(prepared)
 import matplotlib.pyplot as plt
 plt.imshow(wordcloud)
 plt.axis("off")
-plt.show() '''
+plt.show()
 
 
 ''''#!/usr/bin/env python
