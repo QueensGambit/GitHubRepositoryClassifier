@@ -91,3 +91,5 @@ ENV/
 
 # ~~~~ addtion for pychar ~~~~~
 .idea/
+.idea/workspace.xml
+examples/text_analysis/wordcloud/repository_category/export/*.png

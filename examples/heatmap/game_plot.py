@@ -6,14 +6,16 @@ print('Script start...')
 
 strFile = 'G:\\Octave\\octave_sample_data\\full-game'
 
-iNRows = 300000
-data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None ) #,skiprows=500000
+iNRows = 600000
+id = 38
+
+data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None, skiprows=500000 ) #,skiprows=500000
 
 print(data)
 len(data)
 
 # only get the entries where the id is 4
-dataFilt = data.loc[data[0] == 4]
+dataFilt = data.loc[data[0] == id]
 
 
 # .ix returns a the values from  a specific column or row
@@ -35,9 +37,9 @@ print('lengthX:' + str(len(x)))
 
 # add a description
 fig = plt.figure(0)
-fig.canvas.set_window_title('Location_Player_ID_4')
+fig.canvas.set_window_title('Location_Player_ID_' + str(id))
 plt.hexbin(x, y, bins=None)
-plt.title('Location of Player ID=4\nwithin the first ' + str(iNRows) + ' Rows (' + str(len(x)) + 'Entries)')
+plt.title('Location of Player ID=' + str(id) + '\nwithin the first ' + str(iNRows) + ' Rows (' + str(len(x)) + 'Entries)')
 plt.xlabel('X-Coordinate')
 plt.ylabel('Y-Coordinate')
 plt.colorbar()
