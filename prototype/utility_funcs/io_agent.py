@@ -11,6 +11,8 @@ import json
 import requests
 import os
 
+# for installtion use:
+# pip install github3.py
 from github3 import GitHub
 from github3 import login
 import os

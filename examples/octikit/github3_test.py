@@ -1,7 +1,10 @@
 # http://chase-seibert.github.io/blog/2016/07/22/pygithub-examples.html
 
+# for installtion use:
+# pip install github3.py
 from github3 import GitHub
 from github3 import login
+from github3.models import GitHubCore
 import os
 import json
 import base64
@@ -33,7 +36,6 @@ def callByToken():
     print('name:', jsDjango['name'])
     print('code64README:', code64README)
     print('strREADME:', strREADME)
-
 
 #callAnonymous()
 callByToken()
