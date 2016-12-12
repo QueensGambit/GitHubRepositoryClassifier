@@ -20,4 +20,6 @@ model.add(Dense(32, batch_input_shape=(None, 784)))
 model = Sequential()
 model.add(Dense(32, input_dim=784))
 
+print('Script-End')
+
 

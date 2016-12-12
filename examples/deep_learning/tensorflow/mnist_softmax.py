@@ -24,7 +24,8 @@ from __future__ import print_function
 import argparse
 
 # Import data
-from tensorflow.examples.tutorials.mnist import input_data as input_data
+#from tensorflow.examples.tutorials.mnist import input_data as input_data
+import input_data
 
 import tensorflow as tf
 #from tensorflow.contrib.learn.python.learn.datasets.mnist import read_data_sets as input_data #read_data_sets
