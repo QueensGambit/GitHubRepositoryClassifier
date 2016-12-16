@@ -1,9 +1,15 @@
 from os import path
+from pathlib import Path
 import pandas as pd
 import numpy as np
 from githubRepo import GithubRepo
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from operator import add
+import os
+
+from utility_funcs.preprocessing_operations import *
+
+import matplotlib.pyplot as plt
 
 iNumCategories = 7
 iNumExamples = 5
@@ -13,9 +19,15 @@ lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHERS']
 lstReadmeURL = [None] * iNumCategories * iNumExamples
 
 directory = path.dirname(__file__)
+
+# get the project-directory
+strProjectDir = str(Path().resolve().parent)
+print('strProjectDir:', strProjectDir)
+
 print(directory)
 
-trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
+# trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
+trainData = pd.read_csv(strProjectDir + '/data/csv/example_repos.csv', header=0, delimiter=",",
                         nrows=iNumExamples * (iNumCategories - 1))
 
 iNumTrainData = iNumExamples * (iNumCategories - 1)
@@ -89,8 +101,8 @@ iLabel = int(clf.predict([[42]*len(lstGithubRepo[0].getNormedFeatures(lstMeanVal
 print('iLabel:', iLabel)
 print('Prediction for 42,42:', lstStrCategories[iLabel])
 
-
-unlabeledData = pd.read_csv(directory + "/unclassified_repos.csv", header=0, delimiter=",", nrows=4)
+# read the unlabeled data set from a csv
+unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",", nrows=4)
 
 for i in range(4):
     tmpRepo = GithubRepo.fromURL(unlabeledData["URL"][i])
@@ -98,3 +110,10 @@ for i in range(4):
 
     print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
     print(lstStrCategories[iLabel])
+
+strVocabPath = directory + '/vocab'
+
+lstVoc = createVoabularyFeatures(lstGithubRepo)
+
+print('lstVoc: ', lstVoc)
+

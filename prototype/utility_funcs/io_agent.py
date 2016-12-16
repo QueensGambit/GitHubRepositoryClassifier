@@ -84,7 +84,7 @@ class InputOutputAgent:
 
         # Check if readme exists already. If so, open it.
         if os.path.isfile(strPathReadme):
-            print("Open readme..." )
+            #print("Open readme..." )
             return open(strPathReadme).read()
 
         else:

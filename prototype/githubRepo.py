@@ -6,6 +6,8 @@ from os import path
 import os
 import json
 
+import string_operation
+
 from utility_funcs.io_agent import InputOutputAgent
 
 import numpy as np
@@ -40,8 +42,9 @@ class GithubRepo:
 
         self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 
-        strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
-        print(self.ioAgent.getReadme(strDirPath_readme))
+        self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
+        # print(self.ioAgent.getReadme(self.strDirPath_readme))
+
 
         self.intFeatures = None
         self.strFeatures = None
@@ -49,6 +52,9 @@ class GithubRepo:
         print('url: ' + str(self.apiUrl))
         self.readAttributes()
 
+    def getFilteredReadme(self):
+        strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
+        return string_operation.prepare_words(strMyREADME)
 
     @classmethod
     def fromURL(cls, strURL):
@@ -86,7 +92,7 @@ class GithubRepo:
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
                                        iOpenIssues=self.apiJSON['open_issues'],
                                        iDevTime=iDevTime,
-                                       dCodeFrequency=0,
+                                       dRepoActivity=0,
                                        dCommitIntervals=0,
                                        iNumBranches=0,
                                        iSize=self.apiJSON['size'])
@@ -96,13 +102,12 @@ class GithubRepo:
 
         # print('len(jsContrib):', len(jsContrib)) # better use subscriber-count ther contributor length only lists the top contributors
 
-        # self.tplIntAtrributes =
 
     def getFeatures(self):
         lstFeatures = [self.intFeatures.iSubscriberCount,
                        self.intFeatures.iOpenIssues,
                        self.intFeatures.iDevTime,
-                       self.intFeatures.dCodeFrequency,
+                       self.intFeatures.dRepoActivity, #dCodeFrequency
                        self.intFeatures.dCommitIntervals,
                        self.intFeatures.iNumBranches,
                        self.intFeatures.iSize
