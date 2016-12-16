@@ -27,6 +27,8 @@ def auto_str(cls):
 
 @auto_str
 class GithubRepo:
+
+
     def __init__(self, strUser, strName):
         self.user = strUser
         self.name = strName
@@ -43,6 +45,15 @@ class GithubRepo:
 
         print('url: ' + str(self.apiUrl))
         self.readAttributes()
+
+
+    @classmethod
+    def fromURL(cls, strURL):
+        iIndexUser = 3
+        iIndexName = 4
+        lststrLabelGroup = strURL.split('/')
+        return cls(lststrLabelGroup[iIndexUser], lststrLabelGroup[iIndexName])
+
 
     def readAttributes(self):
         # print('readAttributes...')
@@ -66,15 +77,15 @@ class GithubRepo:
 
         # print('iDevTime:', iDevTime)
 
-        jsBranches = (requests.get(self.apiJSON['branches_url'])).json()
-        iNumBranches = len(jsBranches)
+        # jsBranches = self.apiJSON['branches_url'])).json()
+        # iNumBranches = len(jsBranches)
 
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
                                        iOpenIssues=self.apiJSON['open_issues'],
                                        iDevTime=iDevTime,
                                        dCodeFrequency=0,
                                        dCommitIntervals=0,
-                                       iNumBranches=iNumBranches,
+                                       iNumBranches=0,
                                        iSize=self.apiJSON['size'])
 
         # print(self.apiJSON['contributors_url'])
@@ -94,3 +105,14 @@ class GithubRepo:
                        self.intFeatures.iSize
                        ]
         return lstFeatures
+
+    def getNormedFeatures(self, lstMeanValues):
+        lstNormedFeatures = self.getFeatures()
+        lstNormedFeatures[:] = [x / y for x, y in zip(lstNormedFeatures, lstMeanValues)]
+        return lstNormedFeatures
+
+    def getName(self):
+        return self.name
+
+    def getUser(self):
+        return self.user
