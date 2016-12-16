@@ -42,6 +42,10 @@ class InputOutputAgent:
         if self.bWithToken:
             # the TokenGithubAPI is stored as an environment-variable
             self.gh = login(token=str(os.environ['TokenGithubAPI']))
+        else:
+            self.gh = GitHub()
+
+
 
 
     def loadJSONdata(self, strPathJSON):
@@ -58,14 +62,8 @@ class InputOutputAgent:
             with open(strPathJSON) as jsonData:
                 jsonAPI = json.load(jsonData)
         else:
-
-            if self.bWithToken:
-                repo = self.gh.repository(self.strUser, self.strName)
-
-                jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
-
-            else:
-                jsonAPI = (requests.get(self.strAPIUrl)).json()
+            repo = self.gh.repository(self.strUser, self.strName)
+            jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
             # export to json-file
             with open(strPathJSON, 'w') as outfile:
@@ -75,37 +73,39 @@ class InputOutputAgent:
         return jsonAPI, self.strAPIUrl, self.lstReadmePath
 
 
-    # get String from readme file
-    def getREADME(self, strPathReadme):
+    # Get content from readme as string
+    def getReadme(self, strPathReadme):
 
+        # Create readme directory
         if not os.path.exists(strPathReadme):
             os.makedirs(strPathReadme)
 
-        filename = '\\' + self.strUser + '_' + self.strName + '.txt'
-        strPathReadme += filename
+        strPathReadme += '\\' + self.strUser + '_' + self.strName + '.txt'
 
+        # Check if readme exists already. If so, open it.
         if os.path.isfile(strPathReadme):
-            print("Open " + strPathReadme)
+            print("Open readme..." )
             return open(strPathReadme).read()
 
         else:
-            print("Try readme...")
+            print("Get readme...")
 
             repo = self.gh.repository(self.strUser, self.strName)
             code64readme = repo.readme().content
 
+            # If the content of the received readme is a string and not a NullObject create
+            # a new file in directory. Otherwise create an empty file to prevent checking a
+            # repo twice.
             if isinstance(code64readme, str):
                 strReadme = str(base64.b64decode(code64readme))
-                f = open(strPathReadme, "w")
-                f.write(strReadme)
-                return strReadme
 
             else:
-                f = open(strPathReadme, "w")
-                f.write("")
-                return "No readme in repo"
+                strReadme = ""
 
 
+            file = open(strPathReadme, "w")
+            file.write(strReadme)
+            return strReadme
 
 
 
