@@ -6,10 +6,11 @@ Created on 11.12.2016 19:59
 @author: QueensGambit
 SEE LICENSE.TXT
 '''
+from clyent import json_help
 
 import json
 import requests
-import os
+import base64
 
 # for installtion use:
 # pip install github3.py
@@ -73,6 +74,33 @@ class InputOutputAgent:
 
         return jsonAPI, self.strAPIUrl, self.lstReadmePath
 
-    # TODO finish README-loading
-    # def loadREADME(self, strPathREADME, bWithToken=False):
+
+    # get String from readme file
+    def getREADME(self, strPathReadme):
+
+        filename = '\\' + self.strUser + self.strName + '.txt'
+        strPathReadme += filename
+
+        if os.path.isfile(strPathReadme):
+            print("Open " + strPathReadme)
+            return open(strPathReadme).read()
+
+        else:
+            print("Try readme...")
+
+            repo = self.gh.repository(self.strUser, self.strName)
+            code64readme = repo.readme().content
+
+            if isinstance(code64readme, str):
+                strReadme = str(base64.b64decode(code64readme))
+                f = open(strPathReadme, "w")
+                f.write(strReadme)
+                return strReadme
+
+            else:
+                return "No readme in repo"
+
+
+
+
 

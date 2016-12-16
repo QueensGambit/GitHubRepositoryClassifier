@@ -40,6 +40,9 @@ class GithubRepo:
 
         self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 
+        strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
+        print(self.ioAgent.getREADME(strDirPath_readme))
+
         self.intFeatures = None
         self.strFeatures = None
 
