@@ -78,7 +78,10 @@ class InputOutputAgent:
     # get String from readme file
     def getREADME(self, strPathReadme):
 
-        filename = '\\' + self.strUser + self.strName + '.txt'
+        if not os.path.exists(strPathReadme):
+            os.makedirs(strPathReadme)
+
+        filename = '\\' + self.strUser + '_' + self.strName + '.txt'
         strPathReadme += filename
 
         if os.path.isfile(strPathReadme):
@@ -98,6 +101,8 @@ class InputOutputAgent:
                 return strReadme
 
             else:
+                f = open(strPathReadme, "w")
+                f.write("")
                 return "No readme in repo"
 
 
