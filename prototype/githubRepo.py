@@ -6,6 +6,8 @@ from os import path
 import os
 import json
 
+import string_operation
+
 from utility_funcs.io_agent import InputOutputAgent
 
 import numpy as np
@@ -27,6 +29,8 @@ def auto_str(cls):
 
 @auto_str
 class GithubRepo:
+
+
     def __init__(self, strUser, strName):
         self.user = strUser
         self.name = strName
@@ -38,11 +42,27 @@ class GithubRepo:
 
         self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 
+        self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
+        # print(self.ioAgent.getReadme(self.strDirPath_readme))
+
+
         self.intFeatures = None
         self.strFeatures = None
 
         print('url: ' + str(self.apiUrl))
         self.readAttributes()
+
+    def getFilteredReadme(self):
+        strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
+        return string_operation.prepare_words(strMyREADME)
+
+    @classmethod
+    def fromURL(cls, strURL):
+        iIndexUser = 3
+        iIndexName = 4
+        lststrLabelGroup = strURL.split('/')
+        return cls(lststrLabelGroup[iIndexUser], lststrLabelGroup[iIndexName])
+
 
     def readAttributes(self):
         # print('readAttributes...')
@@ -66,15 +86,15 @@ class GithubRepo:
 
         # print('iDevTime:', iDevTime)
 
-        jsBranches = (requests.get(self.apiJSON['branches_url'])).json()
-        iNumBranches = len(jsBranches)
+        # jsBranches = self.apiJSON['branches_url'])).json()
+        # iNumBranches = len(jsBranches)
 
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
                                        iOpenIssues=self.apiJSON['open_issues'],
                                        iDevTime=iDevTime,
-                                       dCodeFrequency=0,
+                                       dRepoActivity=0,
                                        dCommitIntervals=0,
-                                       iNumBranches=iNumBranches,
+                                       iNumBranches=0,
                                        iSize=self.apiJSON['size'])
 
         # print(self.apiJSON['contributors_url'])
@@ -82,15 +102,25 @@ class GithubRepo:
 
         # print('len(jsContrib):', len(jsContrib)) # better use subscriber-count ther contributor length only lists the top contributors
 
-        # self.tplIntAtrributes =
 
     def getFeatures(self):
         lstFeatures = [self.intFeatures.iSubscriberCount,
                        self.intFeatures.iOpenIssues,
                        self.intFeatures.iDevTime,
-                       self.intFeatures.dCodeFrequency,
+                       self.intFeatures.dRepoActivity, #dCodeFrequency
                        self.intFeatures.dCommitIntervals,
                        self.intFeatures.iNumBranches,
                        self.intFeatures.iSize
                        ]
         return lstFeatures
+
+    def getNormedFeatures(self, lstMeanValues):
+        lstNormedFeatures = self.getFeatures()
+        lstNormedFeatures[:] = [x / y for x, y in zip(lstNormedFeatures, lstMeanValues)]
+        return lstNormedFeatures
+
+    def getName(self):
+        return self.name
+
+    def getUser(self):
+        return self.user

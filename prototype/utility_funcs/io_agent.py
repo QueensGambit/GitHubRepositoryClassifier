@@ -1,15 +1,21 @@
-'''
-@file: io_funcs.py
+"""
+@file: io_agent.py
 Created on 11.12.2016 19:59
 @project: GitHubRepositoryClassifier
 
 @author: QueensGambit
-SEE LICENSE.TXT
-'''
+
+The InputOutputAgent loads data (json-Data, README...) from a given repository which
+ is defined by strUser and strName. If the needed data has already been requested before,
+ then is loaded from a file. Otherwise a new connection is created.
+ By default the autorization of the connection is done with an API-Token
+"""
+
+from clyent import json_help
 
 import json
 import requests
-import os
+import base64
 
 # for installtion use:
 # pip install github3.py
@@ -41,6 +47,10 @@ class InputOutputAgent:
         if self.bWithToken:
             # the TokenGithubAPI is stored as an environment-variable
             self.gh = login(token=str(os.environ['TokenGithubAPI']))
+        else:
+            self.gh = GitHub()
+
+
 
 
     def loadJSONdata(self, strPathJSON):
@@ -57,14 +67,8 @@ class InputOutputAgent:
             with open(strPathJSON) as jsonData:
                 jsonAPI = json.load(jsonData)
         else:
-
-            if self.bWithToken:
-                repo = self.gh.repository(self.strUser, self.strName)
-
-                jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
-
-            else:
-                jsonAPI = (requests.get(self.strAPIUrl)).json()
+            repo = self.gh.repository(self.strUser, self.strName)
+            jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
             # export to json-file
             with open(strPathJSON, 'w') as outfile:
@@ -73,6 +77,40 @@ class InputOutputAgent:
 
         return jsonAPI, self.strAPIUrl, self.lstReadmePath
 
-    # TODO finish README-loading
-    # def loadREADME(self, strPathREADME, bWithToken=False):
+
+    # Get content from readme as string
+    def getReadme(self, strPathReadme):
+
+        # Create readme directory
+        if not os.path.exists(strPathReadme):
+            os.makedirs(strPathReadme)
+
+        strPathReadme += '\\' + self.strUser + '_' + self.strName + '.txt'
+
+        # Check if readme exists already. If so, open it.
+        if os.path.isfile(strPathReadme):
+            #print("Open readme..." )
+            return open(strPathReadme).read()
+
+        else:
+            print("Get readme...")
+
+            repo = self.gh.repository(self.strUser, self.strName)
+            code64readme = repo.readme().content
+
+            # If the content of the received readme is a string and not a NullObject create
+            # a new file in directory. Otherwise create an empty file to prevent checking a
+            # repo twice.
+            if isinstance(code64readme, str):
+                strReadme = str(base64.b64decode(code64readme))
+
+            else:
+                strReadme = ""
+
+
+            file = open(strPathReadme, "w")
+            file.write(strReadme)
+            return strReadme
+
+
 
