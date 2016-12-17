@@ -1,11 +1,16 @@
-'''
-@file: io_funcs.py
+"""
+@file: io_agent.py
 Created on 11.12.2016 19:59
 @project: GitHubRepositoryClassifier
 
 @author: QueensGambit
-SEE LICENSE.TXT
-'''
+
+The InputOutputAgent loads data (json-Data, README...) from a given repository which
+ is defined by strUser and strName. If the needed data has already been requested before,
+ then is loaded from a file. Otherwise a new connection is created.
+ By default the autorization of the connection is done with an API-Token
+"""
+
 from clyent import json_help
 
 import json
