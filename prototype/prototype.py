@@ -79,7 +79,11 @@ print('lstMeanValues: ', lstMeanValues)
 
 
 print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
-strVocabPath = directory + '/vocab/vocabList.dump'
+strVocabPath = directory + '/vocab/'
+# Create vocab-directory if needed directory
+if not os.path.exists(strVocabPath):
+    os.makedirs(strVocabPath)
+strVocabPath += 'vocabList.dump'
 lstVoc = initInputParameters(strVocabPath, lstGithubRepo)
 
 print('lstVoc: ', lstVoc)
