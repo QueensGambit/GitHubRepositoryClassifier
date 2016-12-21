@@ -48,5 +48,6 @@ for iTmpOccurrence in lstOccurrence:
     #print('{:.10}'.format(lstFeatureNames[i]), end=":\t")
     #print(iTmpOccurrence)
 
+    # for more beautiful print layout {:15s} and {:3d} is used
     print('{:15s} {:3d}'.format(lstFeatureNames[i], iTmpOccurrence))
     i += 1

@@ -5,11 +5,14 @@ import numpy as np
 from githubRepo import GithubRepo
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from operator import add
-import os
 
 from utility_funcs.preprocessing_operations import *
+from utility_funcs.count_vectorizer_operations import *
+import logging
 
 import matplotlib.pyplot as plt
+
+#logging.basicConfig(level=logging.DEBUG)
 
 iNumCategories = 7
 iNumExamples = 5
@@ -75,11 +78,29 @@ lstMeanValues[:] = [x / iNumTrainData for x in lstMeanValues]
 print('lstMeanValues: ', lstMeanValues)
 
 
+print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
+strVocabPath = directory + '/vocab/vocabList.dump'
+lstVoc = initInputParameters(strVocabPath, lstGithubRepo)
+
+print('lstVoc: ', lstVoc)
+print('len(lstVoc): ', len(lstVoc))
+
+lstInputFeatures = []
 for tmpGithubRepo in lstGithubRepo:
-    # train the nearest neighbour-model
-    lstTrainData.append(tmpGithubRepo.getNormedFeatures(lstMeanValues))
+    # fill the Training-Data
+    # ordinary integer-attributes
+    # lstTrainData.append(tmpGithubRepo.getNormedFeatures(lstMeanValues))
 
+    # lstInputFeatures = tmpGithubRepo.getNormedFeatures(lstMeanValues)
+    # with the word occurrence vector
+    # lstInputFeatures = lstInputFeatures + (tmpGithubRepo.getWordSparseMatrix(lstVoc))
+    # print(tmpGithubRepo.getNormedFeatures(lstMeanValues))
+    # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
+    # np.vstack  concates to numpy-arrays
+    lstInputFeatures = tmpGithubRepo.getNormedFeatures(lstMeanValues) + tmpGithubRepo.getWordOccurences(lstVoc)
+
+    lstTrainData.append(lstInputFeatures)
 
 print("lstTrainData:")
 print(lstTrainData)
@@ -88,32 +109,39 @@ print("lstTrainLabels:")
 print(lstTrainLabels)
 
 print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
-# train the model
+# train the nearest neighbour-model
 clf = NearestCentroid()
 clf.fit(lstTrainData, lstTrainLabels)
-
 
 print('~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~')
 # classify the result
 
 # as a sample prediction example use an array of 42, 42, ... as an example feature set
-iLabel = int(clf.predict([[42]*len(lstGithubRepo[0].getNormedFeatures(lstMeanValues))]))
+iNumbeTrainingFeatures = len(lstGithubRepo[0].getNormedFeatures(lstMeanValues)) + len(lstVoc)
+iLabel = int(clf.predict([[42] * iNumbeTrainingFeatures]))
+
 print('iLabel:', iLabel)
 print('Prediction for 42,42:', lstStrCategories[iLabel])
 
+iNumOfPredictions = 7
 # read the unlabeled data set from a csv
-unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",", nrows=4)
+unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",", nrows=iNumOfPredictions)
 
-for i in range(4):
+strStopper1 = "="*80
+strStopper2 = "-"*80
+
+for i in range(iNumOfPredictions):
     tmpRepo = GithubRepo.fromURL(unlabeledData["URL"][i])
-    iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
+    print(strStopper1)
 
+    lstInputFeatures = tmpRepo.getNormedFeatures(lstMeanValues) + tmpRepo.getWordOccurences(lstVoc)
+
+    # iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
+    iLabel = int(clf.predict([lstInputFeatures]))
+    lstOccurence = tmpRepo.getWordOccurences(lstVoc)
+    # print('lstOccurence:', lstOccurence)
+    printFeatureOccurences(lstVoc, lstOccurence, 0)
+    print('len(lstOccurence):', len(lstOccurence))
     print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
     print(lstStrCategories[iLabel])
-
-strVocabPath = directory + '/vocab'
-
-lstVoc = createVoabularyFeatures(lstGithubRepo)
-
-print('lstVoc: ', lstVoc)
-
+    print(strStopper2)
