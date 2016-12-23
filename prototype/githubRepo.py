@@ -141,11 +141,17 @@ class GithubRepo:
         # flatten makes a matrix 1 dimensional
         lstOccurrence = np.array(matOccurrence.flatten()).tolist()    # np.array().tolist() is not needed
 
+        #iHits = np.sum(lstOccurrence)
+
         # divide each element by a factor to reduce the effectiveness
         iLen = len(strFilteredReadme.split())
+
         if iLen == 0:
             iLen = 1
-        lstOccurrence[:] = [x / iLen * 10 for x in lstOccurrence]
+
+        fFacEffectiveness = 10.0
+        # 10 is the factor between string and integer attributes
+        lstOccurrence[:] = [x / iLen * fFacEffectiveness for x in lstOccurrence]
 
         # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 
