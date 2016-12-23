@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="added matplotlib-examples for kivy">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/test.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/data/screens/layout.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/generatePieChart.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/my.kv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/kivy/plots/test.png" afterPath="$PROJECT_DIR$/examples/kivy/plots/test.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DEV.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DEV.png" />
@@ -36,31 +38,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LICENSE" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/LICENSE">
+      <file leaf-file-name="gui_prototype.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+            <state relative-caret-position="271">
+              <caret line="115" column="29" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
+              <folding>
+                <element signature="e#73#90#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="generatePieChart.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/generatePieChart.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="backend_kivy.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivy.py">
+      <file leaf-file-name="pyplot.py" pinned="false" current-in-tab="false">
+        <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="349">
-              <caret line="39" column="65" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+            <state relative-caret-position="149">
+              <caret line="578" column="4" selection-start-line="578" selection-start-column="4" selection-end-line="578" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pie_demo_features.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pie_demo_features.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+            <state relative-caret-position="329">
+              <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -69,55 +83,28 @@
       <file leaf-file-name="kivy_pie_chart_plot.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+            <state relative-caret-position="260">
+              <caret line="94" column="29" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="android.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/android.txt">
+      <file leaf-file-name="test_backend.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="139">
+              <caret line="38" column="10" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="10" />
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="accordions.kv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="test_events.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+            <state relative-caret-position="170">
+              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -125,11 +112,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_plt.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_plt.py">
+      <file leaf-file-name="figure.py" pinned="false" current-in-tab="false">
+        <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/figure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+            <state relative-caret-position="-626">
+              <caret line="924" column="8" selection-start-line="924" selection-start-column="8" selection-end-line="924" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="my.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/my.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/data/screens/layout.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -183,13 +190,25 @@
         <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/data/screens/layout.kv" />
+        <option value="$PROJECT_DIR$/gui_prototype/data/screens/controller.kv" />
+        <option value="$PROJECT_DIR$/examples/kivy/screen/controller_gui.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/layout.kv" />
+        <option value="$PROJECT_DIR$/gui_prototype/mykv.kv" />
+        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/test.kv" />
+        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py" />
+        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestlayout.kv" />
+        <option value="$PROJECT_DIR$/gui_prototype/generatePieChart.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/my.kv" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="width" value="1611" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
     <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -232,6 +251,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui_prototype" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -289,6 +322,76 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="garden.matplotlib-master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="kivy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plots" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="garden.matplotlib-master" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="examples" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="definitions" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -303,80 +406,49 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\screen" />
       <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\plots" />
       <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\prototype" />
       <recent name="C:\Users\Lukas\Documents\GitHub\GitHubRepositoryClassifier\examples\clustering\affinity_propagation" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype\data" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.kivy_pie_chart_plot">
-    <configuration default="false" name="test_events" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.gui_prototype">
+    <configuration default="false" name="nestingLayout" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="backend_kivyagg" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="gui_prototype" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivyagg.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test_plt (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="pie_demo_features" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -394,6 +466,40 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test_backend" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GitHubRepositoryClassifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test_events" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GitHubRepositoryClassifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -551,19 +657,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python.NLP" />
-      <item index="1" class="java.lang.String" itemvalue="Python.test_events" />
-      <item index="2" class="java.lang.String" itemvalue="Python.backend_kivyagg" />
-      <item index="3" class="java.lang.String" itemvalue="Python.test_plt (1)" />
-      <item index="4" class="java.lang.String" itemvalue="Python.pie_demo_features" />
-      <item index="5" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
+      <item index="1" class="java.lang.String" itemvalue="Python.nestingLayout" />
+      <item index="2" class="java.lang.String" itemvalue="Python.gui_prototype" />
+      <item index="3" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
+      <item index="4" class="java.lang.String" itemvalue="Python.test_backend" />
+      <item index="5" class="java.lang.String" itemvalue="Python.test_events" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
-        <item index="1" class="java.lang.String" itemvalue="Python.pie_demo_features" />
-        <item index="2" class="java.lang.String" itemvalue="Python.test_plt (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test_events" />
-        <item index="4" class="java.lang.String" itemvalue="Python.backend_kivyagg" />
+        <item index="0" class="java.lang.String" itemvalue="Python.gui_prototype" />
+        <item index="1" class="java.lang.String" itemvalue="Python.test_events" />
+        <item index="2" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
+        <item index="3" class="java.lang.String" itemvalue="Python.test_backend" />
+        <item index="4" class="java.lang.String" itemvalue="Python.nestingLayout" />
       </list>
     </recent_temporary>
   </component>
@@ -634,20 +740,50 @@
       <option name="project" value="LOCAL" />
       <updated>1482488726114</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="example for a pie-chart in kivy&#10;">
+      <created>1482491268400</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1482491268400</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 42m 55s.xml">
+      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 43m 06s.xml">
+      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 44m 19s.xml">
+      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 46m 35s.xml">
+      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 47m 00s.xml">
+      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout_(1) - 2016.12.23 at 12h 43m 46s.xml">
+      <configuration name="Nosetests in nestingLayout (1)" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_nestingLayout_(1) - 2016.12.23 at 12h 43m 53s.xml">
+      <configuration name="Nosetests in nestingLayout (1)" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="0" width="1611" height="876" extended-state="0" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27147335" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.269375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.32288402" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.323125" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.47305766" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845187" sideWeight="0.39285713" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.483125" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.677116" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.676875" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -680,56 +816,19 @@
     <MESSAGE value="create vocab-directory if needed" />
     <MESSAGE value="alternative to divide with the number of hits instead of the number of words" />
     <MESSAGE value="added matplotlib-examples for kivy" />
-    <option name="LAST_COMMIT_MESSAGE" value="added matplotlib-examples for kivy" />
+    <MESSAGE value="example for a pie-chart in kivy&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="example for a pie-chart in kivy&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
       <option name="time" value="1" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/prototype/readme/briantemple_homeworkr.txt" />
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/spez_RottenTomatoes.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/spring-projects_spring-boot.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/rubymonstas-zurich_rubymonstas-zurich.github.io.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/QueensGambit_Barcode-App.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/raspberrypi_documentation.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/facebook_react.txt" />
-    <entry file="file://$PROJECT_DIR$/data/csv/manual_classification_appendix_b.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/wordcloud/wordcloud.py" />
-    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/masked.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://G:/Program Files/Anaconda3/Lib/re.py" />
-    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/wordcloud_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/unclassified_repos.csv" />
-    <entry file="file://$PROJECT_DIR$/prototype/example_repos.csv" />
-    <entry file="file://$PROJECT_DIR$/prototype/vocabulary" />
-    <entry file="file://$PROJECT_DIR$/prototype/features/learning_features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="36" selection-start-line="13" selection-start-column="36" selection-end-line="13" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
     <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/numeric.py" />
     <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-952285868/numpy/core/multiarray.py" />
@@ -839,14 +938,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/splitter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://G:/Programming/Projects_WiSe_2016_17/Python/kivy_plots/garden.matplotlib-master/garden.matplotlib-master/examples/test_backend.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="282">
@@ -860,16 +951,8 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#253#0" expanded="true" />
+            <element signature="e#0#253#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -883,16 +966,6 @@
         <state relative-caret-position="149">
           <caret line="96" column="28" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -936,7 +1009,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/buttons.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/dropdown.kv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -944,32 +1038,179 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/rstdocument.kv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/screenmanager.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/progressbar.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/filechoosers.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-246">
+          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
+          <folding>
+            <element signature="e#1173#1194#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/controller.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/widget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/controller_gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/splitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding>
+            <element signature="e#41#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestlayout.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="329">
+          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="578" column="4" selection-start-line="578" selection-start-column="4" selection-end-line="578" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/data/screens/layout.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="38" column="10" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/my.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+        <state relative-caret-position="260">
+          <caret line="94" column="29" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="file://$PROJECT_DIR$/gui_prototype/generatePieChart.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/figure.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+        <state relative-caret-position="-626">
+          <caret line="924" column="8" selection-start-line="924" selection-start-column="8" selection-end-line="924" selection-end-column="8" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="115" column="29" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
+          <folding>
+            <element signature="e#73#90#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
