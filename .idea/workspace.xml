@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/prototype/prototype.py" line="122" />
+    <bookmark url="file://$PROJECT_DIR$/prototype/prototype.py" line="126" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py" />
+    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="added matplotlib-examples for kivy">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/test.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DEV.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DEV.png" />
@@ -14,15 +16,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_HW.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_HW.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_OTHERS.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_OTHERS.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_WEB.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_WEB.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" afterPath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/csv/unclassified_repos.csv" afterPath="$PROJECT_DIR$/data/csv/unclassified_repos.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py" afterPath="$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype/githubRepo.py" afterPath="$PROJECT_DIR$/prototype/githubRepo.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype/prototype.py" afterPath="$PROJECT_DIR$/prototype/prototype.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py" afterPath="$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype/utility_funcs/string_operation.py" afterPath="$PROJECT_DIR$/prototype/utility_funcs/string_operation.py" />
     </list>
     <ignored path="GitHubRepositoryClassifier.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,20 +36,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="prototype.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/prototype/prototype.py">
+      <file leaf-file-name="LICENSE" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/LICENSE">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="289">
+              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="example_repos.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/csv/example_repos.csv">
+      <file leaf-file-name="backend_kivy.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="349">
+              <caret line="39" column="65" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pie_demo_features.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="226">
+              <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="kivy_pie_chart_plot.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="android.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/android.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -64,83 +86,50 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shape_base.py" pinned="false" current-in-tab="false">
-        <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/shape_base.py">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3893">
-              <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="unclassified_repos.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/csv/unclassified_repos.csv">
+      <file leaf-file-name="accordions.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+            <state relative-caret-position="348">
+              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
-        <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/pandas/indexes/base.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33048">
-              <caret line="1979" column="0" selection-start-line="1979" selection-start-column="0" selection-end-line="1979" selection-end-column="0" />
-              <folding />
-            </state>
+      <file leaf-file-name="test.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="githubRepo.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/prototype/githubRepo.py">
+      <file leaf-file-name="test_events.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2193">
-              <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
+            <state relative-caret-position="187">
+              <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="numeric.py" pinned="false" current-in-tab="false">
-        <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/numeric.py">
+      <file leaf-file-name="test_plt.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_plt.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6800">
-              <caret line="413" column="4" selection-start-line="413" selection-start-column="4" selection-end-line="413" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="multiarray.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-952285868/numpy/core/multiarray.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67065">
-              <caret line="3945" column="8" selection-start-line="3945" selection-start-column="8" selection-end-line="3945" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="count_vectorizer_operations.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="word_occurrence.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="395">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state relative-caret-position="238">
+              <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -189,17 +178,19 @@
         <option value="$PROJECT_DIR$/prototype/vocab/vocabList.dump" />
         <option value="$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py" />
         <option value="$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py" />
-        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
         <option value="$PROJECT_DIR$/data/csv/unclassified_repos.csv" />
         <option value="$PROJECT_DIR$/prototype/prototype.py" />
+        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
+        <option value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
+        <option value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
+        <option value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1696" />
-    <option name="height" value="1066" />
+    <option name="width" value="1611" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -254,43 +245,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utility_funcs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
+              <option name="myItemId" value="examples" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -308,11 +263,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="text_analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="wordcloud" />
+              <option name="myItemId" value="kivy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -330,50 +281,18 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="text_analysis" />
+              <option name="myItemId" value="kivy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="word_occurrence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="csv" />
+              <option name="myItemId" value="plots" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,97 +302,98 @@
     <property name="SearchEverywhereHistoryKey" value="back&#9;ACTION&#9;Back" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\plots" />
       <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\prototype" />
       <recent name="C:\Users\Lukas\Documents\GitHub\GitHubRepositoryClassifier\examples\clustering\affinity_propagation" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.prototype">
-    <configuration default="false" name="prototype" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.kivy_pie_chart_plot">
+    <configuration default="false" name="test_events" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/prototype" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prototype/prototype.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="githubRepo" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="backend_kivyagg" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/prototype" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prototype/githubRepo.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivyagg.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="preprocessing_operations" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="test_plt (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/prototype/utility_funcs" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="text" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="pie_demo_features" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="word_occurrence" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="kivy_pie_chart_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/text_analysis/word_occurrence" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -631,19 +551,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python.NLP" />
-      <item index="1" class="java.lang.String" itemvalue="Python.prototype" />
-      <item index="2" class="java.lang.String" itemvalue="Python.githubRepo" />
-      <item index="3" class="java.lang.String" itemvalue="Python.preprocessing_operations" />
-      <item index="4" class="java.lang.String" itemvalue="Python.text" />
-      <item index="5" class="java.lang.String" itemvalue="Python.word_occurrence" />
+      <item index="1" class="java.lang.String" itemvalue="Python.test_events" />
+      <item index="2" class="java.lang.String" itemvalue="Python.backend_kivyagg" />
+      <item index="3" class="java.lang.String" itemvalue="Python.test_plt (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.pie_demo_features" />
+      <item index="5" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.prototype" />
-        <item index="1" class="java.lang.String" itemvalue="Python.githubRepo" />
-        <item index="2" class="java.lang.String" itemvalue="Python.preprocessing_operations" />
-        <item index="3" class="java.lang.String" itemvalue="Python.word_occurrence" />
-        <item index="4" class="java.lang.String" itemvalue="Python.text" />
+        <item index="0" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
+        <item index="1" class="java.lang.String" itemvalue="Python.pie_demo_features" />
+        <item index="2" class="java.lang.String" itemvalue="Python.test_plt (1)" />
+        <item index="3" class="java.lang.String" itemvalue="Python.test_events" />
+        <item index="4" class="java.lang.String" itemvalue="Python.backend_kivyagg" />
       </list>
     </recent_temporary>
   </component>
@@ -693,30 +613,51 @@
       <option name="project" value="LOCAL" />
       <updated>1481978773714</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="create vocab-directory if needed">
+      <created>1482311946510</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1482311946510</updated>
+    </task>
+    <task id="LOCAL-00007" summary="alternative to divide with the number of hits instead of the number of words">
+      <created>1482485436615</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1482485436615</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added matplotlib-examples for kivy">
+      <created>1482488726114</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1482488726114</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1066" extended-state="6" />
+    <frame x="-8" y="0" width="1611" height="876" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27142859" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27147335" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43619248" sideWeight="0.3065476" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.32288402" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.47305766" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845187" sideWeight="0.39285713" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32740587" sideWeight="0.4857143" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.483125" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.677116" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43619248" sideWeight="0.69345236" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32740587" sideWeight="0.47559524" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -736,49 +677,18 @@
     <MESSAGE value="added norming of the integer attributes&#10;temporarily removed numBranches from IntegerAttribute because a new request was created&#10;" />
     <MESSAGE value="added unclassified_repos.csv" />
     <MESSAGE value="added documentation for io_agent.py" />
-    <option name="LAST_COMMIT_MESSAGE" value="added documentation for io_agent.py" />
+    <MESSAGE value="create vocab-directory if needed" />
+    <MESSAGE value="alternative to divide with the number of hits instead of the number of words" />
+    <MESSAGE value="added matplotlib-examples for kivy" />
+    <option name="LAST_COMMIT_MESSAGE" value="added matplotlib-examples for kivy" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/prototype/readme/scipyscipy.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/spring-projectsspring-boot.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/uwhpsc-2016example-python-homework.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/bcaffo751and2.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/atomatom.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/AllThingsSmittyjquery-tips-everyone-should-know.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/alexwhat-happens-when.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/BloombergMediawhatiscode.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/bundestaggesetze.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/DataScienceSpecializationcourses.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/briantemplehomeworkr.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/mongodbdocs.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/minimaxirbig-list-of-naughty-strings.txt" />
-    <entry file="file://$PROJECT_DIR$/examples/clustering/clustering.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1548">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/octikit/github3_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/clustering/NLP/BagOfWords.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/readme/alex_what-happens-when.txt" />
-    <entry file="file://$PROJECT_DIR$/prototype/readme/bcaffo_751and2.txt" />
     <entry file="file://$PROJECT_DIR$/prototype/readme/briantemple_homeworkr.txt" />
     <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
     <entry file="file://$PROJECT_DIR$/prototype/readme/spez_RottenTomatoes.txt" />
@@ -813,20 +723,6 @@
     <entry file="file://$PROJECT_DIR$/prototype/unclassified_repos.csv" />
     <entry file="file://$PROJECT_DIR$/prototype/example_repos.csv" />
     <entry file="file://$PROJECT_DIR$/prototype/vocabulary" />
-    <entry file="file://$PROJECT_DIR$/prototype/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/io_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="101" column="50" selection-start-line="101" selection-start-column="50" selection-end-line="101" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/prototype/features/learning_features.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -834,83 +730,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py">
+    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
+    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/numeric.py" />
+    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-952285868/numpy/core/multiarray.py" />
+    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/shape_base.py" />
+    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/pandas/indexes/base.py" />
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1921">
-          <caret line="798" column="8" selection-start-line="798" selection-start-column="8" selection-end-line="798" selection-end-column="8" />
+        <state relative-caret-position="850">
+          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/string_operation.py">
+    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+        <state relative-caret-position="476">
+          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/vocab/vocabList.dump">
+    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/io_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="44" selection-start-line="9" selection-start-column="44" selection-end-line="9" selection-end-column="44" />
+        <state relative-caret-position="-141">
+          <caret line="90" column="38" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
+        <state relative-caret-position="-329">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
           <folding>
-            <element signature="e#0#59#0" expanded="true" />
+            <element signature="e#0#59#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/numeric.py">
+    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/string_operation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6800">
-          <caret line="413" column="4" selection-start-line="413" selection-start-column="4" selection-end-line="413" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-952285868/numpy/core/multiarray.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67065">
-          <caret line="3945" column="8" selection-start-line="3945" selection-start-column="8" selection-end-line="3945" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/shape_base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3893">
-          <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/githubRepo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2193">
-          <caret line="144" column="44" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/pandas/indexes/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33048">
-          <caret line="1979" column="0" selection-start-line="1979" selection-start-column="0" selection-end-line="1979" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/example_repos.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="148">
+          <caret line="17" column="27" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -923,28 +785,190 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/prototype/vocab/vocabList.dump">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prototype/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/csv/example_repos.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/prototype/githubRepo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="153" column="24" selection-start-line="153" selection-start-column="24" selection-end-line="153" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/prototype/prototype.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+        <state relative-caret-position="258">
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py">
+    <entry file="file://$PROJECT_DIR$/examples/deep_learning/theano/gpu_vs_cpu.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="395">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+        <state relative-caret-position="204">
+          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#52#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/splitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="14" column="29" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py">
+    <entry file="file://G:/Programming/Projects_WiSe_2016_17/Python/kivy_plots/garden.matplotlib-master/garden.matplotlib-master/examples/test_backend.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
+        <state relative-caret-position="282">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#253#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivyagg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="149">
+          <caret line="96" column="28" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test_plt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_plt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="39" column="65" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/android.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="20" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="57" column="24" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
           <folding />
         </state>
       </provider>
