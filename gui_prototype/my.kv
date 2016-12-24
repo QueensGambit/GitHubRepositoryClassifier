@@ -1,0 +1,38 @@
+#:kivy 1.8.0
+
+<MainWidget>:
+    #wordCloudPlot: wordCloudPlot
+    BoxLayout:
+        id: myBox
+        size: root.size
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint: 1.0, 0.5
+            orientation: 'horizontal'
+            Button:
+                text: 'menu'
+                size_hint: 0.7, 1.0
+                #size: 100,50
+                #size: (root.size / 4),(root.size / 2)
+                #pos_hint: { 'center_x' : .5 }
+            Button:
+                text: 'result'
+                size_hint: 0.3, 1.0
+                #size: 100,50
+                #size: (root.size / 4),(root.size / 2)
+                #pos_hint: { 'center_x' : .5 }
+
+        PageLayout:
+            id: wordCloudPlot
+            size_hint: 1.0, 1.7
+            Button:
+                id: wordCloudBtn
+                text: 'word-cloud plot'
+            Button:
+                text: 'bar chart'
+            Button:
+                text: 'graph'
+        Button:
+            text: 'terminal'
+

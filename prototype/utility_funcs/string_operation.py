@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import re
 import nltk
 from nltk.corpus import stopwords   # Import the stop word list
-
+from nltk.stem.porter import PorterStemmer
 
 # refine the input string
 def prepare_words(raw_text):
@@ -14,4 +14,8 @@ def prepare_words(raw_text):
     words = letters.lower().split()                                     # write words into array
     words = [w for w in words if not w in stopwords.words("english")]   # remove "filler" words
 
-    return " ".join(words)                                              # return the words as a string, separator: space
+    # see: http://www.nltk.org/howto/stem.html for more details
+    stemmer = PorterStemmer()
+    singles = [stemmer.stem(word) for word in words]
+
+    return " ".join(singles)                                              # return the words as a string, separator: space

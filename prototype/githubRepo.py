@@ -1,5 +1,6 @@
 import requests
 import learning_features
+from sklearn.feature_extraction.text import CountVectorizer
 
 import datetime
 from os import path
@@ -7,6 +8,7 @@ import os
 import json
 
 import string_operation
+import count_vectorizer_operations
 
 from utility_funcs.io_agent import InputOutputAgent
 
@@ -118,6 +120,43 @@ class GithubRepo:
         lstNormedFeatures = self.getFeatures()
         lstNormedFeatures[:] = [x / y for x, y in zip(lstNormedFeatures, lstMeanValues)]
         return lstNormedFeatures
+
+    def getWordOccurences(self, lstVocab):
+        vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
+
+        strFilteredReadme = self.getFilteredReadme()
+        # print(strFilteredReadme)
+
+        # return a sparse matrix
+        # each column is mapped to a specific feature (see lstFeatureNames)
+        # the value describes the occurrence of the word in the current line
+        matSparse = vectorizer.fit_transform(strFilteredReadme.split())
+
+        lstFeatureNames = vectorizer.get_feature_names()
+
+        # print('~~~~~~~~~~ Number-of-total-occurrences ~~~~~~~~~~')
+        # print('--> repository: ' + self.user + '_' + self.name + '~~~~~~~~~~')
+        matOccurrence = np.asarray(np.sum(matSparse, axis=0))
+
+        # flatten makes a matrix 1 dimensional
+        lstOccurrence = np.array(matOccurrence.flatten()).tolist()    # np.array().tolist() is not needed
+
+        #iHits = np.sum(lstOccurrence)
+
+        # divide each element by a factor to reduce the effectiveness
+        iLen = len(strFilteredReadme.split())
+
+        if iLen == 0:
+            iLen = 1
+
+        fFacEffectiveness = 10.0
+        # 10 is the factor between string and integer attributes
+        lstOccurrence[:] = [x / iLen * fFacEffectiveness for x in lstOccurrence]
+
+        # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
+
+        return lstOccurrence
+
 
     def getName(self):
         return self.name
