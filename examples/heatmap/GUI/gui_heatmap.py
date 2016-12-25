@@ -107,10 +107,9 @@ class MainWidget(Widget):
     Add an action to be called from the kv lang file.
     '''
 
-
+    __player_id = None
 
     def do_action(self):
-        self.ids.wordCloudBtn.text = '42'
 
         fl = self.ids.wordCloudPlot
         fl.clear_widgets()
@@ -118,25 +117,38 @@ class MainWidget(Widget):
         fl.add_widget(wCanavas)
 
 
-    def plot_heatmap(self):
+    def plotheatmap(self):
         print("plot button pressed")
 
 
+        if self.__player_id is not None:
+            print("playerId: ", self.__player_id)
+        else:
+            print("no player selected")
+        '''
+        heat.set_id(self.__player_id)
+        fig = heat.get_figure()
 
+        fig.canvas.set_window_title('Location_Player_ID_' + str(id))
+        canvas = fig.canvas
+        wCanavas = canvas
+        '''
 
-    def reset_heatmap(self):
+    def resetheatmap(self):
         print("reset button pressed")
         heat.clean_plot()
 
 
+    def getSelectedPlayer(self):
+       self.__player_id = self.ids.spinner_id.text
 
-class heatmaplayoutApp(App):
+class layout_heatmapApp(App):
 
     def build(self):
         # wordCloudPlot = ObjectProperty(None)
         myWidget = MainWidget()
         myWidget.do_action()
-        return myWidget #info='Hello world')
+        return myWidget
 
 
     #     boxHeader = BoxLayout(size=root.size, orientation='vertical')
@@ -156,4 +168,4 @@ class heatmaplayoutApp(App):
 
 if __name__ == '__main__':
     #ax = fig.gca()
-    heatmaplayoutApp().run()
+    layout_heatmapApp().run()
