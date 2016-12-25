@@ -51,6 +51,7 @@ fig = plt.gcf()
 canvas = fig.canvas
 
 
+
 # plt.figure(2)
 # plt.subplot(212)
 #

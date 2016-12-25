@@ -2,9 +2,7 @@ import matplotlib.pyplot as plt
 import pandas
 
 
-print('Script start...')
-
-strFile = 'G:\\Octave\\octave_sample_data\\full-game'
+strFile = 'C:\\Users\\MEDA-02\\Documents\\full-game'
 
 iNRows = 600000
 id = 38
@@ -58,8 +56,4 @@ plt.show()
 
 #s
 
-
-
 '''
-
-print('Script end.')

@@ -32,7 +32,6 @@ def auto_str(cls):
 @auto_str
 class GithubRepo:
 
-
     def __init__(self, strUser, strName):
         self.user = strUser
         self.name = strName
