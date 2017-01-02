@@ -118,6 +118,7 @@ class GithubRepo:
 
     def getNormedFeatures(self, lstMeanValues):
         lstNormedFeatures = self.getFeatures()
+        # norm every integer feature by dividing it with it's mean value
         lstNormedFeatures[:] = [x / y for x, y in zip(lstNormedFeatures, lstMeanValues)]
         return lstNormedFeatures
 

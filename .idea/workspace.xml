@@ -4,11 +4,406 @@
     <bookmark url="file://$PROJECT_DIR$/prototype/prototype.py" line="126" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="added matplotlib-examples for kivy">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/data/screens/layout.kv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/generatePieChart.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/my.kv" />
+    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="added all official kivy examples">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/compass/needle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/compass/rose.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/takepicture/shadow32.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12908_sweet_trip_mm_clap_hi.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12909_sweet_trip_mm_clap_lo.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12910_sweet_trip_mm_clap_mid.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12911_sweet_trip_mm_hat_cl.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12913_sweet_trip_mm_kick_hi.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12914_sweet_trip_mm_kick_lo.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12915_sweet_trip_mm_kick_mid.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12916_sweet_trip_mm_kwik_mod_01.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12917_sweet_trip_mm_kwik_mod_02.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12918_sweet_trip_mm_kwik_mod_03.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12919_sweet_trip_mm_kwik_mod_04.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12920_sweet_trip_mm_kwik_mod_05.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12921_sweet_trip_mm_kwik_mod_06.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12922_sweet_trip_mm_kwik_mod_07.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12923_sweet_trip_mm_metal_clave.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12925_sweet_trip_mm_sweep_x.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12926_sweet_trip_mm_sweep_y.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/12927_sweet_trip_mm_sweep_z.wav" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/kiwi.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/mtexture1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/mtexture2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/texture_example_image.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/images/.empty" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/images/Bubbles.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/images/Ill1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/images/Wall.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/images/faust_github.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/shadow32.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/background.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/faust_github.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/icons/next.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/icons/prev.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/icons/sourcecode.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/particle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/kivy.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/shader/tex3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/notes/final/data/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Apple.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Apple.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Apple.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Apple.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Apple.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Avocado.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Avocado.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Avocado.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Avocado.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Avocado.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Banana.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Banana.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Banana.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Banana.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Banana.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cantaloupe.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cantaloupe.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cantaloupe.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cantaloupe.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cantaloupe.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cherry.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cherry.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cherry.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cherry.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Cherry.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grape.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grape.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grape.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grape.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grape.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grapefruit.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grapefruit.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grapefruit.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grapefruit.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Grapefruit.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Honeydew.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Honeydew.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Honeydew.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Honeydew.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Honeydew.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Kiwifruit.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Kiwifruit.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Kiwifruit.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Kiwifruit.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Kiwifruit.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lemon.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lemon.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lemon.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lemon.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lemon.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lime.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lime.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lime.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lime.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Lime.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Nectarine.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Nectarine.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Nectarine.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Nectarine.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Nectarine.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Orange.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Orange.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Orange.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Orange.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Orange.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Peach.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Peach.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Peach.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Peach.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Peach.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pear.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pear.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pear.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pear.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pear.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pineapple.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pineapple.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pineapple.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pineapple.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Pineapple.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Plum.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Plum.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Plum.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Plum.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Plum.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Strawberry.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Strawberry.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Strawberry.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Strawberry.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Strawberry.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Tangerine.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Tangerine.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Tangerine.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Tangerine.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Tangerine.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Watermelon.128.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Watermelon.256.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Watermelon.32.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Watermelon.512.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/Watermelon.64.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/ClickHereButton-animated.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/RingGreen.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/busy-stick-figures-animated.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/button_white.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/button_white_animated.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/info.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/data/images/info.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/softboy.mpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/softboy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/3Drendering/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/3Drendering/monkey.obj" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/3Drendering/objloader.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/3Drendering/simple.glsl" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/RST_Editor/editor.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/RST_Editor/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/compass/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/compass/compass.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/compass/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/takepicture/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/takepicture/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/android/takepicture/takepicture.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/animation/animate.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/app_suite.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/app_suite_data/testkvdir.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/app_with_build.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/app_with_kv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/app_with_kv_in_template1.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/template1/test.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/test.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/application/testkvfile.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/audio.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/audio/pitch.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/camera/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/bezier.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/canvas_stress.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/circle.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/fbo_canvas.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/lines.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/lines_extended.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/mesh.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/mesh_manipulation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/multitexture.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/repeat_texture.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/rotation.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/rounded_rectangle.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/scale.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/stencil_canvas.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/tesselate.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/canvas/texture.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/container/kv/1.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/container/kv/2.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/container/kv/3.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/container/kv/root.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/container/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/camera_puzzle.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/AnchorLayoutContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/BoxLayoutContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/ButtonContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/CheckBoxContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/FileChooserContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/FloatLayoutContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/GridLayoutContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/LabelContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/MediaContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/PlaygroundContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/PopupContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/ProgressBarContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/RestContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/ScatterContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/SelectorsContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/StackLayoutContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/container_kvs/TextContainer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/kivycatalog.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/gesturedatabase.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/gesturedatabase.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/helpers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/historymanager.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/historymanager.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/multistroke.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/settings.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/settings.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/pictures/pictures.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/shadereditor/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/shadereditor/shadereditor.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/icons/README" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/accordions.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/bubbles.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/buttons.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/carousel.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/checkboxes.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/codeinput.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/dropdown.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/filechoosers.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/popups.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/progressbar.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/rstdocument.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/scatter.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/screenmanager.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/sliders.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/spinner.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/splitter.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/switches.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/tabbedpanel + layouts.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/textinputs.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/data/screens/togglebutton.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/showcase.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/demo/touchtracer/touchtracer.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/frameworks/twisted/echo_client_app.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/frameworks/twisted/echo_server_app.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/frameworks/twisted/twistd_app.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/gestures/gesture_board.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/gestures/my_gestures.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/designwithkv/controller.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/designwithkv/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/1_skeleton.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/2_print_touch.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/3_draw_ellipse.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/4_draw_line.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/5_random_colors.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/6_button.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/guide/quickstart/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/includes/button.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/includes/layout.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/includes/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/includes/test.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/keyboard/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/keyboard/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/keyboard/numeric.json" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kinect/README.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kinect/kinectviewer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_button.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_camera.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_fbo.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_layout.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_logo.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_scatter.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_stencil.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/app_video.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/builder_template.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/ids/id_in_kv/id_in_kv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/ids/id_in_kv/test.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/ids/kv_and_py/kv_and_py.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/ids/kv_and_py/test.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/kv/kvrun.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/miscellaneous/clipboard.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/miscellaneous/multiple_dropfile.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/miscellaneous/two_panes.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/settings/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/settings/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/settings/my.ini" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/shader/plasma.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/shader/plasma.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/shader/shadertree.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/shader/shadertree.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/benchmark.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/cloud.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/main-smaa.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/music.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/ship.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/sun.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/svg/tiger.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/notes/final/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/notes/final/note.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step1/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step1/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step2/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step2/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step3/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step3/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step4/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step4/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step5/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/tutorials/pong/steps/step5/pong.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/accordion_1.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/actionbar.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/asyncimage.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/boxlayout_poshint.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/bubble_test.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/camera.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/carousel_buttons.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/codeinput.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/codeinputtest.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/colorpicker.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/colorusage.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/compound_selection.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/customcollide.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/effectwidget.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/effectwidget2.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/effectwidget3_advanced.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/fbowidget.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/focus_behavior.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/image_mipmap.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/keyboardlistener.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/label_mipmap.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/label_sizing.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/label_text_size.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/label_with_markup.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lang_dynamic_classes.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fixtures.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_detail_view.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/fruit_images/fruit_image_attribution.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_cascade.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_cascade_dict.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_cascade_images.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_composite.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_kv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_master_detail.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_ops.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_reset_data.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_simple.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_simple_in_kv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_simple_in_kv_2.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/lists/list_two_up.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/pagelayout.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/popup_with_kv.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/recycleview/basic_data.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/rstexample.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/scatter.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/scatter.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/screenmanager.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/scrollview.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/scrollview.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/android.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/main.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/uix/__init__.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/sequenced_images/uix/custom_button.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/settings.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/shorten_text.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/softboy.jsa" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/spinner.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/splitter.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/tabbed_panel_showcase.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/tabbedpanel.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/textalign.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/textalign.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/textinput.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/unicode_textinput.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/examples/widgets/videoplayer.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestlayout.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/screen/controller.kv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/examples/kivy/screen/controller_gui.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/kivy/plots/test.png" afterPath="$PROJECT_DIR$/examples/kivy/plots/test.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_DATA.png" />
@@ -19,6 +414,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_OTHERS.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_OTHERS.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_WEB.png" afterPath="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/export/WordCloud_WEB.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/prototype/githubRepo.py" afterPath="$PROJECT_DIR$/prototype/githubRepo.py" />
     </list>
     <ignored path="GitHubRepositoryClassifier.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -38,73 +434,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="gui_prototype.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/simpleGUI/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="115" column="29" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
-              <folding>
-                <element signature="e#73#90#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="generatePieChart.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/generatePieChart.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pyplot.py" pinned="false" current-in-tab="false">
-        <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="578" column="4" selection-start-line="578" selection-start-column="4" selection-end-line="578" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pie_demo_features.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="329">
-              <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="kivy_pie_chart_plot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="94" column="29" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_backend.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="38" column="10" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_events.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+            <state relative-caret-position="16">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -112,31 +446,95 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="figure.py" pinned="false" current-in-tab="false">
-        <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/figure.py">
+      <file leaf-file-name="kinectviewer.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/kinect/kinectviewer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-626">
-              <caret line="924" column="8" selection-start-line="924" selection-start-column="8" selection-end-line="924" selection-end-column="8" />
+            <state relative-caret-position="306">
+              <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="animate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/animation/animate.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="my.kv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/my.kv">
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/RST_Editor/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="289">
+              <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="layout.kv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/data/screens/layout.kv">
+      <file leaf-file-name="objloader.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/objloader.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="289">
               <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="monkey.obj" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/monkey.obj">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="controller_gui.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/screen/controller_gui.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/README.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -187,7 +585,6 @@
         <option value="$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py" />
         <option value="$PROJECT_DIR$/data/csv/unclassified_repos.csv" />
         <option value="$PROJECT_DIR$/prototype/prototype.py" />
-        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
         <option value="$PROJECT_DIR$/gui_prototype/data/screens/layout.kv" />
@@ -202,6 +599,7 @@
         <option value="$PROJECT_DIR$/gui_prototype/my.kv" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
         <option value="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
+        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
       </list>
     </option>
   </component>
@@ -264,6 +662,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="gui_prototype" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -278,6 +690,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="gui_prototype" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="examples" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -297,84 +727,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="kivy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kivy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kivy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="garden.matplotlib-master" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="kivy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plots" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="garden.matplotlib-master" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -392,10 +744,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GitHubRepositoryClassifier" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="csv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -405,101 +775,101 @@
     <property name="SearchEverywhereHistoryKey" value="back&#9;ACTION&#9;Back" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\screen" />
-      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\plots" />
-      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\prototype" />
-      <recent name="C:\Users\Lukas\Documents\GitHub\GitHubRepositoryClassifier\examples\clustering\affinity_propagation" />
-      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype" />
       <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype\data" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\screen" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\kivy\plots" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\prototype" />
+      <recent name="C:\Users\Lukas\Documents\GitHub\GitHubRepositoryClassifier\examples\clustering\affinity_propagation" />
+    </key>
   </component>
-  <component name="RunManager" selected="Python.gui_prototype">
-    <configuration default="false" name="nestingLayout" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.main">
+    <configuration default="false" name="main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/examples/RST_Editor" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/examples/RST_Editor/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="gui_prototype" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="main (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/examples/3Drendering" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/examples/3Drendering/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="kivy_pie_chart_plot" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="objloader" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/examples/3Drendering" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/examples/3Drendering/objloader.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="test_backend" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="controller_gui" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/screen" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/screen/controller_gui.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="test_events" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/showcase" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/showcase/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -657,19 +1027,19 @@
     </configuration>
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python.NLP" />
-      <item index="1" class="java.lang.String" itemvalue="Python.nestingLayout" />
-      <item index="2" class="java.lang.String" itemvalue="Python.gui_prototype" />
-      <item index="3" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
-      <item index="4" class="java.lang.String" itemvalue="Python.test_backend" />
-      <item index="5" class="java.lang.String" itemvalue="Python.test_events" />
+      <item index="1" class="java.lang.String" itemvalue="Python.main (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.main (2)" />
+      <item index="3" class="java.lang.String" itemvalue="Python.objloader" />
+      <item index="4" class="java.lang.String" itemvalue="Python.controller_gui" />
+      <item index="5" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.gui_prototype" />
-        <item index="1" class="java.lang.String" itemvalue="Python.test_events" />
-        <item index="2" class="java.lang.String" itemvalue="Python.kivy_pie_chart_plot" />
-        <item index="3" class="java.lang.String" itemvalue="Python.test_backend" />
-        <item index="4" class="java.lang.String" itemvalue="Python.nestingLayout" />
+        <item index="0" class="java.lang.String" itemvalue="Python.main" />
+        <item index="1" class="java.lang.String" itemvalue="Python.controller_gui" />
+        <item index="2" class="java.lang.String" itemvalue="Python.objloader" />
+        <item index="3" class="java.lang.String" itemvalue="Python.main (2)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.main (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -747,18 +1117,34 @@
       <option name="project" value="LOCAL" />
       <updated>1482491268400</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="created initial gui_prototype&#10;- general layout&#10;- matplotlib.plot integration">
+      <created>1482501809114</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1482501809114</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 42m 55s.xml">
-      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    <history-entry file="Nosetests_in_TestApp - 2017.01.02 at 21h 48m 40s.xml">
+      <configuration name="Nosetests in TestApp" configurationId="tests" />
     </history-entry>
-    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 43m 06s.xml">
-      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    <history-entry file="Nosetests_in_animate - 2017.01.02 at 21h 59m 43s.xml">
+      <configuration name="Nosetests in animate" configurationId="tests" />
     </history-entry>
-    <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 44m 19s.xml">
-      <configuration name="Nosetests in nestingLayout" configurationId="tests" />
+    <history-entry file="Nosetests_in_asyncimage - 2017.01.02 at 21h 46m 13s.xml">
+      <configuration name="Nosetests in asyncimage" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_bubble_test - 2017.01.02 at 21h 46m 19s.xml">
+      <configuration name="Nosetests in bubble_test" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_bubble_test - 2017.01.02 at 21h 46m 29s.xml">
+      <configuration name="Nosetests in bubble_test" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Nosetests_in_carousel_buttons - 2017.01.02 at 21h 46m 38s.xml">
+      <configuration name="Nosetests in carousel_buttons" configurationId="tests" />
     </history-entry>
     <history-entry file="Nosetests_in_nestingLayout - 2016.12.23 at 12h 46m 35s.xml">
       <configuration name="Nosetests in nestingLayout" configurationId="tests" />
@@ -773,17 +1159,26 @@
       <configuration name="Nosetests in nestingLayout (1)" configurationId="tests" />
     </history-entry>
   </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.269375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.323125" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.268125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32898173" sideWeight="0.4975" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32898173" sideWeight="0.5025" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.47305766" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32845187" sideWeight="0.39285713" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.483125" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37859008" sideWeight="0.676875" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37859008" sideWeight="0.670625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -817,7 +1212,9 @@
     <MESSAGE value="alternative to divide with the number of hits instead of the number of words" />
     <MESSAGE value="added matplotlib-examples for kivy" />
     <MESSAGE value="example for a pie-chart in kivy&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="example for a pie-chart in kivy&#10;" />
+    <MESSAGE value="created initial gui_prototype&#10;- general layout&#10;- matplotlib.plot integration" />
+    <MESSAGE value="added all official kivy examples" />
+    <option name="LAST_COMMIT_MESSAGE" value="added all official kivy examples" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -829,62 +1226,87 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/sklearn/feature_extraction/text.py" />
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/numeric.py" />
-    <entry file="file://$USER_HOME$/.PyCharm2016.2/system/python_stubs/-952285868/numpy/core/multiarray.py" />
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/numpy/core/shape_base.py" />
-    <entry file="file://D:/Program Files/Anaconda3/Lib/site-packages/pandas/indexes/base.py" />
-    <entry file="file://$PROJECT_DIR$/examples/text_analysis/word_occurrence/word_occurrence.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/actionbar.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="28" column="14" selection-start-line="28" selection-start-column="14" selection-end-line="28" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/io_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-141">
-          <caret line="90" column="38" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-329">
-          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+        <state relative-caret-position="391">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
           <folding>
-            <element signature="e#0#59#0" expanded="false" />
+            <element signature="e#0#33#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/utility_funcs/string_operation.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/asyncimage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="17" column="27" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="27" />
+        <state relative-caret-position="323">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/unclassified_repos.csv">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/bubble_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="38" selection-start-line="7" selection-start-column="38" selection-end-line="7" selection-end-column="38" />
+        <state relative-caret-position="272">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/vocab/vocabList.dump">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/carousel_buttons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/colorpicker.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/colorusage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="29" selection-start-line="21" selection-start-column="29" selection-end-line="21" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/customcollide.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/effectwidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="31" column="0" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/scatter.kv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -892,203 +1314,323 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/test.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/popup_with_kv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+        <state relative-caret-position="374">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/example_repos.csv">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/rstexample.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="27" column="32" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="323">
+          <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/githubRepo.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/widgets/scatter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="153" column="24" selection-start-line="153" selection-start-column="24" selection-end-line="153" selection-end-column="24" />
+        <state relative-caret-position="272">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="false" />
+            <element signature="e#0#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/prototype/prototype.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/kv/builder_template.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        <state relative-caret-position="323">
+          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/deep_learning/theano/gpu_vs_cpu.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/kv/kvrun.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/keyboard/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/gestures/gesture_board.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="23" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/gestures/my_gestures.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/frameworks/twisted/echo_client_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/frameworks/twisted/twistd_app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/gesturedatabase.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="56" selection-start-line="18" selection-start-column="56" selection-end-line="18" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/camera_puzzle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/showcase/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/pictures/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/demo/kivycatalog/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="15" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/circle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/bezier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="14" selection-start-line="1" selection-start-column="14" selection-end-line="1" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/canvas_stress.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/mesh_manipulation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="24" column="11" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/rounded_rectangle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="22" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/stencil_canvas.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/tesselate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="24" column="22" selection-start-line="24" selection-start-column="22" selection-end-line="24" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/canvas/texture.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/audio/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/audio/pitch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/1_skeleton.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="16" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="e#0#52#0" expanded="false" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://G:/Programming/Projects_WiSe_2016_17/Python/kivy_plots/garden.matplotlib-master/garden.matplotlib-master/examples/test_backend.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/guide/designwithkv/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="289">
+          <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/__init__.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/6_button.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/guide/firstwidget/5_random_colors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/guide/quickstart/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/simpleGUI/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="16">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="e#0#253#0" expanded="false" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/kinect/kinectviewer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="6" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivyagg.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/animation/animate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="96" column="28" selection-start-line="96" selection-start-column="28" selection-end-line="96" selection-end-column="28" />
+        <state relative-caret-position="204">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test_plt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/LICENSE">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/RST_Editor/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_plt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="19" selection-start-line="14" selection-start-column="19" selection-end-line="14" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/backend_kivy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="39" column="65" selection-start-line="39" selection-start-column="65" selection-end-line="39" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/android.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/test.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/accordions.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/buttons.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="22" selection-start-line="18" selection-start-column="22" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/dropdown.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/rstdocument.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/screenmanager.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/progressbar.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/filechoosers.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-246">
-          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
           <folding>
-            <element signature="e#1173#1194#0" expanded="false" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/controller.kv">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="289">
+          <caret line="25" column="20" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/widget.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/objloader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/examples/3Drendering/monkey.obj">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1098,119 +1640,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/kivy/screen/controller_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="323">
+          <caret line="19" column="35" selection-start-line="19" selection-start-column="35" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/splitter.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/README.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py">
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="e#41#65#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestlayout.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+        <state relative-caret-position="306">
+          <caret line="18" column="52" selection-start-line="18" selection-start-column="52" selection-end-line="18" selection-end-column="52" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="578" column="4" selection-start-line="578" selection-start-column="4" selection-end-line="578" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/data/screens/layout.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="30" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_backend.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="38" column="10" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/my.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="94" column="29" selection-start-line="94" selection-start-column="29" selection-end-line="94" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/generatePieChart.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/figure.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-626">
-          <caret line="924" column="8" selection-start-line="924" selection-start-column="8" selection-end-line="924" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/kivy/plots/garden.matplotlib-master/examples/test_events.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="115" column="29" selection-start-line="115" selection-start-column="29" selection-end-line="115" selection-end-column="29" />
-          <folding>
-            <element signature="e#73#90#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
