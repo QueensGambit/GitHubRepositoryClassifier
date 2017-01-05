@@ -7,7 +7,7 @@ from collections import namedtuple
 IntFeatures = namedtuple('IntFeatures',
                          # 'iNumContributors' -> the url for the contributors doesn't has the actual size
                          'iSubscriberCount '  # addition
-                         'dCodeFrequency '
+                         'dRepoActivity ' # old name 'dCodeFrequency '
                          'dCommitIntervals '
                          'iNumBranches '
                          'iOpenIssues '
