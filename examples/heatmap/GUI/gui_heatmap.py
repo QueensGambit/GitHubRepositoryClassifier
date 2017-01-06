@@ -96,7 +96,7 @@ class MyHeatMap:
         plt.ylim(self.__ygmin, self.__ygmax)
 
         # set axis hidden
-        #plt.axis('off')
+        plt.axis('off')
 
         # turn off interactive plotting - speeds things up by 1 Frame / second
         plt.ioff()
