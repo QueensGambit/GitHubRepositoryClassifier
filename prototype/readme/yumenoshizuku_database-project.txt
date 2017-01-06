@@ -1,0 +1,1 @@
+b'Supply Chain Logistics & Sales Database\n\nDesigned a database to track merchandise flow, enabling consumer preference analysis\t\n'

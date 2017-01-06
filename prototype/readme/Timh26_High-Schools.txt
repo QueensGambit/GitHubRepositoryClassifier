@@ -1,0 +1,1 @@
+b"High Schools Web scraper\n============\nDependencies:\n  * htmldom (https://pypi.python.org/pypi/htmldom)\n  * pyGeocoder (https://pypi.python.org/pypi/pygeocoder)\n\nSorry I don't know how to set up a python virtual environment, you'll have to download the dependencies yourself.\n"

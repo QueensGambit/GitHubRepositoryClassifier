@@ -1,0 +1,29 @@
+<HBoxWidget>:
+	BoxLayout:
+		size: root.size
+		pos: root.pos
+		id: boxlayout_h
+		orientation: 'horizontal'
+		ToggleButton:
+			text: 'h1'
+			group: 'test'
+		ToggleButton:
+			text: 'h2'
+			group: 'test'
+
+<VBoxWidget>:
+	BoxLayout:
+		orientation: 'vertical'
+		size: root.size
+		pos: root.pos
+		ToggleButton:
+			text: 'v1'
+			group: 'test'
+		ToggleButton:
+			text: 'v2'
+			group: 'test'
+
+<ContainerBox>:
+	orientation: 'horizontal'
+	HBoxWidget:
+    VBoxWidget:

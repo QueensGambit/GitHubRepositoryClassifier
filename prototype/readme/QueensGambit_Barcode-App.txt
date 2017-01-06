@@ -1,0 +1,1 @@
+b'# Barcode-App\nsemester project (WS 2015/16) at the Faculty of Computer Science of "Hochschule Furtwangen University"\n\nproject participants:\n- Bj\xc3\xb6rn Beha\n- Johannes Czech\n- Lukas Scheuerle\n- Suhay Sevinc\n\nproject supervisor:\n- Prof. Dr. Peter Fleischer\n- Judith Jakob'

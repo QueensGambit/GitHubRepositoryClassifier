@@ -1,0 +1,1 @@
+b'\n\n`Machine` is a singleton that syncs the value\nof chocoroles, gansitos, pinguinos that exists on a certain time.\n\n`Stage` is the main class where the three threads are defined.\n\njavac *.java\n\n'

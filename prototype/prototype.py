@@ -2,10 +2,13 @@ from os import path
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from scipy.stats._discrete_distns import skellam_gen
+
 from githubRepo import GithubRepo
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from operator import add
 
+from io_agent import InputOutputAgent
 from utility_funcs.preprocessing_operations import *
 from utility_funcs.count_vectorizer_operations import *
 import logging
@@ -16,10 +19,15 @@ import matplotlib.pyplot as plt
 
 iNumCategories = 7
 iNumExamples = 5
-lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHERS']
+lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
+
+#iNumTrainData = iNumExamples * (iNumCategories - 1)
+iNumTrainData = 270 #100 #
+print("iNumTrainData: ", iNumTrainData)
 
 # initialize a list with None-values
-lstReadmeURL = [None] * iNumCategories * iNumExamples
+#lstReadmeURL = [None] * iNumCategories * iNumExamples
+lstReadmeURL = [None] * iNumTrainData
 
 directory = path.dirname(__file__)
 
@@ -29,12 +37,13 @@ print('strProjectDir:', strProjectDir)
 
 print(directory)
 
-# trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
-trainData = pd.read_csv(strProjectDir + '/data/csv/example_repos.csv', header=0, delimiter=",",
-                        nrows=iNumExamples * (iNumCategories - 1))
+# strFilenameCSV = 'example_repos.csv'
+strFilenameCSV = 'additional_data_sets_cleaned.csv'
+# strFilenameCSV = 'additional_data_sets_skipped_rows.csv'
 
-iNumTrainData = iNumExamples * (iNumCategories - 1)
-print("iNumTrainData: ", iNumTrainData)
+# trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
+trainData = pd.read_csv(strProjectDir + '/data/csv/' + strFilenameCSV, header=0, delimiter=",",
+                        nrows=iNumTrainData) #, skiprows=100)
 
 lstGithubRepo = []
 
