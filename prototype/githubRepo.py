@@ -48,6 +48,7 @@ class GithubRepo:
         """
         self.user = strUser
         self.name = strName
+        # print('user: ', self.user, 'name: ', self.name)
 
         d = path.dirname(__file__)
         self.strPathJSON = d + '/json/' + strUser + '_' + strName + '.json'

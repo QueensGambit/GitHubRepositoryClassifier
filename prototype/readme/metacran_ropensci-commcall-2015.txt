@@ -1,0 +1,1 @@
+b'# ropensci-commcall-2015\nROpenSci Community Call #6 presentation\n\nSee more [here](https://github.com/ropensci/commcalls/issues/6)\n'

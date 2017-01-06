@@ -1,0 +1,1 @@
+b'Homework\n========\n\nHomework result for 12 sser cpp'

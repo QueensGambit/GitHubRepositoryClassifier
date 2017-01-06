@@ -1,0 +1,1 @@
+b'instead.syscall.ru\n========\n\n[http://instead.syscall.ru](http://instead.syscall.ru) site\n\nInitially based on thescribble theme.\n'

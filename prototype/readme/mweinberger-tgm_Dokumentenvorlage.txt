@@ -1,0 +1,1 @@
+b'# Dokumentenvorlage\nLaTeX-Dokumenten Vorlage, \xc3\xbcbernommen von https://github.com/TGM-HIT/protocols\n'

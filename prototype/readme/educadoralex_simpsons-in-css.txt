@@ -1,0 +1,1 @@
+b'## Simpsons in CSS\n\nSimpsons characters in pure CSS\n\n[View the project page](http://pattle.github.io/simpsons-in-css "Simpsons in CSS")'
