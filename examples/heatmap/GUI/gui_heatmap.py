@@ -6,146 +6,119 @@ from xlwt.Bitmap import ObjBmpRecord
 
 #set up standard window size
 from kivy.config import Config
-Config.set('graphics', 'width', '1200')
-Config.set('graphics', 'height', '800')
-#Config.set('graphics','resizable', False)
-
+Config.set('graphics', 'width', '900')
+Config.set('graphics', 'height', '600')
+Config.set('graphics','resizable', False)
+#matplotlib.use('TkAgg') # <-- THIS MAKES IT FAST!
+import matplotlib
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
-
+import matplotlib.pyplot as plt
 import numpy as np
-
+from scipy.stats.kde import gaussian_kde
 from kivy.app import App
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.widget import Widget
 from kivy.uix.button import Button
-
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
-import matplotlib.pyplot as plt
 import pandas
+import timeit
+
+class MyHeatMap:
+    __iNRows =4700000
+    __lstData = None
+
+    def __init__(self, strFile):
+        start = timeit.timeit()
+
+        self.__lstData = pandas.read_csv(strFile, delimiter=',', nrows=self.__iNRows, header=None,
+                                         skiprows=500000)  # ,skiprows=500000
+
+        end = timeit.timeit()
+        time = end - start
+        print("time read_csv: ", time)
+        # get a dupletfree list of player id's to set up gui elements
+        self.__lstplayer = list(set(self.__lstData.ix[:, 0]))
+
+        #columns x and y
+        self.__xg = self.__lstData.ix[:, 2]
+        self.__yg = self.__lstData.ix[:, 3]
+
+        # filter infinite figures otherwise exception
+        self.__xg = self.__xg[np.logical_not(np.isnan(self.__xg))]
+        self.__yg = self.__yg[np.logical_not(np.isnan(self.__yg))]
+
+        start = timeit.timeit()
+
+        # initialize min and max value of whole data
+        self.__xgmin = self.__xg.min()
+        self.__xgmax = self.__xg.max()
+        self.__ygmin = self.__yg.min()
+        self.__ygmax = self.__yg.max()
+
+        end = timeit.timeit()
+        time = end - start
+        print("min and max values: ", time)
+
+    def clean_plot(self):
+        plt.clf()
 
 
-# iNRows = 300000
-# strFile = 'C:\\Users\\MEDA-02\\Documents\\full-game'
-# data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None, skiprows=500000)
-#
-# class MyHeatMap:
-#
-#     __id = 0
-#     __data = []
-#     size = 0
-#     __fig = None
-#
-#     def __init__(self, data):
-#            self.__data = data
-#
-#     def clean_plot(self):
-#         plt.clf()
-#
-#     def current_state_of_plot(self):
-#         self.__fig = plt.gcf()
-#         return fig
-#
-#     def get_figure(self, id):
-#         strFile = 'C:\\Users\\MEDA-02\\Documents\\full-game'
-#
-#         iNRows = 300000
-#
-#         data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None, skiprows=500000)  # ,skiprows=500000
-#
-#         print(data)
-#         len(data)
-#
-#         # only get the entries where the id is 4
-#         dataFilt = data.loc[data[0] == id]
-#
-#         # .ix returns a the values from  a specific column or row
-#         x = dataFilt.ix[:, 2]
-#         y = dataFilt.ix[:, 3]
-#         z = dataFilt.ix[:, 4]
-#
-#         print('lengthX:' + str(len(x)))
-#
-#         # other interesting methods:
-#         # x.values, x.toarray, x.transpose, np.random.randn(4242)
-#
-#         # print('x-column only')
-#         # print(x)
-#
-#
-#         # hist2d is a non hex-represantation
-#         # plt.hist2d(x, y, bins=50)
-#
-#         # add a description
-#         self.__fig = plt.figure(0)
-#         self.__fig.canvas.set_window_title('Location_Player_ID_' + str(id))
-#         plt.hexbin(x, y, bins=None)
-#         plt.title('Location of Player ID=' + str(id) + '\nwithin the first ' + str(iNRows) + ' Rows (' + str(
-#             len(x)) + 'Entries)')
-#         plt.xlabel('X-Coordinate')
-#         plt.ylabel('Y-Coordinate')
-#         plt.colorbar()
-#         self.__fig = plt.gcf()
-#
-#         return self.__fig
-#
-# heat = MyHeatMap(data)
-#
-# #get plot with player_id 4
-# fig = heat.get_figure(4)
+    def get_playerlist(self):
+        return self.__lstplayer
+
+    def get_figure(self, pid):
+        start = timeit.timeit()
+        #id = pid
+        id = int(pid)
+        # only get the entries where the id is 4
+        dataFilt = self.__lstData.loc[self.__lstData[0] == id]
+
+        # .ix returns a the values from  a specific column or row
+        x = dataFilt.ix[:, 2]
+        y = dataFilt.ix[:, 3]
+
+
+        # x = y[np.logical_not(np.isnan(x))]
+        # y = y[np.logical_not(np.isnan(y))]
+
+
+        k = gaussian_kde(np.vstack([x, y]))
+        xi, yi = np.mgrid[self.__xgmin:self.__xgmax:x.size ** 0.5 * 1j, self.__ygmin:self.__ygmax:y.size ** 0.5 * 1j]
+        zi = k(np.vstack([xi.flatten(), yi.flatten()]))
+
+        fig = plt.figure(figsize=(9, 10))
+
+        # alpha=0.5 will make the plots semitransparent
+        plt.pcolormesh(xi, yi, zi.reshape(xi.shape), alpha=0.5)
+
+        # set up x,y axes
+        plt.xlim(self.__xgmin, self.__xgmax)
+        plt.ylim(self.__ygmin, self.__ygmax)
+
+        # set axis hidden
+        #plt.axis('off')
+
+        # turn off interactive plotting - speeds things up by 1 Frame / second
+        plt.ioff()
+
+        # overlay soccer field
+        im = plt.imread('data\\soccer2.jpg')
+        plt.imshow(im, extent=[self.__xgmin, self.__xgmax, self.__ygmin, self.__ygmax], aspect='auto')
+
+        fig = plt.gcf()
+        # We need to draw the canvas before we start animating...
+        end = timeit.timeit()
+        time = end - start
+        print("creating plot ", time)
+
+
+        return fig
 
 
 strFile = 'C:\\Users\\MEDA-02\\Documents\\full-game'
-
-iNRows = 10000
-id = 4
-
-data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None, skiprows=500000 ) #,skiprows=500000
-
-print(data)
-len(data)
-
-# only get the entries where the id is 4
-dataFilt = data.loc[data[0] == id]
-
-
-# .ix returns a the values from  a specific column or row
-x = dataFilt.ix[:, 2]
-y = dataFilt.ix[:, 3]
-#z = dataFilt.ix[:, 4]
-
-print('lengthX:' + str(len(x)))
-
-#other interesting methods:
-#x.values, x.toarray, x.transpose, np.random.randn(4242)
-
-#print('x-column only')
-#print(x)
-
-
-# hist2d is a non hex-represantation
-#plt.hist2d(x, y, bins=50)
-fig = plt.figure(figsize=(9, 10))
-fig.canvas.set_window_title('Location_Player_ID_' + str(id))
-plt.hexbin(x, y, bins=None)
-plt.title('Location of Player ID=' + str(id) + '\nwithin the first ' + str(iNRows) + ' Rows (' + str(
-len(x)) + 'Entries)')
-plt.xlabel('X-Coordinate')
-plt.ylabel('Y-Coordinate')
-plt.colorbar()
-z = np.exp(-((x-1)**2+y**2))
-
-# Plot the density map using nearest-neighbor interpolation
-plt.pcolormesh(x,y,z)
-plt.colorbar()
-# overlay soccer field
-#im = plt.imread('data\\soccer.jpg')
-#ax1 = fig.add_subplot(211)
-#ax1.imshow(im, aspect='auto')
-
-
-
+heat = MyHeatMap(strFile)
+fig = heat.get_figure(38)
 canvas = fig.canvas
-
 
 class MainWidget(Widget):
     '''Create a controller that receives a custom widget from the kv lang file.
@@ -159,6 +132,11 @@ class MainWidget(Widget):
 
     def do_action(self):
 
+
+        spinner = self.ids.playerlist
+        strPlayerlist = map(str, heat.get_playerlist())
+        spinner.values = strPlayerlist
+
         self.fl = self.ids.wordCloudPlot
         self.fl.clear_widgets()
         self.wCanavas = canvas
@@ -168,40 +146,15 @@ class MainWidget(Widget):
     def plotheatmap(self):
         print("plot button pressed")
 
-
         if self.__player_id is not None:
 
-            # heat.clean_plot()
-            # fig = heat.get_figure(self.__player_id)
-            # canvas = fig.canvas
-            #
-            # self.fl = self.ids.wordCloudPlot
-            # self.fl.clear_widgets()
-
-            # The slices will be ordered and plotted counter-clockwise.
-           # heat.clean_plot()
             self.fl.clear_widgets()
-            labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
-            sizes = [15, 30, 45, 10]
-            colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
-            explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+            heat.clean_plot()
+            fig = heat.get_figure(self.__player_id)
 
-            plt.figure(1)
-            plt.pie(sizes, explode=explode, labels=labels, colors=colors,
-                    autopct='%1.1f%%', shadow=True, startangle=90)
-            # Set aspect ratio to be equal so that pie is drawn as a circle.
-            plt.axis('equal')
-
-            # fig = plt.figure()
-            fig = plt.gcf()
-            plt.savefig('debugplot.png')
-            # fig.set_size_inches(2000, 2000)
-            # fig.figsi
             canvas = fig.canvas
-
             self.wCanavas = canvas
             self.wCanavas.canvas.ask_update()
-
             self.fl.add_widget(self.wCanavas)
 
         else:
@@ -211,12 +164,11 @@ class MainWidget(Widget):
     def resetheatmap(self):
         print("reset button pressed")
         heat.clean_plot()
+        self.fl.clear_widgets()
         self.wCanavas.canvas.ask_update()
 
-
-
     def getSelectedPlayer(self):
-       self.__player_id = self.ids.spinner_id.text
+       self.__player_id = self.ids.playerlist.text
 
 class layout_heatmapApp(App):
 
@@ -228,5 +180,4 @@ class layout_heatmapApp(App):
 
 
 if __name__ == '__main__':
-    #ax = fig.gca()
    layout_heatmapApp().run()

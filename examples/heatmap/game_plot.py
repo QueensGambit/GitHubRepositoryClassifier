@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import pandas
-
+import numpy as np
 
 strFile = 'C:\\Users\\MEDA-02\\Documents\\full-game'
 
-iNRows = 600000
+iNRows = 45000000
 id = 38
 
 data = pandas.read_csv(strFile, delimiter=',', nrows=iNRows, header=None, skiprows=500000 ) #,skiprows=500000
@@ -17,10 +17,22 @@ dataFilt = data.loc[data[0] == id]
 
 
 # .ix returns a the values from  a specific column or row
+
+
+xg = data.ix[:, 2]
+yg = data.ix[:, 3]
+#zg = data.ix[:, 4]
+
+xg = xg[np.logical_not(np.isnan(xg))]
+yg = yg[np.logical_not(np.isnan(yg))]
+
+
 x = dataFilt.ix[:, 2]
 y = dataFilt.ix[:, 3]
-z = dataFilt.ix[:, 4]
+#z = dataFilt.ix[:, 4]
 
+#x = y[np.logical_not(np.isnan(x))]
+#y = y[np.logical_not(np.isnan(y))]
 print('lengthX:' + str(len(x)))
 
 #other interesting methods:
@@ -37,12 +49,18 @@ print('lengthX:' + str(len(x)))
 fig = plt.figure(0)
 fig.canvas.set_window_title('Location_Player_ID_' + str(id))
 plt.hexbin(x, y, bins=None)
+
+plt.xlim([min(xg), max(xg)])
+plt.ylim([min(yg), max(yg)])
+
 plt.title('Location of Player ID=' + str(id) + '\nwithin the first ' + str(iNRows) + ' Rows (' + str(len(x)) + 'Entries)')
 plt.xlabel('X-Coordinate')
 plt.ylabel('Y-Coordinate')
 plt.colorbar()
+
 #plt.clf()
 plt.show()
+
 
 '''
 SCATTER-EXAMPLE
