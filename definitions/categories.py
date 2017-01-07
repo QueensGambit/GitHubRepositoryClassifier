@@ -8,4 +8,4 @@ class Category(IntEnum):
     DOCS = 3,
     WEB = 4,
     DATA = 5,
-    OTHERS = 6
+    OTHER = 6

@@ -15,7 +15,6 @@ from utility_funcs.io_agent import InputOutputAgent
 import numpy as np
 from features.learning_features import IntFeatures, StringFeatures
 
-
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
     """
@@ -170,6 +169,9 @@ class GithubRepo:
         :param lstVocab: vocabulary which is used in the CountVectorizer of scikit-learn
         :return: integer list representing the percentage-usage of the vocabulary words
         """
+        # test avoiding vocab
+        # return [0] * len(lstVocab)
+
         vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
 
         strFilteredReadme = self.getFilteredReadme()
@@ -189,7 +191,7 @@ class GithubRepo:
         # flatten makes a matrix 1 dimensional
         lstOccurrence = np.array(matOccurrence.flatten()).tolist()    # np.array().tolist() is not needed
 
-        #iHits = np.sum(lstOccurrence)
+        iHits = np.sum(lstOccurrence)
 
         # divide each element by a factor to reduce the effectiveness
         iLen = len(strFilteredReadme.split())
@@ -198,9 +200,19 @@ class GithubRepo:
         if iLen == 0:
             iLen = 1
 
+        if iHits == 0:
+            iHits = 1
+
         fFacEffectiveness = 10.0
+
         # 10 is the factor between string and integer attributes
-        lstOccurrence[:] = [x / iLen * fFacEffectiveness for x in lstOccurrence]
+        # lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
+
+        # keep as is
+        lstOccurrence[:] = [x * fFacEffectiveness for x in lstOccurrence]
+
+        # make a binarized vector
+        # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
 
         # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 

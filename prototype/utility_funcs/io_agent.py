@@ -50,6 +50,7 @@ class InputOutputAgent:
                               "https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.rst"}
         self.bWithToken = bWithToken
 
+    def connectToGitHub(self):
         if InputOutputAgent.gh is None:
             if self.bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
@@ -69,7 +70,6 @@ class InputOutputAgent:
             print('normal ratelimit info: ', rates['resources']['core'])  # => your normal ratelimit info
             print('search ratelimit info: ', rates['resources']['search'])  # => your search ratelimit info
 
-
     def loadJSONdata(self, strPathJSON):
         """
         loads the requested json-data either from a file or alternatively from the web
@@ -86,6 +86,7 @@ class InputOutputAgent:
                     print("jsonData=None exception: ", strPathJSON)
                 jsonAPI = json.load(jsonData)
         else:
+            self.connectToGitHub()
             repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
             jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
@@ -112,6 +113,7 @@ class InputOutputAgent:
             return open(strPathReadme).read()
 
         else:
+            self.connectToGitHub()
             #print("Get readme...")
 
             repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
