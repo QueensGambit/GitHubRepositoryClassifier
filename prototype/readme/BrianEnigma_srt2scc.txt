@@ -1,0 +1,1 @@
+b"This is a basic script for converting SRT (SubRip) caption files to SCC \n(Scenarist) caption files.\n\nAt present, it is not terribly configurable.  You're stuck with 3-line \nRoll-Up style captions until I add in an option to allow otherwise.\n\n"

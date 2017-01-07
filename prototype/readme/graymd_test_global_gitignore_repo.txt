@@ -1,0 +1,1 @@
+b'# test_global_gitignore_repo\n\nThis is a repo where I can add files to my global .gitignore file and verify everything is working.\n\nhttps://help.github.com/articles/ignoring-files/'

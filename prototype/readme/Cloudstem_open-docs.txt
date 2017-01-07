@@ -1,0 +1,1 @@
+b'# open-docs\nDocumentation for Cloudstem supported open source projects.\n'

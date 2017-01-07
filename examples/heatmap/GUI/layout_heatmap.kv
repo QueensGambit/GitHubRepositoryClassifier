@@ -1,0 +1,60 @@
+#:kivy 1.8.0
+
+<MainWidget>:
+    #wordCloudPlot: wordCloudPlot
+    BoxLayout:
+        id: myBox
+        size: root.size
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint: 1.0, 0.5
+            orientation: 'horizontal'
+
+            Slider:
+                size_hint: 0.8, 1.0
+                #size: 100,50
+                #size: (root.size / 4),(root.size / 2)
+                #pos_hint: { 'center_x' : .5 }
+
+
+            Spinner:
+                id: playerlist
+                text: 'Select Player'
+                #values: ('1', '2', '3', '4' , '5', '6', '7' , '8', '9', '10' , '11', '12', '13', '14')
+                height: '10dp'
+                size_hint: 0.2, 1.0
+                on_text: root.getSelectedPlayer()
+                #size: 100,50
+                #size: (root.size / 4),(root.size / 2)
+                #pos_hint: { 'center_x' : .5 }
+
+        BoxLayout:
+            id: wordCloudPlot
+            size_hint: 1.0, 4.0
+            Button:
+                id: wordCloudBtn
+                text: 'word-cloud plot'
+            Button:
+                text: 'bar chart'
+            Button:
+                text: 'graph'
+        BoxLayout:
+            size_hint: 1.0, 0.5
+            orientation: 'horizontal'
+
+            Button:
+                text: 'Plot'
+                size_hint: 1.0, 1.0
+                on_press: root.plotheatmap()
+                #size: 50,20
+                #size: (root.size / 4),(root.size / 2)
+                #pos_hint: { 'center_x' : .5 }
+
+            Button:
+                text: 'Reset'
+                size_hint: 1.0, 1.0
+                #size: 50,20
+                #size: (root.size / 4),(root.size / 2)
+                on_press: root.resetheatmap()
+                #pos_hint: { 'center_x' : .5 }

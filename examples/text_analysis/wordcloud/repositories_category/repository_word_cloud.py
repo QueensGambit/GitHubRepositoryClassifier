@@ -37,8 +37,8 @@ lstReadmeURL[Category.DOCS] = 'https://raw.githubusercontent.com/raspberrypi/doc
 lstReadmeURL[Category.WEB] = 'https://raw.githubusercontent.com/JaceRobinson8/jacerobinson8.github.io/master/README.md'
 # Data example
 lstReadmeURL[Category.DATA] = 'https://raw.githubusercontent.com/OpenExoplanetCatalogue/open_exoplanet_catalogue/master/README.md'
-# Others example
-lstReadmeURL[Category.OTHERS] = 'https://raw.githubusercontent.com/restic/others/master/README.md'
+# Other example
+lstReadmeURL[Category.OTHER] = 'https://raw.githubusercontent.com/restic/others/master/README.md'
 
 
 # here the readme-contents will be stored
@@ -69,7 +69,7 @@ lstStrIcons[Category.EDU] = "bullhorn-8x.png"
 lstStrIcons[Category.DOCS] = "document-8x.png" #"clipboard-8x.png" #"book-8x.png"
 lstStrIcons[Category.WEB] = "globe-8x.png"
 lstStrIcons[Category.DATA] = "cloud-download-8x.png"
-lstStrIcons[Category.OTHERS] = "beaker-8x.png"
+lstStrIcons[Category.OTHER] = "beaker-8x.png"
 
 
 lstImgMask = []

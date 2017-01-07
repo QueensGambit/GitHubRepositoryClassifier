@@ -10,8 +10,10 @@ The InputOutputAgent loads data (json-Data, README...) from a given repository w
  then is loaded from a file. Otherwise a new connection is created.
  By default the autorization of the connection is done with an API-Token
 """
+from _ast import In
 
 from clyent import json_help
+from docutils.io import Input
 
 import json
 import requests
@@ -23,9 +25,13 @@ from github3 import GitHub
 from github3 import login
 import os
 
+#from io_agent import InputOutputAgent
+
 
 class InputOutputAgent:
 
+    gh = None
+    
     def __init__(self, strUser, strName, bWithToken=False):
         """
         Initializes the member variables
@@ -44,14 +50,25 @@ class InputOutputAgent:
                               "https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.rst"}
         self.bWithToken = bWithToken
 
-        if self.bWithToken:
-            # the TokenGithubAPI is stored as an environment-variable
-            self.gh = login(token=str(os.environ['TokenGithubAPI']))
-        else:
-            self.gh = GitHub()
+    def connectToGitHub(self):
+        if InputOutputAgent.gh is None:
+            if self.bWithToken:
+                # the TokenGithubAPI is stored as an environment-variable
+                InputOutputAgent.gh = login(token=str(os.environ['TokenGithubAPI']))
 
+            else:
+                InputOutputAgent.gh = GitHub()
 
+            # https://github3py.readthedocs.io/en/master/
+            # InputOutputAgent.gh.refresh()
+            # InputOutputAgent.gh.refresh(True)  # Will send the GET with a header such that if nothing
+            # has changed, it will not count against your ratelimit
+            # otherwise you'll get the updated user object.
 
+            # get rate limit information
+            rates = InputOutputAgent.gh.rate_limit()
+            print('normal ratelimit info: ', rates['resources']['core'])  # => your normal ratelimit info
+            print('search ratelimit info: ', rates['resources']['search'])  # => your search ratelimit info
 
     def loadJSONdata(self, strPathJSON):
         """
@@ -65,9 +82,12 @@ class InputOutputAgent:
         if os.path.isfile(strPathJSON):
             # read from it
             with open(strPathJSON) as jsonData:
+                if jsonData is None:
+                    print("jsonData=None exception: ", strPathJSON)
                 jsonAPI = json.load(jsonData)
         else:
-            repo = self.gh.repository(self.strUser, self.strName)
+            self.connectToGitHub()
+            repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
             jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
             # export to json-file
@@ -93,9 +113,10 @@ class InputOutputAgent:
             return open(strPathReadme).read()
 
         else:
-            print("Get readme...")
+            self.connectToGitHub()
+            #print("Get readme...")
 
-            repo = self.gh.repository(self.strUser, self.strName)
+            repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
             code64readme = repo.readme().content
 
             # If the content of the received readme is a string and not a NullObject create
@@ -107,9 +128,10 @@ class InputOutputAgent:
             else:
                 strReadme = ""
 
-
             file = open(strPathReadme, "w")
             file.write(strReadme)
+            print('readme was exported to: ', strPathReadme)
+
             return strReadme
 
 

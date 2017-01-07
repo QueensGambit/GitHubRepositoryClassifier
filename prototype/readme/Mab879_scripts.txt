@@ -1,0 +1,1 @@
+b"# Mab879's Collection of Scripts\n## Rails Install Script\n\nOrginal by [ThoughtBot/Laptop](https://github.com/thoughtbot/laptop)\n\t\n\tbash < <( curl -s https://raw.github.com/Mab879/scripts/master/rails)\x13\n"

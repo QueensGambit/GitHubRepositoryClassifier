@@ -1,0 +1,1 @@
+b'# homework\n\ncodename `hoo`\n\nWhere my homework happens...\n'

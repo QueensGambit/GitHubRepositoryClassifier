@@ -1,0 +1,1 @@
+b'# Welcome to Scientific Programming with Python\n\nPlease refer to the\n[course website](http://schryer.github.io/python_course_material) for\ndetails about the live version of this course being given at the\nUniversity of Tartu.  The first lesson is on September 2nd, 2014 and\nwill continue for 16 weeks.\n'

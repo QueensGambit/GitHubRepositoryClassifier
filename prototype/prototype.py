@@ -2,13 +2,18 @@ from os import path
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from scipy.stats._discrete_distns import skellam_gen
+
 from githubRepo import GithubRepo
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from operator import add
 
+from io_agent import InputOutputAgent
 from utility_funcs.preprocessing_operations import *
 from utility_funcs.count_vectorizer_operations import *
 import logging
+from sklearn.externals import joblib
+from sklearn import preprocessing
 
 import matplotlib.pyplot as plt
 
@@ -16,10 +21,15 @@ import matplotlib.pyplot as plt
 
 iNumCategories = 7
 iNumExamples = 5
-lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHERS']
+lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
+
+#iNumTrainData = iNumExamples * (iNumCategories - 1)
+# iNumTrainData = 270 #100 #
+
 
 # initialize a list with None-values
-lstReadmeURL = [None] * iNumCategories * iNumExamples
+#lstReadmeURL = [None] * iNumCategories * iNumExamples
+# lstReadmeURL = [None] * iNumTrainData
 
 directory = path.dirname(__file__)
 
@@ -29,15 +39,19 @@ print('strProjectDir:', strProjectDir)
 
 print(directory)
 
-# trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
-trainData = pd.read_csv(strProjectDir + '/data/csv/example_repos.csv', header=0, delimiter=",",
-                        nrows=iNumExamples * (iNumCategories - 1))
+# strFilenameCSV = 'example_repos.csv'
+strFilenameCSV = 'additional_data_sets_cleaned.csv'
+# strFilenameCSV = 'additional_data_sets_skipped_rows.csv'
 
-iNumTrainData = iNumExamples * (iNumCategories - 1)
+# trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
+trainData = pd.read_csv(strProjectDir + '/data/csv/' + strFilenameCSV, header=0, delimiter=",")#,
+                        # nrows=iNumTrainData) #, skiprows=100)
+
+# len(trainData.index) gets the number of rows
+iNumTrainData = len(trainData.index)
 print("iNumTrainData: ", iNumTrainData)
 
 lstGithubRepo = []
-
 
 
 print('~~~~~~~~~~ EXTRACTING FEATURES ~~~~~~~~~~')
@@ -56,6 +70,8 @@ for i in range(iNumTrainData):
 lstTrainData = []
 lstTrainLabels = []
 
+print('~~~~~~~~~~ CALCULATE THE MEAN VALUES ~~~~~~~~~~')
+
 lstMeanValues = [0] * 7
 i = 0
 for tmpGithubRepo in lstGithubRepo:
@@ -67,6 +83,8 @@ for tmpGithubRepo in lstGithubRepo:
     # the label is defined in trainData
     lstTrainLabels.append(lstStrCategories.index(trainData["CATEGORY"][i]))
     i += 1
+
+# joblib.dump(lstMeanValues, strModelPath + 'lstMeanValues.pkl')
 
 
 # replace every 0 with 1, otherwise division by 0 occurs
@@ -104,6 +122,9 @@ for tmpGithubRepo in lstGithubRepo:
     # np.vstack  concates to numpy-arrays
     lstInputFeatures = tmpGithubRepo.getNormedFeatures(lstMeanValues) + tmpGithubRepo.getWordOccurences(lstVoc)
 
+    # test using unnormed features
+    # lstInputFeatures = tmpGithubRepo.getFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
+
     lstTrainData.append(lstInputFeatures)
 
 print("lstTrainData:")
@@ -113,9 +134,37 @@ print("lstTrainLabels:")
 print(lstTrainLabels)
 
 print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
+
+print('~~~~~~~~~~ NORMALIZE ~~~~~~~~~~~~~')
+# lstTrainData = preprocessing.normalize(lstTrainData)
+
+# print("lstTrainDataNormalized:", lstTrainData)
+
 # train the nearest neighbour-model
 clf = NearestCentroid()
 clf.fit(lstTrainData, lstTrainLabels)
+
+
+print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
+strModelPath = directory + '/model/'
+# Create model-directory if needed
+if not os.path.exists(strModelPath):
+    os.makedirs(strModelPath)
+strModelFileName = 'RepoClassNearestNeighbour.pkl'
+
+# load the classifier from the file
+clf = joblib.load(strModelPath + strModelFileName)
+
+print('~~~~~~~~~~ SAVE MODEL TO FILE ~~~~~~~')
+# http://scikit-learn.org/stable/modules/model_persistence.html
+# http://stackoverflow.com/questions/10592605/save-classifier-to-disk-in-scikit-learn
+
+# save the trained classifier to a file
+# joblib.dump(clf, strModelPath + strModelFileName)
+
+
+print('~~~~~~~~~~ CREATE VERITY COMP MATRIX ~~~~~~~~')
+
 
 print('~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~')
 # classify the result
@@ -127,25 +176,64 @@ iLabel = int(clf.predict([[42] * iNumbeTrainingFeatures]))
 print('iLabel:', iLabel)
 print('Prediction for 42,42:', lstStrCategories[iLabel])
 
-iNumOfPredictions = 7
+# iNumOfPredictions = 7
 # read the unlabeled data set from a csv
-unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",", nrows=iNumOfPredictions)
+#unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",")#, nrows=iNumOfPredictions)
+dtUnlabeledData = pd.read_csv(strProjectDir + '/data/csv/manual_classification_appendix_b.csv', header=0, delimiter=",")#, nrows=iNumOfPredictions)
+
+# http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
+# len(dtFrame.index) gets the number of rows NaN are included
+iNumOfPredictions = len(dtUnlabeledData.index)
 
 strStopper1 = "="*80
 strStopper2 = "-"*80
 
+print('~~~~~~~~~~~ CREATE VERITY MATRIX ~~~~~~~~~~~~')
+matPredictionTarget = np.zeros((iNumOfPredictions, iNumCategories))
+
+# use a verity matrix to validate the result
+matPredictionRes = np.copy(matPredictionTarget)
+
 for i in range(iNumOfPredictions):
-    tmpRepo = GithubRepo.fromURL(unlabeledData["URL"][i])
+    tmpRepo = GithubRepo.fromURL(dtUnlabeledData["URL"][i])
     print(strStopper1)
 
     lstInputFeatures = tmpRepo.getNormedFeatures(lstMeanValues) + tmpRepo.getWordOccurences(lstVoc)
 
     # iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
     iLabel = int(clf.predict([lstInputFeatures]))
+    # set the verity matrix
+    strTarget = dtUnlabeledData["CATEGORY"][i]
+    strTargetAlt1 = dtUnlabeledData["CATEGORY_ALTERNATIVE_1"][i]
+    strTargetAlt2 = dtUnlabeledData["CATEGORY_ALTERNATIVE_2"][i]
+
+    matPredictionTarget[i, lstStrCategories.index(strTarget)] = 1
+
+    if pd.notnull(strTargetAlt1):
+        # strTargetAlt1 = strTargetAlt1[1:]
+        # print('i:', i)
+        print('strTargetAlt1:', strTargetAlt1)
+        matPredictionTarget[i, lstStrCategories.index(strTargetAlt1)] = 1
+
+    if pd.notnull(strTargetAlt2):
+        # strTargetAlt2 = strTargetAlt2[1:]
+        # print('i:', i)
+        # print('strTargetAlt2:', strTargetAlt2)
+        matPredictionTarget[i, lstStrCategories.index(strTargetAlt2)] = 1
+
+    matPredictionRes[i, iLabel] = 1
+
     lstOccurence = tmpRepo.getWordOccurences(lstVoc)
     # print('lstOccurence:', lstOccurence)
-    printFeatureOccurences(lstVoc, lstOccurence, 0)
+    printFeatureOccurences(lstVoc, lstOccurence,     0)
     print('len(lstOccurence):', len(lstOccurence))
     print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
     print(lstStrCategories[iLabel])
     print(strStopper2)
+
+print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
+print('verity matrix for matPredictionRes:\n ', matPredictionRes)
+
+matCompRes = np.multiply(matPredictionTarget, matPredictionRes)
+fPredictionRes = sum(matCompRes.flatten()) / iNumOfPredictions
+print('fPredictionRes:', fPredictionRes)
