@@ -111,6 +111,7 @@ class GithubRepo:
 
         strGithubTimestampFormat = "%Y-%m-%dT%H:%M:%SZ"
         datStart = datetime.datetime.strptime(self.apiJSON['created_at'], strGithubTimestampFormat)
+        # last update is a push or change in wiki, description...
         datLastUpdate = datetime.datetime.strptime(self.apiJSON['updated_at'], strGithubTimestampFormat)
         iDevTime = (datLastUpdate - datStart).days
 

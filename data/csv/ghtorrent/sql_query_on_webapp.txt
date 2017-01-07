@@ -1,0 +1,11 @@
+// run this query on http://ghtorrent.org/dblite/
+// no account is needed
+// the id interval is changeable
+// afterwards save the result as .csv for example
+
+// here the main features are description, num_watchers, dev_time_days, language
+SELECT p.id, p.url, p.name, p.description, COUNT(w.user_id) AS "num_watchers", DATEDIFF(p.updated_at, p.created_at) AS "dev_time_days", p.language FROM projects AS p INNER JOIN watchers AS w ON p.id = w.repo_id WHERE p.id >= 1 AND p.id <= 2000000 AND p.id MOD 42 = 0 AND p.updated_at > 0 GROUP BY w.repo_id
+
+
+// the ids are iterated in 42 steps in order to increase randomness
+// often similar repositories were behind each other

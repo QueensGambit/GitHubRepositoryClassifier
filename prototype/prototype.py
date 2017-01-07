@@ -136,15 +136,20 @@ iLabel = int(clf.predict([[42] * iNumbeTrainingFeatures]))
 print('iLabel:', iLabel)
 print('Prediction for 42,42:', lstStrCategories[iLabel])
 
-iNumOfPredictions = 7
+# iNumOfPredictions = 7
 # read the unlabeled data set from a csv
-unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",", nrows=iNumOfPredictions)
+#unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",")#, nrows=iNumOfPredictions)
+dtUnlabeledData = pd.read_csv(strProjectDir + '/data/csv/manual_classification_appendix_b.csv', header=0, delimiter=",")#, nrows=iNumOfPredictions)
+
+# http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
+# len(dtFrame.index) gets the number of rows NaN are included
+iNumOfPredictions = len(dtUnlabeledData.index)
 
 strStopper1 = "="*80
 strStopper2 = "-"*80
 
 for i in range(iNumOfPredictions):
-    tmpRepo = GithubRepo.fromURL(unlabeledData["URL"][i])
+    tmpRepo = GithubRepo.fromURL(dtUnlabeledData["URL"][i])
     print(strStopper1)
 
     lstInputFeatures = tmpRepo.getNormedFeatures(lstMeanValues) + tmpRepo.getWordOccurences(lstVoc)
