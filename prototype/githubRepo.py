@@ -158,7 +158,8 @@ class GithubRepo:
         """
         lstNormedFeatures = self.getFeatures()
         # norm every integer feature by dividing it with it's mean value
-        lstNormedFeatures[:] = [x / y for x, y in zip(lstNormedFeatures, lstMeanValues)]
+        # avoid dividing by 0
+        lstNormedFeatures[:] = [x / y if y != 0 else 0 for x, y in zip(lstNormedFeatures, lstMeanValues)]
         return lstNormedFeatures
 
     def getWordOccurences(self, lstVocab):
@@ -169,8 +170,8 @@ class GithubRepo:
         :param lstVocab: vocabulary which is used in the CountVectorizer of scikit-learn
         :return: integer list representing the percentage-usage of the vocabulary words
         """
-        # test avoiding vocab
-        # return [0] * len(lstVocab)
+        # test avoiding word occurrences completly in the evaluation
+        return [0] * len(lstVocab)
 
         vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
 
@@ -204,12 +205,13 @@ class GithubRepo:
             iHits = 1
 
         fFacEffectiveness = 10.0
+        # fFacEffectiveness = 20.0
 
         # 10 is the factor between string and integer attributes
-        # lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
+        lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
 
         # keep as is
-        lstOccurrence[:] = [x * fFacEffectiveness for x in lstOccurrence]
+        # lstOccurrence[:] = [x * fFacEffectiveness for x in lstOccurrence]
 
         # make a binarized vector
         # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]

@@ -31,6 +31,16 @@ def createVoabularyFeatures(lstRepos):
     return lstFeatureNames
 
 
+def readVocabFromFile(strVocabPath):
+    # http://stackoverflow.com/questions/899103/writing-a-list-to-a-file-with-python
+    # read dump file
+    with open(strVocabPath, 'rb') as fp:
+        logging.debug('open vocab from file...')
+        lstVoc = pickle.load(fp)
+
+    return lstVoc
+
+
 def initInputParameters(strVocabPath, lstGithubRepo):
     """
     Initialies the vocabulary set
@@ -44,11 +54,7 @@ def initInputParameters(strVocabPath, lstGithubRepo):
     lstVoc = []
 
     if os.path.isfile(strVocabPath):
-        # http://stackoverflow.com/questions/899103/writing-a-list-to-a-file-with-python
-        # read dump file
-        with open(strVocabPath, 'rb') as fp:
-            logging.debug('open vocab from file...')
-            lstVoc = pickle.load(fp)
+        lstVoc = readVocabFromFile(strVocabPath)
 
     else:
         lstVoc = createVoabularyFeatures(lstGithubRepo)
@@ -57,10 +63,10 @@ def initInputParameters(strVocabPath, lstGithubRepo):
             logging.debug('dump vocab to file...')
             pickle.dump(lstVoc, fb)
 
-    for tmpGithubRepo in lstGithubRepo:
-        lstOccurence = tmpGithubRepo.getWordOccurences(lstVoc)
-        # print('sum(sparseMatrix):', sum(matSparse))
-        # print('lstOccurence: ', lstOccurence)
-        # print('len(Occurence): ', len(lstOccurence))
+    # for tmpGithubRepo in lstGithubRepo:
+    #     lstOccurence = tmpGithubRepo.getWordOccurences(lstVoc)
+    #     # print('sum(sparseMatrix):', sum(matSparse))
+    #     # print('lstOccurence: ', lstOccurence)
+    #     # print('len(Occurence): ', len(lstOccurence))
 
     return lstVoc
