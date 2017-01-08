@@ -9,7 +9,7 @@ IntFeatures = namedtuple('IntFeatures',
                          'iSubscriberCount '  # addition
                          'dRepoActivity ' # old name 'dCodeFrequency '
                          'dCommitIntervals '
-                         'iNumBranches '
+                         'iWatchersCount '  #'iNumBranches '
                          'iOpenIssues '
                          'iDevTime '
                          'iSize'  # addition

@@ -29,7 +29,7 @@ from kivy.app import App
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.widget import Widget
 
-
+from kivy.core.clipboard import Clipboard
 
 
 # The slices will be ordered and plotted counter-clockwise.
@@ -46,6 +46,7 @@ plt.axis('equal')
 
 # fig = plt.figure()
 fig = plt.gcf()
+# fig = plt.figure()
 # fig.set_size_inches(2000, 2000)
 # fig.figsi
 canvas = fig.canvas
@@ -64,6 +65,51 @@ canvas = fig.canvas
 #
 # fig2 = plt.gcf()
 # canvas2 = fig2.canvas
+
+# http://stackoverflow.com/questions/101128/how-do-i-read-text-from-the-windows-clipboard-from-python
+# from tkinter import Tk
+# r = Tk()
+# # r.withdraw()
+#
+# strClipBoardData = r.clipboard_get()
+# if strClipBoardData:
+#     print('clipboard_data:', strClipBoardData)
+# r.clipboard_clear()
+# r.destroy()
+# r.clipboard_append('i can has clipboardz?')
+# print('Clipboard.paste():', Clipboard.paste())
+
+
+# Alternatives use
+# 1) ctypes
+#
+# import ctypes
+#
+# CF_TEXT = 1
+#
+# kernel32 = ctypes.windll.kernel32
+# user32 = ctypes.windll.user32
+#
+# user32.OpenClipboard(0)
+# if user32.IsClipboardFormatAvailable(CF_TEXT):
+#     data = user32.GetClipboardData(CF_TEXT)
+#     data_locked = kernel32.GlobalLock(data)
+#     text = ctypes.c_char_p(data_locked)
+#     print(text.value)
+#     kernel32.GlobalUnlock(data_locked)
+# else:
+#     print('no text in clipboard')
+# user32.CloseClipboard()
+
+# 2) cross-platform Clipboard-Library -> needs to get installed
+import clipboard
+
+clipboard.copy("this text is now in the clipboard")
+strClipBoardText = clipboard.paste()
+if strClipBoardText == '':
+    print('no text in clipboard')
+else:
+    print (clipboard.paste())
 
 class MainWidget(Widget):
     '''Create a controller that receives a custom widget from the kv lang file.
@@ -93,11 +139,11 @@ class MainWidget(Widget):
 
         wCanavas = canvas
         # wCanvas2 = canvas2
-        w = Widget()
         wCanavas.size = (3000, 3000)
         # wCanvas2.size = (3000, 3000)
         # wCanavas.size_hint = (0.1, 0.1)
-        fl.add_widget(wCanavas)
+        # fl.add_widget(wCanavas)
+        fl.add_widget(FigureCanvas(fig))
         # fl.add_widget(wCanvas2)
 
         # fl.add_widget(btn)

@@ -104,5 +104,5 @@ def autolabel(rects):
 
 plt.draw()
 #fig1.set_size_inches(18.5, 10.5, forward = True)
-plt.savefig("test.png")
+# plt.savefig("test.png")
 plt.show()

@@ -1,4 +1,5 @@
 #:kivy 1.8.0
+#:import Clipboard kivy.core.clipboard.Clipboard
 
 <MainWidget>:
     #wordCloudPlot: wordCloudPlot
@@ -35,4 +36,8 @@
                 text: 'graph'
         Button:
             text: 'terminal'
+            # this did crash unfortunately
+            #on_release:
+                #self.text = Clipboard.paste()
+                #Clipboard.copy('Data')
 

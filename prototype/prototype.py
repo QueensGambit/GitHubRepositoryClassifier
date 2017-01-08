@@ -10,7 +10,14 @@ from sklearn.neighbors.nearest_centroid import NearestCentroid
 from githubRepo import GithubRepo
 from utility_funcs.count_vectorizer_operations import *
 from utility_funcs.preprocessing_operations import *
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import RadiusNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.linear_model import  LogisticRegression
 
+from sklearn import preprocessing
 
 #logging.basicConfig(level=logging.DEBUG)
 
@@ -26,9 +33,10 @@ class RepoClassifierNearestNeighbour:
         self.clf = None
         self.lstMeanValues = None
         self.lstVoc = None
+        self.stdScaler =None
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
-        
+
         self.directory = path.dirname(__file__)
         print(self.directory)
 
@@ -80,6 +88,10 @@ class RepoClassifierNearestNeighbour:
         self.lstMeanValues = [0] * 7
         i = 0
         for tmpGithubRepo in lstGithubRepo:
+            # print out the description
+            print('descr:', tmpGithubRepo.getFilteredRepoDescription())
+            print('lang:', tmpGithubRepo.getRepoLanguage())
+
             # lstMeanValues += tmpGithubRepo.getFeatures()
             self.lstMeanValues = list(map(add, self.lstMeanValues, tmpGithubRepo.getFeatures()))
 
@@ -94,6 +106,10 @@ class RepoClassifierNearestNeighbour:
 
         # Divide each element with the number of training data
         self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
+
+        # set all mean values to 1
+        # self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
+
         print('lstMeanValues: ', self.lstMeanValues)
 
         print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
@@ -120,7 +136,7 @@ class RepoClassifierNearestNeighbour:
             # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
             # np.vstack  concates to numpy-arrays
-            lstInputFeatures = tmpGithubRepo.getNormedFeatures(self.lstMeanValues) + tmpGithubRepo.getWordOccurences(self.lstVoc)
+            lstInputFeatures = tmpGithubRepo.getNormedFeatures(self.lstMeanValues) + tmpGithubRepo.getWordOccurences(self.lstVoc) + tmpGithubRepo.getRepoLanguageAsVector()
 
             # test using unnormed features
             # lstInputFeatures = tmpGithubRepo.getFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
@@ -134,6 +150,11 @@ class RepoClassifierNearestNeighbour:
         print(lstTrainLabels)
 
         print('~~~~~~~~~~ NORMALIZE ~~~~~~~~~~~~~')
+        # self.stdScaler = preprocessing.StandardScaler()
+        # self.stdScaler.fit(lstTrainData)
+        # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
+        #
+        # lstTrainData = self.stdScaler.fit_transform(lstTrainData)
         # lstTrainData = preprocessing.normalize(lstTrainData)
 
         # print("lstTrainDataNormalized:", lstTrainData)
@@ -141,6 +162,16 @@ class RepoClassifierNearestNeighbour:
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
         self.clf = NearestCentroid()
+
+        # test out other classifiers
+        # self.clf = KNeighborsClassifier()
+        # self.clf = SVC()
+        # self.clf = RadiusNeighborsClassifier(radius=100)
+        # self.clf = MLPClassifier()
+        # self.clf = GaussianProcessClassifier()
+        # self.clf = LogisticRegression()
+
+        # self.fit_transform()
         self.clf.fit(lstTrainData, lstTrainLabels)
 
         self.bModelTrained = True
@@ -234,7 +265,10 @@ class RepoClassifierNearestNeighbour:
         for i in range(iNumOfPredictions):
             tmpRepo = GithubRepo.fromURL(dtUnlabeledData["URL"][i])
 
-            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc)
+            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
+
+            # apply pre-processing
+            # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
 
             # iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
             iLabel = int(self.clf.predict([lstInputFeatures]))
@@ -245,17 +279,20 @@ class RepoClassifierNearestNeighbour:
 
             matPredictionTarget[i, self.lstStrCategories.index(strTarget)] = 1
 
+            print('strTarget: ', strTarget, end="")
             if pd.notnull(strTargetAlt1):
                 # strTargetAlt1 = strTargetAlt1[1:]
                 # print('i:', i)
-                print('strTargetAlt1:', strTargetAlt1)
+                print('strTargetAlt1:', strTargetAlt1, end="")
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt1)] = 1
 
             if pd.notnull(strTargetAlt2):
                 # strTargetAlt2 = strTargetAlt2[1:]
                 # print('i:', i)
-                # print('strTargetAlt2:', strTargetAlt2)
+                print('strTargetAlt2:', strTargetAlt2, end="")
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt2)] = 1
+
+            print()
 
             matPredictionRes[i, iLabel] = 1
 
@@ -286,9 +323,35 @@ class RepoClassifierNearestNeighbour:
         """
         tmpRepo = GithubRepo.fromURL(strGitHubRepoURL)
 
-        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc)
+        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
+
+        # apply pre-processing
+        # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
 
         iLabel = int(self.clf.predict([lstInputFeatures]))
+
+        # res = self.clf.predict_proba([lstInputFeatures])
+        # print('self.clf.predict_proba()', res)
+        # score = self.clf.score(self.clf.predict([lstInputFeatures]), [0] * 7)
+        # print('score:', score)
+
+        matCentroids = self.clf.centroids_
+
+        fDistSum = 0
+        lstDistances = []
+
+        for centroid in matCentroids:
+            print(centroid)
+            fDist = np.linalg.norm([lstInputFeatures]-centroid)
+            lstDistances.append(fDist)
+            print('fDist:', fDist)
+            fDistSum += fDist
+
+
+        for i, fDist in enumerate(lstDistances):
+            print(self.lstStrCategories[i], 'pecentage:', fDist / fDistSum)
+
+        # print(self.clf.centroids_)
 
         self.__printResult(tmpRepo, iLabel)
 

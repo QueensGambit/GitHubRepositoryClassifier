@@ -14,6 +14,7 @@ from utility_funcs.io_agent import InputOutputAgent
 
 import numpy as np
 from features.learning_features import IntFeatures, StringFeatures
+import definitions.githubLanguages
 
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
@@ -64,6 +65,35 @@ class GithubRepo:
 
         print('url: ' + str(self.apiUrl))
         self.readAttributes()
+
+
+    def getFilteredRepoDescription(self):
+        strDescription = self.apiJSON['description']
+        if strDescription:
+            # return strDescription
+            return string_operation.prepare_words(strDescription)
+        else:
+            return ""
+
+    def getRepoLanguage(self):
+        strLanguage = self.apiJSON['language']
+        # return string_operation.prepare_words(strLanguage)
+        if strLanguage:
+            return strLanguage
+        else:
+            return "undetected"
+
+    def getRepoLanguageAsVector(self):
+        lstLangVec = [0] * len(definitions.githubLanguages.lstLanguages)
+        try:
+            iLangIndex = definitions.githubLanguages.lstLanguages.index(self.getRepoLanguage())
+        except ValueError:
+            iLangIndex = definitions.githubLanguages.lstLanguages.index("rare")
+
+        lstLangVec[iLangIndex] = 1 #1
+
+        return lstLangVec
+
 
     def getFilteredReadme(self):
         """
@@ -124,7 +154,7 @@ class GithubRepo:
                                        iDevTime=iDevTime,
                                        dRepoActivity=0,
                                        dCommitIntervals=0,
-                                       iNumBranches=0,
+                                       iWatchersCount=0, #self.apiJSON['watchers_count'],
                                        iSize=self.apiJSON['size'])
 
         # print(self.apiJSON['contributors_url'])
@@ -144,9 +174,13 @@ class GithubRepo:
                        self.intFeatures.iDevTime,
                        self.intFeatures.dRepoActivity, #dCodeFrequency
                        self.intFeatures.dCommitIntervals,
-                       self.intFeatures.iNumBranches,
+                       self.intFeatures.iWatchersCount,  #iNumBranches
                        self.intFeatures.iSize
                        ]
+
+        # skip int features
+        # lstFeatures = [0] * 7
+
         return lstFeatures
 
     def getNormedFeatures(self, lstMeanValues):
@@ -170,12 +204,17 @@ class GithubRepo:
         :param lstVocab: vocabulary which is used in the CountVectorizer of scikit-learn
         :return: integer list representing the percentage-usage of the vocabulary words
         """
-        # test avoiding word occurrences completly in the evaluation
+        # test skipping word occurrences completly in the evaluation
         return [0] * len(lstVocab)
 
         vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
 
-        strFilteredReadme = self.getFilteredReadme()
+        strFilteredReadme = ""
+        # strFilteredReadme = self.getFilteredReadme()
+        getFilteredRepoDescription = self.getFilteredRepoDescription()
+        strFilteredReadme += getFilteredRepoDescription
+        # strFilteredReadme += getFilteredRepoDescription
+
         # print(strFilteredReadme)
 
         # return a sparse matrix
@@ -204,17 +243,17 @@ class GithubRepo:
         if iHits == 0:
             iHits = 1
 
-        fFacEffectiveness = 10.0
+        # fFacEffectiveness = 10.0
         # fFacEffectiveness = 20.0
 
         # 10 is the factor between string and integer attributes
-        lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
+        # lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
 
         # keep as is
-        # lstOccurrence[:] = [x * fFacEffectiveness for x in lstOccurrence]
+        # lstOccurrence[:] = [x for x in lstOccurrence]
 
         # make a binarized vector
-        # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
+        lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
 
         # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 

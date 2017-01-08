@@ -5,23 +5,29 @@ import pickle
 import logging
 
 def createVoabularyFeatures(lstRepos):
-    strAllReadmes = ""
-    lstAllReadmes = []
+    # lstAllReadmes = []
+
+    lstAllDescr = []
 
     for tmpRepo in lstRepos:
 
         # load the single lines to an array
         #print('tmpRepo.getFilteredREADME(): ', tmpRepo.getFilteredREADME())
-        lstAllReadmes.append(tmpRepo.getFilteredReadme())
+        # lstAllReadmes.append(tmpRepo.getFilteredReadme())
+
+        lstAllDescr.append(tmpRepo.getFilteredRepoDescription())
+
+    lstBannedWordsAddition = ['git', 'repositori', 'github', 'new', 'us', 'use', 'high', 'nasa', 'present', 'open', 'public', 'http', 'www', 'com']
 
     # create a counter which counts the occurrence of each word which is defined in the vocabulary
     # by default the vocabulary consists of all words
-    vectorizer = CountVectorizer(min_df=3)
+    vectorizer = CountVectorizer(min_df=3, stop_words=lstBannedWordsAddition)
 
     # return a sparse matrix
     # each column is mapped to a specific feature (see lstFeatureNames)
     # the value describes the occurrence of the word in the current line
-    matSparse = vectorizer.fit_transform(lstAllReadmes)
+    # matSparse = vectorizer.fit_transform(lstAllReadmes)
+    matSparse = vectorizer.fit_transform(lstAllDescr)
 
     lstFeatureNames = vectorizer.get_feature_names()
 

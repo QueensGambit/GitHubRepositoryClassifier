@@ -35,7 +35,6 @@ from kivy.clock import Clock
 from kivy.animation import Animation
 from kivy.uix.screenmanager import Screen
 
-
 class ShowcaseScreen(Screen):
     fullscreen = BooleanProperty(False)
 

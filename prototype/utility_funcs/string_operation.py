@@ -7,7 +7,7 @@ from nltk.stem.porter import PorterStemmer
 # refine the input string
 def prepare_words(raw_text):
 
-    raw_text = raw_text[1:]
+    # raw_text = raw_text[1:]                                             # remove first letter
     raw_text = raw_text.rstrip()                                        # remove all control-characters: \n, \t ...
     beautiful = BeautifulSoup(raw_text, "lxml")                         # remove all html tags
     letters = re.sub("[^a-zA-Z]", " ", beautiful.get_text())            # remove everything that isn't a letter
@@ -18,4 +18,5 @@ def prepare_words(raw_text):
     stemmer = PorterStemmer()
     singles = [stemmer.stem(word) for word in words]
 
+    # return words
     return " ".join(singles)                                              # return the words as a string, separator: space
