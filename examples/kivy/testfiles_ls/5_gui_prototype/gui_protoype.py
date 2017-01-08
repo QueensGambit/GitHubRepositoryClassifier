@@ -8,7 +8,6 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
-import time
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -19,14 +18,26 @@ from kivy.properties import StringProperty
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
+from kivy.uix.popup import Popup
+from kivy.config import Config
 
 import matplotlib.pyplot as plt
+
+import os
 
 kivy.require("1.9.0")
 
 
-class ScrollableLabel(ScrollView):
-    text = StringProperty('')
+class FileSaverPopup(Popup):
+    filename_input = ObjectProperty()
+
+    log_text = ""
+
+    def save_file(self, path, filename):
+        with open(os.path.join(path, filename), 'w') as stream:
+            stream.write(self.log_text)
+
+        self.dismiss()
 
 
 class GUILayout(BoxLayout):
@@ -70,7 +81,8 @@ class GUILayout(BoxLayout):
         plt.axis('equal')
         plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
         fig = plt.gcf()
-        fig.patch.set_facecolor('none')
+        fig.patch.set_facecolor('1')
+        fig.patch.set_alpha(0.3)
 
         # plt.show()
 
@@ -79,7 +91,9 @@ class GUILayout(BoxLayout):
         # canv.canvas.ask_update()
 
     def save_log(self):
-        print("save log")
+        save_popup = FileSaverPopup()
+        save_popup.log_text = self.log_console.text
+        save_popup.open()
 
 
 
