@@ -64,20 +64,21 @@ class GUILayout(BoxLayout):
         sizes = [15, 30, 45, 10]
         colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
         explode = (0.1, 0, 0, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        plt.figure(1)
+        plt.figure(1, figsize=(300, 300))
         plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=90)
         plt.axis('equal')
         fig = plt.gcf()
+        fig.patch.set_facecolor('none')
+        print(plt.colors())
 
         #plt.show()
 
         self.pie_chart.clear_widgets()
         self.pie_chart.add_widget(FigureCanvas(fig))       # das hier sollte laufen
 
-
-
-
+    def save_log(self):
+        print("save log")
 
 
 

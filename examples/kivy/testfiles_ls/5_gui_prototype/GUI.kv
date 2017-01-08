@@ -28,7 +28,6 @@ GUILayout:
     diagram1: dia1
     diagram2: dia2
     diagram3: dia3
-    dialabel1: dialabel1
 
 
     #########################
@@ -66,7 +65,7 @@ GUILayout:
                 orientation: "horizontal"
 
                 Image:
-                    pos_hint: {"center_y": .55, "left": 1}
+                    pos_hint: {"center_y": .55}
                     source: 'logo.jpeg'
                 Button:
                     id: class_button
@@ -131,7 +130,8 @@ GUILayout:
                 text: "Result"
                 font_size: 32
                 size_hint_y: .4
-            BoxLayout:
+            StackLayout:
+                orientation: "lr-tb"
                 id: pie_chart
                 Label:
                     text: "Pie-Chart"
@@ -149,7 +149,6 @@ GUILayout:
             text: "Diagram 1"
             id: dia1
             Label:
-                id: dialabel1
                 text: "insert diagram here (1)"
         TabbedPanelItem:
             text: "Diagram 2"
@@ -165,6 +164,15 @@ GUILayout:
 
         TabbedPanelItem:
             text: "Console"
-            ScrollableLabel:
-                id: log_console
-                text: "No Output yet.."
+            BoxLayout:
+                orientation: "vertical"
+
+                CodeInput:
+                    id: log_console
+                    text: "No Output yet.."
+                    disabled: True
+                Button:
+                    size_hint: 0.5, 0.1
+                    pos_hint: {"center_x": 0.5}
+                    text: "save log to file"
+                    on_press: root.save_log()
