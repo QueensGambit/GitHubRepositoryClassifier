@@ -12,6 +12,37 @@
                 pos: self.pos
                 size: self.size
 
+<FileSaverPopup>
+    title: "Save File"
+    auto_dismiss: False
+    size_hint: 0.5, 0.5
+
+    filename_input: filename_input
+
+
+    BoxLayout:
+        orientation: "vertical"
+        FileChooserIconView:
+            id: file_chooser
+            on_selection: filename_input.text = self.selection and self.selection[0] or ''
+        TextInput:
+            id: filename_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+            text: "rc_console.log"
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "save"
+                on_release: root.save_file(file_chooser.path, filename_input.text)
+
+            Button
+                text: "cancel"
+                on_release: root.dismiss()
+
+
 GUILayout:
 
 <GUILayout>:
