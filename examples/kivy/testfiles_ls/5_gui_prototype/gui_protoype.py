@@ -8,6 +8,7 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
+import time
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -57,28 +58,30 @@ class GUILayout(BoxLayout):
         self.pie_chart.clear_widgets()                                  # widget to it
         self.pie_chart.add_widget(button)
 
-
         # ADDING A PIE CHART!
         # The slices will be ordered and plotted counter-clockwise.
         labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
         sizes = [15, 30, 45, 10]
         colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
-        explode = (0.1, 0, 0, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        plt.figure(1, figsize=(300, 300))
+        explode = (0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
+        plt.figure(1, figsize=(10, 10), dpi=70)
         plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=90)
         plt.axis('equal')
+        plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
         fig = plt.gcf()
         fig.patch.set_facecolor('none')
-        print(plt.colors())
 
-        #plt.show()
+        # plt.show()
 
         self.pie_chart.clear_widgets()
-        self.pie_chart.add_widget(FigureCanvas(fig))       # das hier sollte laufen
+        self.pie_chart.add_widget(FigureCanvas(fig))
+        # canv.canvas.ask_update()
 
     def save_log(self):
         print("save log")
+
+
 
 
 
