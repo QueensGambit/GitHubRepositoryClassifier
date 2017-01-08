@@ -1,185 +1,113 @@
-# https://kivy.org/docs/guide/lang.html
-# integrate matplotlib with kivy
-import matplotlib
-from xlwt.Bitmap import ObjBmpRecord
-
-matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
-import numpy as np
-import matplotlib.pyplot as plt
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.button import Button
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
-
 """
-from kivy import BoxLayout
+@file: gui_protoype.py
+Created on 07.01.2017 23:06
+@project: GitHubRepositoryClassifier
 
-layout = BoxLayout(orientation='vertical')
-btn1 = Button(text='Hello')
-btn2 = Button(text='World')
-layout.add_widget(btn1)
-layout.add_widget(btn2)
+@author: Lukas
+
+GUI Prototype using kivy
 """
 
 import kivy
-#kivy.require('1.0.5')
-
-import kivy
-from kivy.uix.floatlayout import FloatLayout
 from kivy.app import App
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ObjectProperty
+from kivy.core.window import Window
+from kivy.uix.scrollview import ScrollView
+from kivy.properties import StringProperty
+from kivy.uix.button import Button
 from kivy.uix.widget import Widget
+from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
+from kivy.uix.popup import Popup
+from kivy.config import Config
 
-from kivy.core.clipboard import Clipboard
+import matplotlib.pyplot as plt
 
+import os
 
-# The slices will be ordered and plotted counter-clockwise.
-labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
-sizes = [15, 30, 45, 10]
-colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
-explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
-
-plt.figure(1)
-plt.pie(sizes, explode=explode, labels=labels, colors=colors,
-        autopct='%1.1f%%', shadow=True, startangle=90)
-# Set aspect ratio to be equal so that pie is drawn as a circle.
-plt.axis('equal')
-
-# fig = plt.figure()
-fig = plt.gcf()
-# fig = plt.figure()
-# fig.set_size_inches(2000, 2000)
-# fig.figsi
-canvas = fig.canvas
+kivy.require("1.9.0")
 
 
+class FileSaverPopup(Popup):
+    filename_input = ObjectProperty()
 
-# plt.figure(2)
-# plt.subplot(212)
-#
-#
-# t1 = np.arange(0.0, 5.0, 0.1)
-# t2 = np.arange(0.0, 5.0, 0.02)
-#
-# plt.plot(t2, np.cos(2*np.pi*t2), 'r--')
-# plt.show()
-#
-# fig2 = plt.gcf()
-# canvas2 = fig2.canvas
+    log_text = ""
 
-# http://stackoverflow.com/questions/101128/how-do-i-read-text-from-the-windows-clipboard-from-python
-# from tkinter import Tk
-# r = Tk()
-# # r.withdraw()
-#
-# strClipBoardData = r.clipboard_get()
-# if strClipBoardData:
-#     print('clipboard_data:', strClipBoardData)
-# r.clipboard_clear()
-# r.destroy()
-# r.clipboard_append('i can has clipboardz?')
-# print('Clipboard.paste():', Clipboard.paste())
+    def save_file(self, path, filename):
+        with open(os.path.join(path, filename), 'w') as stream:
+            stream.write(self.log_text)
+
+        self.dismiss()
 
 
-# Alternatives use
-# 1) ctypes
-#
-# import ctypes
-#
-# CF_TEXT = 1
-#
-# kernel32 = ctypes.windll.kernel32
-# user32 = ctypes.windll.user32
-#
-# user32.OpenClipboard(0)
-# if user32.IsClipboardFormatAvailable(CF_TEXT):
-#     data = user32.GetClipboardData(CF_TEXT)
-#     data_locked = kernel32.GlobalLock(data)
-#     text = ctypes.c_char_p(data_locked)
-#     print(text.value)
-#     kernel32.GlobalUnlock(data_locked)
-# else:
-#     print('no text in clipboard')
-# user32.CloseClipboard()
+class GUILayout(BoxLayout):
 
-# 2) cross-platform Clipboard-Library -> needs to get installed
-import clipboard
+    # define the ObjectProperties to communicate with the .kv file
+    url_input = ObjectProperty()                    # user input line
+    classifier_button = ObjectProperty()            # the button above the user input. should start the process
+    error_label = ObjectProperty()                  # the label underneath the user input. short descriptions go here
+    log_console = ObjectProperty()                  # console to output logs. just add text to it.
+    result_label = ObjectProperty()                 # the big Result Label in the result corner
+    pie_chart = ObjectProperty()                    # the Layout for the piechart in the result corner
+    diagram1 = ObjectProperty()                     # the three TabbedPanelItems to put a diagram, expand if needed
+    diagram2 = ObjectProperty()                     # ↑
+    diagram3 = ObjectProperty()                     # ↑
+    dialabel1 = ObjectProperty()
 
-clipboard.copy("this text is now in the clipboard")
-strClipBoardText = clipboard.paste()
-if strClipBoardText == '':
-    print('no text in clipboard')
-else:
-    print (clipboard.paste())
+    def classify_button_pressed(self):
+        print("Button pressed!")
+        self.classifier_button.text = "pressed!"                        # button demo
+        self.classifier_button.disabled = True
+        self.error_label.text = "ERROR: Prototype not hooked up yet!"   # error label demo
+        self.error_label.color = 1, 0, 0, 1
+        self.log_console.text = ""                                      # clear console
+        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
+        for i in range(0, 50):                                          # demonstrate console
+            self.log_console.text += ("Button pressed, " + str(i) + "\n")
 
-class MainWidget(Widget):
-    '''Create a controller that receives a custom widget from the kv lang file.
+        button = Button(text='Testbutton')                              # demonstration of clearing an area and adding a
+        self.pie_chart.clear_widgets()                                  # widget to it
+        self.pie_chart.add_widget(button)
 
-    Add an action to be called from the kv lang file.
-    '''
+        # ADDING A PIE CHART!
+        # The slices will be ordered and plotted counter-clockwise.
+        labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+        sizes = [15, 30, 45, 10]
+        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
+        explode = (0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
+        plt.figure(1, figsize=(10, 10), dpi=70)
+        plt.pie(sizes, explode=explode, labels=labels, colors=colors,
+                autopct='%1.1f%%', shadow=True, startangle=90)
+        plt.axis('equal')
+        plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+        fig = plt.gcf()
+        fig.patch.set_facecolor('1')
+        fig.patch.set_alpha(0.3)
 
-    def get_fc(self, i):
-        fig1 = plt.figure()
-        fig1.suptitle('mouse hover over figure or axes to trigger events' +
-                      str(i))
-        ax1 = fig1.add_subplot(211)
-        ax2 = fig1.add_subplot(212)
-        wid = FigureCanvas(fig1)
-        return wid
+        # plt.show()
 
-    def add_plot(self):
-        self.add_widget(self.get_fc(1))
-        self.add_widget(self.get_fc(2))
+        self.pie_chart.clear_widgets()
+        self.pie_chart.add_widget(FigureCanvas(fig))
+        # canv.canvas.ask_update()
 
-    def do_action(self):
-        self.ids.wordCloudBtn.text = '42'
-
-        fl = self.ids.wordCloudPlot
-        fl.clear_widgets()
-        btn = Button()
-
-        wCanavas = canvas
-        # wCanvas2 = canvas2
-        wCanavas.size = (3000, 3000)
-        # wCanvas2.size = (3000, 3000)
-        # wCanavas.size_hint = (0.1, 0.1)
-        # fl.add_widget(wCanavas)
-        fl.add_widget(FigureCanvas(fig))
-        # fl.add_widget(wCanvas2)
-
-        # fl.add_widget(btn)
-        fl.add_widget(self.get_fc(1))
-        fl.add_widget(self.get_fc(2))
-        # fl.add_widget(canvas)
-
-        #self.ids.myBox.orientation = 'horizontal'
-
-        # pass
+    def save_log(self):
+        save_popup = FileSaverPopup()
+        save_popup.log_text = self.log_console.text
+        save_popup.open()
 
 
-class myApp(App):
 
+
+
+
+class GUIApp(App):
     def build(self):
-        # wordCloudPlot = ObjectProperty(None)
-        myWidget = MainWidget()
-        myWidget.do_action()
-        return myWidget #info='Hello world')
+        Window.clearcolor = ((41/255), (105/255), (176/255), 1)
+        Window.size = (1200, 800)
+        return GUILayout()
+
+gui = GUIApp()
+gui.run()
 
 
-    #     boxHeader = BoxLayout(size=root.size, orientation='vertical')
-    #
-    #
-    #     boxMiddle = BoxLayout(size_hint=(1.0, 0.5), orientation='horizontal'
-    #     :
-    #     boxMiddle.add_widget()
-    #
-    #     btnMenu = Button(text='menu', size_hint=(0.7, 1.0))
-    #
-    # btnResult = Button(text='result'
-    # size: 100,50
-    # size: (root.size / 4),(root.size / 2)
-    # pos_hint: { 'center_x' : .5 }
 
-
-if __name__ == '__main__':
-    #ax = fig.gca()
-    myApp().run()
