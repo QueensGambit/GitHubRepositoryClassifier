@@ -1,3 +1,9 @@
+<ScrollableLabel>:
+    Label:
+        size_hint_y: None
+        height: self.texture_size[1]
+        text_size: self.width, None
+        text: root.text
 
 
 GUILayout:
@@ -10,6 +16,7 @@ GUILayout:
     url_input: urlInput
     classifier_button: class_button
     error_label: errorOutput
+    log_console: log_console
 
 
     #########################
@@ -135,3 +142,10 @@ GUILayout:
             text: "Diagram 3"
             Label:
                 text: "insert diagram here (3)"
+
+
+        TabbedPanelItem:
+            text: "Console"
+            ScrollableLabel:
+                id: log_console
+                text: "No Output yet.."
