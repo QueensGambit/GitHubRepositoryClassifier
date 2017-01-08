@@ -1,7 +1,9 @@
+from __future__ import print_function
 # https://kivy.org/docs/guide/lang.html
 # integrate matplotlib with kivy
 import matplotlib
 from xlwt.Bitmap import ObjBmpRecord
+
 
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 import numpy as np
@@ -9,16 +11,6 @@ import matplotlib.pyplot as plt
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
-
-"""
-from kivy import BoxLayout
-
-layout = BoxLayout(orientation='vertical')
-btn1 = Button(text='Hello')
-btn2 = Button(text='World')
-layout.add_widget(btn1)
-layout.add_widget(btn2)
-"""
 
 import kivy
 #kivy.require('1.0.5')
@@ -102,14 +94,29 @@ canvas = fig.canvas
 # user32.CloseClipboard()
 
 # 2) cross-platform Clipboard-Library -> needs to get installed
-import clipboard
+# import clipboard
+#
+# clipboard.copy("this text is now in the clipboard")
+# strClipBoardText = clipboard.paste()
+# if strClipBoardText == '':
+#     print('no text in clipboard')
+# else:
+#     print (clipboard.paste())
 
-clipboard.copy("this text is now in the clipboard")
-strClipBoardText = clipboard.paste()
-if strClipBoardText == '':
-    print('no text in clipboard')
-else:
-    print (clipboard.paste())
+
+# http://stackoverflow.com/questions/550470/overload-print-python
+# This must be the first statement before other statements.
+# You may only put a quoted or triple quoted string,
+# Python comments, other future statements, or blank lines before the __future__ line.
+
+# Python 3
+import builtins as __builtin__
+
+
+class StaticVars:
+    btn1 = None
+    strPrintText = ''
+
 
 class MainWidget(Widget):
     '''Create a controller that receives a custom widget from the kv lang file.
@@ -131,6 +138,15 @@ class MainWidget(Widget):
         self.add_widget(self.get_fc(2))
 
     def do_action(self):
+
+        StaticVars.btn1 = self.ids.btnTerminal
+        StaticVars.btn1.text = 'hello?'
+        StaticVars.btn1.bind(on_press=callback)
+
+        self.btnMenu = self.ids.btnMenu
+        self.btnMenu.bind(on_press=callback2)
+
+
         self.ids.wordCloudBtn.text = '42'
 
         fl = self.ids.wordCloudPlot
@@ -154,6 +170,7 @@ class MainWidget(Widget):
         #self.ids.myBox.orientation = 'horizontal'
 
         # pass
+        print('hello World')
 
 
 class myApp(App):
@@ -179,6 +196,33 @@ class myApp(App):
     # size: (root.size / 4),(root.size / 2)
     # pos_hint: { 'center_x' : .5 }
 
+
+def callback2(instance):
+    print('sample output')
+
+def callback(instance):
+    # print('The button <%s> is being pressed' % instance.text)
+    StaticVars.btn1.text = StaticVars.strPrintText
+
+def print(*args, **kwargs):
+    """My custom print() function."""
+    # Adding new arguments to the print function signature
+    # is probably a bad idea.
+    # Instead consider testing if custom argument keywords
+    # are present in kwargs
+    __builtin__.print('My overridden print() function!')
+
+    # if btn1 not None:
+    try:
+        StaticVars.strPrintText += str(*args) #'test' #*args
+        StaticVars.strPrintText += '\n'
+        callback(StaticVars.btn1)
+        __builtin__.print('update text')
+        # StaticVars.btn1 = 'text'
+    except:
+        pass
+
+    return __builtin__.print(*args, **kwargs)
 
 if __name__ == '__main__':
     #ax = fig.gca()
