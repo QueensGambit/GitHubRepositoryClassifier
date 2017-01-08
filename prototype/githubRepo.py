@@ -1,5 +1,5 @@
 import requests
-import learning_features
+import features.learning_features
 from sklearn.feature_extraction.text import CountVectorizer
 
 import datetime
@@ -7,8 +7,8 @@ from os import path
 import os
 import json
 
-import string_operation
-import count_vectorizer_operations
+import utility_funcs.string_operation
+import utility_funcs.count_vectorizer_operations
 
 from utility_funcs.io_agent import InputOutputAgent
 
