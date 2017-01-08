@@ -1,4 +1,7 @@
 from __future__ import print_function
+# Python 3
+import builtins as __builtin__
+
 # https://kivy.org/docs/guide/lang.html
 # integrate matplotlib with kivy
 import matplotlib
@@ -109,8 +112,7 @@ canvas = fig.canvas
 # You may only put a quoted or triple quoted string,
 # Python comments, other future statements, or blank lines before the __future__ line.
 
-# Python 3
-import builtins as __builtin__
+
 
 
 class StaticVars:
