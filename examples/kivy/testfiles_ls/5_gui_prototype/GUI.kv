@@ -1,0 +1,137 @@
+
+
+GUILayout:
+
+<GUILayout>:
+    orientation: "vertical"
+    spacing: 10
+
+                                                            # definitions for program communication
+    url_input: urlInput
+    classifier_button: class_button
+    error_label: errorOutput
+
+
+    #########################
+    # upper area
+    #########################
+
+    BoxLayout:
+        canvas.before:
+                                                            #lines to optically separate sections
+            Color:
+                rgba: 0, 0, 0, 0.5
+            Rectangle:
+                pos: self.x, self.y-2
+                size: self.width, 2
+            Color:
+                rgba: 0, 0, 0, 0.5
+            Rectangle:
+                pos: self.x + self.width *.668 , self.y
+                size: 2, self.height
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.width, 2
+        orientation: "horizontal"
+        size_hint_y: .6
+
+                                                            #entry area
+        BoxLayout:
+            orientation: "vertical"
+            padding: 10
+
+                                                            #entry: logo & button
+            BoxLayout:
+                orientation: "horizontal"
+
+                Image:
+                    pos_hint: {"center_y": .55, "left": 1}
+                    source: 'logo.jpeg'
+                Button:
+                    id: class_button
+                    text: "classify"
+                    size_hint: .5, .2
+                    pos_hint: {"center_y": .15}
+                    on_press: root.classify_button_pressed()
+
+                                                            #entry: URL Input
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, None
+                size: self.width, 30
+
+                Label:
+                    text: "URL:"
+                    size_hint_x: .1
+                TextInput:
+                    id: urlInput
+                    size_hint: .9, None
+                    size: self.width, 30
+                    cursor_color: 0, 0, 0, 1
+                    multiline: False
+                    hint_text: "paste the full URL of the main branch here"
+
+                                                            #entry: errorLabel
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: 1, None
+                size: self.width, 60
+
+                Label:          # placeholder
+                    size_hint_x: .1
+                Label:
+                    id: errorOutput
+                    text: """press the "classify" button to start"""
+                    size_hint: .9, None
+                    size: self.width, 60
+                    #color: 1, 0, 0, 1          #red color
+                    canvas.before:
+                        Color:
+                            rgba:
+                                1, 1, 1, .5
+                        Rectangle:
+                            pos: self.x, self.y + (self.height * .5 / 2)
+                            size: self.width , self.height * .5
+
+
+                                                            #result
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_x: .5
+            canvas.before:
+                Color:
+                    rgba:
+                        1, 1, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: 2, self.height
+            Label:
+                text: "Result"
+                font_size: 32
+                size_hint_y: .5
+            Label:
+                text: "Pie-Chart"
+
+
+
+    #########################
+    # lower area
+    #########################
+    TabbedPanel:
+        do_default_tab: False
+        #tab_pos: 'top_mid'
+        tab_width: 150
+        TabbedPanelItem:
+            text: "Diagram 1"
+            Label:
+                text: "insert diagram here (1)"
+        TabbedPanelItem:
+            text: "Diagram 2"
+            Label:
+                text: "insert diagram here (2)"
+        TabbedPanelItem:
+            text: "Diagram 3"
+            Label:
+                text: "insert diagram here (3)"
