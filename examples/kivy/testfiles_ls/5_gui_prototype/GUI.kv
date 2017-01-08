@@ -4,7 +4,13 @@
         height: self.texture_size[1]
         text_size: self.width, None
         text: root.text
-
+        color: 0, 0, 0, 1
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
 GUILayout:
 
@@ -17,6 +23,12 @@ GUILayout:
     classifier_button: class_button
     error_label: errorOutput
     log_console: log_console
+    result_label: result_label
+    pie_chart: pie_chart
+    diagram1: dia1
+    diagram2: dia2
+    diagram3: dia3
+    dialabel1: dialabel1
 
 
     #########################
@@ -78,7 +90,7 @@ GUILayout:
                     size: self.width, 30
                     cursor_color: 0, 0, 0, 1
                     multiline: False
-                    hint_text: "paste the full URL of the main branch here"
+                    hint_text: "write the full URL of the main branch here (warning: CTRL + V will crash the app)"
 
                                                             #entry: errorLabel
             BoxLayout:
@@ -115,11 +127,14 @@ GUILayout:
                     pos: self.pos
                     size: 2, self.height
             Label:
+                id: result_label
                 text: "Result"
                 font_size: 32
-                size_hint_y: .5
-            Label:
-                text: "Pie-Chart"
+                size_hint_y: .4
+            BoxLayout:
+                id: pie_chart
+                Label:
+                    text: "Pie-Chart"
 
 
 
@@ -132,14 +147,18 @@ GUILayout:
         tab_width: 150
         TabbedPanelItem:
             text: "Diagram 1"
+            id: dia1
             Label:
+                id: dialabel1
                 text: "insert diagram here (1)"
         TabbedPanelItem:
             text: "Diagram 2"
+            id: dia2
             Label:
                 text: "insert diagram here (2)"
         TabbedPanelItem:
             text: "Diagram 3"
+            id: dia3
             Label:
                 text: "insert diagram here (3)"
 
