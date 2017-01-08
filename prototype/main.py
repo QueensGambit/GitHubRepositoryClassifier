@@ -24,3 +24,7 @@ repoClassNN.predictResultsAndCompare()
 
 print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
 repoClassNN.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
+# pobox/overwatch
+# pobox
+repoClassNN.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
+repoClassNN.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')

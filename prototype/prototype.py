@@ -89,8 +89,8 @@ class RepoClassifierNearestNeighbour:
         i = 0
         for tmpGithubRepo in lstGithubRepo:
             # print out the description
-            print('descr:', tmpGithubRepo.getFilteredRepoDescription())
-            print('lang:', tmpGithubRepo.getRepoLanguage())
+            # print('descr:', tmpGithubRepo.getFilteredRepoDescription())
+            # print('lang:', tmpGithubRepo.getRepoLanguage())
 
             # lstMeanValues += tmpGithubRepo.getFeatures()
             self.lstMeanValues = list(map(add, self.lstMeanValues, tmpGithubRepo.getFeatures()))
@@ -314,16 +314,26 @@ class RepoClassifierNearestNeighbour:
 
         return fPredictionRes
 
+    def predictCategoryFromOwnerRepoName(self, strUser, strRepoName):
+        tmpRepo = GithubRepo(strUser, strRepoName)
+
+        return self.predictCategoryFromGitHubRepoObj(tmpRepo)
+
     def predictCategoryFromURL(self, strGitHubRepoURL):
         """
         loads the features of a given repository by URL and the model predicts its category-label
 
         :param strGitHubRepoURL: url to the repository
-        :return: label value form 0 - 6
+        :return: label value form 0 - 6, lst of the precentages for the other categories
         """
         tmpRepo = GithubRepo.fromURL(strGitHubRepoURL)
 
-        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
+        return self.predictCategoryFromGitHubRepoObj(tmpRepo)
+
+    def predictCategoryFromGitHubRepoObj(self, tmpRepo):
+
+        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(
+            self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
 
         # apply pre-processing
         # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
@@ -340,22 +350,41 @@ class RepoClassifierNearestNeighbour:
         fDistSum = 0
         lstDistances = []
 
-        for centroid in matCentroids:
-            print(centroid)
-            fDist = np.linalg.norm([lstInputFeatures]-centroid)
-            lstDistances.append(fDist)
-            print('fDist:', fDist)
+        for i, centroid in enumerate(matCentroids):
+            # print(centroid)
+            fDist = np.linalg.norm([lstInputFeatures] - centroid)
+            lstDistances.append((i, fDist))
+            # print('fDist:', fDist)
             fDistSum += fDist
 
+        lstDistances.sort(key=lambda x: x[1])
+
+        # print('sorted:', lstDistances)
+
+        lstPercentages = []
 
         for i, fDist in enumerate(lstDistances):
-            print(self.lstStrCategories[i], 'pecentage:', fDist / fDistSum)
+            lstPercentages.append(lstDistances[i][1] / fDistSum)
+
+        lstDistancesReordered = []
+
+        for i, fPercentage in enumerate(reversed(lstPercentages)):
+            lstDistancesReordered.append((lstDistances[i][0], fPercentage))
+
+        lstDistancesReordered.sort(key=lambda x: x[0])
+
+        lstFinalPercentages = []
+
+        for i, fPercentage in enumerate(lstDistancesReordered):
+            lstFinalPercentages.append(fPercentage[1])
+            print(self.lstStrCategories[i], 'pecentage:', fPercentage[1])
 
         # print(self.clf.centroids_)
 
         self.__printResult(tmpRepo, iLabel)
 
-        return iLabel
+        return iLabel, lstFinalPercentages
+
 
     def __printResult(self, tmpRepo, iLabel):
         """
