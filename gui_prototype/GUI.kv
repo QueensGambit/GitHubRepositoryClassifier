@@ -1,3 +1,5 @@
+#:import Clipboard kivy.core.clipboard.Clipboard
+
 <ScrollableLabel>:
     Label:
         size_hint_y: None
@@ -105,11 +107,12 @@ GUILayout:
                     pos_hint: {"center_y": .15}
                     on_press: root.classify_button_pressed()
 
-                                                            #entry: URL Input
+                                                            #entry: URL Input & paste button
             BoxLayout:
                 orientation: "horizontal"
                 size_hint: 1, None
                 size: self.width, 30
+                spacing: 5
 
                 Label:
                     text: "URL:"
@@ -121,6 +124,11 @@ GUILayout:
                     cursor_color: 0, 0, 0, 1
                     multiline: False
                     hint_text: "write the full URL of the main branch here (warning: CTRL + V will crash the app)"
+
+                Button:
+                    text: "paste"
+                    size_hint_x: .1
+                    on_release: root.paste()
 
                                                             #entry: errorLabel
             BoxLayout:
@@ -173,7 +181,7 @@ GUILayout:
     TabbedPanel:
         do_default_tab: False
         #tab_pos: 'top_mid'
-        tab_width: 150
+        tab_width_hint: 150
         TabbedPanelItem:
             text: "Diagram 1"
             id: dia1
