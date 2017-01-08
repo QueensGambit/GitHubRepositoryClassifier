@@ -1,0 +1,19 @@
+<CustomButton@Button>:
+    font_size: 32
+    color: 0, 0, 0, 1
+    size: 150, 50
+    background_normal: ''
+    background_down: 'bckgrnd.png'
+    background_color: .88, .88, .88, 1
+    size_hint: .4, .3
+
+<FloatLayout>:
+    CustomButton:
+        text: "Button1"
+        pos_hint: {"x": 0, "top": 1}
+    CustomButton:
+        text: "Button2"
+        pos_hint: {"right": 1, "y": 0}
+    CustomButton:
+        text: "Button3"
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
