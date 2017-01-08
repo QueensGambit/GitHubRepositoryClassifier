@@ -1,6 +1,5 @@
 from enum import IntEnum
 
-
 class Category(IntEnum):
     DEV = 0,
     HW = 1,
