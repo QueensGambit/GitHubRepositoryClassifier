@@ -8,6 +8,16 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
+
+from kivy.config import Config
+Config.set('graphics', 'width', '1200')
+Config.set('graphics', 'height', '800')
+# Config.set('graphics', 'resizable', False)
+
+
+import matplotlib
+matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+
 import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -19,13 +29,16 @@ from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
 from kivy.uix.popup import Popup
-from kivy.config import Config
+import clipboard                                                    # pip install clipboard
+
 
 import matplotlib.pyplot as plt
 
 import os
 
 kivy.require("1.9.0")
+
+
 
 
 class FileSaverPopup(Popup):
@@ -95,19 +108,15 @@ class GUILayout(BoxLayout):
         save_popup.log_text = self.log_console.text
         save_popup.open()
 
-
-
-
-
+    def paste(self):
+        # get clipboard data
+        self.url_input.text = clipboard.paste()
 
 class GUIApp(App):
     def build(self):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
-        Window.size = (1200, 800)
+        # Window.size = (1200, 800)
         return GUILayout()
 
 gui = GUIApp()
 gui.run()
-
-
-
