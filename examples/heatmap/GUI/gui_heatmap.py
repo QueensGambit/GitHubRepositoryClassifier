@@ -1,8 +1,5 @@
 # https://kivy.org/docs/guide/lang.html
 # integrate matplotlib with kivy
-import matplotlib
-
-from xlwt.Bitmap import ObjBmpRecord
 
 #set up standard window size
 from kivy.config import Config
@@ -12,11 +9,8 @@ Config.set('graphics','resizable', False)
 #matplotlib.use('TkAgg') # <-- THIS MAKES IT FAST!
 import matplotlib
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
-import matplotlib.pyplot as plt
-import numpy as np
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.uix.button import Button
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
 from myheatmap import MyHeatMap
 
@@ -74,7 +68,7 @@ class MainWidget(Widget):
         self.wCanavas.canvas.ask_update()
 
     def getSelectedPlayer(self):
-       self.__player_id = self.ids.playerlist.text
+       self.__player_id = int(self.ids.playerlist.text)
 
 class layout_heatmapApp(App):
 

@@ -56,7 +56,7 @@ class MyHeatMap:
     def get_figure(self, pid):
         start = timeit.timeit()
         #id = pid
-        id = int(pid)
+        id = pid
         # only get the entries where the id is 4
         dataFilt = self.__lstData.loc[self.__lstData[0] == id]
 

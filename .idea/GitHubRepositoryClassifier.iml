@@ -5,8 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/prototype" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/prototype/utility_funcs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/prototype/features" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/heatmap/GUI" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.5.2 (D:\Program Files\Anaconda3\python.exe)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.5.2 (C:\Users\ibm\Anaconda3\python.exe)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">
