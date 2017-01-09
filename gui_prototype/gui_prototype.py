@@ -34,6 +34,8 @@ from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
 from kivy.uix.popup import Popup
 import clipboard                                                    # pip install clipboard
 
+import datetime
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 
@@ -69,6 +71,7 @@ def print(*args, **kwargs):
     # are present in kwargs
     # __builtin__.print('My overridden print() function!')
 
+    StaticVars.strPrintText = "[" + str(datetime.now().time()) + "] "
     try:
         # concat all arguments together
         for i, arg in enumerate(args):
@@ -81,7 +84,7 @@ def print(*args, **kwargs):
         # add a new line after the print statement
         StaticVars.strPrintText += '\n'
         updateConsole()
-        __builtin__.print('update text')
+        # __builtin__.print('update text')
     except:
         pass
 
@@ -97,7 +100,7 @@ class GUILayout(BoxLayout):
     url_input = ObjectProperty()                    # user input line
     classifier_button = ObjectProperty()            # the button above the user input. should start the process
     error_label = ObjectProperty()                  # the label underneath the user input. short descriptions go here
-    # log_console = ObjectProperty()                  # console to output logs. just add text to it.
+    log_console = ObjectProperty()                  # console to output logs. just add text to it.
     result_label = ObjectProperty()                 # the big Result Label in the result corner
     pie_chart = ObjectProperty()                    # the Layout for the piechart in the result corner
     diagram1 = ObjectProperty()                     # the three TabbedPanelItems to put a diagram, expand if needed
@@ -106,7 +109,7 @@ class GUILayout(BoxLayout):
     dialabel1 = ObjectProperty()
 
     def classify_button_pressed(self):
-        print("classify-button pressed!")
+        print("classify-button pressed. Classification started")
         self.classifier_button.text = "pressed!"                        # button demo
         self.classifier_button.disabled = True
         self.error_label.text = "ERROR: Prototype not hooked up yet!"   # error label demo
@@ -115,10 +118,6 @@ class GUILayout(BoxLayout):
         StaticVars.widgetConsole.scroll_y = 0                                   # makes the console scroll down automatically
         # for i in range(0, 50):                                          # demonstrate console
             # self.log_console.text += ("Button pressed, " + str(i) + "\n")
-
-        button = Button(text='Testbutton')                              # demonstration of clearing an area and adding a
-        self.pie_chart.clear_widgets()                                  # widget to it
-        self.pie_chart.add_widget(button)
 
         # ADDING A PIE CHART!
         # The slices will be ordered and plotted counter-clockwise.
@@ -154,7 +153,8 @@ class GUILayout(BoxLayout):
         print('pasted text:', clipboard.paste())
 
     def initialize(self):
-        StaticVars.widgetConsole = self.ids.log_console  # connect the console object with the static variable
+        StaticVars.widgetConsole = self.log_console  # connect the console object with the static variable
+
 
 class GUIApp(App):
     def build(self):
