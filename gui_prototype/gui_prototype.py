@@ -12,6 +12,7 @@ from __future__ import print_function
 # used imports to overload the print function in Python 3.X
 import builtins as __builtin__
 
+from github3.repos.repo import Repository
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '800')
@@ -30,7 +31,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
+from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
 import clipboard                                                    # pip install clipboard
 
@@ -50,6 +51,7 @@ class StaticVars:
     # this is satic the widget for the console
     widgetConsole = None
 
+
 class FileSaverPopup(Popup):
     filename_input = ObjectProperty()
 
@@ -61,7 +63,7 @@ class FileSaverPopup(Popup):
 
         self.dismiss()
 
-#http://stackoverflow.com/questions/550470/overload-print-python
+# http://stackoverflow.com/questions/550470/overload-print-python
 # overload the print() function to log to the console
 def print(*args, **kwargs):
     """My custom print() function."""
@@ -94,28 +96,30 @@ def print(*args, **kwargs):
 def updateConsole():
     StaticVars.widgetConsole.text += StaticVars.strPrintText
 
+
 class GUILayout(BoxLayout):
 
     # define the ObjectProperties to communicate with the .kv file
-    url_input = ObjectProperty()                    # user input line
-    classifier_button = ObjectProperty()            # the button above the user input. should start the process
-    error_label = ObjectProperty()                  # the label underneath the user input. short descriptions go here
+    textfield_input = ObjectProperty()                    # user input line
+    button_classifier = ObjectProperty()            # the button above the user input. should start the process
+    label_info = ObjectProperty()                   # the label underneath the user input. short descriptions go here
     log_console = ObjectProperty()                  # console to output logs. just add text to it.
-    result_label = ObjectProperty()                 # the big Result Label in the result corner
-    pie_chart = ObjectProperty()                    # the Layout for the piechart in the result corner
-    diagram1 = ObjectProperty()                     # the three TabbedPanelItems to put a diagram, expand if needed
-    diagram2 = ObjectProperty()                     # ↑
-    diagram3 = ObjectProperty()                     # ↑
-    dialabel1 = ObjectProperty()
+    label_result = ObjectProperty()                 # the big Result Label in the result corner
+    layout_pie_chart = ObjectProperty()             # the Layout for the piechart in the result corner
+    layout_diagram1 = ObjectProperty()              # the three TabbedPanelItems to put a diagram, expand if needed
+    layout_diagram2 = ObjectProperty()              # ↑
+    layout_diagram3 = ObjectProperty()              # ↑
+    checkbox_api_token = ObjectProperty()
 
-    def classify_button_pressed(self):
+    def classify_button_pressed_example(self):                  # THIS IS ONLY THE EXAMPLE! DELETE BEFORE PUBLISHING!
         print("classify-button pressed. Classification started")
-        self.classifier_button.text = "pressed!"                        # button demo
-        self.classifier_button.disabled = True
-        self.error_label.text = "ERROR: Prototype not hooked up yet!"   # error label demo
-        self.error_label.color = 1, 0, 0, 1
+        self.button_classifier.text = "pressed!"                        # button demo
+        self.button_classifier.disabled = True
+        self.label_info.text = "ERROR: Prototype not hooked up yet!"   # error label demo
+        print("[ERROR] Prototype not hooked up yet")
+        self.label_info.color = 1, 0, 0, 1
         # self.log_console.text = ""                                      # clear console
-        StaticVars.widgetConsole.scroll_y = 0                                   # makes the console scroll down automatically
+        StaticVars.widgetConsole.scroll_y = 0                             # makes the console scroll down automatically
         # for i in range(0, 50):                                          # demonstrate console
             # self.log_console.text += ("Button pressed, " + str(i) + "\n")
 
@@ -136,8 +140,8 @@ class GUILayout(BoxLayout):
 
         # plt.show()
 
-        self.pie_chart.clear_widgets()
-        self.pie_chart.add_widget(FigureCanvas(fig))
+        self.layout_pie_chart.clear_widgets()
+        self.layout_pie_chart.add_widget(FigureCanvas(fig))
         # canv.canvas.ask_update()
 
     def save_log(self):
@@ -147,7 +151,7 @@ class GUILayout(BoxLayout):
 
     def paste(self):
         # get clipboard data
-        self.url_input.text = clipboard.paste()
+        self.textfield_input.text = clipboard.paste()
         # print('paste-button pressed')
         # print(clipboard.paste())
         print('pasted text:', clipboard.paste())
@@ -155,8 +159,52 @@ class GUILayout(BoxLayout):
     def initialize(self):
         StaticVars.widgetConsole = self.log_console  # connect the console object with the static variable
 
+    def validate_url(self, url_in):
+        if url_in == "":
+            print("[ERROR] Input is empty")
+            self.set_error("[ERROR] Input is empty")
+            return False
+        elif not url_in.startswith("https://"):
+            print("[ERROR] Input doesn't start with https://")
+            self.set_error("[ERROR] Input doesn't start with https://")
+            return False
+        elif not url_in.startswith("https://github.com/"):
+            print("[ERROR] Input is not a GitHub URL")
+            self.set_error("[ERROR] Input is not a GitHub URL")
+            return False
+        else:
+            print("[INFO] Input is a valid URL")
+            self.set_info("[INFO] Input is a valid URL")
+            return True
 
-class GUIApp(App):
+    def set_info(self, info):                               # put the info text as info text, color to black
+        self.label_info.color = 1, 1, 1, 1
+        self.label_info.text = info
+
+    def set_error(self, error):                             # put the info text as error text, color to red
+        self.label_info.color = 1, 0, 0, 1
+        self.label_info.text = error
+
+    def classify_button_pressed(self):                              # ACTUAL BUTTON CODE
+        self.button_classifier.disabled = True                      # disable button
+
+        url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
+        print("[INFO] Starting Process with \"" + url_in + "\"")    # print info to console
+        valid = self.validate_url(url_in)                           # validate input and handle Errors
+
+        if valid:
+            # TODO: Hook up actual code / start classification here
+            print("# TODO: start classification here")
+
+        else:
+            self.button_classifier.disabled = False                 # re-enable button
+
+
+
+
+
+
+class RepositoryClassifierApp(App):
     def build(self):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
@@ -166,5 +214,5 @@ class GUIApp(App):
 
         return layGUI
 
-gui = GUIApp()
+gui = RepositoryClassifierApp()
 gui.run()

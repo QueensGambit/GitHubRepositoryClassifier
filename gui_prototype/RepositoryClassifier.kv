@@ -61,6 +61,7 @@ GUILayout:
     diagram1: dia1
     diagram2: dia2
     diagram3: dia3
+    api_token_checkbox : use_api_key
 
 
     #########################
@@ -98,14 +99,48 @@ GUILayout:
                 orientation: "horizontal"
 
                 Image:
-                    pos_hint: {"center_y": .55}
+                    pos_hint: {"center_y": .50}
                     source: 'logo.jpeg'
-                Button:
-                    id: class_button
-                    text: "classify"
-                    size_hint: .5, .2
-                    pos_hint: {"center_y": .15}
-                    on_press: root.classify_button_pressed()
+                    size_hint_x: 1.5
+                    size_hint_y: 0.8
+
+                BoxLayout:
+                    orientation: "vertical"
+                    Label:
+                        size_hint_y: 3
+                    Label:
+                        text: "Powered by GitHub"
+                        pos_hint: {"left": 1}
+
+                    Image:
+                        pos_hint: {"left": 1}
+                        source: 'github.png'
+
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 5
+
+                    BoxLayout:
+                        orientation: "horizontal"
+                        size_hint_y: 0.6
+
+                        Label:
+                            text: '[i]use API Token\n(advanced, see documentation)[/i]'
+                            markup: True
+
+                        CheckBox:
+                            id: use_api_key
+                            size_hint_x: 0.1
+
+                    Label:
+                        size_hint_y: 1.5
+
+                    Button:
+                        id: class_button
+                        text: "Classify"
+                        size_hint: .8, .6
+                        pos_hint: {"right": 1}
+                        on_press: root.classify_button_pressed_example() #TODO: CHANGE TO ACTUAL FUNCTION
 
                                                             #entry: URL Input & paste button
             BoxLayout:
@@ -123,10 +158,10 @@ GUILayout:
                     size: self.width, 30
                     cursor_color: 0, 0, 0, 1
                     multiline: False
-                    hint_text: "write the full URL of the main branch here (warning: CTRL + V will crash the app)"
+                    hint_text: "Write the full URL of the main branch here, e.g. https://github.com/kivy/kivy"
 
                 Button:
-                    text: "paste"
+                    text: "Paste"
                     size_hint_x: .1
                     on_release: root.paste()
 
@@ -136,14 +171,14 @@ GUILayout:
                 size_hint: 1, None
                 size: self.width, 60
 
-                Label:          # placeholder
+                Label:                                      #spacer
                     size_hint_x: .1
                 Label:
                     id: errorOutput
                     text: """press the "classify" button to start"""
                     size_hint: .9, None
                     size: self.width, 60
-                    #color: 1, 0, 0, 1          #red color
+                    #color: 1, 0, 0, 1                      #red color
                     canvas.before:
                         Color:
                             rgba:
@@ -184,19 +219,24 @@ GUILayout:
         tab_width_hint: 150
         TabbedPanelItem:
             text: "Diagram 1"
-            id: dia1
-            Label:
-                text: "insert diagram here (1)"
+            BoxLayout:
+                id: dia1
+                Label:
+                    text: "insert diagram here (1)"
+
         TabbedPanelItem:
             text: "Diagram 2"
-            id: dia2
-            Label:
-                text: "insert diagram here (2)"
+            BoxLayout:
+                id: dia2
+                Label:
+                    text: "insert diagram here (2)"
+
         TabbedPanelItem:
             text: "Diagram 3"
-            id: dia3
-            Label:
-                text: "insert diagram here (3)"
+            BoxLayout:
+                id: dia3
+                Label:
+                    text: "insert diagram here (3)"
 
 
         TabbedPanelItem:
@@ -206,7 +246,7 @@ GUILayout:
 
                 CodeInput:
                     id: log_console
-                    text: "No Output yet..\n"
+                    text: "Nothing happened yet..\n"
                     disabled: True
                 Button:
                     size_hint: 0.5, 0.1
