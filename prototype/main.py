@@ -11,13 +11,14 @@ Sample usage of the repository-classifier
 from prototype import RepoClassifierNearestNeighbour
 
 
-repoClassNN = RepoClassifierNearestNeighbour()
+repoClassNN = RepoClassifierNearestNeighbour(bUseStringFeatures=True)
 
 
 # strFilenameCSV = 'example_repos.csv'
 strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-repoClassNN.trainModel('/data/csv/' + strFilenameCSV)
+lstTrainData, lstTrainLabels = repoClassNN.loadTrainingData('/data/csv/' + strFilenameCSV)
+repoClassNN.trainModel(lstTrainData, lstTrainLabels)
 repoClassNN.exportModelToFile()
 # repoClassNN.loadModelFromFile()
 repoClassNN.predictResultsAndCompare()

@@ -26,7 +26,7 @@ import matplotlib.pyplot as plt
 
 class RepoClassifierNearestNeighbour:
 
-    def __init__(self):
+    def __init__(self, bUseStringFeatures=True):
         """
         constructor which initializes member variables
 
@@ -43,6 +43,8 @@ class RepoClassifierNearestNeighbour:
         self.directory = path.dirname(__file__)
         print(self.directory)
 
+        self.bUseStringFeatures = bUseStringFeatures
+
         # get the project-directory
         self.strProjectDir = str(Path().resolve().parent)
         print('strProjectDir:', self.strProjectDir)
@@ -57,7 +59,7 @@ class RepoClassifierNearestNeighbour:
 
         self.iNumCategories = len(self.lstStrCategories)
 
-    def trainModel(self, strProjPathFileNameCSV ='/data/csv/additional_data_sets_cleaned.csv'):
+    def loadTrainingData(self, strProjPathFileNameCSV ='/data/csv/additional_data_sets_cleaned.csv'):
         """
         trains the model with a given csv-file. the csv file must have 2 columns URL and CATEGORY.
         the URL is given in the form 'https://github.com/owner/repository-name'
@@ -90,13 +92,13 @@ class RepoClassifierNearestNeighbour:
         print('~~~~~~~~~~ CALCULATE THE MEAN VALUES ~~~~~~~~~~')
         self.lstMeanValues = [0] * 7
         i = 0
-        for tmpGithubRepo in lstGithubRepo:
+        for tmpRepo in lstGithubRepo:
             # print out the description
             # print('descr:', tmpGithubRepo.getFilteredRepoDescription())
             # print('lang:', tmpGithubRepo.getRepoLanguage())
 
-            # lstMeanValues += tmpGithubRepo.getFeatures()
-            self.lstMeanValues = list(map(add, self.lstMeanValues, tmpGithubRepo.getFeatures()))
+            # lstMeanValues += tmpGithubRepo.getIntegerFeatures()
+            self.lstMeanValues = list(map(add, self.lstMeanValues, tmpRepo.getIntegerFeatures()))
 
             # find the according label as an intger for the current repository
             # the label is defined in trainData
@@ -127,7 +129,7 @@ class RepoClassifierNearestNeighbour:
         print('len(lstVoc): ', len(self.lstVoc))
 
         lstInputFeatures = []
-        for tmpGithubRepo in lstGithubRepo:
+        for tmpRepo in lstGithubRepo:
             # fill the Training-Data
             # ordinary integer-attributes
             # lstTrainData.append(tmpGithubRepo.getNormedFeatures(lstMeanValues))
@@ -139,10 +141,14 @@ class RepoClassifierNearestNeighbour:
             # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
             # np.vstack  concates to numpy-arrays
-            lstInputFeatures = tmpGithubRepo.getNormedFeatures(self.lstMeanValues) + tmpGithubRepo.getWordOccurences(self.lstVoc) + tmpGithubRepo.getRepoLanguageAsVector()
+            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            if self.bUseStringFeatures:
+                lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+            lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
+
 
             # test using unnormed features
-            # lstInputFeatures = tmpGithubRepo.getFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
+            # lstInputFeatures = tmpGithubRepo.getIntegerFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
 
             lstTrainData.append(lstInputFeatures)
 
@@ -162,6 +168,9 @@ class RepoClassifierNearestNeighbour:
 
         # print("lstTrainDataNormalized:", lstTrainData)
 
+        return lstTrainData, lstTrainLabels
+
+    def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
         self.clf = NearestCentroid()
@@ -310,7 +319,10 @@ class RepoClassifierNearestNeighbour:
         for i in range(iNumOfPredictions):
             tmpRepo = GithubRepo.fromURL(dtUnlabeledData["URL"][i])
 
-            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
+            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            if self.bUseStringFeatures:
+                lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+            lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
 
             # apply pre-processing
             # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
@@ -341,9 +353,6 @@ class RepoClassifierNearestNeighbour:
 
             matPredictionRes[i, iLabel] = 1
 
-            lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
-            # print('lstOccurence:', lstOccurence)
-            printFeatureOccurences(self.lstVoc, lstOccurence, 0)
             # print('len(lstOccurence):', len(lstOccurence))
 
             self.__printResult(tmpRepo, iLabel)
@@ -377,8 +386,10 @@ class RepoClassifierNearestNeighbour:
 
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
 
-        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues) + tmpRepo.getWordOccurences(
-            self.lstVoc) + tmpRepo.getRepoLanguageAsVector()
+        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+        if self.bUseStringFeatures:
+            lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+        lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
 
         # apply pre-processing
         # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
@@ -444,6 +455,10 @@ class RepoClassifierNearestNeighbour:
         strStopper2 = "-" * 80
 
         print(strStopper1)
+        if self.bUseStringFeatures:
+            lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
+            printFeatureOccurences(self.lstVoc, lstOccurence, 0)
+
         print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
 
         print(self.lstStrCategories[iLabel])

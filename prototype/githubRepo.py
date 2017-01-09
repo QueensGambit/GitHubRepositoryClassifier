@@ -7,8 +7,8 @@ from os import path
 import os
 import json
 
-import utility_funcs.string_operation
-import utility_funcs.count_vectorizer_operations
+from utility_funcs import string_operation
+from utility_funcs import count_vectorizer_operations
 
 from utility_funcs.io_agent import InputOutputAgent
 
@@ -90,7 +90,7 @@ class GithubRepo:
         except ValueError:
             iLangIndex = definitions.githubLanguages.lstLanguages.index("rare")
 
-        lstLangVec[iLangIndex] = 1 #1
+        lstLangVec[iLangIndex] = 0 #1
 
         return lstLangVec
 
@@ -163,7 +163,7 @@ class GithubRepo:
         # print('len(jsContrib):', len(jsContrib)) # better use subscriber-count ther contributor length only lists the top contributors
 
 
-    def getFeatures(self):
+    def getIntegerFeatures(self):
         """
         gets the intFeatures as a list
 
@@ -190,7 +190,7 @@ class GithubRepo:
         :param lstMeanValues: mean value of every integer feature
         :return: list of the normed integer features
         """
-        lstNormedFeatures = self.getFeatures()
+        lstNormedFeatures = self.getIntegerFeatures()
         # norm every integer feature by dividing it with it's mean value
         # avoid dividing by 0
         lstNormedFeatures[:] = [x / y if y != 0 else 0 for x, y in zip(lstNormedFeatures, lstMeanValues)]
@@ -205,15 +205,15 @@ class GithubRepo:
         :return: integer list representing the percentage-usage of the vocabulary words
         """
         # test skipping word occurrences completly in the evaluation
-        return [0] * len(lstVocab)
+        # return [0] * len(lstVocab)
 
         vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
 
         strFilteredReadme = ""
-        # strFilteredReadme = self.getFilteredReadme()
+        strFilteredReadme = self.getFilteredReadme()
         getFilteredRepoDescription = self.getFilteredRepoDescription()
         strFilteredReadme += getFilteredRepoDescription
-        # strFilteredReadme += getFilteredRepoDescription
+        strFilteredReadme += getFilteredRepoDescription
 
         # print(strFilteredReadme)
 

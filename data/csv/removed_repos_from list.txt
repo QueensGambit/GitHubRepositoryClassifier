@@ -7,3 +7,7 @@ github3.exceptions.ClientError: 451 Repository access blocked
 Repository unavailable due to DMCA takedown.
 This repository is currently disabled due to a DMCA takedown notice. We have disabled public access to the repository. The notice has been publicly posted.
 If you are the repository owner, and you believe that your repository was disabled as a result of mistake or misidentification, you have the right to file a counter notice and have the repository reinstated. Our help articles provide more details on our DMCA takedown policy and how to file a counter notice. If you have any questions about the process or the risks in filing a counter notice, we suggest that you consult with a lawyer.
+
+# removed this two which were previously added to appendix-b
+https://github.com/NexusHero/Trunk,DEV,OTHER,
+https://github.com/QueensGambit/Barcode-App,HW,,
