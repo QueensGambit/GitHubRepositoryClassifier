@@ -282,11 +282,17 @@ class GUILayout(BoxLayout):
         fig.clear()
         plt.pie(lstFinalPercentages, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=90)
+
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
         #  -> this causes a warning; alternative us fig,set_tight_layout(True)
         # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
 
         fig = plt.gcf()
+
+        # an alternative to get a round pie-chart is to use .set_aspect(1)
+        # http://stackoverflow.com/questions/8418566/how-to-draw-a-round-pie-in-non-square-figure-size-in-matplotlib-python
+        ax = plt.gca()
+        ax.set_aspect(1)
         fig.set_tight_layout(True)
 
         fig.patch.set_facecolor('1')
