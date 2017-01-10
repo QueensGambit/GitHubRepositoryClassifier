@@ -4,6 +4,8 @@ from pathlib import Path
 from sklearn import preprocessing
 from sklearn import svm
 import matplotlib.pyplot as plt
+from matplotlib.pyplot import legend
+import matplotlib.patches as mpatches
 import math
 import os
 from sklearn.semi_supervised import label_propagation
@@ -40,33 +42,38 @@ y = np.empty(length)
 
 for i in range(len(data1)):
 
-    X[i] = np.asarray([data1["`num_issues`"][i],
-                       data2["`num_watchers`"][i]],
-                       dtype=np.float64)
+    X[i] = np.asarray(
+        # [data1["`num_issues`"][i],
+                    [data2["`num_watchers`"][i],
+                    data1["`dev_time_days`"][i]],
+                    dtype=np.float64)
     y[i] = np.asarray([-1],
                        dtype=np.int)
 
 for i, tmpRepo in enumerate(lstGithubRepo):
 
-    X[i + i_Offset] = np.asarray([tmpRepo.getNumOpenIssue(),
-                        tmpRepo.getNumWatchers()],
-                        dtype=np.float64)
+    X[i + i_Offset] = np.asarray(
+        # [tmpRepo.getNumOpenIssue(),
+        [tmpRepo.getNumWatchers(),
+        tmpRepo.getDevTime()],
+        dtype=np.float64)
     y[i + i_Offset] = np.asarray([lstStrCategories.index(trainData["CATEGORY"][i])],
                         dtype=np.int)
 
-stdScaler = preprocessing.Normalizer()
-# stdScaler = preprocessing.StandardScaler()
-stdScaler.fit(X)
-X = stdScaler.fit_transform(X)
-X = preprocessing.normalize(X)
+# normalizer = preprocessing.Normalizer()
+normalizer = preprocessing.MinMaxScaler()
+# normalizer = preprocessing.StandardScaler()
+normalizer.fit(X)
+X = normalizer.fit_transform(X)
+# X = preprocessing.normalize(X)
 
 # clf = label_propagation.LabelPropagation()
 # clf.fit(X, y)
 # print(clf.predict(X[:500]))
 
-# clf = label_propagation.LabelSpreading()
-# clf.fit(X, y)
-# print(clf.predict(X))
+clf = label_propagation.LabelSpreading()
+clf.fit(X, y)
+print(clf.predict(X))
 
 rng = np.random.RandomState(0)
 
@@ -100,19 +107,29 @@ color_map = {-1: (1, 1, 1),
              5: (.5, .5, .5),
              6: (.7, .7, .7)}
 
+cs = None
+
 # Plot
 for i, (clf, y_train) in enumerate((ls50, ls100, rbf_svc, lp100)):
     plt.subplot(2, 2, i + 1)
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
 
-    Z = Z.reshape(xx.shape)
-    plt.contourf(xx, yy, Z, cmap=plt.cm.Paired)
-    plt.axis('off')
-
     colors = [color_map[y] for y in y_train]
+
+    Z = Z.reshape(xx.shape)
+    cs = plt.contourf(xx, yy, Z, c=colors, cmap=plt.cm.Paired)
+    # plt.axis('off')
+
     plt.scatter(X[:, 0], X[:, 1], c=colors, cmap=plt.cm.Paired)
 
     plt.title(titles[i])
+
+# legend for contours
+# http://stackoverflow.com/questions/10490302/how-do-you-create-a-legend-for-a-contour-plot-in-matplotlib
+proxy = [plt.Rectangle((0,0),1,1,fc = pc.get_facecolor()[0])
+    for pc in cs.collections]
+
+plt.legend(proxy, lstStrCategories)
 
 # Plot training points
 # Unlabeled points are colored white
