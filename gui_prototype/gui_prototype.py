@@ -40,6 +40,8 @@ from prototype import *
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.definitions.categories import CategoryStr
 import prototype.github_repo
+import webbrowser
+from kivy.properties import BooleanProperty
 
 # import prototype.print_overloading
 
@@ -52,12 +54,17 @@ kivy.require("1.9.0")
 # - contextlib
 # - overload print() function
 # ...
+
+class StaticVars:
+    b_api_checkbox_state = False                    #checkbox status
+
+
 class StdOut(object):
     def __init__(self, log_console):
         # self.txtctrl = txtctrl
         self.log_console = log_console
 
-    def write(self,string):
+    def write(self, string):
         # self.txtctrl.write(string)
         # try:
         self.log_console.text += string #self.txtctrl.getvalue()
@@ -66,6 +73,24 @@ class StdOut(object):
 
     def flush(self):
         pass
+
+
+class InfoPopup(Popup):
+    pass
+
+
+class SettingsPopup(Popup):
+    checkbox_api_token = ObjectProperty()
+    token = BooleanProperty(False)
+
+    def __init__(self):
+        super(SettingsPopup, self).__init__()
+        self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
+
+    def switch_api(self, b_status):
+        StaticVars.b_api_checkbox_state = b_status
+        print('[INFO] use API updated to: ' + str(b_status))
+
 
 class FileSaverPopup(Popup):
     filename_input = ObjectProperty()
@@ -77,6 +102,7 @@ class FileSaverPopup(Popup):
             stream.write(self.log_text)
 
         self.dismiss()
+
 
 
 class GUILayout(BoxLayout):
@@ -91,7 +117,17 @@ class GUILayout(BoxLayout):
     layout_diagram1 = ObjectProperty()              # the three TabbedPanelItems to put a diagram, expand if needed
     layout_diagram2 = ObjectProperty()              # ↑
     layout_diagram3 = ObjectProperty()              # ↑
-    checkbox_api_token = ObjectProperty()
+
+    def show_info(self):
+        info_popup = InfoPopup()
+        info_popup.open()
+
+    def show_documentation(self):
+        webbrowser.open("http://google.com")
+
+    def show_settings(self):
+        settings_popup = SettingsPopup()
+        settings_popup.open()
 
     def classify_button_pressed_example(self):                  # THIS IS ONLY THE EXAMPLE! DELETE BEFORE PUBLISHING!
         print("classify-button pressed. Classification started")
@@ -125,7 +161,7 @@ class GUILayout(BoxLayout):
         plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=90)
         # plt.axis('equal')
-        # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+        # plt.tight_layout()                                       # http://matplotlib.org/users/tight_layout_guide.html
         fig = plt.gcf()
         fig.patch.set_facecolor('1')
         fig.patch.set_alpha(0.3)
@@ -195,11 +231,19 @@ class GUILayout(BoxLayout):
         if valid:
             # TODO: Hook up actual code / start classification here
             print("# TODO: start classification here")
-            iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
-            self.renderPlotChar(lstFinalPercentages)
-            self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
-            print('iLabel: ', iLabel)
-            print('lstFinalPercentages: ', lstFinalPercentages)
+            try:
+                iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
+                self.renderPlotChar(lstFinalPercentages)
+                self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+                print('iLabel: ', iLabel)
+                print('lstFinalPercentages: ', lstFinalPercentages)
+            except ArithmeticError:
+                print("[ERROR] Repository not found.")
+                self.set_error("[ERROR] Repository not found.")
+            except Exception as ex:
+                print("[ERROR] An unknown Error occurred: " + str(ex))
+                self.set_error("[ERROR] An unknown Error occurred")
+
             self.button_classifier.disabled = False  # re-enable button
         else:
             self.button_classifier.disabled = False                 # re-enable button
@@ -254,8 +298,8 @@ class GUILayout(BoxLayout):
         # self.layout_pie_chart.add_widget(fig)
 
 
-
 class RepositoryClassifierApp(App):
+    icon = 'logo_small.png'                          # change window icon
     def build(self):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)

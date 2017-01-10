@@ -45,6 +45,51 @@
                 on_release: root.dismiss()
 
 
+<InfoPopup>
+    title: "Info"
+    auto_dismiss: True
+    size_hint: .8, .8
+
+    BoxLayout:
+        orientation: "vertical"
+        Button:
+            text: "close"
+            on_press: root.dismiss()
+
+
+<SettingsPopup>
+    title: "Settings"
+    auto_dismiss: True
+    size_hint: .8, .2
+
+    checkbox_api_token: use_api_key
+
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: 10
+        padding: 10
+
+        #size_hint_y: 0.6
+
+        CheckBox:
+            id: use_api_key
+            size_hint_x: .1
+            #active: True
+            on_press: root.switch_api(self.active)
+
+        BoxLayout:
+            orientation: "horizontal"
+            Label:
+                text: '[i]use API Token (advanced, see documentation)[/i]'
+                markup: True
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+
+
+
+
+
 GUILayout:
 
 <GUILayout>:
@@ -62,7 +107,45 @@ GUILayout:
     layout_diagram1: dia1
     layout_diagram2: dia2
     layout_diagram3: dia3
-    checkbox_api_token: use_api_key
+
+    ########################
+    # Menu
+    ########################
+
+    ActionBar:
+        size_hint: None, None
+        size: root.width, 30
+        #background_normal: ''
+        #background_down: ''
+        background_image: ''
+        background_color: (41/255), (105/255), (176/255), 1
+
+        ActionView:
+            use_separator: True
+            background_color: [1, 0, 0, 1]
+            ActionPrevious:
+                title: ""
+                with_previous: False
+                app_icon: 'logo_small.png'
+
+            ActionOverflow:
+            ActionButton:
+                text: "Settings"
+                important: True
+                on_press: root.show_settings()
+
+            ActionButton:
+                text: "Documentation"
+                on_press: root.show_documentation()
+
+            ActionButton:
+                text: "Info"
+                #icon: 'info-icon.png'
+                on_press: root.show_info()
+
+
+
+
 
     #########################
     # upper area
@@ -71,21 +154,27 @@ GUILayout:
     BoxLayout:
         canvas.before:
                                                             #lines to optically separate sections
-            Color:
-                rgba: 0, 0, 0, 0.5
-            Rectangle:
-                pos: self.x, self.y-2
-                size: self.width, 2
-            Color:
-                rgba: 0, 0, 0, 0.5
-            Rectangle:
-                pos: self.x + self.width *.668 , self.y
-                size: 2, self.height
+            #Color:
+            #    rgba: 0, 0, 0, 0.5
+            #Rectangle:
+            #    pos: self.x, self.y-2
+            #    size: self.width, 2
+            #Rectangle:
+            #    pos: self.x + self.width *.668 , self.y
+            #    size: 2, self.height
+            #Rectangle:
+            #    pos: self.x, self.y + self.height -2
+            #    size: self.width, 2
             Color:
                 rgba: 1, 1, 1, 1
             Rectangle:
                 pos: self.pos
-                size: self.width, 2
+                size: self.width, 1
+            Rectangle:
+                pos: self.x, self.y + self.height
+                size: self.width, 1
+
+
         orientation: "horizontal"
         size_hint_y: .6
 
@@ -104,33 +193,10 @@ GUILayout:
                     size_hint_x: 1.5
                     size_hint_y: 0.8
 
-                BoxLayout:
-                    orientation: "vertical"
-                    Label:
-                        size_hint_y: 3
-                    Label:
-                        text: "Powered by GitHub"
-                        pos_hint: {"left": 1}
-
-                    Image:
-                        pos_hint: {"left": 1}
-                        source: 'github.png'
 
                 BoxLayout:
                     orientation: "vertical"
                     padding: 5
-
-                    BoxLayout:
-                        orientation: "horizontal"
-                        size_hint_y: 0.6
-
-                        Label:
-                            text: '[i]use API Token\n(advanced, see documentation)[/i]'
-                            markup: True
-
-                        CheckBox:
-                            id: use_api_key
-                            size_hint_x: 0.1
 
                     Label:
                         size_hint_y: 1.5
@@ -200,7 +266,7 @@ GUILayout:
                         1, 1, 1, 1
                 Rectangle:
                     pos: self.pos
-                    size: 2, self.height
+                    size: 1, self.height
             Label:
                 id: result_label
                 text: "Result"
