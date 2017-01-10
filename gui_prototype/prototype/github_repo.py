@@ -119,7 +119,7 @@ class GithubRepo:
         return self.apiJSON['open_issues']
 
     def getNumWatchers(self):
-        self.apiJSON['watchers_count']
+        return self.apiJSON['watchers_count']
 
     @classmethod
     def fromURL(cls, strURL):
