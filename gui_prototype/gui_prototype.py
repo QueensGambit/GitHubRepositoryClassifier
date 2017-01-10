@@ -35,9 +35,11 @@ import sys
 import matplotlib.pyplot as plt
 
 import os
+from prototype import *
 # import prototype.repository_classifier
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.definitions.categories import CategoryStr
+import prototype.github_repo
 
 # import prototype.print_overloading
 
@@ -154,7 +156,7 @@ class GUILayout(BoxLayout):
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
 
         # initialize the repositoryClassifier
-        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
+        self.repoClassifier = prototype.repository_classifier.RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
         self.repoClassifier.loadModelFromFile()
 
     def validate_url(self, url_in):

@@ -7,9 +7,9 @@ import pandas as pd
 from sklearn.externals import joblib
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 
-from githubRepo import GithubRepo
-from utility_funcs.count_vectorizer_operations import *
-from utility_funcs.preprocessing_operations import *
+
+from prototype.utility_funcs.count_vectorizer_operations import *
+from prototype.utility_funcs.preprocessing_operations import *
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import RadiusNeighborsClassifier
 from sklearn.svm import SVC
@@ -23,7 +23,9 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
 #logging.basicConfig(level=logging.DEBUG)
-from utility_funcs.io_agent import InputOutputAgent
+from prototype.utility_funcs.io_agent import InputOutputAgent
+# import github_repo
+from prototype.github_repo import GithubRepo
 
 class RepositoryClassifier:
 
