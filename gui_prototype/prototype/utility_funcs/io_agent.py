@@ -25,8 +25,6 @@ from github3 import GitHub
 from github3 import login
 import os
 
-#from io_agent import InputOutputAgent
-
 
 class InputOutputAgent:
 
@@ -55,9 +53,10 @@ class InputOutputAgent:
             if InputOutputAgent.bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
                 InputOutputAgent.gh = login(token=str(os.environ['TokenGithubAPI']))
-
+                print('GithubToken is used for connection')
             else:
                 InputOutputAgent.gh = GitHub()
+                print('No GithubToken is used for connection')
 
             # https://github3py.readthedocs.io/en/master/
             # InputOutputAgent.gh.refresh()

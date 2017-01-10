@@ -31,19 +31,23 @@ from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worr
 from kivy.uix.popup import Popup
 import clipboard                                                    # pip install clipboard
 
-import sys
+import sys, os
 import matplotlib.pyplot as plt
 
-import os
-from prototype import *
+# add the current directory to the system path in order to find the modules in relative path
+# sys.path.insert(0, os.path.abspath(".."))
+# sys.path.append(os.path.abspath("../prototype"))
+
+# import prototype.print_overloading
+
+# from prototype import *
 # import prototype.repository_classifier
 from prototype.repository_classifier import RepositoryClassifier
-from prototype.definitions.categories import CategoryStr
-import prototype.github_repo
+# from prototype.definitions.categories import CategoryStr
+# import prototype.github_repo
 import webbrowser
 from kivy.properties import BooleanProperty
 
-# import prototype.print_overloading
 
 kivy.require("1.9.0")
 
@@ -195,7 +199,7 @@ class GUILayout(BoxLayout):
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
 
         # initialize the repositoryClassifier
-        self.repoClassifier = prototype.repository_classifier.RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
         self.repoClassifier.loadModelFromFile()
 
     def validate_url(self, url_in):

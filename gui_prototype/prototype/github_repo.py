@@ -5,10 +5,10 @@ from os import path
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 
-import prototype.definitions.githubLanguages as defLanguages
-from prototype.features.learning_features import IntFeatures
-from prototype.utility_funcs import string_operation
-from prototype.utility_funcs.io_agent import InputOutputAgent
+from .definitions.githubLanguages import lstLanguages
+from .features.learning_features import IntFeatures
+from .utility_funcs import string_operation
+from .utility_funcs.io_agent import InputOutputAgent
 
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
@@ -78,11 +78,11 @@ class GithubRepo:
             return "undetected"
 
     def getRepoLanguageAsVector(self):
-        lstLangVec = [0] * len(defLanguages.lstLanguages)
+        lstLangVec = [0] * len(lstLanguages)
         try:
-            iLangIndex = defLanguages.lstLanguages.index(self.getRepoLanguage())
+            iLangIndex = lstLanguages.index(self.getRepoLanguage())
         except ValueError:
-            iLangIndex = defLanguages.lstLanguages.index("rare")
+            iLangIndex = lstLanguages.index("rare")
 
         lstLangVec[iLangIndex] = 0 #1
 

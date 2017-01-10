@@ -7,9 +7,11 @@ import pandas as pd
 from sklearn.externals import joblib
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 
+from os import path
 
-from prototype.utility_funcs.count_vectorizer_operations import *
-from prototype.utility_funcs.preprocessing_operations import *
+from .utility_funcs.count_vectorizer_operations import printFeatureOccurences
+from .utility_funcs.preprocessing_operations import initInputParameters, readVocabFromFile
+
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import RadiusNeighborsClassifier
 from sklearn.svm import SVC
@@ -22,10 +24,11 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
+import os
 #logging.basicConfig(level=logging.DEBUG)
-from prototype.utility_funcs.io_agent import InputOutputAgent
-# import github_repo
-from prototype.github_repo import GithubRepo
+from .utility_funcs.io_agent import InputOutputAgent
+# import prototype.github_repo
+from .github_repo import GithubRepo
 
 class RepositoryClassifier:
 
@@ -55,7 +58,9 @@ class RepositoryClassifier:
         self.bUseStringFeatures = bUseStringFeatures
 
         # get the project-directory
-        self.strProjectDir = str(Path().resolve().parent.parent)
+        # self.strProjectDir = str(Path().resolve().parent.parent)
+        self.strProjectDir = str(Path().resolve().parent)
+
         print('strProjectDir:', self.strProjectDir)
 
         self.strModelPath = self.directory + '/model/'
@@ -80,6 +85,7 @@ class RepositoryClassifier:
 
         # trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
         trainData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
+        # trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
 
         # len(trainData.index) gets the number of rows
         iNumTrainData = len(trainData.index)
@@ -310,9 +316,7 @@ class RepositoryClassifier:
 
         # iNumOfPredictions = 7
         # read the unlabeled data set from a csv
-        # unlabeledData = pd.read_csv(strProjectDir + '/data/csv/unclassified_repos.csv', header=0, delimiter=",")#, nrows=iNumOfPredictions)
-        dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0,
-                                      delimiter=",")  # , nrows=iNumOfPredictions)
+        dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
 
         # http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
         # len(dtFrame.index) gets the number of rows NaN are included
