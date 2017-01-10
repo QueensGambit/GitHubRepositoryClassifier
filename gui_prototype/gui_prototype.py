@@ -60,14 +60,16 @@ class StaticVars:
 
 
 class StdOut(object):
-    def __init__(self, log_console):
+    def __init__(self, log_console, oldStdOut):
         # self.txtctrl = txtctrl
         self.log_console = log_console
+        self.oldStdOut = oldStdOut
 
     def write(self, string):
         # self.txtctrl.write(string)
         # try:
         self.log_console.text += string #self.txtctrl.getvalue()
+        self.oldStdOut.write(string)
         # except:
         #     pass
 
@@ -187,8 +189,9 @@ class GUILayout(BoxLayout):
 
     def initialize(self):
 
+        oldStdOut = sys.stdout
         # overload load the sys.strdout to a class-instance of StdOut
-        sys.stdout = StdOut(self.log_console)
+        sys.stdout = StdOut(self.log_console, oldStdOut)
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
 
         # initialize the repositoryClassifier
