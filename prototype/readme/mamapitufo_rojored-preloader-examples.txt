@@ -1,1 +1,0 @@
-b'# Preloader examples\n\nSome samples of Flex preloaders.\n\n## simple-preloader\n\nSimple custom Flex preloader, color bar, no easing.\n'

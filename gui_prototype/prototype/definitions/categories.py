@@ -1,5 +1,8 @@
 from enum import IntEnum
 
+class CategoryStr():
+    lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
+
 class Category(IntEnum):
     DEV = 0,
     HW = 1,
@@ -8,3 +11,5 @@ class Category(IntEnum):
     WEB = 4,
     DATA = 5,
     OTHER = 6
+
+

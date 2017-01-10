@@ -1,1 +1,0 @@
-b'datasci_course_materials\n========================\n\nPublic repository for course materials for the Data Science at Scale specialization offered by Coursera and the University of Washington.\n\n'

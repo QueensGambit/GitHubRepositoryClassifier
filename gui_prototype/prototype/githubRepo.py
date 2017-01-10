@@ -1,20 +1,14 @@
-import requests
-import features.learning_features
-from sklearn.feature_extraction.text import CountVectorizer
-
 import datetime
-from os import path
 import os
-import json
-
-from utility_funcs import string_operation
-from utility_funcs import count_vectorizer_operations
-
-from utility_funcs.io_agent import InputOutputAgent
+from os import path
 
 import numpy as np
-from features.learning_features import IntFeatures, StringFeatures
+from sklearn.feature_extraction.text import CountVectorizer
+
 import definitions.githubLanguages
+from features.learning_features import IntFeatures
+from utility_funcs import string_operation
+from utility_funcs.io_agent import InputOutputAgent
 
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
@@ -52,7 +46,7 @@ class GithubRepo:
         d = path.dirname(__file__)
         self.strPathJSON = d + '/json/' + strUser + '_' + strName + '.json'
 
-        self.ioAgent = InputOutputAgent(strUser, strName, bWithToken=True)
+        self.ioAgent = InputOutputAgent(strUser, strName)
 
         self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 

@@ -1,1 +1,0 @@
-b'# NASA-rocket-science.github.io\n\nThis site lives at [http://nasa-rocket-science.github.io](http://nasa-rocket-science.github.io).\n\n# Local Hosting\n\nTo test this site locally run. Edit the _config.yml file and uncomment the following line\n   \n    url: "http://localhost:4000/"\n\nthen run the following from the terminal\n\n    bundle exec jekyll serve\n'

@@ -23,20 +23,27 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 
 #logging.basicConfig(level=logging.DEBUG)
+from utility_funcs.io_agent import InputOutputAgent
 
-class RepoClassifierNearestNeighbour:
+class RepositoryClassifier:
 
-    def __init__(self, bUseStringFeatures=True):
+    def __init__(self, bUseStringFeatures=True, bWithOAuthToken=False):
         """
         constructor which initializes member variables
 
         """
+
+        # if bOverloadPrintFunc:
+            # import print_overloading
+
         self.bModelLoaded = False
         self.bModelTrained = False
         self.clf = None
         self.lstMeanValues = None
         self.lstVoc = None
-        self.stdScaler =None
+        self.stdScaler = None
+
+        InputOutputAgent.bWithToken = bWithOAuthToken
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -46,7 +53,7 @@ class RepoClassifierNearestNeighbour:
         self.bUseStringFeatures = bUseStringFeatures
 
         # get the project-directory
-        self.strProjectDir = str(Path().resolve().parent)
+        self.strProjectDir = str(Path().resolve().parent.parent)
         print('strProjectDir:', self.strProjectDir)
 
         self.strModelPath = self.directory + '/model/'
@@ -54,7 +61,7 @@ class RepoClassifierNearestNeighbour:
         # Create model-directory if needed
         if not os.path.exists(self.strModelPath):
             os.makedirs(self.strModelPath)
-        self.strModelFileName = 'RepoClassifierNearestNeighbour.pkl'
+        self.strModelFileName = 'RepositoryClassifier.pkl'
         self.strLstMeanValuesFileName = 'lstMeanValues.pkl'
 
         self.iNumCategories = len(self.lstStrCategories)
@@ -250,7 +257,7 @@ class RepoClassifierNearestNeighbour:
 
     def loadModelFromFile(self):
         """
-        loads / imports the model-object from './model/RepoClassifierNearestNeighbour.pkl'
+        loads / imports the model-object from './model/RepositoryClassifier.pkl'
         and the list of the mean values from './model/lstMeanValues.pkl'
 
         :return:

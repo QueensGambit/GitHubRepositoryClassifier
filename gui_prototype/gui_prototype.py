@@ -8,10 +8,6 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
-from __future__ import print_function
-# used imports to overload the print function in Python 3.X
-import builtins as __builtin__
-
 from github3.repos.repo import Repository
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
@@ -35,22 +31,39 @@ from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worr
 from kivy.uix.popup import Popup
 import clipboard                                                    # pip install clipboard
 
-import datetime
-from datetime import datetime
-
+import sys
 import matplotlib.pyplot as plt
 
 import os
+# import prototype.repository_classifier
+from prototype.repository_classifier import RepositoryClassifier
+from prototype.definitions.categories import CategoryStr
+
+# import prototype.print_overloading
 
 kivy.require("1.9.0")
 
 
-class StaticVars:
-    # the tempory print-output of s single print() call is stored in a static string variable
-    strPrintText = ''
-    # this is satic the widget for the console
-    widgetConsole = None
+# http://stackoverflow.com/questions/2297933/creating-a-custom-sys-stdout-class
+# other options:
+# - redirect_stdout
+# - contextlib
+# - overload print() function
+# ...
+class StdOut(object):
+    def __init__(self, log_console):
+        # self.txtctrl = txtctrl
+        self.log_console = log_console
 
+    def write(self,string):
+        # self.txtctrl.write(string)
+        # try:
+        self.log_console.text += string #self.txtctrl.getvalue()
+        # except:
+        #     pass
+
+    def flush(self):
+        pass
 
 class FileSaverPopup(Popup):
     filename_input = ObjectProperty()
@@ -62,39 +75,6 @@ class FileSaverPopup(Popup):
             stream.write(self.log_text)
 
         self.dismiss()
-
-# http://stackoverflow.com/questions/550470/overload-print-python
-# overload the print() function to log to the console
-def print(*args, **kwargs):
-    """My custom print() function."""
-    # Adding new arguments to the print function signature
-    # is probably a bad idea.
-    # Instead consider testing if custom argument keywords
-    # are present in kwargs
-    # __builtin__.print('My overridden print() function!')
-
-    StaticVars.strPrintText = "[" + str(datetime.now().time()) + "] "
-    try:
-        # concat all arguments together
-        for i, arg in enumerate(args):
-            # add a space in between the arguments
-            if i != 0:
-                StaticVars.strPrintText += " "
-            # add the argument to the string
-            StaticVars.strPrintText += str(arg)
-
-        # add a new line after the print statement
-        StaticVars.strPrintText += '\n'
-        updateConsole()
-        # __builtin__.print('update text')
-    except:
-        pass
-
-    return __builtin__.print(*args, **kwargs)
-
-
-def updateConsole():
-    StaticVars.widgetConsole.text += StaticVars.strPrintText
 
 
 class GUILayout(BoxLayout):
@@ -119,26 +99,37 @@ class GUILayout(BoxLayout):
         print("[ERROR] Prototype not hooked up yet")
         self.label_info.color = 1, 0, 0, 1
         # self.log_console.text = ""                                      # clear console
-        StaticVars.widgetConsole.scroll_y = 0                             # makes the console scroll down automatically
+        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
         # for i in range(0, 50):                                          # demonstrate console
             # self.log_console.text += ("Button pressed, " + str(i) + "\n")
 
         # ADDING A PIE CHART!
         # The slices will be ordered and plotted counter-clockwise.
-        labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
-        sizes = [15, 30, 45, 10]
-        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
-        explode = (0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        plt.figure(1, figsize=(10, 10), dpi=70)
+        # labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+        # sizes = [15, 30, 45, 10]
+
+        labels = 'Frogs', 'Hogs', 'Dogs', 'Logs', 'Blob', 'bla', 'blub'
+        sizes = [1, 30, 45, 10, 10, 2, 2]
+
+        # colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
+        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'black', 'blue', 'red']
+
+        # explode = (0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
+        explode = (0, 0, 0.1, 0, 0, 0, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
+
+        # plt.figure(1, figsize=(10, 10), dpi=70)
+        plt.figure(1, figsize=(40, 40), dpi=70)
+
         plt.pie(sizes, explode=explode, labels=labels, colors=colors,
                 autopct='%1.1f%%', shadow=True, startangle=90)
-        plt.axis('equal')
-        plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+        # plt.axis('equal')
+        # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
         fig = plt.gcf()
         fig.patch.set_facecolor('1')
         fig.patch.set_alpha(0.3)
 
         # plt.show()
+        # fig.set_tight_layout(True)
 
         self.layout_pie_chart.clear_widgets()
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
@@ -157,7 +148,14 @@ class GUILayout(BoxLayout):
         print('pasted text:', clipboard.paste())
 
     def initialize(self):
-        StaticVars.widgetConsole = self.log_console  # connect the console object with the static variable
+
+        # overload load the sys.strdout to a class-instance of StdOut
+        sys.stdout = StdOut(self.log_console)
+        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
+
+        # initialize the repositoryClassifier
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
+        self.repoClassifier.loadModelFromFile()
 
     def validate_url(self, url_in):
         if url_in == "":
@@ -195,12 +193,63 @@ class GUILayout(BoxLayout):
         if valid:
             # TODO: Hook up actual code / start classification here
             print("# TODO: start classification here")
-
+            iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
+            self.renderPlotChar(lstFinalPercentages)
+            self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+            print('iLabel: ', iLabel)
+            print('lstFinalPercentages: ', lstFinalPercentages)
+            self.button_classifier.disabled = False  # re-enable button
         else:
             self.button_classifier.disabled = False                 # re-enable button
 
 
 
+    def renderPlotChar(self, lstFinalPercentages):
+        # self.log_console.text = ""                                      # clear console
+        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
+        # for i in range(0, 50):                                          # demonstrate console
+            # self.log_console.text += ("Button pressed, " + str(i) + "\n")
+
+        # ADDING A PIE CHART!
+        # The slices will be ordered and plotted counter-clockwise.
+        # labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+        labels = CategoryStr.lstStrCategories
+
+        # sizes = [15, 30, 45, 10]
+
+        # multiplicate every element with 100
+        lstFinalPercentages[:] = [x * 100 for x in lstFinalPercentages]
+
+        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'gray', 'lightblue', 'tomato']
+
+        # http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
+        iMaxIndex = lstFinalPercentages.index(max(lstFinalPercentages))
+
+        lstExplode = [0] * len(lstFinalPercentages)
+        lstExplode[iMaxIndex] = 0.1
+        explode = lstExplode #(0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
+        # self.iFigIndex += 1
+        fig = plt.figure(1, figsize=(10, 10), dpi=70)
+        fig.clear()
+        plt.pie(lstFinalPercentages, explode=explode, labels=labels, colors=colors,
+                autopct='%1.1f%%', shadow=True, startangle=90)
+        # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
+        #  -> this causes a warning; alternative us fig,set_tight_layout(True)
+        # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+
+        fig = plt.gcf()
+        fig.set_tight_layout(True)
+
+        fig.patch.set_facecolor('1')
+        fig.patch.set_alpha(0.3)
+
+        # plt.show()
+
+        self.layout_pie_chart.clear_widgets()
+        self.layout_pie_chart.add_widget(FigureCanvas(fig))
+        # fig.clear()
+
+        # self.layout_pie_chart.add_widget(fig)
 
 
 
@@ -214,5 +263,7 @@ class RepositoryClassifierApp(App):
 
         return layGUI
 
+
 gui = RepositoryClassifierApp()
 gui.run()
+
