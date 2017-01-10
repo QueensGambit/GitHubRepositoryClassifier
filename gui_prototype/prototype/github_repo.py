@@ -98,6 +98,29 @@ class GithubRepo:
         strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
         return string_operation.prepare_words(strMyREADME)
 
+    def getDevTime(self):
+        # a usual Github-Time stamp looks like this:
+        # "2011-10-17T15:09:52Z"
+
+        # example conversion: stackoverflow.com/questions/5385238/python-reading-logfile-with-timestamp-including-microseconds
+        # >>> s = "2010-01-01 18:48:14.631829"
+        # >>> datetime.datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f")
+
+        strGithubTimestampFormat = "%Y-%m-%dT%H:%M:%SZ"
+        datStart = datetime.datetime.strptime(self.apiJSON['created_at'], strGithubTimestampFormat)
+        # last update is a push or change in wiki, description...
+
+        datLastUpdate = datetime.datetime.strptime(self.apiJSON['updated_at'], strGithubTimestampFormat)
+        iDevTime = (datLastUpdate - datStart).days
+
+        return iDevTime
+
+    def getNumOpenIssue(self):
+        return self.apiJSON['open_issues']
+
+    def getNumWatchers(self):
+        self.apiJSON['watchers_count']
+
     @classmethod
     def fromURL(cls, strURL):
         """
@@ -125,18 +148,10 @@ class GithubRepo:
         # self.apiJSON = requests.get(strUrl)
         # self.apiJSON = requests.get(self.apiUrl)
 
-        # a usual Github-Time stamp looks like this:
-        # "2011-10-17T15:09:52Z"
 
-        # example conversion: stackoverflow.com/questions/5385238/python-reading-logfile-with-timestamp-including-microseconds
-        # >>> s = "2010-01-01 18:48:14.631829"
-        # >>> datetime.datetime.strptime(s, "%Y-%m-%d %H:%M:%S.%f")
 
-        strGithubTimestampFormat = "%Y-%m-%dT%H:%M:%SZ"
-        datStart = datetime.datetime.strptime(self.apiJSON['created_at'], strGithubTimestampFormat)
-        # last update is a push or change in wiki, description...
-        datLastUpdate = datetime.datetime.strptime(self.apiJSON['updated_at'], strGithubTimestampFormat)
-        iDevTime = (datLastUpdate - datStart).days
+        iDevTime = self.getDevTime()
+
 
         # print('iDevTime:', iDevTime)
 
@@ -144,7 +159,7 @@ class GithubRepo:
         # iNumBranches = len(jsBranches)
 
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
-                                       iOpenIssues=self.apiJSON['open_issues'],
+                                       iOpenIssues=self.getNumOpenIssue(),
                                        iDevTime=iDevTime,
                                        dRepoActivity=0,
                                        dCommitIntervals=0,
