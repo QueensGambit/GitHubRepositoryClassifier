@@ -46,15 +46,82 @@
 
 
 <InfoPopup>
-    title: "Info"
+    title: "Information"
     auto_dismiss: True
     size_hint: .8, .8
 
     BoxLayout:
         orientation: "vertical"
-        Button:
-            text: "close"
-            on_press: root.dismiss()
+        padding: 10
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        BoxLayout:
+            orientation: "horizontal"
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "realised at"
+                    color: 0, 0, 0, 1
+                    size_hint_y: 0.1
+                Image:
+                    source: 'HFU.png'
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "powered by"
+                    color: 0, 0, 0, 1
+                    size_hint_y: 0.1
+                Image:
+                    source: 'github.png'
+        Label:
+            text: "using"
+            color: 0, 0, 0, 1
+            size_hint_y: .3
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: 10
+            padding:10
+
+            Image:
+                source: 'python.png'
+            Image:
+                source: 'kivy.png'
+            Image:
+                source: 'matplot.png'
+            Image:
+                source: 'scikit.png'
+
+        Label:
+            text: "as an entry for the infoCup2016/2017"
+            color: 0, 0, 0, 1
+            size_hint_y: .3
+
+        BoxLayout:
+            orientation: "horizontal"
+            Label:
+                text: "[b]Created by[/b]\nBjoern Beha\nJohannes Czech\nLukas Scheuerle\nSuhay Sevinc"
+                markup: True
+                color: 0, 0, 0, 1
+                valign: 'top'
+                halign: 'center'
+                text_size: self.size
+            Image:
+                source: 'gi.png'
+            Label:
+                text: "[b]Special thanks to[/b]\nProf. Dr. Friedbert Kaspar\nProf. Dr. Harald Glaeser"
+                markup: True
+                color: 0, 0, 0, 1
+                valign: 'top'
+                halign: 'center'
+                text_size: self.size
+
+
 
 
 <SettingsPopup>
