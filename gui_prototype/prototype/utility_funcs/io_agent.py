@@ -49,6 +49,7 @@ class InputOutputAgent:
         self.lstReadmePath = {"https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.md",
                               "https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.rst"}
 
+
     @staticmethod
     def setWithToken(bWithToken):
         if bWithToken is not InputOutputAgent.__bWithToken:
@@ -64,10 +65,16 @@ class InputOutputAgent:
             InputOutputAgent.__bWithTokenUpdated = False
             if InputOutputAgent.__bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
-                InputOutputAgent.__gh = login(token=str(os.environ['TokenGithubAPI']))
+                try:
+                    InputOutputAgent.__gh = login(token=str(os.environ['TokenGithubAPI']))
+                except Exception as ex:
+                    raise ConnectionError('no connection to GitHub could be established')
                 print('GithubToken is used for connection')
             else:
-                InputOutputAgent.__gh = GitHub()
+                try:
+                    InputOutputAgent.__gh = GitHub()
+                except Exception as ex:
+                    raise ConnectionError('no connection to GitHub could be established')
                 print('No GithubToken is used for connection')
 
             # https://github3py.readthedocs.io/en/master/
@@ -93,18 +100,26 @@ class InputOutputAgent:
         if os.path.isfile(strPathJSON):
             # read from it
             with open(strPathJSON) as jsonData:
-                if jsonData is None:
-                    print("jsonData=None exception: ", strPathJSON)
-                jsonAPI = json.load(jsonData)
+                try:
+                    if jsonData is None:
+                        print("jsonData=None exception: ", strPathJSON)
+                    jsonAPI = json.load(jsonData)
+                except Exception as ex:
+                    raise ImportError('the json-data couldn\'t be loaded from the file: ' + strPathJSON)
+                    raise ex
         else:
             InputOutputAgent.__connectToGitHub()
             repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)
-            jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
-            # export to json-file
-            with open(strPathJSON, 'w') as outfile:
-                json.dump(jsonAPI, outfile)
-                print('json-data was exported to: ', strPathJSON)
+            if repo:
+                jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
+
+                # export to json-file
+                with open(strPathJSON, 'w') as outfile:
+                    json.dump(jsonAPI, outfile)
+                    print('json-data was exported to: ', strPathJSON)
+            else:
+                raise ConnectionError('the given repository is not accessible')
 
         return jsonAPI, self.strAPIUrl, self.lstReadmePath
 
@@ -133,15 +148,18 @@ class InputOutputAgent:
             # If the content of the received readme is a string and not a NullObject create
             # a new file in directory. Otherwise create an empty file to prevent checking a
             # repo twice.
-            if isinstance(code64readme, str):
-                strReadme = str(base64.b64decode(code64readme))
+            if repo:
+                if isinstance(code64readme, str):
+                    strReadme = str(base64.b64decode(code64readme))
 
+                else:
+                    strReadme = ""
+
+                file = open(strPathReadme, "w")
+                file.write(strReadme)
+                print('readme was exported to: ', strPathReadme)
             else:
-                strReadme = ""
-
-            file = open(strPathReadme, "w")
-            file.write(strReadme)
-            print('readme was exported to: ', strPathReadme)
+                raise ConnectionError('the given repository is not accessible')
 
             return strReadme
 

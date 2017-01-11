@@ -146,15 +146,21 @@ class GUILayout(BoxLayout):
         Clock.schedule_once(self.start_test, 0)
 
         iLabel = None
+        lstFinalPercentages = []
         try:
             iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
         except ArithmeticError:
             print("[ERROR] Repository not found.")
             self.set_error("[ERROR] Repository not found.")
-        except Exception as ex:
-            print("[ERROR] An unknown Error occurred: " + str(ex))
-            self.set_error("[ERROR] An unknown Error occurred")
+        except ConnectionError:
+            print("[ERROR] A connection error occurred")
+            self.set_error("[ERROR] A connection error occurred")
+        # except Exception as ex:
+        #     print("[ERROR] An unknown Error occurred: " + str(ex))
+        #     self.set_error("[ERROR] An unknown Error occurred")
+        #     bError = True
 
+        # print('iLabel:', iLabel)
         # Do some thread blocking operations.
         # time.sleep(5)
         # l_text = str(int(label_text) * 3000)
@@ -208,6 +214,7 @@ class GUILayout(BoxLayout):
         # self.label_result.text = 'loading done'
 
         # self.label_info.text = str(int(self.label_info.text) + 1)
+        # print('show result')
         self.layout_pie_chart.clear_widgets()
 
         if iLabel:
@@ -216,7 +223,7 @@ class GUILayout(BoxLayout):
             print('iLabel: ', iLabel)
             print('lstFinalPercentages: ', lstFinalPercentages)
         else:
-            self.label_result.text = 'error occured'
+            self.label_result.text = 'Result: '
 
         self.button_classifier.disabled = False                      # re-enable button
 

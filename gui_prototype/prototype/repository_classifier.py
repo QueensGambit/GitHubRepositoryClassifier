@@ -391,7 +391,10 @@ class RepositoryClassifier:
         :param strGitHubRepoURL: url to the repository
         :return: label value form 0 - 6, lst of the precentages for the other categories
         """
-        tmpRepo = GithubRepo.fromURL(strGitHubRepoURL)
+        try:
+            tmpRepo = GithubRepo.fromURL(strGitHubRepoURL)
+        except Exception as ex:
+            raise ex
 
         return self.predictCategoryFromGitHubRepoObj(tmpRepo)
 

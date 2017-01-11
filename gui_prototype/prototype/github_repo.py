@@ -46,19 +46,25 @@ class GithubRepo:
         d = path.dirname(__file__)
         self.strPathJSON = d + '/json/' + strUser + '_' + strName + '.json'
 
-        self.ioAgent = InputOutputAgent(strUser, strName)
+        bError = False
 
-        self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
+        try:
+            self.ioAgent = InputOutputAgent(strUser, strName)
+            self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
+        except ConnectionError as e:
+            bError = True
+            raise e
 
-        self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
-        # print(self.ioAgent.getReadme(self.strDirPath_readme))
+        if not bError:
+            self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
+            # print(self.ioAgent.getReadme(self.strDirPath_readme))
 
 
-        self.intFeatures = None
-        self.strFeatures = None
+            self.intFeatures = None
+            self.strFeatures = None
 
-        print('url: ' + str(self.apiUrl))
-        self.readAttributes()
+            print('url: ' + str(self.apiUrl))
+            self.readAttributes()
 
 
     def getFilteredRepoDescription(self):
