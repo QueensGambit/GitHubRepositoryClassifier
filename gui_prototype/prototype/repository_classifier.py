@@ -32,7 +32,7 @@ from .github_repo import GithubRepo
 
 class RepositoryClassifier:
 
-    def __init__(self, bUseStringFeatures=True, bWithOAuthToken=False):
+    def __init__(self, bUseStringFeatures=True):
         """
         constructor which initializes member variables
 
@@ -47,8 +47,6 @@ class RepositoryClassifier:
         self.lstMeanValues = None
         self.lstVoc = None
         self.stdScaler = None
-
-        InputOutputAgent.bWithToken = bWithOAuthToken
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 

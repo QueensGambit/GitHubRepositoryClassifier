@@ -43,7 +43,9 @@ import matplotlib.pyplot as plt
 # from prototype import *
 # import prototype.repository_classifier
 from prototype.repository_classifier import RepositoryClassifier
-# from prototype.definitions.categories import CategoryStr
+from prototype.utility_funcs.io_agent import InputOutputAgent       # this import is used to enable or disable the GithubToken
+
+from prototype.definitions.categories import CategoryStr
 # import prototype.github_repo
 import webbrowser
 from kivy.properties import BooleanProperty
@@ -96,6 +98,7 @@ class SettingsPopup(Popup):
     def switch_api(self, b_status):
         StaticVars.b_api_checkbox_state = b_status
         print('[INFO] use API updated to: ' + str(b_status))
+        InputOutputAgent.setWithToken(b_status)
 
 
 class FileSaverPopup(Popup):
@@ -199,7 +202,7 @@ class GUILayout(BoxLayout):
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
 
         # initialize the repositoryClassifier
-        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False)
         self.repoClassifier.loadModelFromFile()
 
     def validate_url(self, url_in):

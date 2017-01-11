@@ -28,8 +28,9 @@ import os
 
 class InputOutputAgent:
 
-    gh = None
-    bWithToken = False
+    __gh = None
+    __bWithToken = False
+    __bWithTokenUpdated = False
 
     def __init__(self, strUser, strName):
         """
@@ -48,14 +49,25 @@ class InputOutputAgent:
         self.lstReadmePath = {"https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.md",
                               "https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.rst"}
 
-    def connectToGitHub(self):
-        if InputOutputAgent.gh is None:
-            if InputOutputAgent.bWithToken:
+    @staticmethod
+    def setWithToken(bWithToken):
+        if bWithToken is not InputOutputAgent.__bWithToken:
+            InputOutputAgent.__bWithToken = bWithToken
+            InputOutputAgent.__bWithTokenUpdated = True
+            # if InputOutputAgent.__gh:
+            #     InputOutputAgent.__gh.close()         # there is no .close() method
+            InputOutputAgent.__connectToGitHub()
+
+    @staticmethod
+    def __connectToGitHub():
+        if InputOutputAgent.__gh is None or InputOutputAgent.__bWithTokenUpdated:
+            InputOutputAgent.__bWithTokenUpdated = False
+            if InputOutputAgent.__bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
-                InputOutputAgent.gh = login(token=str(os.environ['TokenGithubAPI']))
+                InputOutputAgent.__gh = login(token=str(os.environ['TokenGithubAPI']))
                 print('GithubToken is used for connection')
             else:
-                InputOutputAgent.gh = GitHub()
+                InputOutputAgent.__gh = GitHub()
                 print('No GithubToken is used for connection')
 
             # https://github3py.readthedocs.io/en/master/
@@ -65,7 +77,7 @@ class InputOutputAgent:
             # otherwise you'll get the updated user object.
 
             # get rate limit information
-            rates = InputOutputAgent.gh.rate_limit()
+            rates = InputOutputAgent.__gh.rate_limit()
             print('normal ratelimit info: ', rates['resources']['core'])  # => your normal ratelimit info
             print('search ratelimit info: ', rates['resources']['search'])  # => your search ratelimit info
 
@@ -85,8 +97,8 @@ class InputOutputAgent:
                     print("jsonData=None exception: ", strPathJSON)
                 jsonAPI = json.load(jsonData)
         else:
-            self.connectToGitHub()
-            repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
+            InputOutputAgent.__connectToGitHub()
+            repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)
             jsonAPI = repo.as_dict()  # .as_json() returns json.dumps(obj.as_dict())
 
             # export to json-file
@@ -112,10 +124,10 @@ class InputOutputAgent:
             return open(strPathReadme).read()
 
         else:
-            self.connectToGitHub()
+            InputOutputAgent.__connectToGitHub()
             #print("Get readme...")
 
-            repo = InputOutputAgent.gh.repository(self.strUser, self.strName)
+            repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)
             code64readme = repo.readme().content
 
             # If the content of the received readme is a string and not a NullObject create

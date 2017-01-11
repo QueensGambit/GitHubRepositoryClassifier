@@ -9,7 +9,7 @@ Sample usage of the repository-classifier
 """
 
 from prototype.repository_classifier import RepositoryClassifier
-
+from prototype.utility_funcs.io_agent import InputOutputAgent
 
 import sys
 
@@ -19,7 +19,8 @@ def main(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    repoClassifier = RepositoryClassifier(bUseStringFeatures=False, bWithOAuthToken=True)
+    InputOutputAgent.setWithToken(False)
+    repoClassifier = RepositoryClassifier(bUseStringFeatures=False)
 
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
