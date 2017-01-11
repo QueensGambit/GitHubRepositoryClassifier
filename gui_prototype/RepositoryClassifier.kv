@@ -20,7 +20,7 @@
     size_hint: 0.5, 0.5
 
     filename_input: filename_input
-
+    label_save: save_label
 
     BoxLayout:
         orientation: "vertical"
@@ -36,6 +36,11 @@
         BoxLayout:
             size_hint_y: None
             height: 30
+            Label:
+                id: save_label
+                size_hint_x: 2
+                text: ""
+                color: 1, 0, 0, 1
             Button:
                 text: "save"
                 on_release: root.save_file(file_chooser.path, filename_input.text)
@@ -65,7 +70,8 @@
             BoxLayout:
                 orientation: "vertical"
                 Label:
-                    text: "realised at"
+                    text: "[b]Realised at[/b]"
+                    markup: True
                     color: 0, 0, 0, 1
                     size_hint_y: 0.1
                 Image:
@@ -73,15 +79,20 @@
             BoxLayout:
                 orientation: "vertical"
                 Label:
-                    text: "powered by"
+                    text: "[b]Powered by[/b]"
+                    markup: True
                     color: 0, 0, 0, 1
                     size_hint_y: 0.1
                 Image:
                     source: 'github.png'
         Label:
-            text: "using"
+            text: "[b]Using[/b]"
+            markup: True
             color: 0, 0, 0, 1
-            size_hint_y: .3
+            size_hint_y: .5
+            text_size: self.size
+            halign: 'center'
+            valign: 'bottom'
 
         BoxLayout:
             orientation: "horizontal"
@@ -98,9 +109,13 @@
                 source: 'scikit.png'
 
         Label:
-            text: "as an entry for the infoCup2016/2017"
+            text: "[b]As an entry for the infoCup 2016/2017[/b]"
+            markup: True
             color: 0, 0, 0, 1
-            size_hint_y: .3
+            size_hint_y: .5
+            text_size: self.size
+            halign: 'center'
+            valign: 'bottom'
 
         BoxLayout:
             orientation: "horizontal"
@@ -292,7 +307,7 @@ GUILayout:
                     size: self.width, 30
                     cursor_color: 0, 0, 0, 1
                     multiline: False
-                    hint_text: "Write the full URL of the main branch here, e.g. https://github.com/kivy/kivy"
+                    hint_text: "Paste the full URL of the main branch here, e.g. https://github.com/kivy/kivy"
                     # text: "https://github.com/ghellwig/cmssw"
 
                 Button:
@@ -310,7 +325,7 @@ GUILayout:
                     size_hint_x: .1
                 Label:
                     id: errorOutput
-                    text: """press the "classify" button to start"""
+                    text: """Press the "Classify" button to Start"""
                     size_hint: .9, None
                     size: self.width, 60
                     #color: 1, 0, 0, 1                      #red color
@@ -355,7 +370,7 @@ GUILayout:
         #tab_pos: 'top_mid'
         tab_width_hint: 150
         TabbedPanelItem:
-            text: "Diagram 1"
+            text: "Wordcloud"
             BoxLayout:
                 id: dia1
                 Label:
@@ -383,12 +398,12 @@ GUILayout:
 
                 CodeInput:
                     id: log_console
-                    text: "Nothing happened yet..\n"
+                    text: ""
                     # disabled: True
                 Button:
                     size_hint: 0.5, 0.1
                     pos_hint: {"center_x": 0.5}
-                    text: "save log to file"
+                    text: "Save log to file"
                     on_press: root.save_log()
 
 <AnimWidget@Widget>:

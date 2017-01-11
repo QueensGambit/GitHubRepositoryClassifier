@@ -111,14 +111,21 @@ class SettingsPopup(Popup):
 
 class FileSaverPopup(Popup):
     filename_input = ObjectProperty()
+    label_save = ObjectProperty()
 
     log_text = ""
 
     def save_file(self, path, filename):
-        with open(os.path.join(path, filename), 'w') as stream:
-            stream.write(self.log_text)
+        try:
+            with open(os.path.join(path, filename), 'w') as stream:
+                stream.write(self.log_text)
+            self.dismiss()
+            print("[INFO] Logfile saved to: " + path + "\\" + filename)
+        except PermissionError as err:
+            print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
+            self.label_save.text = "[ERROR] Couldn't save. Permission denied."
 
-        self.dismiss()
+
 
 class GUILayout(BoxLayout):
 
