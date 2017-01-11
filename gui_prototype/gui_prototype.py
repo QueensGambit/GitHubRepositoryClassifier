@@ -50,6 +50,14 @@ from prototype.definitions.categories import CategoryStr
 import webbrowser
 from kivy.properties import BooleanProperty
 
+# threading and animation
+# multithreading in kivy:
+# https://github.com/kivy/kivy/wiki/Working-with-Python-threads-inside-a-Kivy-application
+import time
+import threading
+from kivy.animation import Animation
+from kivy.clock import Clock, mainthread
+from kivy.factory import Factory
 
 kivy.require("1.9.0")
 
@@ -112,9 +120,9 @@ class FileSaverPopup(Popup):
 
         self.dismiss()
 
-
-
 class GUILayout(BoxLayout):
+
+    stop = threading.Event()
 
     # define the ObjectProperties to communicate with the .kv file
     textfield_input = ObjectProperty()                    # user input line
@@ -126,6 +134,103 @@ class GUILayout(BoxLayout):
     layout_diagram1 = ObjectProperty()              # the three TabbedPanelItems to put a diagram, expand if needed
     layout_diagram2 = ObjectProperty()              # ↑
     layout_diagram3 = ObjectProperty()              # ↑
+
+    # threading
+    def start_classification_thread(self, l_text, url_in):
+        threading.Thread(target=self.classification_thread, args=(l_text, url_in)).start()
+
+    def classification_thread(self, l_text, url_in):
+        # Remove a widget, update a widget property, create a new widget,
+        # add it and animate it in the main thread by scheduling a function
+        # call with Clock.
+        Clock.schedule_once(self.start_test, 0)
+
+        iLabel = None
+        try:
+            iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
+        except ArithmeticError:
+            print("[ERROR] Repository not found.")
+            self.set_error("[ERROR] Repository not found.")
+        except Exception as ex:
+            print("[ERROR] An unknown Error occurred: " + str(ex))
+            self.set_error("[ERROR] An unknown Error occurred")
+
+        # Do some thread blocking operations.
+        # time.sleep(5)
+        # l_text = str(int(label_text) * 3000)
+
+        # Update a widget property in the main thread by decorating the
+        # called function with @mainthread.
+        # self.update_label_text(l_text)
+
+        # Do some more blocking operations.
+        # time.sleep(2)
+
+        # Remove some widgets and update some properties in the main thread
+        # by decorating the called function with @mainthread.
+        self.show_classification_result(iLabel, lstFinalPercentages)
+
+        # Start a new thread with an infinite loop and stop the current one.
+        # threading.Thread(target=self.infinite_loop).start()
+
+    def start_test(self, *args):
+        self.button_classifier.disabled = True                      # disable button
+
+        # Remove the button.
+        self.layout_pie_chart.clear_widgets()
+        # self.remove_widget(self.but_1)
+
+        # Update a widget property.
+        self.label_result.text = 'loading' #''Classificaition in progress'
+        # self.label_result.text = ('The UI remains responsive while the '
+        #                    'second thread is running.')
+
+        # Create and add a new widget.
+        anim_bar = Factory.AnimWidget()
+        self.layout_pie_chart.add_widget(anim_bar)
+
+        # Animate the added widget.
+        anim = Animation(opacity=0.3, width=100, duration=0.6)
+        anim += Animation(opacity=1, width=400, duration=0.8)
+        anim.repeat = True
+        anim.start(anim_bar)
+
+    @mainthread
+    def update_label_text(self, new_text):
+        # pass
+        self.label_info.text = new_text
+
+    @mainthread
+    def show_classification_result(self, iLabel, lstFinalPercentages):
+        # self.label_result.text = ('Second thread exited, a new thread has started. '
+        #                    'Close the app to exit the new thread and stop '
+        #                    'the main process.')
+        # self.label_result.text = 'loading done'
+
+        # self.label_info.text = str(int(self.label_info.text) + 1)
+        self.layout_pie_chart.clear_widgets()
+
+        if iLabel:
+            self.renderPlotChar(lstFinalPercentages)
+            self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+            print('iLabel: ', iLabel)
+            print('lstFinalPercentages: ', lstFinalPercentages)
+        else:
+            self.label_result.text = 'error occured'
+
+        self.button_classifier.disabled = False                      # re-enable button
+
+    # self.remove_widget(self.layout_pie_chart)
+
+    def infinite_loop(self):
+        iteration = 0
+        while True:
+            if self.stop.is_set():
+                # Stop running this thread so the main Python process can exit.
+                return
+            iteration += 1
+            print('Infinite loop, iteration {}.'.format(iteration))
+            time.sleep(1)
 
     def show_info(self):
         info_popup = InfoPopup()
@@ -232,33 +337,14 @@ class GUILayout(BoxLayout):
         self.label_info.text = error
 
     def classify_button_pressed(self):                              # ACTUAL BUTTON CODE
-        self.button_classifier.disabled = True                      # disable button
 
         url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
         print("[INFO] Starting Process with \"" + url_in + "\"")    # print info to console
         valid = self.validate_url(url_in)                           # validate input and handle Errors
 
         if valid:
-            # TODO: Hook up actual code / start classification here
-            print("# TODO: start classification here")
-            try:
-                iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
-                self.renderPlotChar(lstFinalPercentages)
-                self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
-                print('iLabel: ', iLabel)
-                print('lstFinalPercentages: ', lstFinalPercentages)
-            except ArithmeticError:
-                print("[ERROR] Repository not found.")
-                self.set_error("[ERROR] Repository not found.")
-            except Exception as ex:
-                print("[ERROR] An unknown Error occurred: " + str(ex))
-                self.set_error("[ERROR] An unknown Error occurred")
-
-            self.button_classifier.disabled = False  # re-enable button
-        else:
-            self.button_classifier.disabled = False                 # re-enable button
-
-
+            self.button_classifier.disabled = True  # disable button
+            self.start_classification_thread(self.label_info.text, url_in)
 
     def renderPlotChar(self, lstFinalPercentages):
         # self.log_console.text = ""                                      # clear console
@@ -268,10 +354,7 @@ class GUILayout(BoxLayout):
 
         # ADDING A PIE CHART!
         # The slices will be ordered and plotted counter-clockwise.
-        # labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
         labels = CategoryStr.lstStrCategories
-
-        # sizes = [15, 30, 45, 10]
 
         # multiplicate every element with 100
         lstFinalPercentages[:] = [x * 100 for x in lstFinalPercentages]
@@ -316,6 +399,14 @@ class GUILayout(BoxLayout):
 
 class RepositoryClassifierApp(App):
     icon = 'logo_small.png'                          # change window icon
+
+    def on_stop(self):
+        # The Kivy event loop is about to stop, set a stop signal;
+        # otherwise the app window will close, but the Python process will
+        # keep running until all secondary threads exit.
+        self.root.stop.set()
+
+
     def build(self):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
