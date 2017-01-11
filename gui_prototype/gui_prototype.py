@@ -97,16 +97,22 @@ class InfoPopup(Popup):
 
 class SettingsPopup(Popup):
     checkbox_api_token = ObjectProperty()
-    token = BooleanProperty(False)
+    label_api_error = ObjectProperty()
 
     def __init__(self):
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
 
-    def switch_api(self, b_status):
-        StaticVars.b_api_checkbox_state = b_status
-        print('[INFO] use API updated to: ' + str(b_status))
-        InputOutputAgent.setWithToken(b_status)
+    def switch_api(self, b_status):     # TODO: This will pass the test the second time. now the app gets stuck
+        try:
+            # self.label_api_error.text = ""
+            InputOutputAgent.setWithToken(b_status)
+            StaticVars.b_api_checkbox_state = b_status
+            print('[INFO] Use API updated to: ' + str(b_status))
+        except ConnectionError as ce:
+            self.label_api_error.text = "[ERROR] No Connection could be established."
+            print("[ERROR] No Connection could be established: " + str(ce))
+            self.checkbox_api_token.active = False
 
 
 class FileSaverPopup(Popup):
@@ -124,7 +130,6 @@ class FileSaverPopup(Popup):
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
-
 
 
 class GUILayout(BoxLayout):
@@ -353,6 +358,7 @@ class GUILayout(BoxLayout):
     def classify_button_pressed(self):                              # ACTUAL BUTTON CODE
 
         url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
+        self.textfield_input.text = url_in
         print("[INFO] Starting Process with \"" + url_in + "\"")    # print info to console
         valid = self.validate_url(url_in)                           # validate input and handle Errors
 

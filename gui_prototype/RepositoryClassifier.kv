@@ -145,6 +145,7 @@
     size_hint: .8, .2
 
     checkbox_api_token: use_api_key
+    label_api_error: api_error_label
 
     BoxLayout:
         orientation: "horizontal"
@@ -156,7 +157,7 @@
         CheckBox:
             id: use_api_key
             size_hint_x: .1
-            #active: True
+            active: False
             on_press: root.switch_api(self.active)
 
         BoxLayout:
@@ -165,6 +166,13 @@
                 text: '[i]use API Token (advanced, see documentation)[/i]'
                 markup: True
                 halign: 'left'
+                valign: 'middle'
+                text_size: self.size
+            Label:
+                id: api_error_label
+                text: ""
+                color: 1, 0, 0, 1
+                halign: 'right'
                 valign: 'middle'
                 text_size: self.size
 
