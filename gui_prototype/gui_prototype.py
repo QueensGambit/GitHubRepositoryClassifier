@@ -229,7 +229,7 @@ class GUILayout(BoxLayout):
         # print('show result')
         self.layout_pie_chart.clear_widgets()
 
-        if iLabel:
+        if iLabel is not None:
             self.renderPlotChar(lstFinalPercentages)
             self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
             print('iLabel: ', iLabel)
@@ -367,6 +367,7 @@ class GUILayout(BoxLayout):
             self.start_classification_thread(self.label_info.text, url_in)
 
     def renderPlotChar(self, lstFinalPercentages):
+        print("render piechart")
         # self.log_console.text = ""                                      # clear console
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
         # for i in range(0, 50):                                          # demonstrate console
