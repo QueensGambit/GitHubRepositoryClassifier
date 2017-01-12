@@ -164,16 +164,12 @@ class GUILayout(BoxLayout):
         lstFinalPercentages = []
         try:
             iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
-        except ArithmeticError:
-            print("[ERROR] Repository not found.")
-            self.set_error("[ERROR] Repository not found.")
         except ConnectionError:
             print("[ERROR] A connection error occurred")
             self.set_error("[ERROR] A connection error occurred")
-        # except Exception as ex:
-        #     print("[ERROR] An unknown Error occurred: " + str(ex))
-        #     self.set_error("[ERROR] An unknown Error occurred")
-        #     bError = True
+        except Exception as ex:
+            print("[ERROR] An unknown Error occurred: " + str(ex))
+            self.set_error("[ERROR] An unknown Error occurred")
 
         # print('iLabel:', iLabel)
         # Do some thread blocking operations.

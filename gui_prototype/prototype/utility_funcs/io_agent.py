@@ -113,7 +113,7 @@ class InputOutputAgent:
                     raise ImportError('the json-data couldn\'t be loaded from the file: ' + strPathJSON)
                     raise ex
         else:
-            InputOutputAgent.__connectToGitHub()
+            InputOutputAgent.__connectToGitHub(InputOutputAgent.__bWithToken)
             repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)
 
             if repo:
