@@ -53,11 +53,14 @@ class InputOutputAgent:
     @staticmethod
     def setWithToken(bWithToken):
         if bWithToken is not InputOutputAgent.__bWithToken:
-            InputOutputAgent.__bWithToken = bWithToken
-            InputOutputAgent.__bWithTokenUpdated = True
             # if InputOutputAgent.__gh:
             #     InputOutputAgent.__gh.close()         # there is no .close() method
-            InputOutputAgent.__connectToGitHub()
+            try:
+                InputOutputAgent.__connectToGitHub()
+                InputOutputAgent.__bWithToken = bWithToken
+                InputOutputAgent.__bWithTokenUpdated = True
+            except Exception as e:
+                raise e
 
     @staticmethod
     def __connectToGitHub():
