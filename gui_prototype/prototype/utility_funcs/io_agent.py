@@ -56,29 +56,31 @@ class InputOutputAgent:
             # if InputOutputAgent.__gh:
             #     InputOutputAgent.__gh.close()         # there is no .close() method
             try:
-                InputOutputAgent.__connectToGitHub()
+                InputOutputAgent.__connectToGitHub(bWithToken)
                 InputOutputAgent.__bWithToken = bWithToken
                 InputOutputAgent.__bWithTokenUpdated = True
             except Exception as e:
                 raise e
 
     @staticmethod
-    def __connectToGitHub():
+    def __connectToGitHub(bWithToken):
         if InputOutputAgent.__gh is None or InputOutputAgent.__bWithTokenUpdated:
-            InputOutputAgent.__bWithTokenUpdated = False
-            if InputOutputAgent.__bWithToken:
+            if bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
                 try:
                     InputOutputAgent.__gh = login(token=str(os.environ['TokenGithubAPI']))
+                    InputOutputAgent.__bWithTokenUpdated = False
+                    print('GithubToken is used for connection')
+
                 except Exception as ex:
                     raise ConnectionError('no connection to GitHub could be established')
-                print('GithubToken is used for connection')
             else:
                 try:
                     InputOutputAgent.__gh = GitHub()
+                    InputOutputAgent.__bWithTokenUpdated = False
+                    print('No GithubToken is used for connection')
                 except Exception as ex:
                     raise ConnectionError('no connection to GitHub could be established')
-                print('No GithubToken is used for connection')
 
             # https://github3py.readthedocs.io/en/master/
             # InputOutputAgent.gh.refresh()
