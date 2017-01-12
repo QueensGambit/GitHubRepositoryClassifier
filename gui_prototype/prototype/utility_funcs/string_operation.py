@@ -5,7 +5,7 @@ from nltk.corpus import stopwords   # Import the stop word list
 from nltk.stem.porter import PorterStemmer
 
 # refine the input string
-def prepare_words(raw_text):
+def prepare_words(raw_text, bApplyStemmer=True):
 
     # raw_text = raw_text[1:]                                             # remove first letter
     raw_text = raw_text.rstrip()                                        # remove all control-characters: \n, \t ...
@@ -14,9 +14,11 @@ def prepare_words(raw_text):
     words = letters.lower().split()                                     # write words into array
     words = [w for w in words if not w in stopwords.words("english")]   # remove "filler" words
 
-    # see: http://www.nltk.org/howto/stem.html for more details
-    stemmer = PorterStemmer()
-    singles = [stemmer.stem(word) for word in words]
+    if bApplyStemmer:
+        # see: http://www.nltk.org/howto/stem.html for more details
+        stemmer = PorterStemmer()
+        singles = [stemmer.stem(word) for word in words]
+        words = " ".join(singles)
 
     # return words
-    return " ".join(singles)                                              # return the words as a string, separator: space
+    return words                                             # return the words as a string, separator: space

@@ -67,11 +67,18 @@ class GithubRepo:
             self.readAttributes()
 
 
-    def getFilteredRepoDescription(self):
-        strDescription = self.apiJSON['description']
-        if strDescription:
+    def getRepoDescription(self):
+        strDescr = self.apiJSON['description']
+        if strDescr is None:
+            return ""
+        else:
+            return strDescr
+
+    def getFilteredRepoDescription(self, bApplyStemmer=True):
+        strDescription = self.getRepoDescription()
+        if strDescription is not "":
             # return strDescription
-            return string_operation.prepare_words(strDescription)
+            return string_operation.prepare_words(strDescription, bApplyStemmer)
         else:
             return ""
 
@@ -99,13 +106,13 @@ class GithubRepo:
         strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
         return strMyREADME
 
-    def getFilteredReadme(self):
+    def getFilteredReadme(self, bApplyStemmer=True):
         """
         returns the filtered readme with prepare_words() being applied
 
         :return: string of the filtered readme
         """
-        return self.getReadme()
+        return string_operation.prepare_words(self.getReadme(), bApplyStemmer)
 
     def getDevTime(self):
         # a usual Github-Time stamp looks like this:

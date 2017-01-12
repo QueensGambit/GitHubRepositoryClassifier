@@ -195,7 +195,8 @@ class GUILayout(BoxLayout):
         # Start a new thread with an infinite loop and stop the current one.
         # threading.Thread(target=self.infinite_loop).start()
 
-        self.show_wordcloud(tmpRepo.getReadme(), iLabel)
+        strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(bApplyStemmer=True))
+        self.show_wordcloud(strText, iLabel)
 
     def start_test(self, *args):
         self.button_classifier.disabled = True                      # disable button
@@ -259,6 +260,7 @@ class GUILayout(BoxLayout):
 
     def show_wordcloud(self, text, label):
 
+        print('text: ', text)
         img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[label])).split()[-1]
         print(label)
         # the mask is inverted, so invert it again
