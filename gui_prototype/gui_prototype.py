@@ -379,6 +379,12 @@ class GUILayout(BoxLayout):
         # multiplicate every element with 100
         lstFinalPercentages[:] = [x * 100 for x in lstFinalPercentages]
 
+        lstLabelsPieChart = [None] * len(labels)
+        lstLabelsPieChart = labels[:]
+
+        for i, _ in enumerate(labels):
+            lstLabelsPieChart[i] += ' (' + str(round(lstFinalPercentages[i], 1)) + '%)'
+
         colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'gray', 'lightblue', 'tomato']
 
         # http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
@@ -390,12 +396,17 @@ class GUILayout(BoxLayout):
         # self.iFigIndex += 1
         fig = plt.figure(1, figsize=(10, 10), dpi=70)
         fig.clear()
-        plt.pie(lstFinalPercentages, explode=explode, labels=labels, colors=colors,
-                autopct='%1.1f%%', shadow=True, startangle=90)
+
+        # patches, texts = plt.pie(lstFinalPercentages, explode=explode, colors=colors, # labels=labels, autopct='%1.1f%%', shadow=True,
+        #           startangle=90)
+        plt.pie(lstFinalPercentages, explode=explode, colors=colors, labels=labels, autopct='%1.1f%%', shadow=True,
+                  startangle=90)
 
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
         #  -> this causes a warning; alternative us fig,set_tight_layout(True)
         # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+
+        # plt.legend(patches, lstLabelsPieChart, loc=(0.97, 0.3), prop={'size':10})
 
         fig = plt.gcf()
 
@@ -405,7 +416,8 @@ class GUILayout(BoxLayout):
         ax.set_aspect(1)
         fig.set_tight_layout(True)
 
-        fig.patch.set_facecolor('1')
+        # fig.patch.set_facecolor('1')
+        # fig.patch.set_alpha(0.0)
         fig.patch.set_alpha(0.3)
 
         # plt.show()
