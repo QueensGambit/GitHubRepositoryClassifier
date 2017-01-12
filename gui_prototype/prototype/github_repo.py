@@ -95,14 +95,17 @@ class GithubRepo:
         return lstLangVec
 
 
+    def getReadme(self):
+        strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
+        return strMyREADME
+
     def getFilteredReadme(self):
         """
         returns the filtered readme with prepare_words() being applied
 
         :return: string of the filtered readme
         """
-        strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
-        return string_operation.prepare_words(strMyREADME)
+        return self.getReadme()
 
     def getDevTime(self):
         # a usual Github-Time stamp looks like this:
