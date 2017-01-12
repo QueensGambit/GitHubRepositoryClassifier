@@ -144,7 +144,7 @@ class InputOutputAgent:
             return open(strPathReadme).read()
 
         else:
-            InputOutputAgent.__connectToGitHub()
+            InputOutputAgent.__connectToGitHub(InputOutputAgent.__bWithToken)
             #print("Get readme...")
 
             repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)

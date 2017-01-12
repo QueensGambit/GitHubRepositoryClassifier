@@ -60,6 +60,11 @@ from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
 from wordcloud import WordCloud
+from prototype.definitions.categories import Category
+
+from PIL import Image
+from PIL import ImageOps
+import numpy as np
 
 kivy.require("1.9.0")
 
@@ -163,7 +168,7 @@ class GUILayout(BoxLayout):
         iLabel = None
         lstFinalPercentages = []
         try:
-            iLabel, lstFinalPercentages = self.repoClassifier.predictCategoryFromURL(url_in)
+            iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
         except ConnectionError:
             print("[ERROR] A connection error occurred")
             self.set_error("[ERROR] A connection error occurred")
@@ -189,6 +194,8 @@ class GUILayout(BoxLayout):
 
         # Start a new thread with an infinite loop and stop the current one.
         # threading.Thread(target=self.infinite_loop).start()
+
+        self.show_wordcloud(tmpRepo.getReadme(), iLabel)
 
     def start_test(self, *args):
         self.button_classifier.disabled = True                      # disable button
@@ -250,13 +257,22 @@ class GUILayout(BoxLayout):
             print('Infinite loop, iteration {}.'.format(iteration))
             time.sleep(1)
 
-    def show_wordcloud(self, text):
-        wordcloud = WordCloud().generate(text)
+    def show_wordcloud(self, text, label):
+
+        img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[label])).split()[-1]
+        print(label)
+        # the mask is inverted, so invert it again
+        img = ImageOps.invert(img)
+        img = img.resize((512, 512), Image.NONE)
+        imgMask = np.array(img)
+
+        wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
         self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
         plt.axis("off")
         fig = plt.gcf()
+        fig.patch.set_facecolor((48/255, 48/255, 48/255))
         self.layout_diagram1.add_widget(FigureCanvas(fig))
 
     def show_info(self):
@@ -337,6 +353,8 @@ class GUILayout(BoxLayout):
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False)
         self.repoClassifier.loadModelFromFile()
 
+        self.strPath = os.path.dirname(__file__)
+
     def validate_url(self, url_in):
         if url_in == "":
             print("[ERROR] Input is empty")
@@ -373,7 +391,6 @@ class GUILayout(BoxLayout):
         if valid:
             self.button_classifier.disabled = True  # disable button
             self.start_classification_thread(self.label_info.text, url_in)
-            self.show_wordcloud("Lorem ipsum dolor set amet aksje shaje ahsme akuen")
 
     def renderPlotChar(self, lstFinalPercentages):
         print("render piechart")

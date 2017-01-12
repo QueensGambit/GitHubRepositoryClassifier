@@ -1,0 +1,4 @@
+https://useiconic.com/open
+
+"OpenIconic
+An open source icon set with 223 marks in SVG, webfont and raster formats"

@@ -453,7 +453,7 @@ class RepositoryClassifier:
 
         self.__printResult(tmpRepo, iLabel)
 
-        return iLabel, lstFinalPercentages
+        return iLabel, lstFinalPercentages, tmpRepo
 
 
     def __printResult(self, tmpRepo, iLabel):
