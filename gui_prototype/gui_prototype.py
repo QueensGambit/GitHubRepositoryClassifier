@@ -59,6 +59,8 @@ from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
+from wordcloud import WordCloud
+
 kivy.require("1.9.0")
 
 
@@ -252,6 +254,15 @@ class GUILayout(BoxLayout):
             print('Infinite loop, iteration {}.'.format(iteration))
             time.sleep(1)
 
+    def show_wordcloud(self, text):
+        wordcloud = WordCloud().generate(text)
+        self.layout_diagram1.clear_widgets()
+        plt.figure(2)
+        plt.imshow(wordcloud)
+        plt.axis("off")
+        fig = plt.gcf()
+        self.layout_diagram1.add_widget(FigureCanvas(fig))
+
     def show_info(self):
         info_popup = InfoPopup()
         info_popup.open()
@@ -366,6 +377,7 @@ class GUILayout(BoxLayout):
         if valid:
             self.button_classifier.disabled = True  # disable button
             self.start_classification_thread(self.label_info.text, url_in)
+            self.show_wordcloud("Lorem ipsum dolor set amet aksje shaje ahsme akuen")
 
     def renderPlotChar(self, lstFinalPercentages):
         print("render piechart")
