@@ -105,7 +105,7 @@ class SettingsPopup(Popup):
 
     def switch_api(self, b_status):     # TODO: This will pass the test the second time. now the app gets stuck
         try:
-            # self.label_api_error.text = ""
+            self.label_api_error.text = ""
             InputOutputAgent.setWithToken(b_status)
             StaticVars.b_api_checkbox_state = b_status
             print('[INFO] Use API updated to: ' + str(b_status))
@@ -113,6 +113,7 @@ class SettingsPopup(Popup):
             self.label_api_error.text = "[ERROR] No Connection could be established."
             print("[ERROR] No Connection could be established: " + str(ce))
             self.checkbox_api_token.active = False
+            StaticVars.b_api_checkbox_state = False
 
 
 class FileSaverPopup(Popup):

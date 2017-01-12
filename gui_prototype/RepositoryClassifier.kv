@@ -55,86 +55,135 @@
     auto_dismiss: True
     size_hint: .8, .8
 
-    BoxLayout:
-        orientation: "vertical"
-        padding: 10
-        canvas.before:
-            Color:
-                rgba: 1, 1, 1, 1
-            Rectangle:
-                size: self.size
-                pos: self.pos
+    TabbedPanel:
+        do_default_tab: False
 
-        BoxLayout:
-            orientation: "horizontal"
+        TabbedPanelItem:
+            text: "Page 1"
             BoxLayout:
                 orientation: "vertical"
+                padding: 10
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "[b]Realised at[/b]"
+                            markup: True
+                            color: 0, 0, 0, 1
+                            size_hint_y: 0.1
+                        Image:
+                            source: 'media/HFU.png'
+                    BoxLayout:
+                        orientation: "vertical"
+                        Label:
+                            text: "[b]Powered by[/b]"
+                            markup: True
+                            color: 0, 0, 0, 1
+                            size_hint_y: 0.1
+                        Image:
+                            source: 'media/github.png'
+
                 Label:
-                    text: "[b]Realised at[/b]"
+                    text: "[b]As an entry for the infoCup 2016/2017[/b]"
                     markup: True
                     color: 0, 0, 0, 1
-                    size_hint_y: 0.1
-                Image:
-                    source: 'HFU.png'
+                    size_hint_y: .5
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'bottom'
+
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        text: "[b]Created by[/b]\nBjoern Beha\nJohannes Czech\nLukas Scheuerle\nSuhay Sevinc"
+                        markup: True
+                        color: 0, 0, 0, 1
+                        valign: 'top'
+                        halign: 'center'
+                        text_size: self.size
+                    Image:
+                        source: 'media/gi.png'
+                    Label:
+                        text: "[b]Special thanks to[/b]\nProf. Dr. Friedbert Kaspar\nProf. Dr. Harald Glaeser"
+                        markup: True
+                        color: 0, 0, 0, 1
+                        valign: 'top'
+                        halign: 'center'
+                        text_size: self.size
+
+        TabbedPanelItem:
+            text: "Page 2"
+
             BoxLayout:
                 orientation: "vertical"
+
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+
                 Label:
-                    text: "[b]Powered by[/b]"
+                    text: "[b]Using[/b]"
                     markup: True
                     color: 0, 0, 0, 1
-                    size_hint_y: 0.1
-                Image:
-                    source: 'github.png'
-        Label:
-            text: "[b]Using[/b]"
-            markup: True
-            color: 0, 0, 0, 1
-            size_hint_y: .5
-            text_size: self.size
-            halign: 'center'
-            valign: 'bottom'
+                    size_hint_y: .1
+                    text_size: self.size
+                    halign: 'center'
+                    valign: 'bottom'
 
-        BoxLayout:
-            orientation: "horizontal"
-            spacing: 10
-            padding:10
+                BoxLayout:
+                    orientation: "vertical"
+                    BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 10
+                        padding: 10
 
-            Image:
-                source: 'python.png'
-            Image:
-                source: 'kivy.png'
-            Image:
-                source: 'matplot.png'
-            Image:
-                source: 'scikit.png'
+                        Image:
+                            source: 'media/python.png'
+                        Image:
+                            source: 'media/kivy.png'
+                        Image:
+                            source: 'media/matplot.png'
+                        Image:
+                            source: 'media/scikit.png'
 
-        Label:
-            text: "[b]As an entry for the infoCup 2016/2017[/b]"
-            markup: True
-            color: 0, 0, 0, 1
-            size_hint_y: .5
-            text_size: self.size
-            halign: 'center'
-            valign: 'bottom'
+                    BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 10
+                        padding: 10
 
-        BoxLayout:
-            orientation: "horizontal"
-            Label:
-                text: "[b]Created by[/b]\nBjoern Beha\nJohannes Czech\nLukas Scheuerle\nSuhay Sevinc"
-                markup: True
-                color: 0, 0, 0, 1
-                valign: 'top'
-                halign: 'center'
-                text_size: self.size
-            Image:
-                source: 'gi.png'
-            Label:
-                text: "[b]Special thanks to[/b]\nProf. Dr. Friedbert Kaspar\nProf. Dr. Harald Glaeser"
-                markup: True
-                color: 0, 0, 0, 1
-                valign: 'top'
-                halign: 'center'
-                text_size: self.size
+                        Image:
+                            source: 'media/sphinx.png'
+                        Image:
+                            source: 'media/taiga.jpg'
+                        Image:
+                            source: 'media/numpy.jpg'
+                        Image:
+                            source: 'media/pandas.png'
+
+                    BoxLayout:
+                        orientation: "horizontal"
+                        spacing: 10
+                        padding: 10
+
+                        Image:
+                            source: 'media/github3.png'
+                        Image:
+                            source: 'media/pyinstaller.png'
+                        Image:
+                            source: 'media/nltk.png'
+                        Image:
+                            source: 'media/wordcloud.png'
 
 
 
@@ -188,7 +237,6 @@ GUILayout:
 
                                                             # definitions for program communication
     textfield_input: urlInput
-    text: "https://github.com/ghellwig/cmssw"               # for faster testing
     button_classifier: class_button
     label_info: errorOutput
     log_console: log_console
@@ -216,7 +264,7 @@ GUILayout:
             ActionPrevious:
                 title: ""
                 with_previous: False
-                app_icon: 'logo_small.png'
+                app_icon: 'media/logo_small.png'
 
             ActionOverflow:
             ActionButton:
@@ -230,7 +278,6 @@ GUILayout:
 
             ActionButton:
                 text: "Info"
-                #icon: 'info-icon.png'
                 on_press: root.show_info()
 
 
@@ -279,7 +326,7 @@ GUILayout:
 
                 Image:
                     pos_hint: {"center_y": .50}
-                    source: 'logo.jpeg'
+                    source: 'media/logo.jpeg'
                     size_hint_x: 1.5
                     size_hint_y: 0.8
 
@@ -316,7 +363,7 @@ GUILayout:
                     cursor_color: 0, 0, 0, 1
                     multiline: False
                     hint_text: "Paste the full URL of the main branch here, e.g. https://github.com/kivy/kivy"
-                    # text: "https://github.com/ghellwig/cmssw"
+                    text: "https://github.com/ghellwig/cmssw"                   # debugging
 
                 Button:
                     text: "Paste"
