@@ -3,7 +3,10 @@ import pandas as pd
 from pathlib import Path
 from sklearn import preprocessing
 from sklearn import svm
+from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
+from sklearn import decomposition
+from sklearn.cluster import KMeans
 from matplotlib.pyplot import legend
 import matplotlib.patches as mpatches
 import math
@@ -35,28 +38,25 @@ for i in range(iNumTrainData):
 
 length = len(data1) + len(lstGithubRepo)
 i_Offset = len(data1)
-dimension = 2
+dimension = 3
 
 X = np.empty((length, dimension))
 y = np.empty(length)
 
 for i in range(len(data1)):
 
-    X[i] = np.asarray(
-        # [data1["`num_issues`"][i],
-                    [data2["`num_watchers`"][i],
-                    data1["`dev_time_days`"][i]],
-                    dtype=np.float64)
+    X[i] = np.asarray([data1["`num_issues`"][i],
+                       data1["`dev_time_days`"][i],
+                       data2["`num_watchers`"][i]],
+                      dtype=np.float64)
     y[i] = np.asarray([-1],
                        dtype=np.int)
 
 for i, tmpRepo in enumerate(lstGithubRepo):
-
-    X[i + i_Offset] = np.asarray(
-        # [tmpRepo.getNumOpenIssue(),
-        [tmpRepo.getNumWatchers(),
-        tmpRepo.getDevTime()],
-        dtype=np.float64)
+    X[i + i_Offset] = np.asarray([tmpRepo.getNumOpenIssue(),
+                                  tmpRepo.getDevTime(),
+                                  tmpRepo.getNumWatchers()],
+                                 dtype=np.float64)
     y[i + i_Offset] = np.asarray([lstStrCategories.index(trainData["CATEGORY"][i])],
                         dtype=np.int)
 
@@ -71,9 +71,17 @@ X = normalizer.fit_transform(X)
 # clf.fit(X, y)
 # print(clf.predict(X[:500]))
 
-clf = label_propagation.LabelSpreading()
-clf.fit(X, y)
-print(clf.predict(X))
+# clf = label_propagation.LabelSpreading()
+# clf.fit(X, y)
+# print(clf.predict(X))
+
+print(X)
+plt.cla()
+pca = decomposition.PCA(n_components=2)
+pca.fit(X)
+X = pca.transform(X)
+print(X)
+
 
 rng = np.random.RandomState(0)
 
