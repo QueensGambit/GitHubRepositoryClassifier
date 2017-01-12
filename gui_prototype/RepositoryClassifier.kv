@@ -67,8 +67,8 @@
                     Color:
                         rgba: 1, 1, 1, 1
                     Rectangle:
-                        size: self.size
-                        pos: self.pos
+                        size: self.width, self.height - 50
+                        pos: self.x, self.y + 50
 
                 BoxLayout:
                     orientation: "horizontal"
@@ -118,19 +118,28 @@
                         valign: 'top'
                         halign: 'center'
                         text_size: self.size
+                Button:
+                    text: "Close"
+                    size_hint: None, None
+                    height: 30
+                    width: 100
+                    pos_hint: {"right": 1}
+
+                    on_release: root.dismiss()
 
         TabbedPanelItem:
             text: "Libraries"
 
             BoxLayout:
                 orientation: "vertical"
+                padding: 10
 
                 canvas.before:
                     Color:
                         rgba: 1, 1, 1, 1
                     Rectangle:
-                        size: self.size
-                        pos: self.pos
+                        size: self.width, self.height - 50
+                        pos: self.x, self.y + 50
 
                 BoxLayout:
                     orientation: "vertical"
@@ -175,8 +184,14 @@
                             source: 'media/nltk.png'
                         Image:
                             source: 'media/wordcloud.png'
+                Button:
+                    text: "Close"
+                    size_hint: None, None
+                    height: 30
+                    width: 100
+                    pos_hint: {"right": 1}
 
-
+                    on_release: root.dismiss()
 
 
 <SettingsPopup>
@@ -186,35 +201,49 @@
 
     checkbox_api_token: use_api_key
     label_api_error: api_error_label
-
     BoxLayout:
-        orientation: "horizontal"
-        spacing: 10
-        padding: 10
-
-        #size_hint_y: 0.6
-
-        CheckBox:
-            id: use_api_key
-            size_hint_x: .1
-            active: False
-            on_press: root.switch_api(self.active)
+        orientation: "vertical"
 
         BoxLayout:
             orientation: "horizontal"
-            Label:
-                text: '[i]use API Token (advanced, see documentation)[/i]'
-                markup: True
-                halign: 'left'
-                valign: 'middle'
-                text_size: self.size
-            Label:
-                id: api_error_label
-                text: ""
-                color: 1, 0, 0, 1
-                halign: 'right'
-                valign: 'middle'
-                text_size: self.size
+            spacing: 10
+            padding: 10
+
+            #size_hint_y: 0.6
+
+            CheckBox:
+                id: use_api_key
+                size_hint_x: .1
+                active: False
+                on_press: root.switch_api(self.active)
+
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    text: 'use API Token [i](advanced, see documentation)[/i]'
+                    markup: True
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                Label:
+                    id: api_error_label
+                    text: ""
+                    color: 1, 0, 0, 1
+                    halign: 'right'
+                    valign: 'middle'
+                    text_size: self.size
+
+        Button:
+            text: "Close"
+            size_hint: None, None
+            height: 30
+            width: 100
+            pos_hint: {"right": 1}
+
+            on_release: root.dismiss()
+
+
+
 
 
 
@@ -414,27 +443,28 @@ GUILayout:
     TabbedPanel:
         do_default_tab: False
         #tab_pos: 'top_mid'
-        tab_width_hint: 150
+        tab_width_hint: None
+        tab_width: 150
         TabbedPanelItem:
             text: "Wordcloud"
             BoxLayout:
                 id: dia1
                 Label:
-                    text: "insert diagram here (1)"
+                    text: "No Diagram to show yet"
 
         TabbedPanelItem:
-            text: "Diagram 2"
+            text: "Integer Attributes"
             BoxLayout:
                 id: dia2
                 Label:
-                    text: "insert diagram here (2)"
+                    text: "No Diagram to show yet"
 
         TabbedPanelItem:
-            text: "Diagram 3"
+            text: "2D Visualisation"
             BoxLayout:
                 id: dia3
                 Label:
-                    text: "insert diagram here (3)"
+                    text: "No Diagram to show yet"
 
 
         TabbedPanelItem:
