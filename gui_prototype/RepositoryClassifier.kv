@@ -59,7 +59,7 @@
         do_default_tab: False
 
         TabbedPanelItem:
-            text: "Page 1"
+            text: "General"
             BoxLayout:
                 orientation: "vertical"
                 padding: 10
@@ -120,7 +120,7 @@
                         text_size: self.size
 
         TabbedPanelItem:
-            text: "Page 2"
+            text: "Libraries"
 
             BoxLayout:
                 orientation: "vertical"
@@ -131,15 +131,6 @@
                     Rectangle:
                         size: self.size
                         pos: self.pos
-
-                Label:
-                    text: "[b]Using[/b]"
-                    markup: True
-                    color: 0, 0, 0, 1
-                    size_hint_y: .1
-                    text_size: self.size
-                    halign: 'center'
-                    valign: 'bottom'
 
                 BoxLayout:
                     orientation: "vertical"
