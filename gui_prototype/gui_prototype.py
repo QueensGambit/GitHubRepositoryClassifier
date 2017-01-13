@@ -8,7 +8,6 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
-from github3.repos.repo import Repository
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '800')
@@ -39,17 +38,12 @@ import matplotlib.pyplot as plt
 # sys.path.insert(0, os.path.abspath(".."))
 # sys.path.append(os.path.abspath("../prototype"))
 
-# import prototype.print_overloading
 
-# from prototype import *
-# import prototype.repository_classifier
 from prototype.repository_classifier import RepositoryClassifier
-from prototype.utility_funcs.io_agent import InputOutputAgent       # this import is used to enable or disable the GithubToken
+from prototype.utility_funcs.io_agent import InputOutputAgent  # this import is used to enable or disable the GithubToken
 
 from prototype.definitions.categories import CategoryStr
-# import prototype.github_repo
 import webbrowser
-from kivy.properties import BooleanProperty
 
 # threading and animation
 # multithreading in kivy:
@@ -61,7 +55,6 @@ from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
 from wordcloud import WordCloud
-from prototype.definitions.categories import Category
 
 from PIL import Image
 from PIL import ImageOps
@@ -78,7 +71,7 @@ kivy.require("1.9.0")
 # ...
 
 class StaticVars:
-    b_api_checkbox_state = False                    #checkbox status
+    b_api_checkbox_state = False                    # checkbox status for global use
 
 
 class StdOut(object):
@@ -88,60 +81,87 @@ class StdOut(object):
         self.oldStdOut = oldStdOut
 
     def write(self, string):
-        # self.txtctrl.write(string)
-        # try:
-        self.log_console.text += string #self.txtctrl.getvalue()
+
+        self.log_console.text += string  # self.txtctrl.getvalue()
         self.oldStdOut.write(string)
-        # except:
-        #     pass
 
     def flush(self):
         pass
 
 
 class InfoPopup(Popup):
+    """
+    The Information Popup which is called by show_info() in the GUILayout class.
+    """
     pass
 
 
 class SettingsPopup(Popup):
-    checkbox_api_token = ObjectProperty()
-    label_api_error = ObjectProperty()
+    """
+    The Settings Popup which is called by show_settings() in the GUILayout class.
+    """
+    checkbox_api_token = ObjectProperty()                   # The checkbox to toggle the usage of the API Token
+    label_api_error = ObjectProperty()                      # The Label to Output potential errors
 
     def __init__(self):
+        """
+        Called upon opening of the Settings Popup
+        Override the active state of the API checkbox to display the current internal saved state
+        """
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
 
-    def switch_api(self, b_status):     # TODO: This will pass the test the second time. now the app gets stuck
+    def switch_api(self, b_status):
+        """
+        Called by the API Checkbox in the Settings Popup.
+        checks whether the Token is is valid/existent and switches accordingly.
+
+        :param b_status: provides the current state of the checkbox
+        :return:
+        """
         try:
-            self.label_api_error.text = ""
-            InputOutputAgent.setWithToken(b_status)
-            StaticVars.b_api_checkbox_state = b_status
-            print('[INFO] Use API updated to: ' + str(b_status))
+            self.label_api_error.text = ""                              # Reset Error Label
+            InputOutputAgent.setWithToken(b_status)                     # set token if possible
+            StaticVars.b_api_checkbox_state = b_status                  # save state of the token
+            print('[INFO] Use API updated to: ' + str(b_status))        # print info to console
         except ConnectionError as ce:
             self.label_api_error.text = "[ERROR] No Connection could be established."
             print("[ERROR] No Connection could be established: " + str(ce))
-            self.checkbox_api_token.active = False
-            StaticVars.b_api_checkbox_state = False
+            self.checkbox_api_token.active = False                      # update checkbox to display the internal state
+            StaticVars.b_api_checkbox_state = False                     # set the internal state to false
 
 
 class FileSaverPopup(Popup):
-    filename_input = ObjectProperty()
-    label_save = ObjectProperty()
-
-    log_text = ""
+    """
+    The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
+    """
+    label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
 
     def save_file(self, path, filename):
+        """
+        Called by the "save" button in the Popup.
+        Saves the file with the input filename to the path. Handles Permission Errors.
+
+        :param path: The current folder path to save the file into, ends with "/"
+        :param filename: The filename to save the file as
+        :return:
+        """
         try:
             with open(os.path.join(path, filename), 'w') as stream:
                 stream.write(self.log_text)
+                stream.close()
             self.dismiss()
             print("[INFO] Logfile saved to: " + path + "\\" + filename)
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
+            stream.close()
 
 
 class GUILayout(BoxLayout):
+    """
+    The Main Layout of the Main Window. Handles most events
+    """
 
     stop = threading.Event()
 
@@ -158,49 +178,51 @@ class GUILayout(BoxLayout):
 
     # threading
     def start_classification_thread(self, l_text, url_in):
+        """
+        start the classification Thread to run parallel to the GUI so it doesn't freeze in the meantime
+
+        :param l_text: apparently needs this to not break. can be anything, isn't used anyway
+        :param url_in: the URL to check in for the Repository
+        :return:
+        """
         threading.Thread(target=self.classification_thread, args=(l_text, url_in)).start()
 
     def classification_thread(self, l_text, url_in):
+        """
+        Tries to reach the Repository and start the classification process.
+        If successful starts the rendering of the different visualisations
+
+        :param l_text: apparently needs this to not break. can be anything, isn't used anyway
+        :param url_in: the URL to check in for the Repository
+        :return:
+        """
         # Remove a widget, update a widget property, create a new widget,
         # add it and animate it in the main thread by scheduling a function
         # call with Clock.
-        Clock.schedule_once(self.start_test, 0)
+        Clock.schedule_once(self.start_loading_animation, 0)
 
-        iLabel = None
-        lstFinalPercentages = []
         try:
             iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
-            self.show_classification_result(iLabel, lstFinalPercentages)
+            self.show_classification_result(iLabel, lstFinalPercentages, tmpRepo)
 
-            # Start a new thread with an infinite loop and stop the current one.
-            # threading.Thread(target=self.infinite_loop).start()
 
-            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
-                bApplyStemmer=True))
-            self.show_wordcloud(strText, iLabel)
-        except ConnectionError:
-            print("[ERROR] A connection error occurred")
+        except ConnectionError as ce:
+            print("[ERROR] A connection error occurred: " + str(ce))
             self.set_error("[ERROR] A connection error occurred")
         except Exception as ex:
             print("[ERROR] An unknown Error occurred: " + str(ex))
             self.set_error("[ERROR] An unknown Error occurred")
 
-        # print('iLabel:', iLabel)
-        # Do some thread blocking operations.
-        # time.sleep(5)
-        # l_text = str(int(label_text) * 3000)
+    def start_loading_animation(self, *args):
+        """
+        Creates the User-Feedback while loading, such as setting the label_error and showing the loading animation.
 
-        # Update a widget property in the main thread by decorating the
-        # called function with @mainthread.
-        # self.update_label_text(l_text)
+        :param args:
+        :return:
+        """
 
-        # Do some more blocking operations.
-        # time.sleep(2)
-
-
-    def start_test(self, *args):
         self.button_classifier.disabled = True                      # disable button
 
         # Remove the button.
@@ -208,8 +230,7 @@ class GUILayout(BoxLayout):
         # self.remove_widget(self.but_1)
 
         # Update a widget property.
-        self.label_result.text = 'loading' #''Classificaition in progress'
-        self.label_info.text = "[INFO] Classification in progress"
+        self.set_info("[INFO] Classification in progress")
         # self.label_result.text = ('The UI remains responsive while the '
         #                    'second thread is running.')
 
@@ -224,39 +245,44 @@ class GUILayout(BoxLayout):
         anim.start(anim_bar)
 
     @mainthread
-    def update_label_text(self, new_text):
-        # pass
-        self.label_info.text = new_text
+    def show_classification_result(self, iLabel, lstFinalPercentages, tmpRepo):
+        """
+        Creates the user output for the final result:
+        The pie chart as well as the label in the top right corner
 
-    @mainthread
-    def show_classification_result(self, iLabel, lstFinalPercentages):
+        :param iLabel: index of the Category Enum of the found result
+        :param lstFinalPercentages: The amount of percentages each Category yields
+        :return:
+        """
 
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
-            self.renderPlotChar(lstFinalPercentages)
+            self.renderPieChart(lstFinalPercentages)
             self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
-            self.label_info.text = "[INFO] Classification complete"
+            self.set_info("[INFO] Classification complete")
+
+            # Wordcloud
+            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
+                bApplyStemmer=True))
+            self.show_wordcloud(strText, iLabel)
         else:
-            self.label_result.text = 'Result: '
+            self.label_result.text = 'No Result'
 
         self.button_classifier.disabled = False                      # re-enable button
 
-    def infinite_loop(self):
-        iteration = 0
-        while True:
-            if self.stop.is_set():
-                # Stop running this thread so the main Python process can exit.
-                return
-            iteration += 1
-            print('Infinite loop, iteration {}.'.format(iteration))
-            time.sleep(1)
+    def show_wordcloud(self, text, iLabel):
+        """
+        Creates the Wordcloud in the first Diagram Tab.
 
-    def show_wordcloud(self, text, label):
+        :param text: The Text to create the word cloud from
+        :param iLabel: index of the Category Enum of the found result
+        :return:
+        """
 
         # print('text: ', text)
-        img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[label])).split()[-1]
-        print(label)
+        img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[iLabel])).split()[-1]
+        print(iLabel)
         # the mask is inverted, so invert it again
         img = ImageOps.invert(img)
         img = img.resize((512, 512), Image.NONE)
@@ -272,66 +298,48 @@ class GUILayout(BoxLayout):
         self.layout_diagram1.add_widget(FigureCanvas(fig))
 
     def show_info(self):
+        """
+        Displays the info popup, called by the ActionBar
+
+        :return:
+        """
         info_popup = InfoPopup()
         info_popup.open()
 
     def show_documentation(self):
+        """
+        Opens the sphinx-code-documentation in a web browser, called by the ActionBar
+
+        :return:
+        """
         webbrowser.open("http://google.com")
 
     def show_settings(self):
+        """
+        Displays the settings popup, called by the ActionBar
+
+        :return:
+        """
         settings_popup = SettingsPopup()
         settings_popup.open()
 
-    def classify_button_pressed_example(self):                  # THIS IS ONLY THE EXAMPLE! DELETE BEFORE PUBLISHING!
-        print("classify-button pressed. Classification started")
-        self.button_classifier.text = "pressed!"                        # button demo
-        self.button_classifier.disabled = True
-        self.label_info.text = "ERROR: Prototype not hooked up yet!"   # error label demo
-        print("[ERROR] Prototype not hooked up yet")
-        self.label_info.color = 1, 0, 0, 1
-        # self.log_console.text = ""                                      # clear console
-        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
-        # for i in range(0, 50):                                          # demonstrate console
-            # self.log_console.text += ("Button pressed, " + str(i) + "\n")
-
-        # ADDING A PIE CHART!
-        # The slices will be ordered and plotted counter-clockwise.
-        # labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
-        # sizes = [15, 30, 45, 10]
-
-        labels = 'Frogs', 'Hogs', 'Dogs', 'Logs', 'Blob', 'bla', 'blub'
-        sizes = [1, 30, 45, 10, 10, 2, 2]
-
-        # colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
-        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'black', 'blue', 'red']
-
-        # explode = (0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        explode = (0, 0, 0.1, 0, 0, 0, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-
-        # plt.figure(1, figsize=(10, 10), dpi=70)
-        plt.figure(1, figsize=(40, 40), dpi=70)
-
-        plt.pie(sizes, explode=explode, labels=labels, colors=colors,
-                autopct='%1.1f%%', shadow=True, startangle=90)
-        # plt.axis('equal')
-        # plt.tight_layout()                                       # http://matplotlib.org/users/tight_layout_guide.html
-        fig = plt.gcf()
-        fig.patch.set_facecolor('1')
-        fig.patch.set_alpha(0.3)
-
-        # plt.show()
-        # fig.set_tight_layout(True)
-
-        self.layout_pie_chart.clear_widgets()
-        self.layout_pie_chart.add_widget(FigureCanvas(fig))
-        # canv.canvas.ask_update()
-
     def save_log(self):
+        """
+        Displays the save file popup, called by the Button underneath the Console
+
+        :return:
+        """
         save_popup = FileSaverPopup()
         save_popup.log_text = self.log_console.text
         save_popup.open()
 
     def paste(self):
+        """
+        Pastes the content of the clipboard into the url input textfield,
+        called by the Paste Button next to the Textfield
+
+        :return:
+        """
         # get clipboard data
         self.textfield_input.text = clipboard.paste()
         # print('paste-button pressed')
@@ -339,6 +347,11 @@ class GUILayout(BoxLayout):
         print('pasted text:', clipboard.paste())
 
     def initialize(self):
+        """
+        Initializes the Main Layout (GUILayout), is called after the its creation in the RepositoryClassifierApp
+
+        :return:
+        """
 
         oldStdOut = sys.stdout
         # overload load the sys.strdout to a class-instance of StdOut
@@ -351,7 +364,16 @@ class GUILayout(BoxLayout):
 
         self.strPath = os.path.dirname(__file__)
 
+        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
+
+
     def validate_url(self, url_in):
+        """
+        Performs some simple string checks to validate the URL for further processing
+
+        :param url_in: The URL to perform the checks on
+        :return:
+        """
         if url_in == "":
             print("[ERROR] Input is empty")
             self.set_error("[ERROR] Input is empty")
@@ -369,15 +391,32 @@ class GUILayout(BoxLayout):
             self.set_info("[INFO] Input is a valid URL")
             return True
 
-    def set_info(self, info):                               # put the info text as info text, color to black
+    def set_info(self, info):
+        """
+        put the info text as info text, text color to white
+
+        :param info: the text to display
+        :return:
+        """
         self.label_info.color = 1, 1, 1, 1
         self.label_info.text = info
 
-    def set_error(self, error):                             # put the info text as error text, color to red
+    def set_error(self, error):
+        """
+        put the info text as error text, text color to red
+
+        :param error:
+        :return:
+        """
         self.label_info.color = 1, 0, 0, 1
         self.label_info.text = error
 
-    def classify_button_pressed(self):                              # ACTUAL BUTTON CODE
+    def classify_button_pressed(self):
+        """
+        Gets called from the "Classify" button, starts the classification thread function
+
+        :return:
+        """
 
         url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
         self.textfield_input.text = url_in
@@ -388,21 +427,21 @@ class GUILayout(BoxLayout):
             self.button_classifier.disabled = True  # disable button
             self.start_classification_thread(self.label_info.text, url_in)
 
-    def renderPlotChar(self, lstFinalPercentages):
-        print("render piechart")
-        # self.log_console.text = ""                                      # clear console
-        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
-        # for i in range(0, 50):                                          # demonstrate console
-            # self.log_console.text += ("Button pressed, " + str(i) + "\n")
+    def renderPieChart(self, lstFinalPercentages):
+        """
+        Creates the pie chart
 
-        # ADDING A PIE CHART!
+        :param lstFinalPercentages: the percentages to use in the piechart
+        :return:
+        """
+        print("[INFO] Rendering Piechart")
+
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
 
         # multiplicate every element with 100
         lstFinalPercentages[:] = [x * 100 for x in lstFinalPercentages]
 
-        lstLabelsPieChart = [None] * len(labels)
         lstLabelsPieChart = labels[:]
 
         for i, _ in enumerate(labels):
@@ -415,19 +454,16 @@ class GUILayout(BoxLayout):
 
         lstExplode = [0] * len(lstFinalPercentages)
         lstExplode[iMaxIndex] = 0.1
-        explode = lstExplode #(0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        # self.iFigIndex += 1
+        explode = lstExplode                                            # only "explode" the biggest slice
         fig = plt.figure(1, figsize=(10, 10), dpi=70)
         fig.clear()
 
-        # patches, texts = plt.pie(lstFinalPercentages, explode=explode, colors=colors, # labels=labels, autopct='%1.1f%%', shadow=True,
-        #           startangle=90)
         plt.pie(lstFinalPercentages, explode=explode, colors=colors, labels=labels, autopct='%1.1f%%', shadow=True,
                   startangle=90)
 
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
         #  -> this causes a warning; alternative us fig,set_tight_layout(True)
-        # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+        # plt.tight_layout()                                       # http://matplotlib.org/users/tight_layout_guide.html
 
         # plt.legend(patches, lstLabelsPieChart, loc=(0.97, 0.3), prop={'size':10})
 
@@ -449,9 +485,13 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
         # fig.clear()
 
-        # self.layout_pie_chart.add_widget(fig)
-
     def load_example(self, link):
+        """
+        write the example link into the textfield, gets called by the Examples in the Action Bar
+
+        :param link: the link to the repository, without the github in front!
+        :return:
+        """
         self.textfield_input.text = "https://github.com/" + link
 
     def plot_multi_dim(self, multidimarray):
@@ -501,16 +541,27 @@ class GUILayout(BoxLayout):
 
 
 class RepositoryClassifierApp(App):
+    """
+    The Main App Class that contains the App
+    """
     icon = 'logo_small.png'                          # change window icon
 
     def on_stop(self):
+        """
+        gets called when the main Kivy Event Loop is about to stop, setting a stop signal
+
+        :return:
+        """
         # The Kivy event loop is about to stop, set a stop signal;
         # otherwise the app window will close, but the Python process will
         # keep running until all secondary threads exit.
         self.root.stop.set()
 
-
     def build(self):
+        """
+        gets called upon running the GUI Object, initialises the window as well as the the GUI Layout
+        :return:
+        """
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
 
