@@ -24,7 +24,7 @@ def main(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    InputOutputAgent.setWithToken(False)
+    InputOutputAgent.setWithToken(True)
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
 
     # strFilenameCSV = 'example_repos.csv'
@@ -33,7 +33,7 @@ def main(args=None):
     #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
     #repoClassifier.exportModelToFile()
-    clf = repoClassifier.loadModelFromFile()
+    clf, lstMeanValues = repoClassifier.loadModelFromFile()
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
@@ -43,6 +43,7 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
+    print('NormedIntegerFeatures:', tmpRepo.getNormedFeatures(lstMeanValues=lstMeanValues))
     X = np.empty((10, 3))
     X[0] = np.asarray([tmpRepo.getNumOpenIssue(),
                        tmpRepo.getDevTime(),

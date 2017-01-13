@@ -292,7 +292,7 @@ class RepositoryClassifier:
 
         self.bModelLoaded = True
 
-        return self.clf
+        return self.clf, self.lstMeanValues
 
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """
