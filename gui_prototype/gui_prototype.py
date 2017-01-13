@@ -29,7 +29,8 @@ from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
-import clipboard                                                    # pip install clipboard
+import clipboard
+from sklearn import decomposition
 
 import sys, os
 import matplotlib.pyplot as plt
@@ -452,6 +453,51 @@ class GUILayout(BoxLayout):
 
     def load_example(self, link):
         self.textfield_input.text = "https://github.com/" + link
+
+    def plot_multi_dim(self, multidimarray):
+
+        if not isinstance(multidimarray, (np.ndarray, np.generic)):
+            print('Need Numpy')
+            return
+
+        if multidimarray.shape[1] > 2:
+            plt.cla()
+            pca = decomposition.PCA(n_components=2)
+            pca.fit(multidimarray)
+            multidimarray = pca.transform(multidimarray)
+
+        # plt.scatter(multidimarray[:, 0],
+        #             multidimarray[:, 1])
+        # plt.show()
+
+        h = .02
+
+        x_min, x_max = multidimarray[:, 0].min() - 1, multidimarray[:, 0].max() + 1
+        y_min, y_max = multidimarray[:, 1].min() - 1, multidimarray[:, 1].max() + 1
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+        clf = self.repoClassifier.loadModelFromFile()
+
+        Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+        Z = Z.reshape(xx.shape)
+        plt.figure(1)
+        plt.clf()
+        plt.imshow(Z, interpolation='nearest',
+                   extent=(xx.min(), xx.max(), yy.min(), yy.max()),
+                   cmap=plt.cm.Paired,
+                   aspect='auto', origin='lower')
+        plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+
+        centroids = clf.centroids_
+        plt.scatter(centroids[:, 0], centroids[:, 1],
+                    marker='x', s=169, linewidths=3,
+                    color='w', zorder=10)
+
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+        plt.xticks(())
+        plt.yticks(())
+        plt.show()
 
 
 class RepositoryClassifierApp(App):

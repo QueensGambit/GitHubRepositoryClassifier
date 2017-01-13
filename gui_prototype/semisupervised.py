@@ -14,6 +14,7 @@ import os
 from sklearn.semi_supervised import label_propagation
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.github_repo import GithubRepo
+import gui_prototype
 
 
 
@@ -80,6 +81,24 @@ plt.cla()
 pca = decomposition.PCA(n_components=2)
 pca.fit(X)
 X = pca.transform(X)
+print(X)
+
+
+X = np.empty((10, 2))
+X[0] = np.asarray([0., 0.], dtype=np.float64)
+X[1] = np.asarray([0., 1.], dtype=np.float64)
+X[2] = np.asarray([0., 2.], dtype=np.float64)
+X[3] = np.asarray([1., 0.], dtype=np.float64)
+X[4] = np.asarray([1., 1.], dtype=np.float64)
+X[5] = np.asarray([1., 2.], dtype=np.float64)
+X[6] = np.asarray([2., 0.], dtype=np.float64)
+X[7] = np.asarray([2., 1.], dtype=np.float64)
+X[8] = np.asarray([2., 2.], dtype=np.float64)
+X[9] = np.asarray([3, 3], dtype=np.float64)
+
+print(X)
+normalizer.fit(X)
+X = normalizer.fit_transform(X)
 print(X)
 
 
