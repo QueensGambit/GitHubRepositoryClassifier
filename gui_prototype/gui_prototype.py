@@ -449,6 +449,9 @@ class GUILayout(BoxLayout):
 
         # self.layout_pie_chart.add_widget(fig)
 
+    def load_example(self, link):
+        self.textfield_input.text = "https://github.com/" + link
+
 
 class RepositoryClassifierApp(App):
     icon = 'logo_small.png'                          # change window icon
@@ -475,6 +478,7 @@ gui.run()
 
 # TODO: PRIORITY - DESCRIPTION
 # TODO: VERY HIGH - Build Windows-Excecutable
+# TODO: VERY HIGH - Write Docu
 # TODO: HIGH - Build single console excecutable
 # TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling
 # TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart)

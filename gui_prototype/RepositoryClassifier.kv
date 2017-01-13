@@ -128,7 +128,7 @@
                     on_release: root.dismiss()
 
         TabbedPanelItem:
-            text: "Libraries"
+            text: "Tools"
 
             BoxLayout:
                 orientation: "vertical"
@@ -151,17 +151,21 @@
                         Image:
                             source: 'media/python.png'
                         Image:
+                            source: 'media/anaconda.png'
+                        Image:
                             source: 'media/kivy.png'
                         Image:
-                            source: 'media/matplot.png'
-                        Image:
                             source: 'media/scikit.png'
+                        Image:
+                            source: 'media/pycharm.png'
+
 
                     BoxLayout:
                         orientation: "horizontal"
                         spacing: 10
                         padding: 10
-
+                        Image:
+                            source: 'media/matplot.png'
                         Image:
                             source: 'media/sphinx.png'
                         Image:
@@ -299,6 +303,18 @@ GUILayout:
             ActionButton:
                 text: "Info"
                 on_press: root.show_info()
+
+            ActionGroup:
+                text: "Examples"
+                mode: "spinner"
+                ActionButton:
+                    text: "DEV"
+                    on_press: root.load_example("GNOME/gimp")
+                ActionButton:
+                    text: "HW"
+                    on_press: root.load_example("QueensGambit/BarcodeApp")
+                ActionButton:
+                    text: "more..."
 
 
 
