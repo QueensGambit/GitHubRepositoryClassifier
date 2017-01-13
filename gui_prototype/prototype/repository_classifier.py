@@ -68,8 +68,11 @@ class RepositoryClassifier:
             os.makedirs(self.strModelPath)
         self.strModelFileName = 'RepositoryClassifier.pkl'
         self.strLstMeanValuesFileName = 'lstMeanValues.pkl'
+        self.strMatIntegerTrainingData = 'matIntegerTrainingData.pkl'
 
         self.iNumCategories = len(self.lstStrCategories)
+
+        self.matIntegerTrainingData = []
 
     def loadTrainingData(self, strProjPathFileNameCSV ='/data/csv/additional_data_sets_cleaned.csv'):
         """
@@ -142,6 +145,7 @@ class RepositoryClassifier:
         print('len(lstVoc): ', len(self.lstVoc))
 
         lstInputFeatures = []
+
         for tmpRepo in lstGithubRepo:
             # fill the Training-Data
             # ordinary integer-attributes
@@ -154,7 +158,12 @@ class RepositoryClassifier:
             # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
             # np.vstack  concates to numpy-arrays
-            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            lstInputFeatures = lstIntegerAttributes
+
+            self.matIntegerTrainingData.append(tmpRepo.getNormedFeatures(self.lstMeanValues))
+
+
             if self.bUseStringFeatures:
                 lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
             lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
@@ -171,6 +180,8 @@ class RepositoryClassifier:
         print("lstTrainLabels:")
         print(lstTrainLabels)
 
+        print('self.matIntegerTrainingData')
+        print(self.matIntegerTrainingData)
         print('~~~~~~~~~~ NORMALIZE ~~~~~~~~~~~~~')
         # self.stdScaler = preprocessing.StandardScaler()
         # self.stdScaler.fit(lstTrainData)
@@ -260,6 +271,7 @@ class RepositoryClassifier:
             # save the trained classifier to a file
             joblib.dump(self.clf, self.strModelPath + self.strModelFileName)
             joblib.dump(self.lstMeanValues, self.strModelPath + self.strLstMeanValuesFileName)
+            joblib.dump(self.matIntegerTrainingData, self.strModelPath + self.strMatIntegerTrainingData)
 
     def loadModelFromFile(self):
         """
@@ -273,6 +285,8 @@ class RepositoryClassifier:
         # load the classifier from the file
         self.clf = joblib.load(self.strModelPath + self.strModelFileName)
         self.lstMeanValues = joblib.load(self.strModelPath + self.strLstMeanValuesFileName)
+        # load the integer training data for later plotting
+        self.matIntegerTrainingData = joblib.load(self.strModelPath + self.strMatIntegerTrainingData)
         print('lstMeanValues: ', self.lstMeanValues)
 
         print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
@@ -292,7 +306,7 @@ class RepositoryClassifier:
 
         self.bModelLoaded = True
 
-        return self.clf, self.lstMeanValues
+        return self.clf, self.lstMeanValues, self.matIntegerTrainingData
 
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """

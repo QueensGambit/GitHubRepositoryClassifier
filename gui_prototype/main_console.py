@@ -30,10 +30,15 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    #repoClassifier.exportModelToFile()
-    clf, lstMeanValues = repoClassifier.loadModelFromFile()
+    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+
+    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    repoClassifier.exportModelToFile()
+
+    clf, lstMeanValues, matIntegerTrainingData = repoClassifier.loadModelFromFile()
+    print('len', len(matIntegerTrainingData))
+    print('matIntegerTrainingData:', matIntegerTrainingData[:])
+
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
@@ -42,7 +47,7 @@ def main(args=None):
     # pobox
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
-
+"""
     print('NormedIntegerFeatures:', tmpRepo.getNormedFeatures(lstMeanValues=lstMeanValues))
     X = np.empty((10, 3))
     X[0] = np.asarray([tmpRepo.getNumOpenIssue(),
@@ -151,7 +156,7 @@ def plot_multi_dim(clf, multidimarray):
 # ---> lenght < 2 and with removing stop words
 # fPredictionRes: 0.612903225806
 # fAccuracy:  61.2903225806 %
-
+"""
 
 if __name__ == "__main__":
     main()
