@@ -292,6 +292,8 @@ class RepositoryClassifier:
 
         self.bModelLoaded = True
 
+        return self.clf
+
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """
         loads a csv-file with of layout 'URL, CATEGORY, CATEGORY_ALTERNATIVE_1,CATEGORY_ALTERNATIVE_2'

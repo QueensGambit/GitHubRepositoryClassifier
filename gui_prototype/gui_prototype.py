@@ -169,6 +169,16 @@ class GUILayout(BoxLayout):
         lstFinalPercentages = []
         try:
             iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
+            # Remove some widgets and update some properties in the main thread
+            # by decorating the called function with @mainthread.
+            self.show_classification_result(iLabel, lstFinalPercentages)
+
+            # Start a new thread with an infinite loop and stop the current one.
+            # threading.Thread(target=self.infinite_loop).start()
+
+            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
+                bApplyStemmer=True))
+            self.show_wordcloud(strText, iLabel)
         except ConnectionError:
             print("[ERROR] A connection error occurred")
             self.set_error("[ERROR] A connection error occurred")
@@ -188,15 +198,6 @@ class GUILayout(BoxLayout):
         # Do some more blocking operations.
         # time.sleep(2)
 
-        # Remove some widgets and update some properties in the main thread
-        # by decorating the called function with @mainthread.
-        self.show_classification_result(iLabel, lstFinalPercentages)
-
-        # Start a new thread with an infinite loop and stop the current one.
-        # threading.Thread(target=self.infinite_loop).start()
-
-        strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(bApplyStemmer=True))
-        self.show_wordcloud(strText, iLabel)
 
     def start_test(self, *args):
         self.button_classifier.disabled = True                      # disable button
