@@ -204,12 +204,9 @@ class GUILayout(BoxLayout):
             iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
-            self.show_classification_result(iLabel, lstFinalPercentages)
+            self.show_classification_result(iLabel, lstFinalPercentages, tmpRepo)
 
-            # Wordcloud
-            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
-                bApplyStemmer=True))
-            self.show_wordcloud(strText, iLabel)
+
         except ConnectionError as ce:
             print("[ERROR] A connection error occurred: " + str(ce))
             self.set_error("[ERROR] A connection error occurred")
@@ -247,7 +244,7 @@ class GUILayout(BoxLayout):
         anim.start(anim_bar)
 
     @mainthread
-    def show_classification_result(self, iLabel, lstFinalPercentages):
+    def show_classification_result(self, iLabel, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
         The pie chart as well as the label in the top right corner
@@ -260,9 +257,14 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
-            self.renderPlotChar(lstFinalPercentages)
+            self.renderPieChart(lstFinalPercentages)
             self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
             self.set_info("[INFO] Classification complete")
+
+            # Wordcloud
+            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
+                bApplyStemmer=True))
+            self.show_wordcloud(strText, iLabel)
         else:
             self.label_result.text = 'No Result'
 
@@ -361,6 +363,9 @@ class GUILayout(BoxLayout):
 
         self.strPath = os.path.dirname(__file__)
 
+        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
+
+
     def validate_url(self, url_in):
         """
         Performs some simple string checks to validate the URL for further processing
@@ -406,7 +411,11 @@ class GUILayout(BoxLayout):
         self.label_info.text = error
 
     def classify_button_pressed(self):
-        """"""
+        """
+        Gets called from the "Classify" button, starts the classification thread function
+
+        :return:
+        """
 
         url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
         self.textfield_input.text = url_in
@@ -417,21 +426,21 @@ class GUILayout(BoxLayout):
             self.button_classifier.disabled = True  # disable button
             self.start_classification_thread(self.label_info.text, url_in)
 
-    def renderPlotChar(self, lstFinalPercentages):
-        print("[INFO] Rendering Piechart")
-        # self.log_console.text = ""                                      # clear console
-        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
-        # for i in range(0, 50):                                          # demonstrate console
-            # self.log_console.text += ("Button pressed, " + str(i) + "\n")
+    def renderPieChart(self, lstFinalPercentages):
+        """
+        Creates the pie chart
 
-        # ADDING A PIE CHART!
+        :param lstFinalPercentages: the percentages to use in the piechart
+        :return:
+        """
+        print("[INFO] Rendering Piechart")
+
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
 
         # multiplicate every element with 100
         lstFinalPercentages[:] = [x * 100 for x in lstFinalPercentages]
 
-        lstLabelsPieChart = [None] * len(labels)
         lstLabelsPieChart = labels[:]
 
         for i, _ in enumerate(labels):
@@ -444,19 +453,16 @@ class GUILayout(BoxLayout):
 
         lstExplode = [0] * len(lstFinalPercentages)
         lstExplode[iMaxIndex] = 0.1
-        explode = lstExplode #(0, 0, 0.1, 0)  # only "explode" the 1st slice (i.e. 'Dogs')
-        # self.iFigIndex += 1
+        explode = lstExplode                                            # only "explode" the biggest slice
         fig = plt.figure(1, figsize=(10, 10), dpi=70)
         fig.clear()
 
-        # patches, texts = plt.pie(lstFinalPercentages, explode=explode, colors=colors, # labels=labels, autopct='%1.1f%%', shadow=True,
-        #           startangle=90)
         plt.pie(lstFinalPercentages, explode=explode, colors=colors, labels=labels, autopct='%1.1f%%', shadow=True,
                   startangle=90)
 
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
         #  -> this causes a warning; alternative us fig,set_tight_layout(True)
-        # plt.tight_layout()                                         # http://matplotlib.org/users/tight_layout_guide.html
+        # plt.tight_layout()                                       # http://matplotlib.org/users/tight_layout_guide.html
 
         # plt.legend(patches, lstLabelsPieChart, loc=(0.97, 0.3), prop={'size':10})
 
@@ -478,23 +484,38 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
         # fig.clear()
 
-        # self.layout_pie_chart.add_widget(fig)
-
     def load_example(self, link):
+        """
+        write the example link into the textfield, gets called by the Examples in the Action Bar
+
+        :param link: the link to the repository, without the github in front!
+        :return:
+        """
         self.textfield_input.text = "https://github.com/" + link
 
 
 class RepositoryClassifierApp(App):
+    """
+    The Main App Class that contains the App
+    """
     icon = 'logo_small.png'                          # change window icon
 
     def on_stop(self):
+        """
+        gets called when the main Kivy Event Loop is about to stop, setting a stop signal
+
+        :return:
+        """
         # The Kivy event loop is about to stop, set a stop signal;
         # otherwise the app window will close, but the Python process will
         # keep running until all secondary threads exit.
         self.root.stop.set()
 
-
     def build(self):
+        """
+        gets called upon running the GUI Object, initialises the window as well as the the GUI Layout
+        :return:
+        """
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
 
