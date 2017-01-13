@@ -8,7 +8,6 @@ Created on 07.01.2017 23:06
 GUI Prototype using kivy
 """
 
-from github3.repos.repo import Repository
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '800')
@@ -38,17 +37,12 @@ import matplotlib.pyplot as plt
 # sys.path.insert(0, os.path.abspath(".."))
 # sys.path.append(os.path.abspath("../prototype"))
 
-# import prototype.print_overloading
 
-# from prototype import *
-# import prototype.repository_classifier
 from prototype.repository_classifier import RepositoryClassifier
-from prototype.utility_funcs.io_agent import InputOutputAgent       # this import is used to enable or disable the GithubToken
+from prototype.utility_funcs.io_agent import InputOutputAgent  # this import is used to enable or disable the GithubToken
 
 from prototype.definitions.categories import CategoryStr
-# import prototype.github_repo
 import webbrowser
-from kivy.properties import BooleanProperty
 
 # threading and animation
 # multithreading in kivy:
@@ -60,7 +54,6 @@ from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
 from wordcloud import WordCloud
-from prototype.definitions.categories import Category
 
 from PIL import Image
 from PIL import ImageOps
@@ -77,7 +70,7 @@ kivy.require("1.9.0")
 # ...
 
 class StaticVars:
-    b_api_checkbox_state = False                    #checkbox status
+    b_api_checkbox_state = False                    # checkbox status for global use
 
 
 class StdOut(object):
@@ -87,60 +80,87 @@ class StdOut(object):
         self.oldStdOut = oldStdOut
 
     def write(self, string):
-        # self.txtctrl.write(string)
-        # try:
-        self.log_console.text += string #self.txtctrl.getvalue()
+
+        self.log_console.text += string  # self.txtctrl.getvalue()
         self.oldStdOut.write(string)
-        # except:
-        #     pass
 
     def flush(self):
         pass
 
 
 class InfoPopup(Popup):
+    """
+    The Information Popup which is called by show_info() in the GUILayout class.
+    """
     pass
 
 
 class SettingsPopup(Popup):
-    checkbox_api_token = ObjectProperty()
-    label_api_error = ObjectProperty()
+    """
+    The Settings Popup which is called by show_settings() in the GUILayout class.
+    """
+    checkbox_api_token = ObjectProperty()                   # The checkbox to toggle the usage of the API Token
+    label_api_error = ObjectProperty()                      # The Label to Output potential errors
 
     def __init__(self):
+        """
+        Called upon opening of the Settings Popup
+        Override the active state of the API checkbox to display the current internal saved state
+        """
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
 
-    def switch_api(self, b_status):     # TODO: This will pass the test the second time. now the app gets stuck
+    def switch_api(self, b_status):
+        """
+        Called by the API Checkbox in the Settings Popup.
+        checks whether the Token is is valid/existent and switches accordingly.
+
+        :param b_status: provides the current state of the checkbox
+        :return:
+        """
         try:
-            self.label_api_error.text = ""
-            InputOutputAgent.setWithToken(b_status)
-            StaticVars.b_api_checkbox_state = b_status
-            print('[INFO] Use API updated to: ' + str(b_status))
+            self.label_api_error.text = ""                              # Reset Error Label
+            InputOutputAgent.setWithToken(b_status)                     # set token if possible
+            StaticVars.b_api_checkbox_state = b_status                  # save state of the token
+            print('[INFO] Use API updated to: ' + str(b_status))        # print info to console
         except ConnectionError as ce:
             self.label_api_error.text = "[ERROR] No Connection could be established."
             print("[ERROR] No Connection could be established: " + str(ce))
-            self.checkbox_api_token.active = False
-            StaticVars.b_api_checkbox_state = False
+            self.checkbox_api_token.active = False                      # update checkbox to display the internal state
+            StaticVars.b_api_checkbox_state = False                     # set the internal state to false
 
 
 class FileSaverPopup(Popup):
-    filename_input = ObjectProperty()
-    label_save = ObjectProperty()
-
-    log_text = ""
+    """
+    The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
+    """
+    label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
 
     def save_file(self, path, filename):
+        """
+        Called by the "save" button in the Popup.
+        Saves the file with the input filename to the path. Handles Permission Errors.
+
+        :param path: The current folder path to save the file into, ends with "/"
+        :param filename: The filename to save the file as
+        :return:
+        """
         try:
             with open(os.path.join(path, filename), 'w') as stream:
                 stream.write(self.log_text)
+                stream.close()
             self.dismiss()
             print("[INFO] Logfile saved to: " + path + "\\" + filename)
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
+            stream.close()
 
 
 class GUILayout(BoxLayout):
+    """
+    The Main Layout of the Main Window. Handles most events
+    """
 
     stop = threading.Event()
 
@@ -157,6 +177,13 @@ class GUILayout(BoxLayout):
 
     # threading
     def start_classification_thread(self, l_text, url_in):
+        """
+        start the classification Thread to run parallel to the GUI so it doesn't freeze in the meantime
+
+        :param l_text: apparently needs this to not break. can be anything, isn't used anyway
+        :param url_in: the URL to check in for the Repository
+        :return:
+        """
         threading.Thread(target=self.classification_thread, args=(l_text, url_in)).start()
 
     def classification_thread(self, l_text, url_in):
@@ -186,19 +213,6 @@ class GUILayout(BoxLayout):
             print("[ERROR] An unknown Error occurred: " + str(ex))
             self.set_error("[ERROR] An unknown Error occurred")
 
-        # print('iLabel:', iLabel)
-        # Do some thread blocking operations.
-        # time.sleep(5)
-        # l_text = str(int(label_text) * 3000)
-
-        # Update a widget property in the main thread by decorating the
-        # called function with @mainthread.
-        # self.update_label_text(l_text)
-
-        # Do some more blocking operations.
-        # time.sleep(2)
-
-
     def start_test(self, *args):
         self.button_classifier.disabled = True                      # disable button
 
@@ -208,7 +222,7 @@ class GUILayout(BoxLayout):
 
         # Update a widget property.
         self.label_result.text = 'loading' #''Classificaition in progress'
-        self.label_info.text = "[INFO] Classification in progress"
+        self.set_info("[INFO] Classification in progress")
         # self.label_result.text = ('The UI remains responsive while the '
         #                    'second thread is running.')
 
@@ -388,7 +402,7 @@ class GUILayout(BoxLayout):
             self.start_classification_thread(self.label_info.text, url_in)
 
     def renderPlotChar(self, lstFinalPercentages):
-        print("render piechart")
+        print("[INFO] Rendering Piechart")
         # self.log_console.text = ""                                      # clear console
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
         # for i in range(0, 50):                                          # demonstrate console
