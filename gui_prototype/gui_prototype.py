@@ -72,6 +72,10 @@ kivy.require("1.9.0")
 
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
+    b_run_loading = True                            # boolean to stop loading thread from running too late
+    animation_loading = Animation()
+    anim_bar = None
+    str_stdOutPuffer = ""
 
 
 class StdOut(object):
@@ -82,8 +86,9 @@ class StdOut(object):
 
     def write(self, string):
 
-        self.log_console.text += string  # self.txtctrl.getvalue()
         self.oldStdOut.write(string)
+        StaticVars.str_stdOutPuffer += string
+
 
     def flush(self):
         pass
@@ -176,6 +181,25 @@ class GUILayout(BoxLayout):
     layout_diagram2 = ObjectProperty()              # ↑
     layout_diagram3 = ObjectProperty()              # ↑
 
+    def update_console(self):
+
+        self.log_console.text += StaticVars.str_stdOutPuffer
+        StaticVars.str_stdOutPuffer = ""
+
+    def reset_result_layout(self):
+        """
+        gets called whenever some operation failed to allow for another try.
+
+        :return:
+        """
+
+        StaticVars.b_run_loading = False
+        self.layout_pie_chart.clear_widgets()
+        self.label_result.text = "ERROR"
+        self.button_classifier.disabled = False
+        self.update_console()
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+
     # threading
     def start_classification_thread(self, l_text, url_in):
         """
@@ -185,7 +209,7 @@ class GUILayout(BoxLayout):
         :param url_in: the URL to check in for the Repository
         :return:
         """
-        threading.Thread(target=self.classification_thread, args=(l_text, url_in)).start()
+        threading.Thread(target=self.classification_thread, args=(l_text, url_in), daemon=True).start()
 
     def classification_thread(self, l_text, url_in):
         """
@@ -196,6 +220,7 @@ class GUILayout(BoxLayout):
         :param url_in: the URL to check in for the Repository
         :return:
         """
+
         # Remove a widget, update a widget property, create a new widget,
         # add it and animate it in the main thread by scheduling a function
         # call with Clock.
@@ -203,17 +228,23 @@ class GUILayout(BoxLayout):
 
         try:
             iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
+
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
             self.show_classification_result(iLabel, lstFinalPercentages, tmpRepo)
 
-
         except ConnectionError as ce:
             print("[ERROR] A connection error occurred: " + str(ce))
-            self.set_error("[ERROR] A connection error occurred")
+            self.set_error("[ERROR] The Repository is not accessible")
+            self.reset_result_layout()
+        except IndexError as ie:
+            print("[ERROR] An Index Error occurred: " + str(ie))
+            self.set_error("[ERROR] Have you added the repository?")
+            self.reset_result_layout()
         except Exception as ex:
             print("[ERROR] An unknown Error occurred: " + str(ex))
             self.set_error("[ERROR] An unknown Error occurred")
+            self.reset_result_layout()
 
     def start_loading_animation(self, *args):
         """
@@ -223,26 +254,31 @@ class GUILayout(BoxLayout):
         :return:
         """
 
-        self.button_classifier.disabled = True                      # disable button
+        if StaticVars.b_run_loading:
 
-        # Remove the button.
-        self.layout_pie_chart.clear_widgets()
-        # self.remove_widget(self.but_1)
+            print("Start loading animation")
 
-        # Update a widget property.
-        self.set_info("[INFO] Classification in progress")
-        # self.label_result.text = ('The UI remains responsive while the '
-        #                    'second thread is running.')
+            # self.button_classifier.disabled = True                      # disable button
 
-        # Create and add a new widget.
-        anim_bar = Factory.AnimWidget()
-        self.layout_pie_chart.add_widget(anim_bar)
+            # Remove the button.
+            self.layout_pie_chart.clear_widgets()
+            # self.remove_widget(self.but_1)
 
-        # Animate the added widget.
-        anim = Animation(opacity=0.3, width=100, duration=0.6)
-        anim += Animation(opacity=1, width=400, duration=0.8)
-        anim.repeat = True
-        anim.start(anim_bar)
+            # Update a widget property.
+            self.set_info("[INFO] Classification in progress")
+            self.label_result.text = "Loading..."
+
+            # Create and add a new widget.
+            StaticVars.anim_bar = Factory.AnimWidget()
+            self.layout_pie_chart.add_widget(StaticVars.anim_bar)
+
+            # Animate the added widget.
+            StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
+            StaticVars.animation_loading += Animation(opacity=1, width=400, duration=0.8)
+            StaticVars.animation_loading.repeat = True
+            StaticVars.animation_loading.start(StaticVars.anim_bar)
+        else:
+            print("didn't start loading animation")
 
     @mainthread
     def show_classification_result(self, iLabel, lstFinalPercentages, tmpRepo):
@@ -270,6 +306,9 @@ class GUILayout(BoxLayout):
             self.label_result.text = 'No Result'
 
         self.button_classifier.disabled = False                      # re-enable button
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        self.update_console()
 
     def show_wordcloud(self, text, iLabel):
         """
@@ -282,7 +321,6 @@ class GUILayout(BoxLayout):
 
         # print('text: ', text)
         img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[iLabel])).split()[-1]
-        print(iLabel)
         # the mask is inverted, so invert it again
         img = ImageOps.invert(img)
         img = img.resize((512, 512), Image.NONE)
@@ -377,18 +415,22 @@ class GUILayout(BoxLayout):
         if url_in == "":
             print("[ERROR] Input is empty")
             self.set_error("[ERROR] Input is empty")
+            self.update_console()
             return False
         elif not url_in.startswith("https://"):
             print("[ERROR] Input doesn't start with https://")
             self.set_error("[ERROR] Input doesn't start with https://")
+            self.update_console()
             return False
         elif not url_in.startswith("https://github.com/"):
             print("[ERROR] Input is not a GitHub URL")
             self.set_error("[ERROR] Input is not a GitHub URL")
+            self.update_console()
             return False
         else:
             print("[INFO] Input is a valid URL")
             self.set_info("[INFO] Input is a valid URL")
+            self.update_console()
             return True
 
     def set_info(self, info):
@@ -420,11 +462,12 @@ class GUILayout(BoxLayout):
 
         url_in = "".join(self.textfield_input.text.split())               # read input and remove whitespaces
         self.textfield_input.text = url_in
-        print("[INFO] Starting Process with \"" + url_in + "\"")    # print info to console
-        valid = self.validate_url(url_in)                           # validate input and handle Errors
+        print("[INFO] Starting Process with \"" + url_in + "\"")        # print info to console
+        valid = self.validate_url(url_in)                               # validate input and handle Errors
 
         if valid:
-            self.button_classifier.disabled = True  # disable button
+            self.button_classifier.disabled = True                      # disable button
+            StaticVars.b_run_loading = True                             # enable loading screen
             self.start_classification_thread(self.label_info.text, url_in)
 
     def renderPieChart(self, lstFinalPercentages):
