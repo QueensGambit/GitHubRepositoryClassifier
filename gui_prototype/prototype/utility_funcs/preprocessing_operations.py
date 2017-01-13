@@ -7,15 +7,14 @@ import logging
 def createVoabularyFeatures(lstRepos):
     # lstAllReadmes = []
 
-    lstAllDescr = []
+    lstRepoStringInfo = []
 
     for tmpRepo in lstRepos:
 
         # load the single lines to an array
         #print('tmpRepo.getFilteredREADME(): ', tmpRepo.getFilteredREADME())
-        # lstAllReadmes.append(tmpRepo.getFilteredReadme())
-
-        lstAllDescr.append(tmpRepo.getFilteredRepoDescription())
+        lstRepoStringInfo.append(tmpRepo.getFilteredReadme())
+        lstRepoStringInfo.append(tmpRepo.getFilteredRepoDescription())
 
     lstBannedWordsAddition = ['git', 'repositori', 'github', 'new', 'us', 'use', 'high', 'nasa', 'present', 'open', 'public', 'http', 'www', 'com']
 
@@ -27,7 +26,7 @@ def createVoabularyFeatures(lstRepos):
     # each column is mapped to a specific feature (see lstFeatureNames)
     # the value describes the occurrence of the word in the current line
     # matSparse = vectorizer.fit_transform(lstAllReadmes)
-    matSparse = vectorizer.fit_transform(lstAllDescr)
+    matSparse = vectorizer.fit_transform(lstRepoStringInfo)
 
     lstFeatureNames = vectorizer.get_feature_names()
 

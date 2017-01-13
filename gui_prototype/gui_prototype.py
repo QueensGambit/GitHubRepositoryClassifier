@@ -207,6 +207,7 @@ class GUILayout(BoxLayout):
 
         # Update a widget property.
         self.label_result.text = 'loading' #''Classificaition in progress'
+        self.label_info.text = "[INFO] Classification in progress"
         # self.label_result.text = ('The UI remains responsive while the '
         #                    'second thread is running.')
 
@@ -227,26 +228,17 @@ class GUILayout(BoxLayout):
 
     @mainthread
     def show_classification_result(self, iLabel, lstFinalPercentages):
-        # self.label_result.text = ('Second thread exited, a new thread has started. '
-        #                    'Close the app to exit the new thread and stop '
-        #                    'the main process.')
-        # self.label_result.text = 'loading done'
 
-        # self.label_info.text = str(int(self.label_info.text) + 1)
-        # print('show result')
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
             self.renderPlotChar(lstFinalPercentages)
             self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
-            print('iLabel: ', iLabel)
-            print('lstFinalPercentages: ', lstFinalPercentages)
+            self.label_info.text = "[INFO] Classification complete"
         else:
             self.label_result.text = 'Result: '
 
         self.button_classifier.disabled = False                      # re-enable button
-
-    # self.remove_widget(self.layout_pie_chart)
 
     def infinite_loop(self):
         iteration = 0
@@ -260,7 +252,7 @@ class GUILayout(BoxLayout):
 
     def show_wordcloud(self, text, label):
 
-        print('text: ', text)
+        # print('text: ', text)
         img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[label])).split()[-1]
         print(label)
         # the mask is inverted, so invert it again
@@ -352,7 +344,7 @@ class GUILayout(BoxLayout):
         self.log_console.scroll_y = 0                             # makes the console scroll down automatically
 
         # initialize the repositoryClassifier
-        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=False)
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
         self.repoClassifier.loadModelFromFile()
 
         self.strPath = os.path.dirname(__file__)
@@ -480,4 +472,16 @@ class RepositoryClassifierApp(App):
 
 gui = RepositoryClassifierApp()
 gui.run()
+
+# TODO: PRIORITY - DESCRIPTION
+# TODO: VERY HIGH - Build Windows-Excecutable
+# TODO: HIGH - Build single console excecutable
+# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling
+# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart)
+# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map)
+# TODO: MEDIUM - Build Sphinx-Docu
+# TODO: MEDIUM - Beautifully draw the word clouds in different colors
+# TODO: LOW - Drob-Down-List with nice examples which work well ;)
+# TODO: LOW - Add better animation while waiting
+
 

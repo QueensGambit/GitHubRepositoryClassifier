@@ -280,6 +280,15 @@ class RepositoryClassifier:
 
         strVocabPath += 'vocabList.dump'
         self.lstVoc = readVocabFromFile(strVocabPath)
+        # only print out the first 7 and the last 7 entries
+        # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
+        print('len(self.lstVoc):', len(self.lstVoc))
+        if len(self.lstVoc) > 14:
+            print("[", end="")
+            print(*self.lstVoc[:7], sep=", ", end=" ")
+            print('...', end=" ")
+            print(*self.lstVoc[-7:], sep=", ", end="")
+            print("]")
 
         self.bModelLoaded = True
 
@@ -451,12 +460,12 @@ class RepositoryClassifier:
 
         # print(self.clf.centroids_)
 
-        self.__printResult(tmpRepo, iLabel)
+        self.__printResult(tmpRepo, iLabel, bPrintWordHits=False)
 
         return iLabel, lstFinalPercentages, tmpRepo
 
 
-    def __printResult(self, tmpRepo, iLabel):
+    def __printResult(self, tmpRepo, iLabel, bPrintWordHits=False):
         """
         prints the repository name and its category by using the iLabel
 
@@ -469,9 +478,10 @@ class RepositoryClassifier:
         strStopper2 = "-" * 80
 
         print(strStopper1)
-        if self.bUseStringFeatures:
-            lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
-            printFeatureOccurences(self.lstVoc, lstOccurence, 0)
+        if bPrintWordHits is True:
+            if self.bUseStringFeatures:
+                lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
+                printFeatureOccurences(self.lstVoc, lstOccurence, 0)
 
         print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
 

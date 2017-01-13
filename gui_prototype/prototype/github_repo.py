@@ -85,7 +85,7 @@ class GithubRepo:
     def getRepoLanguage(self):
         strLanguage = self.apiJSON['language']
         # return string_operation.prepare_words(strLanguage)
-        if strLanguage:
+        if strLanguage is not None:
             return strLanguage
         else:
             return "undetected"
@@ -97,7 +97,7 @@ class GithubRepo:
         except ValueError:
             iLangIndex = lstLanguages.index("rare")
 
-        lstLangVec[iLangIndex] = 0 #1
+        lstLangVec[iLangIndex] = 1 #1 # you can enable and disable here
 
         return lstLangVec
 
