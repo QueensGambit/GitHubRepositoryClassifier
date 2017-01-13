@@ -30,15 +30,10 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-
-    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    repoClassifier.exportModelToFile()
-
+    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    #repoClassifier.exportModelToFile()
     clf, lstMeanValues, matIntegerTrainingData = repoClassifier.loadModelFromFile()
-    print('len', len(matIntegerTrainingData))
-    print('matIntegerTrainingData:', matIntegerTrainingData[:])
-
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
@@ -47,50 +42,39 @@ def main(args=None):
     # pobox
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
-"""
-    print('NormedIntegerFeatures:', tmpRepo.getNormedFeatures(lstMeanValues=lstMeanValues))
-    X = np.empty((10, 3))
-    X[0] = np.asarray([tmpRepo.getNumOpenIssue(),
-                       tmpRepo.getDevTime(),
-                       tmpRepo.getNumWatchers()],
-                      dtype=np.float64)
-    print(X)
+
+    print(matIntegerTrainingData)
+    plot_multi_dim(clf, matIntegerTrainingData)
+
+
+
+def plot_multi_dim(clf, data):
 
     normalizer = preprocessing.MinMaxScaler()
-    normalizer.fit(X)
-    X = normalizer.fit_transform(X)
+    normalizer.fit(data)
+    data = normalizer.fit_transform(data)
 
-    plot_multi_dim(clf, X)
-
-
-
-
-###############################################################################
-# Test
-##############################################################################
-def plot_multi_dim(clf, multidimarray):
-    if not isinstance(multidimarray, (np.ndarray, np.generic)):
+    if not isinstance(data, (np.ndarray, np.generic)):
         print('Need Numpy')
         return
 
-    if multidimarray.shape[1] > 2:
+    if len(data) < 2:
+        print('Need more values')
+        return
+
+    if data.shape[1] > 2:
         plt.cla()
         pca = decomposition.PCA(n_components=2)
-        pca.fit(multidimarray)
-        multidimarray = pca.transform(multidimarray)
+        pca.fit(data)
+        data = pca.transform(data)
 
-    # plt.scatter(multidimarray[:, 0],
-    #             multidimarray[:, 1])
-    # plt.show()
-
-    n_digits = 7
-    kmeans = KMeans(init='k-means++',n_clusters=n_digits, n_init=10)
-    kmeans.fit(multidimarray)
-
+    n_clusters = 7
+    kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+    kmeans.fit(data)
     h = .02
 
-    x_min, x_max = multidimarray[:, 0].min() - 1, multidimarray[:, 0].max() + 1
-    y_min, y_max = multidimarray[:, 1].min() - 1, multidimarray[:, 1].max() + 1
+    x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+    y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
     Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
@@ -103,11 +87,11 @@ def plot_multi_dim(clf, multidimarray):
                aspect='auto', origin='lower')
     #plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
-    plt.scatter(multidimarray[:, 0], multidimarray[:, 1], cmap=plt.cm.Paired)
+    plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
 
     centroids = clf.centroids_
     plt.scatter(centroids[:, 0], centroids[:, 1],
-                marker='o', s=169, linewidths=3,
+                marker='x', s=169, linewidths=3,
                 color='w', zorder=10)
 
     plt.xlim(x_min, x_max)
@@ -116,19 +100,6 @@ def plot_multi_dim(clf, multidimarray):
     plt.yticks(())
     plt.show()
 
-
-
-    # # Plot
-    # for i, (clf, y_train) in enumerate((ls50, ls100, rbf_svc, lp100)):
-    #     plt.subplot(2, 2, i + 1)
-    #     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    #
-    #     colors = [color_map[y] for y in y_train]
-    #
-    #     Z = Z.reshape(xx.shape)
-    #     cs = plt.contourf(xx, yy, Z, c=colors, cmap=plt.cm.Paired)
-    #     # plt.axis('off')
-    #
 
 
 #### RESULTS
@@ -156,7 +127,7 @@ def plot_multi_dim(clf, multidimarray):
 # ---> lenght < 2 and with removing stop words
 # fPredictionRes: 0.612903225806
 # fAccuracy:  61.2903225806 %
-"""
+
 
 if __name__ == "__main__":
     main()

@@ -22,6 +22,9 @@ from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.core.window import Window
+from sklearn import preprocessing
+from sklearn import decomposition
+from sklearn.cluster import KMeans
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 from kivy.uix.button import Button
@@ -537,39 +540,47 @@ class GUILayout(BoxLayout):
         """
         self.textfield_input.text = "https://github.com/" + link
 
-    def plot_multi_dim(self, multidimarray):
+    def plot_multi_dim(self, data):
 
-        if not isinstance(multidimarray, (np.ndarray, np.generic)):
-            print('Need Numpy')
-            return
+        if not isinstance(data, (np.ndarray, np.generic)):
+            raise Exception ('Need numpy array')
 
-        if multidimarray.shape[1] > 2:
-            plt.cla()
-            pca = decomposition.PCA(n_components=2)
-            pca.fit(multidimarray)
-            multidimarray = pca.transform(multidimarray)
+        if len(data) < 2:
+            raise Exception ('Lenght of array >= 2')
 
-        # plt.scatter(multidimarray[:, 0],
-        #             multidimarray[:, 1])
-        # plt.show()
-
-        h = .02
-
-        x_min, x_max = multidimarray[:, 0].min() - 1, multidimarray[:, 0].max() + 1
-        y_min, y_max = multidimarray[:, 1].min() - 1, multidimarray[:, 1].max() + 1
-        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+        normalizer = preprocessing.MinMaxScaler()
+        normalizer.fit(data)
+        data = normalizer.fit_transform(data)
 
         clf = self.repoClassifier.loadModelFromFile()
 
-        Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+        if data.shape[1] > 2:
+            plt.cla()
+            pca = decomposition.PCA(n_components=2)
+            pca.fit(data)
+            data = pca.transform(data)
+
+        n_clusters = 1
+        kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+        kmeans.fit(data)
+        h = .02
+
+        x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+        y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+        Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
         Z = Z.reshape(xx.shape)
+
         plt.figure(1)
         plt.clf()
         plt.imshow(Z, interpolation='nearest',
                    extent=(xx.min(), xx.max(), yy.min(), yy.max()),
                    cmap=plt.cm.Paired,
                    aspect='auto', origin='lower')
-        plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+        # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+
+        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
 
         centroids = clf.centroids_
         plt.scatter(centroids[:, 0], centroids[:, 1],
