@@ -36,6 +36,8 @@ from sklearn import decomposition
 
 import sys, os
 import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt2
+import matplotlib.pyplot as plt3
 
 # add the current directory to the system path in order to find the modules in relative path
 # sys.path.insert(0, os.path.abspath(".."))
@@ -305,6 +307,11 @@ class GUILayout(BoxLayout):
             strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
                 bApplyStemmer=True))
             self.show_wordcloud(strText, iLabel)
+
+            # multidimensional
+
+            self.plot_multi_dim(self.matIntegerTrainingData)
+
         else:
             self.label_result.text = 'No Result'
 
@@ -401,7 +408,7 @@ class GUILayout(BoxLayout):
 
         # initialize the repositoryClassifier
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.repoClassifier.loadModelFromFile()
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData = self.repoClassifier.loadModelFromFile()
 
         self.strPath = os.path.dirname(__file__)
 
@@ -541,21 +548,23 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = "https://github.com/" + link
 
     def plot_multi_dim(self, data):
-
-        if not isinstance(data, (np.ndarray, np.generic)):
-            raise Exception ('Need numpy array')
-
-        if len(data) < 2:
-            raise Exception ('Lenght of array >= 2')
+        clf = self.clf
 
         normalizer = preprocessing.MinMaxScaler()
         normalizer.fit(data)
         data = normalizer.fit_transform(data)
 
-        clf = self.repoClassifier.loadModelFromFile()
+        if not isinstance(data, (np.ndarray, np.generic)):
+            raise Exception('Need numpy array')
+
+        if len(data) < 2:
+            raise Exception('Lenght of array >= 2')
+
+        normalizer = preprocessing.MinMaxScaler()
+        normalizer.fit(data)
+        data = normalizer.fit_transform(data)
 
         if data.shape[1] > 2:
-            plt.cla()
             pca = decomposition.PCA(n_components=2)
             pca.fit(data)
             data = pca.transform(data)
@@ -572,26 +581,31 @@ class GUILayout(BoxLayout):
         Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
         Z = Z.reshape(xx.shape)
 
-        plt.figure(1)
-        plt.clf()
-        plt.imshow(Z, interpolation='nearest',
+        plt3.figure(3)
+        plt3.clf()
+        plt3.imshow(Z, interpolation='nearest',
                    extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt.cm.Paired,
+                   cmap=plt3.cm.Paired,
                    aspect='auto', origin='lower')
         # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
-        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
+        plt3.scatter(data[:, 0], data[:, 1], cmap=plt3.cm.Paired)
 
         centroids = clf.centroids_
-        plt.scatter(centroids[:, 0], centroids[:, 1],
+        plt3.scatter(centroids[:, 0], centroids[:, 1],
                     marker='x', s=169, linewidths=3,
                     color='w', zorder=10)
 
-        plt.xlim(x_min, x_max)
-        plt.ylim(y_min, y_max)
-        plt.xticks(())
-        plt.yticks(())
-        plt.show()
+        plt3.xlim(x_min, x_max)
+        plt3.ylim(y_min, y_max)
+        plt3.xticks(())
+        plt3.yticks(())
+        # .show()
+
+        fig = plt3.gcf()
+        fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+        self.layout_diagram3.clear_widgets()
+        self.layout_diagram3.add_widget(FigureCanvas(fig))
 
 
 class RepositoryClassifierApp(App):
