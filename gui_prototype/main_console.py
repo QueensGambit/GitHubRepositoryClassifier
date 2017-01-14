@@ -39,7 +39,7 @@ def main(args=None):
     repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
-    iLabel, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
+    iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
     # pobox/overwatch
     # pobox
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')

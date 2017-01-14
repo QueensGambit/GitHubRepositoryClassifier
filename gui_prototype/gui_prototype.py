@@ -316,7 +316,9 @@ class GUILayout(BoxLayout):
             # Wordcloud
             strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
                 bApplyStemmer=True))
-            self.show_wordcloud(strText, iLabel)
+
+            if strText != " ":
+                self.show_wordcloud(strText, iLabel)
 
             # multidimensional
 

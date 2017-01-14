@@ -19,7 +19,7 @@ def prepare_words(raw_text, bApplyStemmer=True):
     # raw_text = re.sub(r"[\{\(\[\<].*?[\)\]\>\}]", "", raw_text)         # remove everything in a bracket
     raw_text = re.sub(r'\([^()]*\)', ' ', raw_text)
     # http://stackoverflow.com/questions/11331982/how-to-remove-any-url-within-a-string-in-python
-    raw_text = re.sub(r'\[[^()]*\]', ' ', raw_text)
+    # raw_text = re.sub(r'\[[^()]*\]', ' ', raw_text)
     # raw_text = re.sub(r'\<[^()]*\>', ' ', raw_text)
 
     # beautiful = BeautifulSoup(raw_text, "lxml")                         # remove all html tags

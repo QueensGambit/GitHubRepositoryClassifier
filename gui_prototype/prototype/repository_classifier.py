@@ -212,6 +212,10 @@ class RepositoryClassifier:
         #
         self.normalizer = preprocessing.Normalizer()
         self.normalizer.fit(self.lstTrainData)
+
+        # self.normalizerIntegerAttr = preprocessing.Normalizer()
+        self.normalizerIntegerAttr.fit(self.matIntegerTrainingData)
+
         self.lstTrainData = self.normalizer.fit_transform(self.lstTrainData)
 
         # lstTrainData = self.stdScaler.fit_transform(lstTrainData)
@@ -385,29 +389,17 @@ class RepositoryClassifier:
 
         # use a verity matrix to validate the result
         matPredictionRes = np.copy(matPredictionTarget)
+        matPredictionResWithAlt = np.copy(matPredictionTarget)
 
         for i in range(iNumOfPredictions):
-            tmpRepo = GithubRepo.fromURL(dtUnlabeledData["URL"][i])
 
-            lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
-            if self.bUseStringFeatures:
-                lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
-            lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
-
-            # apply pre-processing
-            # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
-
-            # iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
-            lstInputFeatures = self.normalizer.transform(lstInputFeatures)
-            iLabel = int(self.clf.predict(lstInputFeatures))
             # set the verity matrix
             strTarget = dtUnlabeledData["CATEGORY"][i]
             strTargetAlt1 = dtUnlabeledData["CATEGORY_ALTERNATIVE_1"][i]
             strTargetAlt2 = dtUnlabeledData["CATEGORY_ALTERNATIVE_2"][i]
 
-            matPredictionTarget[i, self.lstStrCategories.index(strTarget)] = 1
-
             print('strTarget: ', strTarget, end="")
+
             if pd.notnull(strTargetAlt1):
                 # strTargetAlt1 = strTargetAlt1[1:]
                 # print('i:', i)
@@ -420,20 +412,29 @@ class RepositoryClassifier:
                 print('strTargetAlt2:', strTargetAlt2, end="")
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt2)] = 1
 
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = self.predictCategoryFromURL(dtUnlabeledData["URL"][i])
+
+            matPredictionTarget[i, self.lstStrCategories.index(strTarget)] = 1
+
             print()
 
             matPredictionRes[i, iLabel] = 1
+            matPredictionResWithAlt[i, iLabel] = 1
+            matPredictionResWithAlt[i, iLabelAlt] = 1
 
             # print('len(lstOccurence):', len(lstOccurence))
 
-            self.__printResult(tmpRepo, iLabel)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
         print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
         print('verity matrix for matPredictionRes:\n ', matPredictionRes)
 
         matCompRes = np.multiply(matPredictionTarget, matPredictionRes)
+        matCompResAlt = np.multiply(matPredictionTarget, matPredictionResWithAlt)
         fPredictionRes = sum(matCompRes.flatten()) / iNumOfPredictions
+        fPredictionResWithAlt = sum(matCompResAlt.flatten()) / iNumOfPredictions
         print('fPredictionRes:', fPredictionRes)
+        print('fPredictionResWithAlt:', fPredictionResWithAlt)
         fAccuracy = fPredictionRes * 100
         print('fAccuracy: ', fAccuracy, '%')
 
@@ -468,9 +469,14 @@ class RepositoryClassifier:
         # apply pre-processing
         # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
         # print('lstInputFeature pre normalize: ', lstInputFeatures)
+        lstInputFeatures = np.array(lstInputFeatures).reshape(1, len(lstInputFeatures))
+
         lstInputFeatures = self.normalizer.transform(lstInputFeatures)
         # print('lstInputFeature post normalize: ', lstInputFeatures)
 
+        # lstInputFeatures = lstInputFeatures.tolist()
+
+        # reshape Input Features -> otherwise a deprecation warning occurs
         iLabel = int(self.clf.predict(lstInputFeatures))
 
         # res = self.clf.predict_proba([lstInputFeatures])
@@ -480,14 +486,16 @@ class RepositoryClassifier:
 
 
         # self.bUseCentroids = False
-        self.__printResult(tmpRepo, iLabel, bPrintWordHits=False)
+
         if self.bUseCentroids is True:
             matCentroids = self.clf.centroids_
-            lstFinalPercentages = self.predictProbNearestCentroids(self, matCentroids, lstInputFeatures)
+            lstFinalPercentages = self.predictProbNearestCentroids(matCentroids, lstInputFeatures)
         else:
             lstFinalPercentages = self.clf.predict_proba(lstInputFeatures)
 
         iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
+
+        self.__printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
         return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo
 
@@ -544,7 +552,7 @@ class RepositoryClassifier:
         return lstFinalPercentages
 
 
-    def __printResult(self, tmpRepo, iLabel, bPrintWordHits=False):
+    def __printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
         """
         prints the repository name and its category by using the iLabel
 
@@ -565,4 +573,7 @@ class RepositoryClassifier:
         print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
 
         print(self.lstStrCategories[iLabel])
+        if iLabelAlt is not None:
+            print('Alternative: ', self.lstStrCategories[iLabelAlt])
+
         print(strStopper2)
