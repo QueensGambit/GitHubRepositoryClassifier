@@ -408,7 +408,7 @@ class GUILayout(BoxLayout):
 
         # initialize the repositoryClassifier
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.clf, self.lstMeanValues, self.matIntegerTrainingData = self.repoClassifier.loadModelFromFile()
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer = self.repoClassifier.loadModelFromFile()
 
         self.strPath = os.path.dirname(__file__)
 
@@ -500,8 +500,6 @@ class GUILayout(BoxLayout):
         for i, _ in enumerate(labels):
             lstLabelsPieChart[i] += ' (' + str(round(lstFinalPercentages[i], 1)) + '%)'
 
-        colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'gray', 'lightblue', 'tomato']
-
         # http://stackoverflow.com/questions/2474015/getting-the-index-of-the-returned-max-or-min-item-using-max-min-on-a-list
         iMaxIndex = lstFinalPercentages.index(max(lstFinalPercentages))
 
@@ -511,7 +509,7 @@ class GUILayout(BoxLayout):
         fig = plt.figure(1, figsize=(10, 10), dpi=70)
         fig.clear()
 
-        plt.pie(lstFinalPercentages, explode=explode, colors=colors, labels=labels, autopct='%1.1f%%', shadow=True,
+        plt.pie(lstFinalPercentages, explode=explode, colors=CategoryStr.lstStrColors, labels=labels, autopct='%1.1f%%', shadow=True,
                   startangle=90)
 
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!

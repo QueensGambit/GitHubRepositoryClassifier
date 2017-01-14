@@ -29,6 +29,7 @@ import os
 from .utility_funcs.io_agent import InputOutputAgent
 # import prototype.github_repo
 from .github_repo import GithubRepo
+from numpy import array
 
 class RepositoryClassifier:
 
@@ -47,6 +48,9 @@ class RepositoryClassifier:
         self.lstMeanValues = None
         self.lstVoc = None
         self.stdScaler = None
+        self.lstTrainLabels = None
+        self.lstTrainData = None
+        self.normalizer = None
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -69,6 +73,9 @@ class RepositoryClassifier:
         self.strModelFileName = 'RepositoryClassifier.pkl'
         self.strLstMeanValuesFileName = 'lstMeanValues.pkl'
         self.strMatIntegerTrainingData = 'matIntegerTrainingData.pkl'
+        self.strLstTrainLabels = 'lstTrainLabels.pkl'
+        self.strLstTrainData = 'lstTrainData.pkl'
+        self.strNormalizer = 'strNormalizer.pkl'
 
         self.iNumCategories = len(self.lstStrCategories)
 
@@ -102,8 +109,8 @@ class RepositoryClassifier:
             lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))
 
         # fill the train and the label-data
-        lstTrainData = []
-        lstTrainLabels = []
+        self.lstTrainData = []
+        self.lstTrainLabels = []
 
         print('~~~~~~~~~~ CALCULATE THE MEAN VALUES ~~~~~~~~~~')
         self.lstMeanValues = [0] * 7
@@ -118,7 +125,7 @@ class RepositoryClassifier:
 
             # find the according label as an intger for the current repository
             # the label is defined in trainData
-            lstTrainLabels.append(self.lstStrCategories.index(trainData["CATEGORY"][i]))
+            self.lstTrainLabels.append(self.lstStrCategories.index(trainData["CATEGORY"][i]))
             i += 1
 
         # replace every 0 with 1, otherwise division by 0 occurs
@@ -172,13 +179,27 @@ class RepositoryClassifier:
             # test using unnormed features
             # lstInputFeatures = tmpGithubRepo.getIntegerFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
 
-            lstTrainData.append(lstInputFeatures)
+            self.lstTrainData.append(lstInputFeatures)
 
         print("lstTrainData:")
-        print(lstTrainData)
+        print(self.lstTrainData)
+
+
+        # calculate median values:
+        # npArr = np.array(self.matIntegerTrainingData)
+        # npMean = np.mean(npArr.value[:])
+        # npMean = npArr.mean(axis=1)
+
+        # calculate the mean values:
+        # npMedian = np.median(npArr,axis=1)
+
+        # lstMeanValues = npMedian.tolist()
+        # print('lstMedianValues:', lstMeanValues)
+        # print('npMean:', npMean)
+        # print('npMedian:', npMedian)
 
         print("lstTrainLabels:")
-        print(lstTrainLabels)
+        print(self.lstTrainLabels)
 
         print('self.matIntegerTrainingData')
         print(self.matIntegerTrainingData)
@@ -187,12 +208,16 @@ class RepositoryClassifier:
         # self.stdScaler.fit(lstTrainData)
         # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
         #
+        self.normalizer = preprocessing.Normalizer()
+        self.normalizer.fit(self.lstTrainData)
+        self.lstTrainData = self.normalizer.fit_transform(self.lstTrainData)
+
         # lstTrainData = self.stdScaler.fit_transform(lstTrainData)
         # lstTrainData = preprocessing.normalize(lstTrainData)
 
         # print("lstTrainDataNormalized:", lstTrainData)
 
-        return lstTrainData, lstTrainLabels
+        return self.lstTrainData, self.lstTrainLabels
 
     def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
@@ -272,6 +297,9 @@ class RepositoryClassifier:
             joblib.dump(self.clf, self.strModelPath + self.strModelFileName)
             joblib.dump(self.lstMeanValues, self.strModelPath + self.strLstMeanValuesFileName)
             joblib.dump(self.matIntegerTrainingData, self.strModelPath + self.strMatIntegerTrainingData)
+            joblib.dump(self.lstTrainLabels, self.strModelPath + self.strLstTrainLabels)
+            joblib.dump(self.lstTrainData, self.strModelPath + self.strLstTrainData)
+            joblib.dump(self.normalizer, self.strModelPath + self.strNormalizer)
 
     def loadModelFromFile(self):
         """
@@ -287,6 +315,10 @@ class RepositoryClassifier:
         self.lstMeanValues = joblib.load(self.strModelPath + self.strLstMeanValuesFileName)
         # load the integer training data for later plotting
         self.matIntegerTrainingData = joblib.load(self.strModelPath + self.strMatIntegerTrainingData)
+        self.lstTrainLabels = joblib.load(self.strModelPath + self.strLstTrainLabels)
+        self.lstTrainData = joblib.load(self.strModelPath + self.strLstTrainData)
+        self.normalizer = joblib.load(self.strModelPath + self.strNormalizer)
+
         print('lstMeanValues: ', self.lstMeanValues)
 
         print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
@@ -306,7 +338,7 @@ class RepositoryClassifier:
 
         self.bModelLoaded = True
 
-        return self.clf, self.lstMeanValues, self.matIntegerTrainingData
+        return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer
 
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """
@@ -364,7 +396,8 @@ class RepositoryClassifier:
             # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
 
             # iLabel = int(clf.predict([tmpRepo.getNormedFeatures(lstMeanValues)]))
-            iLabel = int(self.clf.predict([lstInputFeatures]))
+            lstInputFeatures = self.normalizer.transform(lstInputFeatures)
+            iLabel = int(self.clf.predict(lstInputFeatures))
             # set the verity matrix
             strTarget = dtUnlabeledData["CATEGORY"][i]
             strTargetAlt1 = dtUnlabeledData["CATEGORY_ALTERNATIVE_1"][i]
@@ -432,8 +465,11 @@ class RepositoryClassifier:
 
         # apply pre-processing
         # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
+        # print('lstInputFeature pre normalize: ', lstInputFeatures)
+        lstInputFeatures = self.normalizer.transform(lstInputFeatures)
+        # print('lstInputFeature post normalize: ', lstInputFeatures)
 
-        iLabel = int(self.clf.predict([lstInputFeatures]))
+        iLabel = int(self.clf.predict(lstInputFeatures))
 
         # res = self.clf.predict_proba([lstInputFeatures])
         # print('self.clf.predict_proba()', res)

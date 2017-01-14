@@ -15,8 +15,10 @@ from sklearn.cluster import KMeans
 
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs.io_agent import InputOutputAgent
+import matplotlib.patches as mpatches
 
 import sys
+from prototype.definitions.categories import CategoryStr
 
 
 def main(args=None):
@@ -30,11 +32,11 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    #repoClassifier.exportModelToFile()
-    clf, lstMeanValues, matIntegerTrainingData = repoClassifier.loadModelFromFile()
-    #repoClassifier.predictResultsAndCompare()
+    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    repoClassifier.exportModelToFile()
+    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer = repoClassifier.loadModelFromFile()
+    repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
@@ -44,13 +46,17 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
     print(matIntegerTrainingData)
-    plot_multi_dim(clf, matIntegerTrainingData)
+    plot_multi_dim(clf, lstTrainData, lstTrainLabels)
 
 
 
-def plot_multi_dim(clf, data):
+def plot_multi_dim(clf, data, lstTrainLabels):
 
-    normalizer = preprocessing.MinMaxScaler()
+    # normalizer = preprocessing.MinMaxScaler()
+    # normalizer = preprocessing.RobustScaler()
+    # normalizer = preprocessing.StandardScaler()
+    normalizer = preprocessing.Normalizer()
+
     normalizer.fit(data)
     data = normalizer.fit_transform(data)
 
@@ -87,17 +93,34 @@ def plot_multi_dim(clf, data):
                aspect='auto', origin='lower')
     #plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
-    plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
+    lstColors = [None] * len(lstTrainLabels)
+    lstStrLabels = [None] * len(lstTrainLabels)
+
+    for i, iLabel in enumerate(lstTrainLabels):
+        lstColors[i] = CategoryStr.lstStrColors[iLabel]
+        lstStrLabels = CategoryStr.lstStrCategories[iLabel]
+
+    plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
 
     centroids = clf.centroids_
+    centroids = normalizer.fit_transform(centroids)
+
+
     plt.scatter(centroids[:, 0], centroids[:, 1],
                 marker='x', s=169, linewidths=3,
-                color='w', zorder=10)
+                color=CategoryStr.lstStrColors, zorder=10)
 
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
     plt.xticks(())
     plt.yticks(())
+
+    lstPatches = [None] *len(CategoryStr.lstStrCategories)
+    for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+        lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+
+    plt.legend(handles=lstPatches)
+
     plt.show()
 
 

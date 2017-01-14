@@ -1,7 +1,7 @@
-from githubRepo import GithubRepo
+from prototype.github_repo import GithubRepo
 import numpy as np
 from sklearn.neighbors.nearest_centroid import NearestCentroid
-import utility_funcs.io_agent
+from prototype.utility_funcs.io_agent import InputOutputAgent
 from os import path
 
 # read all input files
@@ -36,3 +36,10 @@ print('strPathJSON:', strPathJSON)
 print(clf.predict([[42] * len(ourRepo.getIntegerFeatures())]))
 
 print('Prediciton for Barocde-App:', clf.predict([ourRepo.getIntegerFeatures()]))
+
+# Lucifier129_Lucifier129.github.io
+io = InputOutputAgent('Lucifier129', 'Lucifier129.github.io')
+tmpRepo = GithubRepo('Lucifier129', 'Lucifier129.github.io')
+strReadme = tmpRepo.getReadme()
+# strReadme = io.getReadme()
+print('strReadme: ', strReadme)

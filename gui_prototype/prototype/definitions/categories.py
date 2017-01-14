@@ -21,6 +21,8 @@ class CategoryStr():
     lstStrIcons[Category.DATA] = "cloud-download-8x.png"
     lstStrIcons[Category.OTHER] = "beaker-8x.png"
 
+    lstStrColors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'gray', 'lightblue', 'tomato']
+
 
 
 
