@@ -39,10 +39,10 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    #repoClassifier.exportModelToFile()
-    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer = repoClassifier.loadModelFromFile()
+    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    repoClassifier.exportModelToFile()
+    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, _ = repoClassifier.loadModelFromFile()
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')

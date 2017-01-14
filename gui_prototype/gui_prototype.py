@@ -427,7 +427,7 @@ class GUILayout(BoxLayout):
 
         # initialize the repositoryClassifier
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer = self.repoClassifier.loadModelFromFile()
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, _ = self.repoClassifier.loadModelFromFile()
 
         self.strPath = os.path.dirname(__file__)
 
