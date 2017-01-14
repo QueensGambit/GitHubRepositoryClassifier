@@ -52,7 +52,7 @@ class RepositoryClassifier:
         self.lstTrainData = None
         self.normalizer = None
         self.bUseCentroids = True
-
+        self.normalizerIntegerAttr = None
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -77,7 +77,8 @@ class RepositoryClassifier:
         self.strMatIntegerTrainingData = 'matIntegerTrainingData.pkl'
         self.strLstTrainLabels = 'lstTrainLabels.pkl'
         self.strLstTrainData = 'lstTrainData.pkl'
-        self.strNormalizer = 'strNormalizer.pkl'
+        self.strNormalizer = 'normalizer.pkl'
+        self.strNormalizerIntegerAttr = 'normalizerIntegerAttr'
 
         self.iNumCategories = len(self.lstStrCategories)
 
@@ -213,7 +214,7 @@ class RepositoryClassifier:
         self.normalizer = preprocessing.Normalizer()
         self.normalizer.fit(self.lstTrainData)
 
-        # self.normalizerIntegerAttr = preprocessing.Normalizer()
+        self.normalizerIntegerAttr = preprocessing.Normalizer()
         self.normalizerIntegerAttr.fit(self.matIntegerTrainingData)
 
         self.lstTrainData = self.normalizer.fit_transform(self.lstTrainData)
@@ -306,6 +307,7 @@ class RepositoryClassifier:
             joblib.dump(self.lstTrainLabels, self.strModelPath + self.strLstTrainLabels)
             joblib.dump(self.lstTrainData, self.strModelPath + self.strLstTrainData)
             joblib.dump(self.normalizer, self.strModelPath + self.strNormalizer)
+            joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
 
     def loadModelFromFile(self):
         """
@@ -324,6 +326,7 @@ class RepositoryClassifier:
         self.lstTrainLabels = joblib.load(self.strModelPath + self.strLstTrainLabels)
         self.lstTrainData = joblib.load(self.strModelPath + self.strLstTrainData)
         self.normalizer = joblib.load(self.strModelPath + self.strNormalizer)
+        self.normalizerIntegerAttr = joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
 
         print('lstMeanValues: ', self.lstMeanValues)
 
@@ -344,7 +347,7 @@ class RepositoryClassifier:
 
         self.bModelLoaded = True
 
-        return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer
+        return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr
 
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """
