@@ -9,12 +9,19 @@ Sample usage of the repository-classifier
 """
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
+from pathlib import Path
+from sklearn import svm
 from sklearn import preprocessing
 from sklearn import decomposition
 from sklearn.cluster import KMeans
-
+from sklearn.semi_supervised import label_propagation
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs.io_agent import InputOutputAgent
+from prototype.github_repo import GithubRepo
+
+from sklearn import datasets
+from sklearn.semi_supervised import LabelPropagation
 import matplotlib.patches as mpatches
 
 import sys
@@ -32,11 +39,11 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    repoClassifier.exportModelToFile()
+    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    #repoClassifier.exportModelToFile()
     clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer = repoClassifier.loadModelFromFile()
-    repoClassifier.predictResultsAndCompare()
+    #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
@@ -45,8 +52,11 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
+
+
     print(matIntegerTrainingData)
-    plot_multi_dim(clf, lstTrainData, lstTrainLabels)
+    #plot_multi_dim(clf, lstTrainData, lstTrainLabels)
+    semisupervised(matIntegerTrainingData)
 
 
 
@@ -69,7 +79,6 @@ def plot_multi_dim(clf, data, lstTrainLabels):
         return
 
     if data.shape[1] > 2:
-        plt.cla()
         pca = decomposition.PCA(n_components=2)
         pca.fit(data)
         data = pca.transform(data)
@@ -122,6 +131,50 @@ def plot_multi_dim(clf, data, lstTrainLabels):
     plt.legend(handles=lstPatches)
 
     plt.show()
+
+
+def semisupervised(matIntegerTrainingData):
+
+    X = matIntegerTrainingData
+    length = len(matIntegerTrainingData)
+    print(length)
+
+    strProjectDir = str(Path().resolve().parent)
+    strProjPathFileNameCSV = '/data/csv/additional_data_sets_cleaned.csv'
+
+    trainData = pd.read_csv(strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
+    iNumTrainData = len(trainData.index)
+
+    lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
+    lstGithubRepo = []
+
+    for i in range(iNumTrainData):
+        lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))
+
+    y = np.empty(length)
+
+    for i in range(length):
+
+        if i % 5 == 0:
+            y[i] = np.asarray([lstStrCategories.index(trainData["CATEGORY"][i])],
+                              dtype=np.int)
+        else:
+            y[i] = np.asarray([-1], dtype=np.int)
+
+    clf = label_propagation.LabelPropagation()
+    #iris = datasets.load_iris()
+    #random_unlabeled_points = np.where(np.random.randint(0, 2, size=len(iris.target)))
+    #labels = np.copy(iris.target)
+    #labels[random_unlabeled_points] = -1
+    #clf.fit(iris.data, labels)
+    #print(iris.data)
+    #print(clf.predict(iris.data))
+
+    clf.fit(X,y)
+    print(clf.predict(X))
+
+
+
 
 
 

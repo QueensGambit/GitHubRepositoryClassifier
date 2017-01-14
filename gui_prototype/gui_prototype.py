@@ -33,6 +33,7 @@ from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worr
 from kivy.uix.popup import Popup
 import clipboard
 from sklearn import decomposition
+import matplotlib.patches as mpatches
 
 import sys, os
 import matplotlib.pyplot as plt
@@ -558,12 +559,8 @@ class GUILayout(BoxLayout):
         """
         self.textfield_input.text = "https://github.com/" + link
 
-    def plot_multi_dim(self, data):
+    def plot_multi_dim(self, data, lstTrainLabels):
         clf = self.clf
-
-        normalizer = preprocessing.MinMaxScaler()
-        normalizer.fit(data)
-        data = normalizer.fit_transform(data)
 
         if not isinstance(data, (np.ndarray, np.generic)):
             raise Exception('Need numpy array')
@@ -571,7 +568,7 @@ class GUILayout(BoxLayout):
         if len(data) < 2:
             raise Exception('Lenght of array >= 2')
 
-        normalizer = preprocessing.MinMaxScaler()
+        normalizer = preprocessing.Normalizer()
         normalizer.fit(data)
         data = normalizer.fit_transform(data)
 
@@ -580,7 +577,7 @@ class GUILayout(BoxLayout):
             pca.fit(data)
             data = pca.transform(data)
 
-        n_clusters = 1
+        n_clusters = 7
         kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
         kmeans.fit(data)
         h = .02
@@ -601,18 +598,31 @@ class GUILayout(BoxLayout):
                    aspect='auto', origin='lower')
         # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
-        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
+        lstColors = [None] * len(lstTrainLabels)
+
+        for i, iLabel in enumerate(lstTrainLabels):
+            lstColors[i] = CategoryStr.lstStrColors[iLabel]
+
+        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
 
         centroids = clf.centroids_
+        centroids = normalizer.fit_transform(centroids)
+
         plt.scatter(centroids[:, 0], centroids[:, 1],
                     marker='x', s=169, linewidths=3,
-                    color='w', zorder=10)
+                    color=CategoryStr.lstStrColors, zorder=10)
 
         plt.xlim(x_min, x_max)
         plt.ylim(y_min, y_max)
         plt.xticks(())
         plt.yticks(())
         # .show()
+
+        lstPatches = [None] * len(CategoryStr.lstStrCategories)
+        for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+            lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+
+        plt.legend(handles=lstPatches)
 
         fig = plt.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
