@@ -47,8 +47,8 @@ def main(args=None):
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
-    # pobox/overwatch
-    # pobox
+    #pobox/overwatch
+    #pobox
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
@@ -56,7 +56,6 @@ def main(args=None):
     print(matIntegerTrainingData)
     #plot_multi_dim(clf, lstTrainData, lstTrainLabels)
     semisupervised(matIntegerTrainingData)
-
 
 
 def plot_multi_dim(clf, data, lstTrainLabels):
