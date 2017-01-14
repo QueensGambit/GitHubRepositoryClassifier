@@ -11,7 +11,7 @@ The Categories are:
 * **DOCS** - a repository primarily used for tracking and storage of non-educational documents
 * **WEB** - a repository primarily used to host static personal webpages or blogs
 * **DATA** - a repository primarily used to store data sets
-* **OTHER** - this category is used only is there is no stron correlation to any other repository category
+* **OTHER** - this category is used only if there is no strong correlation to any other repository category
 
 
 ## Installation
