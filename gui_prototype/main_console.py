@@ -19,6 +19,7 @@ from sklearn.semi_supervised import label_propagation
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs.io_agent import InputOutputAgent
 from prototype.github_repo import GithubRepo
+from matplotlib.colors import colorConverter
 
 from sklearn import datasets
 from sklearn.semi_supervised import LabelPropagation
@@ -39,23 +40,24 @@ def main(args=None):
     # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
-    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
-    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    repoClassifier.exportModelToFile()
+    #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
+    #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+    #repoClassifier.exportModelToFile()
     clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr = repoClassifier.loadModelFromFile()
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
-    #pobox/overwatch
-    #pobox
+    # pobox/overwatch
+    # pobox
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
+    matIntegerTrainingData = normalizer.transform(matIntegerTrainingData)
 
-    print(matIntegerTrainingData)
     #plot_multi_dim(clf, lstTrainData, lstTrainLabels)
     semisupervised(matIntegerTrainingData)
+
 
 
 def plot_multi_dim(clf, data, lstTrainLabels):
@@ -63,18 +65,10 @@ def plot_multi_dim(clf, data, lstTrainLabels):
     # normalizer = preprocessing.MinMaxScaler()
     # normalizer = preprocessing.RobustScaler()
     # normalizer = preprocessing.StandardScaler()
-    normalizer = preprocessing.Normalizer()
-
-    normalizer.fit(data)
-    data = normalizer.fit_transform(data)
-
-    if not isinstance(data, (np.ndarray, np.generic)):
-        print('Need Numpy')
-        return
-
-    if len(data) < 2:
-        print('Need more values')
-        return
+    # normalizer = preprocessing.Normalizer()
+    #
+    # normalizer.fit(data)
+    # data = normalizer.fit_transform(data)
 
     if data.shape[1] > 2:
         pca = decomposition.PCA(n_components=2)
@@ -103,19 +97,20 @@ def plot_multi_dim(clf, data, lstTrainLabels):
     lstColors = [None] * len(lstTrainLabels)
     lstStrLabels = [None] * len(lstTrainLabels)
 
-    for i, iLabel in enumerate(lstTrainLabels):
-        lstColors[i] = CategoryStr.lstStrColors[iLabel]
-        lstStrLabels = CategoryStr.lstStrCategories[iLabel]
+#    for i, iLabel in enumerate(lstTrainLabels):
+#        lstColors[i] = CategoryStr.lstStrColors[iLabel]
+#        lstStrLabels = CategoryStr.lstStrCategories[iLabel]
 
-    plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
+    # plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
+    plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
 
-    centroids = clf.centroids_
-    centroids = normalizer.fit_transform(centroids)
-
-
-    plt.scatter(centroids[:, 0], centroids[:, 1],
-                marker='x', s=169, linewidths=3,
-                color=CategoryStr.lstStrColors, zorder=10)
+    # if clf is not None:
+    #     centroids = clf.centroids_
+    #     centroids = normalizer.fit_transform(centroids)
+    #
+    #     plt.scatter(centroids[:, 0], centroids[:, 1],
+    #                 marker='x', s=169, linewidths=3,
+    #                 color=CategoryStr.lstStrColors, zorder=10)
 
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
@@ -133,43 +128,93 @@ def plot_multi_dim(clf, data, lstTrainLabels):
 
 def semisupervised(matIntegerTrainingData):
 
-    X = matIntegerTrainingData
-    length = len(matIntegerTrainingData)
-    print(length)
-
     strProjectDir = str(Path().resolve().parent)
     strProjPathFileNameCSV = '/data/csv/additional_data_sets_cleaned.csv'
-
     trainData = pd.read_csv(strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
-    iNumTrainData = len(trainData.index)
-
     lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
     lstGithubRepo = []
+
+    length = len(matIntegerTrainingData)
+    iNumTrainData = len(trainData.index)
+    X = matIntegerTrainingData
+    y = np.empty(length)
 
     for i in range(iNumTrainData):
         lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))
 
-    y = np.empty(length)
-
     for i in range(length):
-
-        if i % 5 == 0:
-            y[i] = np.asarray([lstStrCategories.index(trainData["CATEGORY"][i])],
-                              dtype=np.int)
+        if i % 2 == 0:
+            value = lstStrCategories.index(trainData["CATEGORY"][i])
         else:
-            y[i] = np.asarray([-1], dtype=np.int)
+            value = -1
 
-    clf = label_propagation.LabelPropagation()
-    #iris = datasets.load_iris()
-    #random_unlabeled_points = np.where(np.random.randint(0, 2, size=len(iris.target)))
-    #labels = np.copy(iris.target)
-    #labels[random_unlabeled_points] = -1
-    #clf.fit(iris.data, labels)
-    #print(iris.data)
-    #print(clf.predict(iris.data))
+        y[i] = np.asarray([value], dtype=np.int)
 
-    clf.fit(X,y)
-    print(clf.predict(X))
+    plot(X, y, lstStrCategories)
+
+
+def plot(X, y, lstStrCategories):
+
+    pca = decomposition.PCA(n_components=2)
+    pca.fit(X)
+    X = pca.transform(X)
+
+    rng = np.random.RandomState(0)
+
+    y_30 = np.copy(y)
+    y_30[rng.rand(len(y)) < 0.3] = -1
+    y_50 = np.copy(y)
+    y_50[rng.rand(len(y)) < 0.5] = -1
+    y_75 = np.copy(y)
+    y_75[rng.rand(len(y)) < 0.8] = -1
+
+    ls50 = (label_propagation.LabelSpreading().fit(X, y_50), y_50)
+    ls75 = (label_propagation.LabelSpreading().fit(X, y_75), y_75)
+    ls100 = (label_propagation.LabelSpreading().fit(X, y), y)
+    lp100 = (label_propagation.LabelPropagation().fit(X, y), y)
+
+    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, .02),
+                         np.arange(y_min, y_max, .02))
+
+    titles = ['Label Spreading 50%',
+              'Label Spreading 75%',
+              'Label Spreading 100%',
+              'Label Propagation 100%']
+
+    color_map = {-1: (1, 1, 1),
+                 0: colorConverter.to_rgb(CategoryStr.lstStrColors[0]),
+                 1: colorConverter.to_rgb(CategoryStr.lstStrColors[1]),
+                 2: colorConverter.to_rgb(CategoryStr.lstStrColors[2]),
+                 3: colorConverter.to_rgb(CategoryStr.lstStrColors[3]),
+                 4: colorConverter.to_rgb(CategoryStr.lstStrColors[4]),
+                 5: colorConverter.to_rgb(CategoryStr.lstStrColors[5]),
+                 6: colorConverter.to_rgb(CategoryStr.lstStrColors[6])}
+
+    cs = None
+
+    for i, (clf, y_train) in enumerate((ls50, ls75, ls100, lp100)):
+        plt.subplot(2, 2, i + 1)
+        Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+
+        colors = [color_map[y] for y in y_train]
+
+        Z = Z.reshape(xx.shape)
+        cs = plt.contourf(xx, yy, Z, c=CategoryStr.lstStrColors, cmap=plt.cm.Paired)
+        #plt.axis('off')
+        plt.ylim(-1, 1)
+        plt.xlim(-1, 1)
+
+        plt.scatter(X[:, 0], X[:, 1], c=colors, cmap=plt.cm.Paired, s=80)
+
+        plt.title(titles[i])
+
+    proxy = [plt.Rectangle((0,0),1,1,fc = pc.get_facecolor()[0])
+        for pc in cs.collections]
+
+    plt.legend(proxy, lstStrCategories)
+    plt.show()
 
 
 
