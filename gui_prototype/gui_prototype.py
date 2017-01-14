@@ -565,6 +565,11 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = "https://github.com/" + link
 
     def plot_multi_dim(self):
+        """
+        show multidimensional data in 2D plot
+        :return:
+        """
+
         clf = self.clf
         lstTrainLabels = self.lstTrainLabels
         data = self.matIntegerTrainingData
