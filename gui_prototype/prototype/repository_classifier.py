@@ -78,7 +78,7 @@ class RepositoryClassifier:
         self.strLstTrainLabels = 'lstTrainLabels.pkl'
         self.strLstTrainData = 'lstTrainData.pkl'
         self.strNormalizer = 'normalizer.pkl'
-        self.strNormalizerIntegerAttr = 'normalizerIntegerAttr'
+        self.strNormalizerIntegerAttr = 'normalizerIntegerAttr.pkl'
 
         self.iNumCategories = len(self.lstStrCategories)
 

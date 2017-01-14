@@ -42,7 +42,7 @@ def main(args=None):
     lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     repoClassifier.trainModel(lstTrainData, lstTrainLabels)
     repoClassifier.exportModelToFile()
-    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, _ = repoClassifier.loadModelFromFile()
+    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr = repoClassifier.loadModelFromFile()
     #repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
