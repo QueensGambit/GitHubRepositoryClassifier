@@ -51,6 +51,8 @@ class RepositoryClassifier:
         self.lstTrainLabels = None
         self.lstTrainData = None
         self.normalizer = None
+        self.bUseCentroids = True
+
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -222,7 +224,6 @@ class RepositoryClassifier:
     def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
-        self.bUseCentroids = True
         self.clf = NearestCentroid()
 
         # test out other classifiers
