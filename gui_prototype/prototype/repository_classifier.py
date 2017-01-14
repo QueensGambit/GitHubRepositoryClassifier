@@ -222,6 +222,7 @@ class RepositoryClassifier:
     def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
+        self.bUseCentroids = True
         self.clf = NearestCentroid()
 
         # test out other classifiers
@@ -476,8 +477,37 @@ class RepositoryClassifier:
         # score = self.clf.score(self.clf.predict([lstInputFeatures]), [0] * 7)
         # print('score:', score)
 
-        matCentroids = self.clf.centroids_
 
+        # self.bUseCentroids = False
+        self.__printResult(tmpRepo, iLabel, bPrintWordHits=False)
+        if self.bUseCentroids is True:
+            matCentroids = self.clf.centroids_
+            lstFinalPercentages = self.predictProbNearestCentroids(self, matCentroids, lstInputFeatures)
+        else:
+            lstFinalPercentages = self.clf.predict_proba(lstInputFeatures)
+
+        iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
+
+        return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo
+
+    def getLabelAlternative(self, lstFinalPercentages):
+
+        # copy the percentages in an additional list
+        lstFinalPercentagesCopy = []
+        lstFinalPercentagesCopy = lstFinalPercentages[:]
+
+        # get the s
+        iMaxIndex = lstFinalPercentagesCopy.index(max(lstFinalPercentagesCopy))
+
+        lstFinalPercentagesCopy[iMaxIndex] = 0
+        iSecondMaxIndex = lstFinalPercentagesCopy.index(max(lstFinalPercentagesCopy))
+
+        return iSecondMaxIndex
+
+
+    def predictProbNearestCentroids(self, matCentroids, lstInputFeatures):
+
+        lstFinalPercentages = []
         fDistSum = 0
         lstDistances = []
 
@@ -504,17 +534,13 @@ class RepositoryClassifier:
 
         lstDistancesReordered.sort(key=lambda x: x[0])
 
-        lstFinalPercentages = []
-
         for i, fPercentage in enumerate(lstDistancesReordered):
             lstFinalPercentages.append(fPercentage[1])
             print(self.lstStrCategories[i], 'pecentage:', fPercentage[1])
 
         # print(self.clf.centroids_)
 
-        self.__printResult(tmpRepo, iLabel, bPrintWordHits=False)
-
-        return iLabel, lstFinalPercentages, tmpRepo
+        return lstFinalPercentages
 
 
     def __printResult(self, tmpRepo, iLabel, bPrintWordHits=False):
