@@ -464,23 +464,23 @@ class RepositoryClassifier:
 
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
 
-        lstInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+        lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
         if self.bUseStringFeatures:
-            lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
-        lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
+            lstNormedInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+        lstNormedInputFeatures += tmpRepo.getRepoLanguageAsVector()
 
         # apply pre-processing
         # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
         # print('lstInputFeature pre normalize: ', lstInputFeatures)
-        lstInputFeatures = np.array(lstInputFeatures).reshape(1, len(lstInputFeatures))
+        lstNormedInputFeatures = np.array(lstNormedInputFeatures).reshape(1, len(lstNormedInputFeatures))
 
-        lstInputFeatures = self.normalizer.transform(lstInputFeatures)
+        lstNormedInputFeatures = self.normalizer.transform(lstNormedInputFeatures)
         # print('lstInputFeature post normalize: ', lstInputFeatures)
 
         # lstInputFeatures = lstInputFeatures.tolist()
 
         # reshape Input Features -> otherwise a deprecation warning occurs
-        iLabel = int(self.clf.predict(lstInputFeatures))
+        iLabel = int(self.clf.predict(lstNormedInputFeatures))
 
         # res = self.clf.predict_proba([lstInputFeatures])
         # print('self.clf.predict_proba()', res)
@@ -492,15 +492,15 @@ class RepositoryClassifier:
 
         if self.bUseCentroids is True:
             matCentroids = self.clf.centroids_
-            lstFinalPercentages = self.predictProbNearestCentroids(matCentroids, lstInputFeatures)
+            lstFinalPercentages = self.predictProbNearestCentroids(matCentroids, lstNormedInputFeatures)
         else:
-            lstFinalPercentages = self.clf.predict_proba(lstInputFeatures)
+            lstFinalPercentages = self.clf.predict_proba(lstNormedInputFeatures)
 
         iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
 
         self.__printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
-        return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo
+        return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
 
     def getLabelAlternative(self, lstFinalPercentages):
 

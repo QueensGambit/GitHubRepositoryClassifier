@@ -53,7 +53,6 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
 
-
     print(matIntegerTrainingData)
     #plot_multi_dim(clf, lstTrainData, lstTrainLabels)
     semisupervised(matIntegerTrainingData)

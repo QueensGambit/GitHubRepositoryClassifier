@@ -236,7 +236,7 @@ class GUILayout(BoxLayout):
         Clock.schedule_once(self.start_loading_animation, 0)
 
         try:
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
             self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
