@@ -265,6 +265,7 @@ GUILayout:
     label_info: errorOutput
     log_console: log_console
     label_result: result_label
+    label_second_result: second_result_label
     layout_pie_chart: pie_chart
     layout_diagram1: dia1
     layout_diagram2: dia2
@@ -444,7 +445,19 @@ GUILayout:
                 id: result_label
                 text: "Result"
                 font_size: 32
-                size_hint_y: .4
+                size_hint_y: .2
+                text_size: self.size
+                halign: 'center'
+                valign: 'bottom'
+            Label:
+                id: second_result_label
+                text: ""
+                font_size: 12
+                size_hint_y: .2
+                text_size: self.size
+                halign: 'center'
+                valign: 'top'
+
             BoxLayout:
                 id: pie_chart
 #                    AnchorLayout:

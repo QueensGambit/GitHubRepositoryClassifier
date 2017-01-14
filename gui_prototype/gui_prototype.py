@@ -181,6 +181,7 @@ class GUILayout(BoxLayout):
     label_info = ObjectProperty()                   # the label underneath the user input. short descriptions go here
     log_console = ObjectProperty()                  # console to output logs. just add text to it.
     label_result = ObjectProperty()                 # the big Result Label in the result corner
+    label_second_result = ObjectProperty()          # the small, secondary Result Label under the big Result Label
     layout_pie_chart = ObjectProperty()             # the Layout for the piechart in the result corner
     layout_diagram1 = ObjectProperty()              # the three TabbedPanelItems to put a diagram, expand if needed
     layout_diagram2 = ObjectProperty()              # ↑
@@ -201,6 +202,7 @@ class GUILayout(BoxLayout):
         StaticVars.b_run_loading = False
         self.layout_pie_chart.clear_widgets()
         self.label_result.text = "ERROR"
+        self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
         StaticVars.animation_loading.cancel(StaticVars.anim_bar)
@@ -232,11 +234,10 @@ class GUILayout(BoxLayout):
         Clock.schedule_once(self.start_loading_animation, 0)
 
         try:
-            iLabel, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
-
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = self.repoClassifier.predictCategoryFromURL(url_in)
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
-            self.show_classification_result(iLabel, lstFinalPercentages, tmpRepo)
+            self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
 
         except ConnectionError as ce:
             print("[ERROR] A connection error occurred: " + str(ce))
@@ -272,6 +273,7 @@ class GUILayout(BoxLayout):
             # Update a widget property.
             self.set_info("[INFO] Classification in progress")
             self.label_result.text = "Loading..."
+            self.label_second_result.text = ""
 
             # Create and add a new widget.
             StaticVars.anim_bar = Factory.AnimWidget()
@@ -286,13 +288,15 @@ class GUILayout(BoxLayout):
             print("didn't start loading animation")
 
     @mainthread
-    def show_classification_result(self, iLabel, lstFinalPercentages, tmpRepo):
+    def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
         The pie chart as well as the label in the top right corner
 
         :param iLabel: index of the Category Enum of the found result
-        :param lstFinalPercentages: The amount of percentages each Category yields
+        :param iLabelAlt: index of the Category Enum of the secondary result
+        :param lstFinalPercentages: List of the percentages each Category yields
+        :param tmpRepo: a Repository object
         :return:
         """
 
@@ -300,7 +304,13 @@ class GUILayout(BoxLayout):
 
         if iLabel is not None:
             self.renderPieChart(lstFinalPercentages)
+
+            lstFinalPercentages.sort()
+            if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
+                self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
+
             self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+
             self.set_info("[INFO] Classification complete")
 
             # Wordcloud
@@ -314,6 +324,7 @@ class GUILayout(BoxLayout):
 
         else:
             self.label_result.text = 'No Result'
+            self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
         StaticVars.b_run_loading = False
