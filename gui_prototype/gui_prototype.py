@@ -113,13 +113,16 @@ class SettingsPopup(Popup):
     checkbox_api_token = ObjectProperty()                   # The checkbox to toggle the usage of the API Token
     label_api_error = ObjectProperty()                      # The Label to Output potential errors
 
-    def __init__(self):
+    def __init__(self, windowParent):
         """
         Called upon opening of the Settings Popup
         Override the active state of the API checkbox to display the current internal saved state
+
+        :param windowParent: windows handle of the main frame where the console is located
         """
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
+        self.windowParent = windowParent
 
     def switch_api(self, b_status):
         """
@@ -139,7 +142,7 @@ class SettingsPopup(Popup):
             print("[ERROR] No Connection could be established: " + str(ce))
             self.checkbox_api_token.active = False                      # update checkbox to display the internal state
             StaticVars.b_api_checkbox_state = False                     # set the internal state to false
-        self.update_console()
+        self.windowParent.update_console()                              # update the window console
 
 
 class FileSaverPopup(Popup):
@@ -237,6 +240,8 @@ class GUILayout(BoxLayout):
 
         try:
             iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, self.lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
+            print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[0][:4])
+
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
             self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
@@ -387,7 +392,7 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-        settings_popup = SettingsPopup()
+        settings_popup = SettingsPopup(windowParent=self)
         settings_popup.open()
 
     def save_log(self):
