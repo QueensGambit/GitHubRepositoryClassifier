@@ -172,9 +172,9 @@ class GithubRepo:
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
                                        iOpenIssues=self.getNumOpenIssue(),
                                        iDevTime=iDevTime,
-                                       dRepoActivity=0,
-                                       dCommitIntervals=0,
-                                       iWatchersCount=0, #self.apiJSON['watchers_count'],
+                                       #dRepoActivity=0,
+                                       #dCommitIntervals=0,
+                                       #iWatchersCount=0, #self.apiJSON['watchers_count'],
                                        iSize=self.apiJSON['size'])
 
         # print(self.apiJSON['contributors_url'])
@@ -192,9 +192,9 @@ class GithubRepo:
         lstFeatures = [self.intFeatures.iSubscriberCount,
                        self.intFeatures.iOpenIssues,
                        self.intFeatures.iDevTime,
-                       self.intFeatures.dRepoActivity, #dCodeFrequency
-                       self.intFeatures.dCommitIntervals,
-                       self.intFeatures.iWatchersCount,  #iNumBranches
+                       #self.intFeatures.dRepoActivity, #dCodeFrequency
+                       #self.intFeatures.dCommitIntervals,
+                       #self.intFeatures.iWatchersCount,  #iNumBranches
                        self.intFeatures.iSize
                        ]
 

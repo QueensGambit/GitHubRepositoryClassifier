@@ -329,7 +329,7 @@ class GUILayout(BoxLayout):
             # multidimensional
 
             self.plot_multi_dim()
-
+            self.plot_barchart(self.lstNormedInputFeatures)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
@@ -632,6 +632,43 @@ class GUILayout(BoxLayout):
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
         self.layout_diagram3.clear_widgets()
         self.layout_diagram3.add_widget(FigureCanvas(fig))
+
+
+
+    def getMedianValue(lstData):
+        sortedlist = sorted(lstData, reverse=False)
+        iSize = len(sortedlist)
+        return sortedlist[iSize / 2]
+
+    def plot_barchart(self, lsIntegerAttribute):
+        plt.figure(4)
+        lsIntegerAttribute = lsIntegerAttribute[:4]
+
+        iN = len(lsIntegerAttribute)
+        ind = np.arange(iN)  # the x locations for the groups
+        width = 0.15  # the width of the bars
+        fig, ax = plt.subplots()
+        rects1 = ax.bar(ind, lsIntegerAttribute, width, color='r')  # yerr=menStd)
+
+        # add some text for labels, title and axes ticks
+        ax.set_xticks(ind + width)
+        ax.set_xticklabels(('Subscriber', 'Open Issues', 'DevTime', 'Size'))
+
+        def autolabel(rects):
+            # attach some text labels
+            for rect in rects:
+                height = rect.get_height()
+                ax.text(rect.get_x() + rect.get_width() / 2., 1.05 * height,
+                        '%d' % int(height),
+                        ha='center', va='bottom')
+
+        autolabel(rects1)
+
+        fig = plt.gcf()
+        fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
+        self.layout_diagram2.clear_widgets()
+        self.layout_diagram2.add_widget(FigureCanvas(fig))
 
 
 class RepositoryClassifierApp(App):
