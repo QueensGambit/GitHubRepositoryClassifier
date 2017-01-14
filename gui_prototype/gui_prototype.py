@@ -36,8 +36,6 @@ from sklearn import decomposition
 
 import sys, os
 import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt2
-import matplotlib.pyplot as plt3
 
 # add the current directory to the system path in order to find the modules in relative path
 # sys.path.insert(0, os.path.abspath(".."))
@@ -139,6 +137,7 @@ class SettingsPopup(Popup):
             print("[ERROR] No Connection could be established: " + str(ce))
             self.checkbox_api_token.active = False                      # update checkbox to display the internal state
             StaticVars.b_api_checkbox_state = False                     # set the internal state to false
+        self.update_console()
 
 
 class FileSaverPopup(Popup):
@@ -166,6 +165,7 @@ class FileSaverPopup(Popup):
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
             stream.close()
+        self.update_console()
 
 
 class GUILayout(BoxLayout):
@@ -581,28 +581,29 @@ class GUILayout(BoxLayout):
         Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
         Z = Z.reshape(xx.shape)
 
-        plt3.figure(3)
-        plt3.clf()
-        plt3.imshow(Z, interpolation='nearest',
+        plt.figure(3)
+        plt.cla()
+        plt.clf()
+        plt.imshow(Z, interpolation='nearest',
                    extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt3.cm.Paired,
+                   cmap=plt.cm.Paired,
                    aspect='auto', origin='lower')
         # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
-        plt3.scatter(data[:, 0], data[:, 1], cmap=plt3.cm.Paired)
+        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
 
         centroids = clf.centroids_
-        plt3.scatter(centroids[:, 0], centroids[:, 1],
+        plt.scatter(centroids[:, 0], centroids[:, 1],
                     marker='x', s=169, linewidths=3,
                     color='w', zorder=10)
 
-        plt3.xlim(x_min, x_max)
-        plt3.ylim(y_min, y_max)
-        plt3.xticks(())
-        plt3.yticks(())
+        plt.xlim(x_min, x_max)
+        plt.ylim(y_min, y_max)
+        plt.xticks(())
+        plt.yticks(())
         # .show()
 
-        fig = plt3.gcf()
+        fig = plt.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
         self.layout_diagram3.clear_widgets()
         self.layout_diagram3.add_widget(FigureCanvas(fig))
