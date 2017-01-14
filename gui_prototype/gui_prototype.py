@@ -29,6 +29,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
+from kivy.uix.label import Label
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
 import clipboard
@@ -318,12 +319,16 @@ class GUILayout(BoxLayout):
             strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
                 bApplyStemmer=True))
 
-            if strText != " ":
+            if not strText.isspace():
                 self.show_wordcloud(strText, iLabel)
+
+            else:
+                self.layout_diagram1.clear_widgets()
+                self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
 
-            self.plot_multi_dim(self.matIntegerTrainingData)
+            self.plot_multi_dim()
 
         else:
             self.label_result.text = 'No Result'
@@ -559,11 +564,10 @@ class GUILayout(BoxLayout):
         """
         self.textfield_input.text = "https://github.com/" + link
 
-    def plot_multi_dim(self, data, lstTrainLabels):
+    def plot_multi_dim(self):
         clf = self.clf
-
-        if not isinstance(data, (np.ndarray, np.generic)):
-            raise Exception('Need numpy array')
+        lstTrainLabels = self.lstTrainLabels
+        data = self.matIntegerTrainingData
 
         if len(data) < 2:
             raise Exception('Lenght of array >= 2')
