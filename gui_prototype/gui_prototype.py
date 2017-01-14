@@ -236,7 +236,7 @@ class GUILayout(BoxLayout):
         Clock.schedule_once(self.start_loading_animation, 0)
 
         try:
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, self.lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
             self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
@@ -640,10 +640,9 @@ class GUILayout(BoxLayout):
         iSize = len(sortedlist)
         return sortedlist[iSize / 2]
 
-    def plot_barchart(self, lsIntegerAttribute):
+    def plot_barchart(self, lsIntegerAttributes):
         plt.figure(4)
-        lsIntegerAttribute = lsIntegerAttribute[:4]
-
+        lsIntegerAttribute = lsIntegerAttributes[0][:4]
         iN = len(lsIntegerAttribute)
         ind = np.arange(iN)  # the x locations for the groups
         width = 0.15  # the width of the bars
