@@ -469,47 +469,50 @@ GUILayout:
     #########################
     # lower area
     #########################
-    TabbedPanel:
-        do_default_tab: False
-        #tab_pos: 'top_mid'
-        tab_width_hint: None
-        tab_width: 150
-        TabbedPanelItem:
-            text: "Wordcloud"
-            BoxLayout:
-                id: dia1
-                Label:
-                    text: "No Diagram to show yet"
+    BoxLayout:
+        orientation: "horizontal"
+        padding: 10
+        TabbedPanel:
+            do_default_tab: False
+            #tab_pos: 'top_mid'
+            tab_width_hint: None
+            tab_width: 150
+            TabbedPanelItem:
+                text: "Wordcloud"
+                BoxLayout:
+                    id: dia1
+                    Label:
+                        text: "No Diagram to show yet"
 
-        TabbedPanelItem:
-            text: "Integer Attributes"
-            BoxLayout:
-                id: dia2
-                Label:
-                    text: "No Diagram to show yet"
+            TabbedPanelItem:
+                text: "Integer Attributes"
+                BoxLayout:
+                    id: dia2
+                    Label:
+                        text: "No Diagram to show yet"
 
-        TabbedPanelItem:
-            text: "2D Visualisation"
-            BoxLayout:
-                id: dia3
-                Label:
-                    text: "No Diagram to show yet"
+            TabbedPanelItem:
+                text: "2D Visualisation"
+                BoxLayout:
+                    id: dia3
+                    Label:
+                        text: "No Diagram to show yet"
 
 
-        TabbedPanelItem:
-            text: "Console"
-            BoxLayout:
-                orientation: "vertical"
+            TabbedPanelItem:
+                text: "Console"
+                BoxLayout:
+                    orientation: "vertical"
 
-                CodeInput:
-                    id: log_console
-                    text: ""
-                    # disabled: True
-                Button:
-                    size_hint: 0.5, 0.1
-                    pos_hint: {"center_x": 0.5}
-                    text: "Save log to file"
-                    on_press: root.save_log()
+                    CodeInput:
+                        id: log_console
+                        text: ""
+                        # disabled: True
+                    Button:
+                        size_hint: 0.5, 0.1
+                        pos_hint: {"center_x": 0.5}
+                        text: "Save log to file"
+                        on_press: root.save_log()
 
 <AnimWidget@Widget>:
     canvas:
