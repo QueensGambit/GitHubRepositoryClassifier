@@ -66,6 +66,7 @@ from wordcloud import WordCloud, ImageColorGenerator
 from PIL import Image
 from PIL import ImageOps
 import numpy as np
+from pathlib import Path
 
 kivy.require("1.9.0")
 
@@ -457,7 +458,8 @@ class GUILayout(BoxLayout):
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
         self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr = self.repoClassifier.loadModelFromFile()
 
-        self.strPath = os.path.dirname(__file__)
+        # self.strPath = os.path.dirname(__file__)
+        self.strPath = str(Path())
 
         self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
 

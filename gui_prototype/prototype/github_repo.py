@@ -10,6 +10,7 @@ from .features.learning_features import IntFeatures
 from .utility_funcs import string_operation
 from .utility_funcs.io_agent import InputOutputAgent
 from .utility_funcs import count_vectorizer_operations
+from pathlib import Path
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
     """
@@ -44,6 +45,8 @@ class GithubRepo:
         # print('user: ', self.user, 'name: ', self.name)
 
         d = path.dirname(__file__)
+        # d = str(Path())
+
         self.strPathJSON = d + '/json/' + strUser + '_' + strName + '.json'
 
         try:

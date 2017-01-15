@@ -30,6 +30,7 @@ from .utility_funcs.io_agent import InputOutputAgent
 # import prototype.github_repo
 from .github_repo import GithubRepo
 from numpy import array
+from pathlib import Path
 import math
 
 class RepositoryClassifier:
@@ -58,6 +59,8 @@ class RepositoryClassifier:
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
         self.directory = path.dirname(__file__)
+        # self.directory = str(Path())
+
         print(self.directory)
 
         self.bUseStringFeatures = bUseStringFeatures
