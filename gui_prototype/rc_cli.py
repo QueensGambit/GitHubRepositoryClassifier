@@ -63,6 +63,10 @@ import os
 
 
 def printMenu():
+    """
+    prints menu guide for headless
+    :return:
+    """
     # tWelc = PrettyTable(['Welcome to the CLI-of the repository classifier'])
     print('Welcome to the CLI of the repository classifier')
     print(strStopper1)
@@ -89,6 +93,10 @@ def init():
     printMenu()
 
 def main():
+    """
+    predicting repositories headless
+    :return:
+    """
     init()
     strInput = ""
 
@@ -129,6 +137,12 @@ def main():
 
 
 def predictFromFile(repoClassifier, strFileInput):
+    """
+    Classifies a Repository list in txt file and creates a new file which contains the classified repositories
+    :param repoClassifier:
+    :param strFileInput:
+    :return:
+    """
     #Checks file exists and txt file
     if os.path.exists(strFileInput) & string_operation.validate_txtfile(strFileInput):
         file = open(strFileInput, 'r')
@@ -147,11 +161,19 @@ def predictFromFile(repoClassifier, strFileInput):
 
 
 def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier):
+    """
+    creates  txt file which contains classified repositories.
+    :param file:
+    :param strReadFileDirectory:
+    :param strFileClassified:
+    :param repoClassifier:
+    :return:
+    """
     try:
 
         for line in file:
             strRepoUrl = line.rsplit('\n')
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(str(strRepoUrl))
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(str(strRepoUrl[0]))
 
             with open(os.path.join(strReadFileDirectory, strFileClassified), 'wb') as temp_file:
 
@@ -166,6 +188,12 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
         #os.close(temp_file)
 
 def predictCategoryFromURL(repoClassifier, strUrl):
+    """
+    Predicts category of repository
+    :param repoClassifier:
+    :param strUrl:
+    :return:
+    """
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
         strUrl)
     repoClassifier.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
