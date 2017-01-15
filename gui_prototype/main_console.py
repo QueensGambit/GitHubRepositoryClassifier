@@ -34,7 +34,7 @@ def main(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    InputOutputAgent.setWithToken(True)
+    InputOutputAgent.setWithToken(False)
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
 
     # strFilenameCSV = 'example_repos.csv'
@@ -42,7 +42,7 @@ def main(args=None):
 
     lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    #repoClassifier.exportModelToFile()
+    repoClassifier.exportModelToFile()
     # clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr = repoClassifier.loadModelFromFile()
     repoClassifier.predictResultsAndCompare()
 

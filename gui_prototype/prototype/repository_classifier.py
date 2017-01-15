@@ -30,6 +30,7 @@ from .utility_funcs.io_agent import InputOutputAgent
 # import prototype.github_repo
 from .github_repo import GithubRepo
 from numpy import array
+import math
 
 class RepositoryClassifier:
 
@@ -136,10 +137,10 @@ class RepositoryClassifier:
         # self.lstMeanValues[:] = [1 if x == 0 else x for x in self.lstMeanValues]
 
         # Divide each element with the number of training data
-        self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
+        # self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
 
         # set all mean values to 1
-        # self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
+        self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
 
         print('lstMeanValues: ', self.lstMeanValues)
 
@@ -156,7 +157,9 @@ class RepositoryClassifier:
 
         lstInputFeatures = []
 
+
         for tmpRepo in lstGithubRepo:
+
             # fill the Training-Data
             # ordinary integer-attributes
             # lstTrainData.append(tmpGithubRepo.getNormedFeatures(lstMeanValues))
@@ -168,7 +171,10 @@ class RepositoryClassifier:
             # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
             # np.vstack  concates to numpy-arrays
-            lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            # lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
+
+            lstIntegerAttributes = []
+            lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures()]
             lstInputFeatures = lstIntegerAttributes
 
             self.matIntegerTrainingData.append(tmpRepo.getNormedFeatures(self.lstMeanValues))
@@ -460,7 +466,8 @@ class RepositoryClassifier:
 
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
 
-        lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+        # lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+        lstNormedInputFeatures = [math.log2(x) for x in tmpRepo.getIntegerFeatures()]
         if self.bUseStringFeatures:
             lstNormedInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
         lstNormedInputFeatures += tmpRepo.getRepoLanguageAsVector()

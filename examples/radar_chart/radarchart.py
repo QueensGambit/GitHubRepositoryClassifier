@@ -173,6 +173,7 @@ if __name__ == '__main__':
 
     colors = ['b', 'r', 'g', 'm', 'y']
     # Plot the four cases from the example data on separate axes
+    print(data)
     for n, (title, case_data) in enumerate(data):
         ax = fig.add_subplot(2, 2, n + 1, projection='radar')
         plt.rgrids([0.2, 0.4, 0.6, 0.8])
