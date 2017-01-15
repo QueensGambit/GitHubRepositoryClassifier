@@ -147,34 +147,6 @@ class SettingsPopup(Popup):
         self.windowParent.update_console()                              # update the window console
 
 
-class FileSaverPopup(Popup):
-    """
-    The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
-    """
-    label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
-
-    def save_file(self, path, filename):
-        """
-        Called by the "save" button in the Popup.
-        Saves the file with the input filename to the path. Handles Permission Errors.
-
-        :param path: The current folder path to save the file into, ends with "/"
-        :param filename: The filename to save the file as
-        :return:
-        """
-        try:
-            with open(os.path.join(path, filename), 'w') as stream:
-                stream.write(self.log_text)
-                stream.close()
-            self.dismiss()
-            print("[INFO] Logfile saved to: " + path + "\\" + filename)
-        except PermissionError as err:
-            print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
-            self.label_save.text = "[ERROR] Couldn't save. Permission denied."
-            stream.close()
-        self.update_console()
-
-
 class GUILayout(BoxLayout):
     """
     The Main Layout of the Main Window. Handles most events
@@ -421,7 +393,7 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-        save_popup = FileSaverPopup()
+        save_popup = FileSaverPopup(self)
         save_popup.log_text = self.log_console.text
         save_popup.open()
 
@@ -699,6 +671,38 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
+
+class FileSaverPopup(Popup):
+    """
+    The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
+    """
+    label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
+    def __init__(self, windowParent):
+        super(FileSaverPopup, self).__init__()
+        self.windowParent = windowParent
+
+    def save_file(self, path, filename):
+        """
+        Called by the "save" button in the Popup.
+        Saves the file with the input filename to the path. Handles Permission Errors.
+
+        :param path: The current folder path to save the file into, ends with "/"
+        :param filename: The filename to save the file as
+        :return:
+        """
+        try:
+            with open(os.path.join(path, filename), 'w') as stream:
+                stream.write(self.log_text)
+                stream.close()
+            self.dismiss()
+            print("[INFO] Logfile saved to: " + path + "\\" + filename)
+            # print("[INFO] Logfile saved to: " + os.path.join(path, filename) + "\\" + filename)
+        except PermissionError as err:
+            print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
+            self.label_save.text = "[ERROR] Couldn't save. Permission denied."
+            stream.close()
+
+        self.windowParent.update_console()
 
 class RepositoryClassifierApp(App):
     """
