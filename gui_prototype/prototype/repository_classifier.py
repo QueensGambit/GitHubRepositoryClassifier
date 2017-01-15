@@ -328,14 +328,16 @@ class RepositoryClassifier:
             joblib.dump(self.normalizer, self.strModelPath + self.strNormalizer)
             joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
 
-    def loadModelFromFile(self):
+    def loadModelFromFile(self, console=None):
         """
         loads / imports the model-object from './model/RepositoryClassifier.pkl'
         and the list of the mean values from './model/lstMeanValues.pkl'
 
         :return:
         """
-        print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
+
+        if console is None:
+            print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
 
         # load the classifier from the file
         self.clf = joblib.load(self.strModelPath + self.strModelFileName)
@@ -347,24 +349,26 @@ class RepositoryClassifier:
         self.normalizer = joblib.load(self.strModelPath + self.strNormalizer)
         self.normalizerIntegerAttr = joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
 
-        print('lstMeanValues: ', self.lstMeanValues)
+        if console is None:
+            print('lstMeanValues: ', self.lstMeanValues)
+            print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
 
-        print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
         strVocabPath = self.directory + '/vocab/'
 
-        strVocabPath += 'vocabList.dump'
-        self.lstVoc = readVocabFromFile(strVocabPath)
-        # only print out the first 7 and the last 7 entries
-        # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
-        print('len(self.lstVoc):', len(self.lstVoc))
-        if len(self.lstVoc) > 14:
-            print("[", end="")
-            print(*self.lstVoc[:7], sep=", ", end=" ")
-            print('...', end=" ")
-            print(*self.lstVoc[-7:], sep=", ", end="")
-            print("]")
+        if console is None:
+            strVocabPath += 'vocabList.dump'
+            self.lstVoc = readVocabFromFile(strVocabPath)
+            # only print out the first 7 and the last 7 entries
+            # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
+            print('len(self.lstVoc):', len(self.lstVoc))
+            if len(self.lstVoc) > 14:
+                print("[", end="")
+                print(*self.lstVoc[:7], sep=", ", end=" ")
+                print('...', end=" ")
+                print(*self.lstVoc[-7:], sep=", ", end="")
+                print("]")
 
-        self.bModelLoaded = True
+            self.bModelLoaded = True
 
         return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr
 
