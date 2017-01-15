@@ -34,7 +34,7 @@ def main(args=None):
     if args is None:
         args = sys.argv[1:]
 
-    InputOutputAgent.setWithToken(False)
+    InputOutputAgent.setWithToken(True)
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
 
     # strFilenameCSV = 'example_repos.csv'

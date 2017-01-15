@@ -717,8 +717,6 @@ class GUILayout(BoxLayout):
         print(lstNormedMeanValues)
 
         print(math.log2(repo.getIntegerFeatures()[0]))
-        print("normalizer params: " + str(self.normalizer.get_params()))
-
 
         fig = pl.figure(5, figsize=(0.1, 0.1))
         fig.clear()
@@ -735,7 +733,7 @@ class GUILayout(BoxLayout):
         ]
 
         radar = Radar(fig, titles, labels)
-        radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
+        # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
         radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
         radar.ax.legend(loc=(1, .6))
 
