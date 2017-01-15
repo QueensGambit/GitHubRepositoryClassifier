@@ -140,10 +140,10 @@ class RepositoryClassifier:
         # self.lstMeanValues[:] = [1 if x == 0 else x for x in self.lstMeanValues]
 
         # Divide each element with the number of training data
-        # self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
+        self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
 
         # set all mean values to 1
-        self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
+        # self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
 
         print('lstMeanValues: ', self.lstMeanValues)
 
@@ -174,19 +174,21 @@ class RepositoryClassifier:
             # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
 
             # np.vstack  concates to numpy-arrays
-            # lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
+            lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
 
-            lstIntegerAttributes = [None] * len(tmpRepo.getIntegerFeatures()) # []
-            for i, x in enumerate(tmpRepo.getIntegerFeatures()):
-                if x > 0:   #
+            # lstIntegerAttributes = [] # [None] * len(tmpRepo.getIntegerFeatures()) # []
+            # lstIntegerAttributes = tmpRepo.getIntegerFeatures()
+
+            # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
+                # if x > 0:   #
                 #     tmpRepo:  youtaya
                 #     objective - c - style - guide
                 # x: -1   -> open_issues was detected as -1
-                    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
-                    print('x:', x)
-                    lstIntegerAttributes[i] = math.log2(x)
-                else:
-                    lstIntegerAttributes[i] = 0
+                #    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
+                #    print('x:', x)
+                #    lstIntegerAttributes[i] = math.log2(x)
+                #else:
+                #   lstIntegerAttributes[i] = 0
             # lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures() if x != 0]
             lstInputFeatures = lstIntegerAttributes
 
@@ -231,7 +233,8 @@ class RepositoryClassifier:
         # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
         #
         self.normalizer = preprocessing.Normalizer()
-        self.normalizer = self.normalizer.fit(self.lstTrainData)
+        # self.normalizer = ReliableNormalizer()
+        self.normalizer.fit(self.lstTrainData)
 
         self.normalizerIntegerAttr = preprocessing.Normalizer()
         self.normalizerIntegerAttr.fit(self.matIntegerTrainingData)
@@ -483,14 +486,14 @@ class RepositoryClassifier:
 
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
 
-        # lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
-        lstNormedInputFeatures = [None] * len(tmpRepo.getIntegerFeatures()) #[]
-        for i, x in enumerate(tmpRepo.getIntegerFeatures()):
-            if x > 0:
-                # print('x:', x)
-                lstNormedInputFeatures[i] = math.log2(x)
-            else:
-                lstNormedInputFeatures[i] = 0
+        lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
+        # lstNormedInputFeatures = [None] * len(tmpRepo.getIntegerFeatures()) #[]
+        # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
+        #     if x > 0:
+        #         # print('x:', x)
+        #         lstNormedInputFeatures[i] = math.log2(x)
+        #     else:
+        #         lstNormedInputFeatures[i] = 0
         # lstNormedInputFeatures = [math.log2(abs(x)) for x in tmpRepo.getIntegerFeatures() if x != 0]
         if self.bUseStringFeatures:
             lstNormedInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
