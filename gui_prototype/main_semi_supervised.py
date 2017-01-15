@@ -54,6 +54,8 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
     print('len(lstTrainData): ', len(lstTrainData))
+    print('len(lstTrainData[0): ', len(lstTrainData[0]))
+
     print('lstTrainData:', lstTrainData)
     # matIntegerTrainingData = normalizer.transform(matIntegerTrainingData)
 
@@ -177,7 +179,7 @@ def plot(X, y, lstStrCategories):
     lp100 = (label_propagation.LabelPropagation().fit(X, y), y)
 
     clfLabelSpread = label_propagation.LabelSpreading()
-    clfLabelSpread.fit(X, y_75)
+    clfLabelSpread.fit(X, y_30)
 
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
