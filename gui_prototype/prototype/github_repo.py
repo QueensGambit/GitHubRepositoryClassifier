@@ -278,7 +278,7 @@ class GithubRepo:
         # make a binarized vector
         # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
 
-        count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
+        # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 
         return lstOccurrence
 

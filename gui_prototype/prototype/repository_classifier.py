@@ -176,8 +176,18 @@ class RepositoryClassifier:
             # np.vstack  concates to numpy-arrays
             # lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
 
-            lstIntegerAttributes = []
-            lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures()]
+            lstIntegerAttributes = [None] * len(tmpRepo.getIntegerFeatures()) # []
+            for i, x in enumerate(tmpRepo.getIntegerFeatures()):
+                if x > 0:   #
+                #     tmpRepo:  youtaya
+                #     objective - c - style - guide
+                # x: -1   -> open_issues was detected as -1
+                    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
+                    print('x:', x)
+                    lstIntegerAttributes[i] = math.log2(x)
+                else:
+                    lstIntegerAttributes[i] = 0
+            # lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures() if x != 0]
             lstInputFeatures = lstIntegerAttributes
 
             self.matIntegerTrainingData.append(tmpRepo.getNormedFeatures(self.lstMeanValues))
@@ -470,7 +480,14 @@ class RepositoryClassifier:
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
 
         # lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
-        lstNormedInputFeatures = [math.log2(x) for x in tmpRepo.getIntegerFeatures()]
+        lstNormedInputFeatures = [None] * len(tmpRepo.getIntegerFeatures()) #[]
+        for i, x in enumerate(tmpRepo.getIntegerFeatures()):
+            if x > 0:
+                # print('x:', x)
+                lstNormedInputFeatures[i] = math.log2(x)
+            else:
+                lstNormedInputFeatures[i] = 0
+        # lstNormedInputFeatures = [math.log2(abs(x)) for x in tmpRepo.getIntegerFeatures() if x != 0]
         if self.bUseStringFeatures:
             lstNormedInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
         lstNormedInputFeatures += tmpRepo.getRepoLanguageAsVector()
