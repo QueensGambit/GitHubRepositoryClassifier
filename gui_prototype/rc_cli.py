@@ -55,8 +55,8 @@ strLogoRC = "\
 
 
 from prettytable import PrettyTable
-from .prototype.repository_classifier import RepositoryClassifier
-from .prototype.utility_funcs import string_operation
+from prototype.repository_classifier import RepositoryClassifier
+from prototype.utility_funcs import string_operation
 
 import sys
 import os

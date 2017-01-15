@@ -231,12 +231,12 @@ class RepositoryClassifier:
         # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
         #
         self.normalizer = preprocessing.Normalizer()
-        self.normalizer.fit(self.lstTrainData)
+        self.normalizer = self.normalizer.fit(self.lstTrainData)
 
         self.normalizerIntegerAttr = preprocessing.Normalizer()
         self.normalizerIntegerAttr.fit(self.matIntegerTrainingData)
 
-        self.lstTrainData = self.normalizer.fit_transform(self.lstTrainData)
+        self.lstTrainData = self.normalizer.transform(self.lstTrainData)
 
         # lstTrainData = self.stdScaler.fit_transform(lstTrainData)
         # lstTrainData = preprocessing.normalize(lstTrainData)

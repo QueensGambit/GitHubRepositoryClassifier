@@ -807,9 +807,13 @@ class RepositoryClassifierApp(App):
 
         return layGUI
 
+def main():
+    gui = RepositoryClassifierApp()
+    gui.run()
 
-gui = RepositoryClassifierApp()
-gui.run()
+if __name__ == "__main__":
+    main()
+
 
 # TODO: PRIORITY - DESCRIPTION
 # TODO: VERY HIGH - Build Windows-Excecutable
