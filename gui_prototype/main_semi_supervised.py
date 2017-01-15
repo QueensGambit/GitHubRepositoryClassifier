@@ -53,11 +53,13 @@ def main(args=None):
     #repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     #repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
 
-    matIntegerTrainingData = normalizer.transform(matIntegerTrainingData)
+    print('len(lstTrainData): ', len(lstTrainData))
+    print('lstTrainData:', lstTrainData)
+    # matIntegerTrainingData = normalizer.transform(matIntegerTrainingData)
 
     #plot_multi_dim(clf, lstTrainData, lstTrainLabels)
-    semisupervised(matIntegerTrainingData)
-
+    # semisupervised(matIntegerTrainingData)
+    semisupervised(lstTrainData)
 
 
 def plot_multi_dim(clf, data, lstTrainLabels):
@@ -140,7 +142,8 @@ def semisupervised(matIntegerTrainingData):
     y = np.empty(length)
 
     for i in range(iNumTrainData):
-        lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))
+        # lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))  # skip this for now for a faster run time
+        pass
 
     for i in range(length):
         if i % 2 == 0:
@@ -172,6 +175,9 @@ def plot(X, y, lstStrCategories):
     ls75 = (label_propagation.LabelSpreading().fit(X, y_75), y_75)
     ls100 = (label_propagation.LabelSpreading().fit(X, y), y)
     lp100 = (label_propagation.LabelPropagation().fit(X, y), y)
+
+    clfLabelSpread = label_propagation.LabelSpreading()
+    clfLabelSpread.fit(X, y_75)
 
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
@@ -213,39 +219,15 @@ def plot(X, y, lstStrCategories):
     proxy = [plt.Rectangle((0,0),1,1,fc = pc.get_facecolor()[0])
         for pc in cs.collections]
 
+    matPredictRes = clfLabelSpread.predict(X)
+    print('matPredictRes: ', matPredictRes)
+
     plt.legend(proxy, lstStrCategories)
     plt.show()
 
 
 
-
-
-
 #### RESULTS
-# fPredictionRes: 0.612903225806
-# fAccuracy:  61.2903225806 %
-# NearestCentroid()
-# fPredictionRes: 0.58064516129
-# fAccuracy:  58.064516129 %
-#
-#
-# KNeighborsClassifier()
-# fPredictionRes: 0.41935483871
-# fAccuracy:  41.935483871 %
-#
-#
-# RadiusNeighborsClassifier()
-#
-#
-# -- > without removing stop words and with length > 3
-# fPredictionRes: 0.645161290323
-# fAccuracy:  64.5161290323 %
-# --> this is the best result but it doesn't feel right,
-#  due to it's randomness of stopper words
-#
-# ---> lenght < 2 and with removing stop words
-# fPredictionRes: 0.612903225806
-# fAccuracy:  61.2903225806 %
 
 
 if __name__ == "__main__":
