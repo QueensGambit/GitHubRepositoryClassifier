@@ -9,7 +9,7 @@ from .definitions.githubLanguages import lstLanguages
 from .features.learning_features import IntFeatures
 from .utility_funcs import string_operation
 from .utility_funcs.io_agent import InputOutputAgent
-
+from .utility_funcs import count_vectorizer_operations
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
     """
@@ -275,7 +275,7 @@ class GithubRepo:
         # make a binarized vector
         # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
 
-        # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
+        count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 
         return lstOccurrence
 

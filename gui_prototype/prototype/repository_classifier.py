@@ -371,13 +371,6 @@ class RepositoryClassifier:
         print('~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~')
         # classify the result
 
-        # as a sample prediction example use an array of 42, 42, ... as an example feature set
-        # iNumbeTrainingFeatures = len(lstGithubRepo[0].getNormedFeatures(lstMeanValues)) + len(lstVoc)
-        # iLabel = int(clf.predict([[42] * iNumbeTrainingFeatures]))
-        #
-        # print('iLabel:', iLabel)
-        # print('Prediction for 42,42:', lstStrCategories[iLabel])
-
         # iNumOfPredictions = 7
         # read the unlabeled data set from a csv
         dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
@@ -401,25 +394,28 @@ class RepositoryClassifier:
             strTargetAlt1 = dtUnlabeledData["CATEGORY_ALTERNATIVE_1"][i]
             strTargetAlt2 = dtUnlabeledData["CATEGORY_ALTERNATIVE_2"][i]
 
-            print('strTarget: ', strTarget, end="")
+            print('strTarget: ', strTarget)
 
             if pd.notnull(strTargetAlt1):
                 # strTargetAlt1 = strTargetAlt1[1:]
                 # print('i:', i)
-                print('strTargetAlt1:', strTargetAlt1, end="")
+                print('strTargetAlt1:', strTargetAlt1)
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt1)] = 1
 
             if pd.notnull(strTargetAlt2):
                 # strTargetAlt2 = strTargetAlt2[1:]
                 # print('i:', i)
-                print('strTargetAlt2:', strTargetAlt2, end="")
+                print('strTargetAlt2:', strTargetAlt2)
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt2)] = 1
 
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo = self.predictCategoryFromURL(dtUnlabeledData["URL"][i])
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = self.predictCategoryFromURL(dtUnlabeledData["URL"][i])
 
             matPredictionTarget[i, self.lstStrCategories.index(strTarget)] = 1
 
             print()
+
+            # uncomment this later
+            print('normed integer features:', lstNormedInputFeatures[0][:4])
 
             matPredictionRes[i, iLabel] = 1
             matPredictionResWithAlt[i, iLabel] = 1

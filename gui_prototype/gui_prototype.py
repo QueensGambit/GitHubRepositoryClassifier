@@ -38,6 +38,8 @@ import matplotlib.patches as mpatches
 
 import sys, os
 import matplotlib.pyplot as plt
+# from colour import Color
+from scipy.misc import imread
 
 # add the current directory to the system path in order to find the modules in relative path
 # sys.path.insert(0, os.path.abspath(".."))
@@ -59,7 +61,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
-from wordcloud import WordCloud
+from wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
 from PIL import ImageOps
@@ -240,7 +242,7 @@ class GUILayout(BoxLayout):
 
         try:
             iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, self.lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
-            print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[0][:4])
+            print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[:4])
 
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
@@ -354,16 +356,34 @@ class GUILayout(BoxLayout):
         """
 
         # print('text: ', text)
-        img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[iLabel])).split()[-1]
-        # the mask is inverted, so invert it again
-        img = ImageOps.invert(img)
-        img = img.resize((512, 512), Image.NONE)
-        imgMask = np.array(img)
+        # img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[iLabel])).split()[-1]
+        # img = np.array((Image.open(self.strPath + "/media/icons/colored/" + 'code_v2_-8x_colored.png')))
+        img = np.array((Image.open(self.strPath + "/media/icons/colored/" + CategoryStr.lstStrIcons[iLabel])))
 
-        wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
+        # imgColor = img.clone()
+        # imgColor[:] = (24, 45, 23)
+        # im1arrF = img.astype('float')
+        # im2arrF = imgColor.astype('float')
+        # additionF = (im1arrF + im2arrF) / 2
+        # img = additionF.astype('uint8')
+
+        # addition = (img + im2arr) / 2
+
+        # the mask is inverted, so invert it again
+        # img = ImageOps.invert(img)
+        # img = img.resize((512, 512), Image.NONE)
+        # imgMask = np.array(img)
+
+        # create coloring from image
+        # imgGrayVariance = Image.open(self.strPath + "/media/icons/" + "gray_variance.png") #imread(path.join(d, "alice_color.png"))
+        img_colors = ImageColorGenerator(img)
+        # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
+        wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors).generate(text)
         self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
+        # plt.imshow(wordcloud.recolor(color_func=img_colors))
+
         plt.axis("off")
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))

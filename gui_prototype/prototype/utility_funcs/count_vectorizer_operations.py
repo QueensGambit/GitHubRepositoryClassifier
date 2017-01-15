@@ -21,9 +21,17 @@ def printFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence=1):
     assert (len(lstFeatureNames) == len(lstOccurrence))
     # print('{:.10}'.format(lstFeatureNames[i]), end=":\t")
 
+    strStopper1 = "=" * 80
+    strStopper2 = "-" * 80
+
+    print(strStopper2)
+
+    print('detected words from the vocabulary:')
     i = 0
     for iTmpOccurrence in lstOccurrence:
         if iTmpOccurrence > iMinOccurence:
             # for more beautiful print layout {:15s} and {:3d} is used
             print('{:15s} {:3f}'.format(lstFeatureNames[i], iTmpOccurrence)) #{:3d} for integers
         i += 1
+
+    print(strStopper2)
