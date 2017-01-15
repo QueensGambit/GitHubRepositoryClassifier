@@ -7,17 +7,37 @@ Created on 07.01.2017 23:06
 
 GUI Prototype using kivy
 """
-
+import kivy
 from kivy.config import Config
 Config.set('graphics', 'width', '1200')
 Config.set('graphics', 'height', '800')
 # Config.set('graphics', 'resizable', False)
 
+# This block is needed to use the right dll-file for building
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# kivy.require("1.9.0")
+
+# import ctypes
+# import os
+# import sys
+#
+# if getattr(sys, 'frozen', False):
+#   # Override dll search path.
+#   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
+#   # Init code to load external dll
+#   ctypes.CDLL('mkl_avx2.dll')
+#   ctypes.CDLL('mkl_def.dll')
+#   ctypes.CDLL('mkl_vml_avx2.dll')
+#   ctypes.CDLL('mkl_vml_def.dll')
+#
+#   # Restore dll search path.
+#   ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+# matplotlib.use('file://G:/GitHub/spyder_Python/GitHubRepositoryClassifier/gui_prototype/kivy.garden.matplotlib.backend_kivy')
 
-import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
@@ -717,8 +737,6 @@ class GUILayout(BoxLayout):
         print(lstNormedMeanValues)
 
         print(math.log2(repo.getIntegerFeatures()[0]))
-        print("normalizer params: " + str(self.normalizer.get_params()))
-
 
         fig = pl.figure(5, figsize=(0.1, 0.1))
         fig.clear()
@@ -735,7 +753,7 @@ class GUILayout(BoxLayout):
         ]
 
         radar = Radar(fig, titles, labels)
-        radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
+        # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
         radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
         radar.ax.legend(loc=(1, .6))
 

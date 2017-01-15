@@ -27,6 +27,7 @@
         FileChooserIconView:
             id: file_chooser
             on_selection: filename_input.text = self.selection and self.selection[0] or ''
+            path: "C:"
         TextInput:
             id: filename_input
             size_hint_y: None
