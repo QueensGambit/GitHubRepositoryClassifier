@@ -717,6 +717,7 @@ class GUILayout(BoxLayout):
         print(lstNormedMeanValues)
 
         print(math.log2(repo.getIntegerFeatures()[0]))
+        print("normalizer params: " + str(self.normalizer.get_params()))
 
 
         fig = pl.figure(5, figsize=(0.1, 0.1))
@@ -727,10 +728,10 @@ class GUILayout(BoxLayout):
         titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
 
         labels = [
-            [(.2/lsAttributes[0])*repo.getIntegerFeatures()[0]],
-            list("12345"),
-            list("uvwxy"),
-            ["one", "two", "three", "four"]
+            [],
+            [],
+            [],
+            []
         ]
 
         radar = Radar(fig, titles, labels)

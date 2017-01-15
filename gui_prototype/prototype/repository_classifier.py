@@ -497,6 +497,7 @@ class RepositoryClassifier:
         # print('lstInputFeature pre normalize: ', lstInputFeatures)
         lstNormedInputFeatures = np.array(lstNormedInputFeatures).reshape(1, len(lstNormedInputFeatures))
 
+
         lstNormedInputFeatures = self.normalizer.transform(lstNormedInputFeatures)
         # print('lstInputFeature post normalize: ', lstInputFeatures)
 
