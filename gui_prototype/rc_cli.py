@@ -61,7 +61,6 @@ from prototype.utility_funcs import string_operation
 import sys
 import os
 
-print(sys.argv)
 
 def printMenu():
     # tWelc = PrettyTable(['Welcome to the CLI-of the repository classifier'])
@@ -95,6 +94,7 @@ def main():
 
     # initialize the repositoryClassifier
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
+    repoClassifier.loadModelFromFile(console=True)
 
     while strInput != 'q':
         strInput = input()
@@ -118,30 +118,30 @@ def main():
         elif strInput == 'h':
             print('help...')
 
-        elif string_operation.validate_url(strInput):
-            predictFromFile(repoClassifier, strInput)
+        #striagt url
+        elif len(strInput) > 1 and string_operation.validate_url(strInput):
+            predictCategoryFromURL(repoClassifier, strInput)
 
-        elif string_operation.validate_txtfile(strInput):
-            predictFromFile(repoClassifier,repoClassifier)
+        #straigt file
+        elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
+            predictFromFile(repoClassifier, strInput)
 
 
 
 def predictFromFile(repoClassifier, strFileInput):
     #Checks file exists and txt file
     if os.path.exists(strFileInput) & string_operation.validate_txtfile(strFileInput):
-        file = os.open(strFileInput)
+        file = open(strFileInput, 'r')
 
         strReadFileDirectory = os.path.dirname(strFileInput)
         strReadFileName = os.path.basename(strFileInput)
 
         print(strReadFileName + 'was read successfully')
 
-        strFileClassified = file.name + '_classified' + '.txt'
+        strFileClassified = strReadFileName + '_classified' + '.txt'
         iLabel = None
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
-        print(strFileClassified + ' was created and classified.')
-
     else:
         print("File could no be read. Make sure you have permission or entered correct File (txt)")
 
@@ -150,18 +150,20 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
     try:
 
         for line in file:
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
-                line)
+            strRepoUrl = line.rsplit('\n')
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(str(strRepoUrl))
 
             with open(os.path.join(strReadFileDirectory, strFileClassified), 'wb') as temp_file:
-                temp_file.write(line + ',' + iLabel)
 
+                temp_file.write(line + ',' + iLabel + '\n')
+
+        print(strFileClassified + ' was created and classified.')
     except OSError as err:
         print("Could not create file. Make sure you have permission in created Directory".format(err))
 
-    finally:
-        os.close(file)
-        os.close(temp_file)
+    #finally:
+        #os.close(file)
+        #os.close(temp_file)
 
 def predictCategoryFromURL(repoClassifier, strUrl):
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
