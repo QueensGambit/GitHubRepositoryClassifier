@@ -164,6 +164,7 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
         os.close(temp_file)
 
 def predictCategoryFromURL(repoClassifier, strUrl):
+
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
         strUrl)
     repoClassifier.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
