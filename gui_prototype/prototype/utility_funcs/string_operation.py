@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import nltk
+import mimetypes
 from nltk.corpus import stopwords   # Import the stop word list
 from nltk.stem.porter import PorterStemmer
 
@@ -39,3 +40,33 @@ def prepare_words(raw_text, bApplyStemmer=True):
 
     # return words
     return words                                             # return the words as a string, separator: space
+
+
+def validate_url(url_in):
+    """
+    Performs some simple string checks to validate the URL for further processing
+
+    :param url_in: The URL to perform the checks on
+    :return:
+    """
+    if url_in == "":
+        print("[ERROR] Input is empty")
+        return False
+    elif not url_in.startswith("https://"):
+        print("[ERROR] Input doesn't start with https://")
+        return False
+    elif not url_in.startswith("https://github.com/"):
+        print("[ERROR] Input is not a GitHub URL")
+        return False
+    else:
+        print("[INFO] Input is a valid URL")
+        return True
+
+def validate_txtfile(path):
+    """
+    Checks file type whether its txt or not
+    :param path: path to file
+    :return:
+    """
+    bFile = True if mimetypes.guess_type(path)[0] == 'text/plain' else False
+    return bFile

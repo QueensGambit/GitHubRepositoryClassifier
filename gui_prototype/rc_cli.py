@@ -55,7 +55,12 @@ strLogoRC = "\
 
 
 from prettytable import PrettyTable
+from .prototype.repository_classifier import RepositoryClassifier
+from .prototype.utility_funcs import string_operation
+
 import sys
+import os
+
 print(sys.argv)
 
 def printMenu():
@@ -63,7 +68,7 @@ def printMenu():
     print('Welcome to the CLI of the repository classifier')
     print(strStopper1)
     t = PrettyTable(['Action', '    Shortcute   '])
-    t.add_row(['Show Menu', '- m _'])
+    t.add_row(['Show Menu', '- m -'])
     t.add_row(['     Predict repositories form txt-file     ', '- i -'])
     t.add_row(['Input URL', '- u -'])
     t.add_row(['Show Info', '- f -'])
@@ -87,14 +92,81 @@ def init():
 def main():
     init()
     strInput = ""
+
+    # initialize the repositoryClassifier
+    repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
+
     while strInput != 'q':
         strInput = input()
 
-        if strInput == 'h':
-            print('help')
-        elif strInput == 'm':
+        if strInput == 'm':
             printMenu()
 
+        elif strInput == 'i':
+            print("Enter path of file")
+            strFileInput = input()
+            predictFromFile(repoClassifier, strFileInput)
+
+        elif strInput == 'u':
+            print("Enter the URL to a Repository.")
+            strUrlInput = input()
+            predictCategoryFromURL(repoClassifier, strUrlInput)
+
+        elif strInput == 'f':
+            print('Show Info')
+
+        elif strInput == 'h':
+            print('help...')
+
+        elif string_operation.validate_url(strInput):
+            predictFromFile(repoClassifier, strInput)
+
+        elif string_operation.validate_txtfile(strInput):
+            predictFromFile(repoClassifier,repoClassifier)
+
+
+
+def predictFromFile(repoClassifier, strFileInput):
+    #Checks file exists and txt file
+    if os.path.exists(strFileInput) & string_operation.validate_txtfile(strFileInput):
+        file = os.open(strFileInput)
+
+        strReadFileDirectory = os.path.dirname(strFileInput)
+        strReadFileName = os.path.basename(strFileInput)
+
+        print(strReadFileName + 'was read successfully')
+
+        strFileClassified = file.name + '_classified' + '.txt'
+        iLabel = None
+
+        writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
+        print(strFileClassified + ' was created and classified.')
+
+    else:
+        print("File could no be read. Make sure you have permission or entered correct File (txt)")
+
+
+def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier):
+    try:
+
+        for line in file:
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
+                line)
+
+            with open(os.path.join(strReadFileDirectory, strFileClassified), 'wb') as temp_file:
+                temp_file.write(line + ',' + iLabel)
+
+    except OSError as err:
+        print("Could not create file. Make sure you have permission in created Directory".format(err))
+
+    finally:
+        os.close(file)
+        os.close(temp_file)
+
+def predictCategoryFromURL(repoClassifier, strUrl):
+    iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
+        strUrl)
+    repoClassifier.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
 
 if __name__ == "__main__":
