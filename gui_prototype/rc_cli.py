@@ -57,6 +57,7 @@ strLogoRC = "\
 from prettytable import PrettyTable
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs import string_operation
+from prototype.definitions.categories import Category
 
 import sys
 import os
@@ -102,7 +103,7 @@ def main():
 
     # initialize the repositoryClassifier
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
-    repoClassifier.loadModelFromFile(console=True)
+    repoClassifier.loadModelFromFile()
 
     while strInput != 'q':
         strInput = input()
@@ -153,7 +154,6 @@ def predictFromFile(repoClassifier, strFileInput):
         print(strReadFileName + 'was read successfully')
 
         strFileClassified = strReadFileName + '_classified' + '.txt'
-        iLabel = None
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
     else:
@@ -169,23 +169,24 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
     :param repoClassifier:
     :return:
     """
+    classifiedFile = None
     try:
 
+        classifiedFile = open(strReadFileDirectory + '/' + strFileClassified, 'w')  # Trying to create a new file or open one
+
         for line in file:
-            strRepoUrl = line.rsplit('\n')
-            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(str(strRepoUrl[0]))
+            strRepoUrl = line.strip(os.linesep)
+            iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(strRepoUrl)
 
-            with open(os.path.join(strReadFileDirectory, strFileClassified), 'wb') as temp_file:
-
-                temp_file.write(line + ',' + iLabel + '\n')
+            classifiedFile.write(strRepoUrl + ',' + str(Category(iLabel)) + '\n')
 
         print(strFileClassified + ' was created and classified.')
     except OSError as err:
         print("Could not create file. Make sure you have permission in created Directory".format(err))
 
-    #finally:
-        #os.close(file)
-        #os.close(temp_file)
+    finally:
+        file.close()
+        classifiedFile.close()
 
 def predictCategoryFromURL(repoClassifier, strUrl):
     """

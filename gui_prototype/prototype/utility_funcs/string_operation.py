@@ -55,19 +55,20 @@ def validate_url(url_in):
     Performs some simple string checks to validate the URL for further processing
 
     :param url_in: The URL to perform the checks on
-    :return:
+    :return: error: errorcode
     """
+
     if url_in == "":
-        print("[ERROR] Input is empty")
+        error = "[ERROR] Input is empty"
         return False
     elif not url_in.startswith("https://"):
-        print("[ERROR] Input doesn't start with https://")
+        error = "[ERROR] Input doesn't start with https://"
         return False
     elif not url_in.startswith("https://github.com/"):
-        print("[ERROR] Input is not a GitHub URL")
+        error = "[ERROR] Input is not a GitHub URL"
         return False
     else:
-        print("[INFO] Input is a valid URL")
+        error = "[INFO] Input is a valid URL"
         return True
 
 def validate_txtfile(path):
