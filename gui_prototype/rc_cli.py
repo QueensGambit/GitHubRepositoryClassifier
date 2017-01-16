@@ -58,7 +58,7 @@ from prettytable import PrettyTable
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs import string_operation
 from prototype.definitions.categories import CategoryStr
-
+from prototype.utility_funcs.io_agent import InputOutputAgent
 import sys
 import os
 
@@ -77,11 +77,12 @@ def printMenu():
     t.add_row(['Input URL', '- u -'])
     t.add_row(['Show Info', '- f -'])
     t.add_row(['Train Model', '- t -'])
+    t.add_row(['set GitHub-Token', '- g -'])
     t.add_row(['Help', '- h -'])
     t.add_row(['Quit', '- q -'])
     print(t)
-
     print('')
+
 def init():
     print(strStopper2)
     print(strLogoGithub)
@@ -93,6 +94,10 @@ def init():
     print()
     printMenu()
 
+# initialize the repositoryClassifier
+repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
+repoClassifier.loadModelFromFile()
+
 def main():
     """
     predicting repositories headless
@@ -101,10 +106,7 @@ def main():
     init()
     strInput = ""
 
-    # initialize the repositoryClassifier
-    repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
-    repoClassifier.loadModelFromFile()
-
+    token = False
     while strInput != 'q':
         strInput = input()
 
@@ -119,7 +121,15 @@ def main():
         elif strInput == 'u':
             print("Enter the URL to a Repository.")
             strUrlInput = input()
-            repoClassifier.predictCategoryFromURL(strInput)
+
+            if string_operation.validate_url(strUrlInput):
+                repoClassifier.predictCategoryFromURL(strInput)
+            else:
+                print("Make sure that you entered a correct url")
+
+        elif strInput == 'g':
+            token = not token
+            InputOutputAgent.setWithToken(token)
 
         elif strInput == 'f':
             print('Show Info')
