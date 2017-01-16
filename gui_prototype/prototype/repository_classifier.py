@@ -163,7 +163,7 @@ class RepositoryClassifier:
         print('len(lstVoc): ', len(self.lstVoc))
 
         lstInputFeatures = []
-
+        lstInputFeaturesRaw = []
 
         for tmpRepo in lstGithubRepo:
 
@@ -183,6 +183,7 @@ class RepositoryClassifier:
             # lstIntegerAttributes = [] # [None] * len(tmpRepo.getIntegerFeatures()) # []
             # lstIntegerAttributes = tmpRepo.getIntegerFeatures()
 
+            lstInputFeaturesRaw = tmpRepo.getIntegerFeatures()
             # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
                 # if x > 0:   #
                 #     tmpRepo:  youtaya
@@ -201,14 +202,15 @@ class RepositoryClassifier:
 
             if self.bUseStringFeatures:
                 lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+                lstInputFeaturesRaw += tmpRepo.getWordOccurences(self.lstVoc)
             lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
-
+            lstInputFeaturesRaw += tmpRepo.getRepoLanguageAsVector()
 
             # test using unnormed features
             # lstInputFeatures = tmpGithubRepo.getIntegerFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
 
             self.lstTrainData.append(lstInputFeatures)
-            self.lstTrainDataRaw.append(lstInputFeatures)
+            self.lstTrainDataRaw.append(lstInputFeaturesRaw)
 
         print("lstTrainData:")
         print(self.lstTrainData)
