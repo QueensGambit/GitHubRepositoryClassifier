@@ -370,9 +370,9 @@ class GUILayout(BoxLayout):
                 self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
-
             self.plot_multi_dim()
-            # self.plot_barchart(self.lstNormedInputFeatures)
+
+            # net diagram
             self.plot_net_diagram(tmpRepo, iLabel)
         else:
             self.label_result.text = 'No Result'
@@ -831,7 +831,7 @@ class GUILayout(BoxLayout):
         radar = Radar(fig, titles, labels, color='silver')  # color=CategoryStr.lstStrColors[iLabel]
         # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
         # radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
-        radar.plot(lsAttributes * 3, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label= repo.getUser() + '/' + repo.getName()) #"This Repo")
+        radar.plot(lsAttributes * 10, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label= repo.getUser() + '/' + repo.getName()) #"This Repo")
 
         leg = radar.ax.legend(loc=(1, .6))
 
@@ -857,9 +857,11 @@ class FileSaverPopup(Popup):
     The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
     """
     label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
+    file_chooser = ObjectProperty()
     def __init__(self, windowParent):
         super(FileSaverPopup, self).__init__()
         self.windowParent = windowParent
+        self.file_chooser.path = os.path.expanduser('~')
 
     def save_file(self, path, filename):
         """
@@ -870,6 +872,8 @@ class FileSaverPopup(Popup):
         :param filename: The filename to save the file as
         :return:
         """
+        stream = None
+
         try:
             with open(os.path.join(path, filename), 'w') as stream:
                 stream.write(self.log_text)
@@ -880,7 +884,8 @@ class FileSaverPopup(Popup):
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
-            stream.close()
+            if stream is not None:
+                stream.close()
 
         self.windowParent.update_console()
 
