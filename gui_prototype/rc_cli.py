@@ -3,7 +3,7 @@
 Created on 15.01.2017 02:36
 @project: GitHubRepositoryClassifier
 
-@author: Anonym
+@author: QueensGambit
 
 Your description goes here...
 """

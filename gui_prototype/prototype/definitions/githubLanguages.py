@@ -3,7 +3,7 @@
 Created on 08.01.2017 00:58
 @project: GitHubRepositoryClassifier
 
-@author: Anonym
+@author: QueensGambit
 
 List of the top 100 languages of GitHub + "Undetected" if the languages wasn't detected
 rare means a language was searched but not found in this list
