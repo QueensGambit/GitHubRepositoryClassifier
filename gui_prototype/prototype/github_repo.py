@@ -72,11 +72,11 @@ class GithubRepo:
         else:
             return strDescr
 
-    def getFilteredRepoDescription(self, bApplyStemmer=True):
+    def getFilteredRepoDescription(self, bApplyStemmer=True, bCheckStopWords=False):
         strDescription = self.getRepoDescription()
         if strDescription is not "":
             # return strDescription
-            return string_operation.prepare_words(strDescription, bApplyStemmer)
+            return string_operation.prepare_words(strDescription, bApplyStemmer, bCheckStopWords)
         else:
             return ""
 
@@ -104,13 +104,13 @@ class GithubRepo:
         strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
         return strMyREADME
 
-    def getFilteredReadme(self, bApplyStemmer=True):
+    def getFilteredReadme(self, bApplyStemmer=True, bCheckStopWords=False):
         """
         returns the filtered readme with prepare_words() being applied
 
         :return: string of the filtered readme
         """
-        return string_operation.prepare_words(self.getReadme(), bApplyStemmer)
+        return string_operation.prepare_words(self.getReadme(), bApplyStemmer, bCheckStopWords)
 
     def getDevTime(self):
         # a usual Github-Time stamp looks like this:
@@ -266,6 +266,7 @@ class GithubRepo:
         if iHits == 0:
             iHits = 1
 
+        # fFacEffectiveness = 1.0
         # fFacEffectiveness = 10.0
         # fFacEffectiveness = 20.0
 
@@ -278,7 +279,7 @@ class GithubRepo:
         # make a binarized vector
         # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
 
-        # count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
+        count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
 
         return lstOccurrence
 

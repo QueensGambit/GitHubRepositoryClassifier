@@ -55,6 +55,7 @@ class RepositoryClassifier:
         self.normalizer = None
         self.bUseCentroids = True
         self.normalizerIntegerAttr = None
+        # self.scaler = None
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -231,7 +232,13 @@ class RepositoryClassifier:
         # self.stdScaler = preprocessing.StandardScaler()
         # self.stdScaler.fit(lstTrainData)
         # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
-        #
+
+        # apply robust scaling
+        # self.scaler = preprocessing.StandardScaler()
+        # self.scaler = preprocessing.MaxAbsScaler()
+        # self.scaler = preprocessing.RobustScaler()
+        # self.lstTrainData = self.scaler.fit_transform(self.lstTrainData)
+
         self.normalizer = preprocessing.Normalizer()
         # self.normalizer = ReliableNormalizer()
         self.normalizer.fit(self.lstTrainData)
@@ -504,7 +511,7 @@ class RepositoryClassifier:
         # print('lstInputFeature pre normalize: ', lstInputFeatures)
         lstNormedInputFeatures = np.array(lstNormedInputFeatures).reshape(1, len(lstNormedInputFeatures))
 
-
+        # lstNormedInputFeatures = self.scaler.transform(lstNormedInputFeatures)
         lstNormedInputFeatures = self.normalizer.transform(lstNormedInputFeatures)
         # print('lstInputFeature post normalize: ', lstInputFeatures)
 

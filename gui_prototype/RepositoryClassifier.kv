@@ -27,7 +27,7 @@
         FileChooserIconView:
             id: file_chooser
             on_selection: filename_input.text = self.selection and self.selection[0] or ''
-            path: "C:"
+            path: "C:/"
         TextInput:
             id: filename_input
             size_hint_y: None
@@ -310,11 +310,45 @@ GUILayout:
                 text: "Examples"
                 mode: "spinner"
                 ActionButton:
-                    text: "DEV"
+                    text: "gimp"  #"DEV"
                     on_press: root.load_example("GNOME/gimp")
+                #ActionButton:
+                #    text: "edX-Learning" #"HW"
+                #    on_press: root.load_example("kirbs-/edX-Learning-From-Data-Solutions")
                 ActionButton:
-                    text: "HW"
+                    text: "hw_tester" #"HW"
+                    on_press: root.load_example("vitaly-chibrikov/homework_tester")
+                ActionButton:
+                    text: "Make_OS" #"EDU"
+                    on_press: root.load_example("SamyPesse/How-to-Make-a-Computer-Operating-System")
+                #ActionButton:
+                #    text: "OKFNat/data" #"DATA"
+                #    on_press: root.load_example("OKFNat/data")
+                ActionButton:
+                    text: "GameSave" #"DATA"
+                    on_press: root.load_example("GameSaveInfo/Data")
+                ActionButton:
+                    text: "InfCup17" #"DOCS"
+                    on_press: root.load_example("InformatiCup/InformatiCup2017")
+                ActionButton:
+                    text: "Chennaipy" #"WEB"
+                    on_press: root.load_example("Chennaipy/website")
+                ActionButton:
+                    text: "Barcode-App" #"DEV"
                     on_press: root.load_example("QueensGambit/Barcode-App")
+                #ActionButton:
+                #    text: "apps-android" #"DEV"
+                    on_press: root.load_example("wikimedia/apps-android-wikipedia")
+                ActionButton:
+                    text: "Stockfish" #"DEV"
+                    on_press: root.load_example("official-stockfish/Stockfish")
+                ActionButton:
+                    text: "WormBase" #"DEV"
+                    on_press: root.load_example("WormBase/website")  # great example
+                ActionButton:
+                    text: "Colorizer" #"OTHER"
+                    on_press: root.load_example("GnaspGames/MCC-VSCode")
+
                 ActionButton:
                     text: "more..."
 

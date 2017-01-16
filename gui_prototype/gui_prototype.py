@@ -87,6 +87,7 @@ from PIL import Image
 from PIL import ImageOps
 import numpy as np
 from pathlib import Path
+from pylab import rcParams
 
 kivy.require("1.9.0")
 
@@ -123,18 +124,30 @@ class StdOut(object):
 
 
 class Radar(object):
+    backgroundcolor = (48 / 255, 48 / 255, 48 / 255) #'w'
+    # http://stackoverflow.com/questions/4804005/matplotlib-figure-facecolor-background-color
+    plt.rcParams['axes.facecolor'] = backgroundcolor
+    plt.rcParams['savefig.facecolor'] = backgroundcolor
+    plt.rcParams['axes.edgecolor'] = 'silver' #''w'
+    plt.rcParams['axes.labelcolor'] = 'silver' #''w'
+    plt.rcParams['grid.color'] = 'silver' #''w'
+    # plt.rcParams['legend.facecolor'] = 'w'
 
-    def __init__(self, fig, titles, labels, rect=None):
+
+    def __init__(self, fig, titles, labels, color='b', rect=None):
         if rect is None:
-            rect = [0.05, 0.05, 0.95, 0.95]
+            # rect = [0.05, 0.05, 0.95, 0.95]
+            # set a constant offset and scale
+            rect = [0.05, 0.05, 0.9, 0.9]
 
         self.n = len(titles)
+        self.color = color
         self.angles = np.arange(45, 45+360, 360.0/self.n)
         self.axes = [fig.add_axes(rect, projection="polar", label="axes%d" % i)
                          for i in range(self.n)]
 
         self.ax = self.axes[0]
-        self.ax.set_thetagrids(self.angles, labels=titles, fontsize=14)
+        self.ax.set_thetagrids(self.angles, labels=titles, fontsize=14, color=self.color)
 
         for ax in self.axes[1:]:
             ax.patch.set_visible(False)
@@ -142,7 +155,7 @@ class Radar(object):
             ax.xaxis.set_visible(False)
 
         for ax, angle, label in zip(self.axes, self.angles, labels):
-            ax.set_rgrids(range(1, 5), angle=angle, labels=label)
+            ax.set_rgrids(range(1, 5), angle=angle, labels=label, backgroundcolor=self.backgroundcolor)
             ax.spines["polar"].set_visible(False)
             ax.set_ylim(0, 5)
 
@@ -346,8 +359,8 @@ class GUILayout(BoxLayout):
             self.set_info("[INFO] Classification complete")
 
             # Wordcloud
-            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
-                bApplyStemmer=True))
+            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True, bCheckStopWords=True) + " " + tmpRepo.getFilteredRepoDescription(
+                bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
                 self.show_wordcloud(strText, iLabel)
@@ -360,7 +373,7 @@ class GUILayout(BoxLayout):
 
             self.plot_multi_dim()
             # self.plot_barchart(self.lstNormedInputFeatures)
-            self.plot_net_diagram(tmpRepo)
+            self.plot_net_diagram(tmpRepo, iLabel)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
@@ -402,7 +415,7 @@ class GUILayout(BoxLayout):
         # imgGrayVariance = Image.open(self.strPath + "/media/icons/" + "gray_variance.png") #imread(path.join(d, "alice_color.png"))
         img_colors = ImageColorGenerator(img)
         # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
-        wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors).generate(text)
+        wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors, max_words=2000).generate(text)
         self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
@@ -648,16 +661,29 @@ class GUILayout(BoxLayout):
         Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
         Z = Z.reshape(xx.shape)
 
-        plt.figure(3)
+        fig = plt.figure(3)
         plt.cla()
         plt.clf()
         plt.imshow(Z, interpolation='nearest',
                    extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt.cm.Paired,
+                   cmap=plt.cm.Paired, alpha=0.1,
                    aspect='auto', origin='lower')
         # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
 
         lstColors = [None] * len(lstTrainLabels)
+
+        rect = [0.05, 0.05, 0.9, 0.9]
+
+        # self.n = len(titles)
+        # self.color = color
+        # self.angles = np.arange(45, 45+360, 360.0/self.n)
+        # fig.set_axes(rect)
+        # self.axes = [fig.add_axes(rect label="axes%d" % i)
+
+        # set a ceratin aspect ratio
+        ax = plt.gca()
+        ax.set_aspect(0.6)#'equal')
+
 
         for i, iLabel in enumerate(lstTrainLabels):
             lstColors[i] = CategoryStr.lstStrColors[iLabel]
@@ -671,20 +697,56 @@ class GUILayout(BoxLayout):
                     marker='x', s=169, linewidths=3,
                     color=CategoryStr.lstStrColors, zorder=10)
 
-        plt.xlim(x_min, x_max)
-        plt.ylim(y_min, y_max)
+        # plt.xlim(x_min, x_max)
+        # plt.ylim(y_min, y_max)
+        # set the xlim and ylim to a custom value
+        # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
+        fMaxVal = 1.4
+        xmin = -fMaxVal
+        xmax = fMaxVal
+        ymin = -fMaxVal
+        ymax = fMaxVal
+
+        plt.xlim(xmin, xmax)
+        plt.ylim(ymin, ymax)
         plt.xticks(())
         plt.yticks(())
-        # .show()
 
+        # create a custom legend in color
         lstPatches = [None] * len(CategoryStr.lstStrCategories)
         for i, strCategory in enumerate(CategoryStr.lstStrCategories):
             lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
 
-        plt.legend(handles=lstPatches)
+        leg = plt.legend(handles=lstPatches, loc=(1.0,0.0)) #'right')
+
+        for i, text in enumerate(leg.get_texts()):
+            text.set_color(CategoryStr.lstStrColors[i])
+
+        # attempt to enable the grid
+        # ax = plt.gca()
+        # plt.rc('grid', color='w')  #linestyle="-",
+        # ax.grid()
+        # plt.grid(True)
+        #
+        # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+        # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+        # ax.grid(b=True, which='minor', linewidth=.2)
+        # ax.grid(b=True, which='major', linewidth=1)
+        #
+        # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
+        # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
+        #
+        # for line in gridlines:
+        #     line.set_linestyle('-')
+        #     line.set_color('w')
+
+        # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
+        # ax.set_xticks(np.arange(0, 1, 0.1))
+        # ax.set_yticks(np.arange(0, 1., 0.1))
 
         fig = plt.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
         self.layout_diagram3.clear_widgets()
         self.layout_diagram3.add_widget(FigureCanvas(fig))
 
@@ -724,7 +786,7 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
-    def plot_net_diagram(self, repo):
+    def plot_net_diagram(self, repo, iLabel):
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
         import pylab as pl
         import math
@@ -736,9 +798,23 @@ class GUILayout(BoxLayout):
         lstNormedMeanValues = self.normalizer.transform([1] * len(self.lstMeanValues))
         print(lstNormedMeanValues)
 
-        print(math.log2(repo.getIntegerFeatures()[0]))
+        # print(math.log2(repo.getIntegerFeatures()[0]))
 
-        fig = pl.figure(5, figsize=(0.1, 0.1))
+        fig = pl.figure(5, figsize=(0.1, 0.1), dpi=80)
+
+        # --> not working
+        # fig.set_size_inches(0.5, 0.5)
+        #
+        # # http://stackoverflow.com/questions/18619880/matplotlib-adjust-figure-margin
+        # plot_margin = 0.25
+        #
+        # x0, x1, y0, y1 = plt.axis()
+        # plt.axis((x0 - plot_margin,
+        #           x1 + plot_margin,
+        #           y0 - plot_margin,
+        #           y1 + plot_margin))
+
+        # rcParams['figure.figsize'] = 8, 3
         fig.clear()
 
 
@@ -752,13 +828,26 @@ class GUILayout(BoxLayout):
             []
         ]
 
-        radar = Radar(fig, titles, labels)
+        radar = Radar(fig, titles, labels, color='silver')  # color=CategoryStr.lstStrColors[iLabel]
         # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
-        radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
-        radar.ax.legend(loc=(1, .6))
+        # radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
+        radar.plot(lsAttributes * 3, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label= repo.getUser() + '/' + repo.getName()) #"This Repo")
+
+        leg = radar.ax.legend(loc=(1, .6))
+
+        # http: // stackoverflow.com / questions / 13828246 / matplotlib - text - color - code - in -the - legend - instead - of - a - line
+        # set the color to white
+        # colors = ['w']
+        # for color, text in zip(colors, leg.get_texts()):
+        #     text.set_color(color)
+
+        # set the color to the category
+        for i, text in enumerate(leg.get_texts()):
+            text.set_color(CategoryStr.lstStrColors[iLabel])
 
         fig = pl.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 

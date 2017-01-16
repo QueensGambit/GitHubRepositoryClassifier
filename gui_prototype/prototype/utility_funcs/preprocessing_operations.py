@@ -13,14 +13,15 @@ def createVoabularyFeatures(lstRepos):
 
         # load the single lines to an array
         #print('tmpRepo.getFilteredREADME(): ', tmpRepo.getFilteredREADME())
-        lstRepoStringInfo.append(tmpRepo.getFilteredReadme())
-        lstRepoStringInfo.append(tmpRepo.getFilteredRepoDescription())
+        lstRepoStringInfo.append(tmpRepo.getFilteredReadme(bApplyStemmer=True, bCheckStopWords=True))
+        lstRepoStringInfo.append(tmpRepo.getFilteredRepoDescription(bApplyStemmer=True, bCheckStopWords=True))
 
     lstBannedWordsAddition = ['git', 'repositori', 'github', 'new', 'us', 'use', 'high', 'nasa', 'present', 'open', 'public', 'http', 'www', 'com']
 
     # create a counter which counts the occurrence of each word which is defined in the vocabulary
     # by default the vocabulary consists of all words
-    vectorizer = CountVectorizer(min_df=3, stop_words=lstBannedWordsAddition)
+    # vectorizer = CountVectorizer(min_df=3, stop_words=lstBannedWordsAddition)
+    vectorizer = CountVectorizer(min_df=5, stop_words=lstBannedWordsAddition)
 
     # return a sparse matrix
     # each column is mapped to a specific feature (see lstFeatureNames)
