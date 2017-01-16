@@ -57,7 +57,7 @@ strLogoRC = "\
 from prettytable import PrettyTable
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs import string_operation
-from prototype.definitions.categories import Category
+from prototype.definitions.categories import CategoryStr
 
 import sys
 import os
@@ -119,7 +119,7 @@ def main():
         elif strInput == 'u':
             print("Enter the URL to a Repository.")
             strUrlInput = input()
-            predictCategoryFromURL(repoClassifier, strUrlInput)
+            repoClassifier.predictCategoryFromURL(strInput)
 
         elif strInput == 'f':
             print('Show Info')
@@ -129,7 +129,7 @@ def main():
 
         #striagt url
         elif len(strInput) > 1 and string_operation.validate_url(strInput):
-            predictCategoryFromURL(repoClassifier, strInput)
+            repoClassifier.predictCategoryFromURL(strInput)
 
         #straigt file
         elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
@@ -152,7 +152,6 @@ def predictFromFile(repoClassifier, strFileInput):
         strReadFileName = os.path.basename(strFileInput)
 
         print(strReadFileName + 'was read successfully')
-
         strFileClassified = strReadFileName + '_classified' + '.txt'
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
@@ -178,7 +177,7 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
             strRepoUrl = line.strip(os.linesep)
             iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(strRepoUrl)
 
-            classifiedFile.write(strRepoUrl + ',' + str(Category(iLabel)) + '\n')
+            classifiedFile.write(strRepoUrl + ' ' + CategoryStr.lstStrCategories[iLabel] + '\n')
 
         print(strFileClassified + ' was created and classified.')
     except OSError as err:
@@ -188,16 +187,6 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
         file.close()
         classifiedFile.close()
 
-def predictCategoryFromURL(repoClassifier, strUrl):
-    """
-    Predicts category of repository
-    :param repoClassifier:
-    :param strUrl:
-    :return:
-    """
-    iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL(
-        strUrl)
-    repoClassifier.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
 
 if __name__ == "__main__":

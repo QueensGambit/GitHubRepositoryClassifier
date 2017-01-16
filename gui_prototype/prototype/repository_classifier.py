@@ -456,7 +456,7 @@ class RepositoryClassifier:
 
             # print('len(lstOccurence):', len(lstOccurence))
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
         print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
         print('verity matrix for matPredictionRes:\n ', matPredictionRes)
@@ -536,7 +536,7 @@ class RepositoryClassifier:
 
         iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
         return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
 
@@ -593,7 +593,7 @@ class RepositoryClassifier:
         return lstFinalPercentages
 
 
-    def printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
+    def __printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
         """
         prints the repository name and its category by using the iLabel
 
