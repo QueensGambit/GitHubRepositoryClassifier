@@ -38,8 +38,7 @@ Config.set('graphics', 'height', '800')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
-# matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
-# matplotlib.use('file://G:/GitHub/spyder_Python/GitHubRepositoryClassifier/gui_prototype/kivy.garden.matplotlib.backend_kivy')
+matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -48,7 +47,7 @@ from kivy.core.window import Window
 from sklearn import preprocessing
 from sklearn.cluster import KMeans
 from kivy.uix.label import Label
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
+from lib.kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
 import clipboard
 from sklearn import decomposition
@@ -481,7 +480,7 @@ class GUILayout(BoxLayout):
 
         # initialize the repositoryClassifier
         self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr = self.repoClassifier.loadModelFromFile()
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr,_ = self.repoClassifier.loadModelFromFile()
 
         # self.strPath = os.path.dirname(__file__)
         self.strPath = str(Path())
