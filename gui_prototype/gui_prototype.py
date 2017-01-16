@@ -559,7 +559,6 @@ class GUILayout(BoxLayout):
         :param lstFinalPercentages: the percentages to use in the piechart
         :return:
         """
-        print("[INFO] Rendering Piechart")
 
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
@@ -795,14 +794,7 @@ class GUILayout(BoxLayout):
         """
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
         import pylab as pl
-        import math
-
         lsAttributes = self.lstNormedInputFeatures[0][:4]
-        print(lsAttributes)
-        print(repo.getIntegerFeatures())
-        print(self.lstMeanValues)
-        lstNormedMeanValues = self.normalizer.transform([1] * len(self.lstMeanValues))
-        print(lstNormedMeanValues)
 
         # print(math.log2(repo.getIntegerFeatures()[0]))
 
