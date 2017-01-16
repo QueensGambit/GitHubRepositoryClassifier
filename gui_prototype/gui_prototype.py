@@ -6,6 +6,9 @@ Created on 07.01.2017 23:06
 @author: Lukas
 
 GUI Prototype using kivy
+Presenting an easily usable GUI to the user to make classification as easy as possible.
+Also includes some visuals like multiple plots and a word cloud as well as some examples
+
 """
 import kivy
 from kivy.config import Config
@@ -35,7 +38,7 @@ Config.set('graphics', 'height', '800')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
-matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+# matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 # matplotlib.use('file://G:/GitHub/spyder_Python/GitHubRepositoryClassifier/gui_prototype/kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
@@ -43,12 +46,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.core.window import Window
 from sklearn import preprocessing
-from sklearn import decomposition
 from sklearn.cluster import KMeans
-from kivy.uix.scrollview import ScrollView
-from kivy.properties import StringProperty
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
@@ -59,7 +57,6 @@ import matplotlib.patches as mpatches
 import sys, os
 import matplotlib.pyplot as plt
 # from colour import Color
-from scipy.misc import imread
 
 # add the current directory to the system path in order to find the modules in relative path
 # sys.path.insert(0, os.path.abspath(".."))
@@ -75,7 +72,6 @@ import webbrowser
 # threading and animation
 # multithreading in kivy:
 # https://github.com/kivy/kivy/wiki/Working-with-Python-threads-inside-a-Kivy-application
-import time
 import threading
 from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
@@ -84,10 +80,8 @@ from kivy.factory import Factory
 from wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
-from PIL import ImageOps
 import numpy as np
 from pathlib import Path
-from pylab import rcParams
 
 kivy.require("1.9.0")
 
@@ -118,7 +112,6 @@ class StdOut(object):
         self.oldStdOut.write(string)
         StaticVars.str_stdOutPuffer += string
 
-
     def flush(self):
         pass
 
@@ -132,7 +125,6 @@ class Radar(object):
     plt.rcParams['axes.labelcolor'] = 'silver' #''w'
     plt.rcParams['grid.color'] = 'silver' #''w'
     # plt.rcParams['legend.facecolor'] = 'w'
-
 
     def __init__(self, fig, titles, labels, color='b', rect=None):
         if rect is None:
@@ -348,7 +340,7 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
-            self.renderPieChart(lstFinalPercentages)
+            self.render_pie_chart(lstFinalPercentages)
 
             lstFinalPercentages.sort()
             if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
@@ -496,7 +488,6 @@ class GUILayout(BoxLayout):
 
         self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
 
-
     def validate_url(self, url_in):
         """
         Performs some simple string checks to validate the URL for further processing
@@ -562,7 +553,7 @@ class GUILayout(BoxLayout):
             StaticVars.b_run_loading = True                             # enable loading screen
             self.start_classification_thread(self.label_info.text, url_in)
 
-    def renderPieChart(self, lstFinalPercentages):
+    def render_pie_chart(self, lstFinalPercentages):
         """
         Creates the pie chart
 
@@ -750,14 +741,23 @@ class GUILayout(BoxLayout):
         self.layout_diagram3.clear_widgets()
         self.layout_diagram3.add_widget(FigureCanvas(fig))
 
+    def get_median_value(lstData):
+        """
+        calculates and returns the median value of a (unsorted) input list.
 
-
-    def getMedianValue(lstData):
+        :return:
+        """
         sortedlist = sorted(lstData, reverse=False)
         iSize = len(sortedlist)
         return sortedlist[iSize / 2]
 
     def plot_barchart(self, lsIntegerAttributes):
+        """
+        function to plot a barchart using the integer values. not used anymore.
+
+        :param lsIntegerAttributes:
+        :return:
+        """
         plt.figure(4)
         lsIntegerAttribute = lsIntegerAttributes[0][:4]
         iN = len(lsIntegerAttribute)
@@ -787,6 +787,13 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
     def plot_net_diagram(self, repo, iLabel):
+        """
+        function to plot a net diagram to display the Integer Attributes.
+
+        :param repo: The Repository to get the values from
+        :param iLabel: The Result of the Classification
+        :return:
+        """
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
         import pylab as pl
         import math
@@ -919,7 +926,14 @@ class RepositoryClassifierApp(App):
 
         return layGUI
 
+
 def main():
+    """
+    Entry point for the programm
+    Runs the GUI
+
+    :return:
+    """
     gui = RepositoryClassifierApp()
     gui.run()
 
@@ -931,12 +945,12 @@ if __name__ == "__main__":
 # TODO: VERY HIGH - Build Windows-Excecutable
 # TODO: VERY HIGH - Write Docu
 # TODO: HIGH - Build single console excecutable
-# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling
-# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart)
-# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map)
+# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling - DONE
+# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart) - DONE
+# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map) - DONE
 # TODO: MEDIUM - Build Sphinx-Docu
-# TODO: MEDIUM - Beautifully draw the word clouds in different colors
-# TODO: LOW - Drob-Down-List with nice examples which work well ;)
+# TODO: MEDIUM - Beautifully draw the word clouds in different colors - DONE
+# TODO: LOW - Drob-Down-List with nice examples which work well ;) - DONE
 # TODO: LOW - Add better animation while waiting
 
 
