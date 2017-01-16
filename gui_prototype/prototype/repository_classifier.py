@@ -346,8 +346,8 @@ class RepositoryClassifier:
         :return:
         """
 
-        if console is None:
-            print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
+
+        print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
 
         # load the classifier from the file
         self.clf = joblib.load(self.strModelPath + self.strModelFileName)
@@ -359,26 +359,26 @@ class RepositoryClassifier:
         self.normalizer = joblib.load(self.strModelPath + self.strNormalizer)
         self.normalizerIntegerAttr = joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
 
-        if console is None:
-            print('lstMeanValues: ', self.lstMeanValues)
-            print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
+
+        print('lstMeanValues: ', self.lstMeanValues)
+        print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
 
         strVocabPath = self.directory + '/vocab/'
 
-        if console is None:
-            strVocabPath += 'vocabList.dump'
-            self.lstVoc = readVocabFromFile(strVocabPath)
-            # only print out the first 7 and the last 7 entries
-            # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
-            print('len(self.lstVoc):', len(self.lstVoc))
-            if len(self.lstVoc) > 14:
-                print("[", end="")
-                print(*self.lstVoc[:7], sep=", ", end=" ")
-                print('...', end=" ")
-                print(*self.lstVoc[-7:], sep=", ", end="")
-                print("]")
 
-            self.bModelLoaded = True
+        strVocabPath += 'vocabList.dump'
+        self.lstVoc = readVocabFromFile(strVocabPath)
+        # only print out the first 7 and the last 7 entries
+        # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
+        print('len(self.lstVoc):', len(self.lstVoc))
+        if len(self.lstVoc) > 14:
+            print("[", end="")
+            print(*self.lstVoc[:7], sep=", ", end=" ")
+            print('...', end=" ")
+            print(*self.lstVoc[-7:], sep=", ", end="")
+            print("]")
+
+        self.bModelLoaded = True
 
         return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr
 
@@ -456,7 +456,7 @@ class RepositoryClassifier:
 
             # print('len(lstOccurence):', len(lstOccurence))
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
         print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
         print('verity matrix for matPredictionRes:\n ', matPredictionRes)
@@ -536,7 +536,7 @@ class RepositoryClassifier:
 
         iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
         return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
 
@@ -593,7 +593,7 @@ class RepositoryClassifier:
         return lstFinalPercentages
 
 
-    def printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
+    def __printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
         """
         prints the repository name and its category by using the iLabel
 
