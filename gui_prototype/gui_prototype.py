@@ -415,6 +415,8 @@ class GUILayout(BoxLayout):
         :return:
         """
 
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
@@ -455,8 +457,6 @@ class GUILayout(BoxLayout):
             self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
-        StaticVars.b_run_loading = False
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
     def show_wordcloud(self, text, iLabel, dicFoundWords):

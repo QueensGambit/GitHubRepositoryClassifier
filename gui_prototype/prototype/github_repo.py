@@ -54,11 +54,11 @@ class GithubRepo:
             self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 
             self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
-            # print(self.ioAgent.getReadme(self.strDirPath_readme))
 
             self.intFeatures = None
             self.strFeatures = None
             self.lstOccurrence = None
+            self.strFilteredReadme = None
             self.dicFoundWords = None
 
             print('url: ' + str(self.apiUrl))
@@ -112,7 +112,10 @@ class GithubRepo:
 
         :return: string of the filtered readme
         """
-        return string_operation.prepare_words(self.getReadme(), bApplyStemmer, bCheckStopWords)
+        if self.strFilteredReadme is None:
+            self.strFilteredReadme = string_operation.prepare_words(self.getReadme(), bApplyStemmer, bCheckStopWords)
+
+        return self.strFilteredReadme
 
     def getDevTime(self):
         # a usual Github-Time stamp looks like this:
