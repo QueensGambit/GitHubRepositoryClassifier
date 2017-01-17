@@ -264,6 +264,7 @@ class RepositoryClassifier:
     def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
+        # "the shrink_threshold" parameter has only negative impact on the prediction results
         self.clf = NearestCentroid()
 
         # test out other classifiers

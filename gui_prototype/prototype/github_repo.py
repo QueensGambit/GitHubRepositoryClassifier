@@ -58,6 +58,8 @@ class GithubRepo:
 
             self.intFeatures = None
             self.strFeatures = None
+            self.lstOccurrence = None
+            self.dicFoundWords = None
 
             print('url: ' + str(self.apiUrl))
             self.readAttributes()
@@ -227,6 +229,7 @@ class GithubRepo:
         :param lstVocab: vocabulary which is used in the CountVectorizer of scikit-learn
         :return: integer list representing the percentage-usage of the vocabulary words
         """
+
         # test skipping word occurrences completly in the evaluation
         # return [0] * len(lstVocab)
 
@@ -254,7 +257,7 @@ class GithubRepo:
         # flatten makes a matrix 1 dimensional
         lstOccurrence = np.array(matOccurrence.flatten()).tolist()    # np.array().tolist() is not needed
 
-        iHits = np.sum(lstOccurrence)
+        iHits = np.sum(self.lstOccurrence)
 
         # divide each element by a factor to reduce the effectiveness
         iLen = len(strFilteredReadme.split())
@@ -271,17 +274,78 @@ class GithubRepo:
         # fFacEffectiveness = 20.0
 
         # 10 is the factor between string and integer attributes
-        # lstOccurrence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurrence]
+        # lstOccurence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurence]
 
         # keep as is
-        # lstOccurrence[:] = [x for x in lstOccurrence]
+        # lstOccurence[:] = [x for x in lstOccurence]
 
         # make a binarized vector
-        # lstOccurrence[:] = [1 if x > 0 else 0 for x in lstOccurrence]
+        # lstOccurence[:] = [1 if x > 0 else 0 for x in lstOccurence]
 
-        count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurrence, 2)
+        # dicFoundWords = count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurence, 2)
+        self.dicFoundWords = self.getFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence=1)
+        self.printFeatureOccurences(self.dicFoundWords)
 
         return lstOccurrence
+
+    def getFeatureOccurences(self, lstFeatureNames, lstOccurrence, iMinOccurence=1):
+        assert (len(lstFeatureNames) == len(lstOccurrence))
+        i = 0
+        dicFoundWords = {}
+        for iTmpOccurrence in lstOccurrence:
+            if iTmpOccurrence > iMinOccurence:
+                # dicFoundWords[lstFeatureNames[i]] = iTmpOccurrence
+                dicFoundWords[iTmpOccurrence] = lstFeatureNames[i]
+            i += 1
+
+        return dicFoundWords
+
+    def getDicFoundWords(self):
+        if self.dicFoundWords is None:
+            raise Exception('getWordOccurences() hasn\'t been called yet')
+        return self.dicFoundWords
+
+    def printFeatureOccurences(self, dicFoundWords): #lstFeatureNames, lstOccurrence, iMinOccurence=1):
+        """
+        Prints out every feature with it's number occurence
+
+        :param lstFeatureNames:     list of the given features, these are the column of the sparse-matrix
+        :param lstOccurrence:       number of occurence of the individual features (has the same size as lstFeatureName
+        :param iMinOccurence:       minimum threshold to print out the feature (if set to 0 all features are print out)
+        :return:
+        """
+
+        strStopper1 = "=" * 80
+        strStopper2 = "-" * 80
+        #
+        print(strStopper2)
+        #
+        # print('detected words from the vocabulary:')
+        # i = 0
+        # # dicFoundWords = {}
+        # for iTmpOccurrence in lstOccurrence:
+        #     if iTmpOccurrence > iMinOccurence:
+        #         # for more beautiful print layout {:15s} and {:3d} is used
+        #         print('{:15s} {:3f}'.format(lstFeatureNames[i], iTmpOccurrence)) #{:3d} for integers
+        #         # dicFoundWords[lstFeatureNames[i]] = iTmpOccurrence
+        #     i += 1
+        #
+
+        # dicFoundWords = getFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence)
+        for k, v in dicFoundWords.items():
+            # for more beautiful print layout {:15s} and {:3d} is used
+            print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
+            # print(k, v)
+
+        print(strStopper2)
+
+        # return dicFoundWords
+
+    def getWordDict(self):
+        if self.lstOccurrence is not None:
+            count_vectorizer_operations.getFeatureOccurences
+        else:
+            raise MemoryError('the list for the word occurrence list is still empty')
 
 
     def getName(self):
