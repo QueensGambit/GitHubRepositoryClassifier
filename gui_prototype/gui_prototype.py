@@ -318,7 +318,7 @@ class GUILayout(BoxLayout):
         self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
     def start_classification_thread(self, l_text, url_in):
@@ -402,7 +402,7 @@ class GUILayout(BoxLayout):
         else:
             print("Didn't start loading animation")
 
-    @mainthread
+    #@mainthread
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
@@ -418,7 +418,11 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
+            # pie chart
+            self.render_pie_chart(lstFinalPercentages)
 
+            # the array get's sorted here!
+            # before that the order was 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
             lstFinalPercentages.sort()
             if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
                 self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
@@ -446,15 +450,13 @@ class GUILayout(BoxLayout):
             # net diagram
             self.plot_net_diagram(tmpRepo, iLabel)
 
-            # pie chart
-            self.render_pie_chart(lstFinalPercentages)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
-        # StaticVars.b_run_loading = False
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
     def show_wordcloud(self, text, iLabel, dicFoundWords):
