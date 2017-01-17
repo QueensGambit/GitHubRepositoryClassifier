@@ -539,6 +539,12 @@ GUILayout:
                 text: "Console"
                 BoxLayout:
                     orientation: "vertical"
+                    canvas.before:
+                        Color:
+                            rgba: (41/255), (105/255), (176/255), 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
 
                     CodeInput:
                         id: log_console

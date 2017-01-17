@@ -324,7 +324,7 @@ class GUILayout(BoxLayout):
 
         try:
             iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, self.lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
-            print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[:4])
+            # print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[:4])
 
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
@@ -376,7 +376,7 @@ class GUILayout(BoxLayout):
             StaticVars.animation_loading.repeat = True
             StaticVars.animation_loading.start(StaticVars.anim_bar)
         else:
-            print("didn't start loading animation")
+            print("Didn't start loading animation")
 
     @mainthread
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
@@ -394,7 +394,6 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
-            self.render_pie_chart(lstFinalPercentages)
 
             lstFinalPercentages.sort()
             if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
@@ -422,6 +421,9 @@ class GUILayout(BoxLayout):
 
             # net diagram
             self.plot_net_diagram(tmpRepo, iLabel)
+
+            # pie chart
+            self.render_pie_chart(lstFinalPercentages)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
@@ -837,7 +839,7 @@ class GUILayout(BoxLayout):
             plt.rcParams['text.color'] = 'silver'
 
             plt.legend((handleCentroids, handleCurRepo),
-                       ('Centroid', 'Curent Repository'),
+                       ('Centroids', 'Curent Repository'),
                        scatterpoints=1,
                        loc='lower left',
                        ncol=3,
@@ -1185,6 +1187,7 @@ class FileSaverPopup(Popup):
                 stream.close()
 
         self.windowParent.update_console()
+
 
 class RepositoryClassifierApp(App):
     """
