@@ -76,7 +76,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
-from wordcloud import WordCloud, ImageColorGenerator
+from lib.wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
 import numpy as np
