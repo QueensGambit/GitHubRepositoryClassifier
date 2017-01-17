@@ -54,11 +54,11 @@ class GithubRepo:
             self.apiJSON, self.apiUrl, self.lstReadmePath = self.ioAgent.loadJSONdata(self.strPathJSON)
 
             self.strDirPath_readme = os.path.abspath(os.path.join(__file__, os.pardir)) + '\\readme'
-            # print(self.ioAgent.getReadme(self.strDirPath_readme))
 
             self.intFeatures = None
             self.strFeatures = None
             self.lstOccurrence = None
+            self.strFilteredReadme = None
             self.dicFoundWords = None
 
             print('url: ' + str(self.apiUrl))
@@ -112,7 +112,10 @@ class GithubRepo:
 
         :return: string of the filtered readme
         """
-        return string_operation.prepare_words(self.getReadme(), bApplyStemmer, bCheckStopWords)
+        if self.strFilteredReadme is None:
+            self.strFilteredReadme = string_operation.prepare_words(self.getReadme(), bApplyStemmer, bCheckStopWords)
+
+        return self.strFilteredReadme
 
     def getDevTime(self):
         # a usual Github-Time stamp looks like this:
@@ -315,29 +318,17 @@ class GithubRepo:
         :return:
         """
 
-        strStopper1 = "=" * 80
-        strStopper2 = "-" * 80
-        #
-        print(strStopper2)
-        #
-        # print('detected words from the vocabulary:')
-        # i = 0
-        # # dicFoundWords = {}
-        # for iTmpOccurrence in lstOccurrence:
-        #     if iTmpOccurrence > iMinOccurence:
-        #         # for more beautiful print layout {:15s} and {:3d} is used
-        #         print('{:15s} {:3f}'.format(lstFeatureNames[i], iTmpOccurrence)) #{:3d} for integers
-        #         # dicFoundWords[lstFeatureNames[i]] = iTmpOccurrence
-        #     i += 1
-        #
+        if len(dicFoundWords.items()) > 0:
+            strStopper1 = "=" * 80
+            strStopper2 = "-" * 80
+            print(strStopper2)
+            print('detected words from the vocabulary:')
 
-        # dicFoundWords = getFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence)
-        for k, v in dicFoundWords.items():
-            # for more beautiful print layout {:15s} and {:3d} is used
-            print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
-            # print(k, v)
+            for k, v in dicFoundWords.items():
+                # for more beautiful print layout {:15s} and {:3d} is used
+                print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
 
-        print(strStopper2)
+            print(strStopper2)
 
         # return dicFoundWords
 

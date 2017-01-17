@@ -202,14 +202,18 @@
 <SettingsPopup>
     title: "Settings"
     auto_dismiss: True
-    size_hint: .8, .2
+    size_hint: .8, .3
 
     checkbox_api_token: use_api_key
     label_api_error: api_error_label
+    checkbox_download: do_redownload
+    label_download_error: redl_error_label
+
+
     BoxLayout:
         orientation: "vertical"
 
-        BoxLayout:
+        BoxLayout:                          # API
             orientation: "horizontal"
             spacing: 10
             padding: 10
@@ -225,13 +229,43 @@
             BoxLayout:
                 orientation: "horizontal"
                 Label:
-                    text: 'use API Token [i](advanced, see documentation)[/i]'
+                    text: 'Use API Token [i](advanced, see documentation)[/i]'
                     markup: True
                     halign: 'left'
                     valign: 'middle'
                     text_size: self.size
                 Label:
                     id: api_error_label
+                    text: ""
+                    color: 1, 0, 0, 1
+                    halign: 'right'
+                    valign: 'middle'
+                    text_size: self.size
+
+
+        BoxLayout:                          #do Redownload
+            orientation: "horizontal"
+            spacing: 10
+            padding: 10
+
+            #size_hint_y: 0.6
+
+            CheckBox:
+                id: do_redownload
+                size_hint_x: .1
+                active: False
+                on_press: root.switch_download(self.active)
+
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    text: 'Re-download cached repositories'
+                    markup: True
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                Label:
+                    id: redl_error_label
                     text: ""
                     color: 1, 0, 0, 1
                     halign: 'right'
@@ -333,18 +367,27 @@ GUILayout:
                 ActionButton:
                     text: "Chennaipy" #"WEB"
                     on_press: root.load_example("Chennaipy/website")
+                #ActionButton:
+                #    text: "Barcode-App" #"DEV"
+                #    on_press: root.load_example("QueensGambit/Barcode-App")
                 ActionButton:
-                    text: "Barcode-App" #"DEV"
-                    on_press: root.load_example("QueensGambit/Barcode-App")
+                    text: "course" #"EDU"
+                    on_press: root.load_example("teachbsd/course")
                 #ActionButton:
                 #    text: "apps-android" #"DEV"
                     on_press: root.load_example("wikimedia/apps-android-wikipedia")
+                #ActionButton:
+                #    text: "Stockfish" #"DEV"
+                #    on_press: root.load_example("official-stockfish/Stockfish")
                 ActionButton:
-                    text: "Stockfish" #"DEV"
-                    on_press: root.load_example("official-stockfish/Stockfish")
+                    text: "Tomorrow" #"DEV"
+                    on_press: root.load_example("LastLeaf/Tomorrow") # great example
                 ActionButton:
-                    text: "WormBase" #"DEV"
-                    on_press: root.load_example("WormBase/website")  # great example
+                    text: "squirrel-proj" #"WEB"
+                    on_press: root.load_example("squirrel-project/website")  # great
+                #ActionButton:
+                #    text: "WormBase" #"DEV"
+                #    on_press: root.load_example("WormBase/website")  # great example for docu
                 ActionButton:
                     text: "Colorizer" #"OTHER"
                     on_press: root.load_example("GnaspGames/MCC-VSCode")

@@ -94,6 +94,7 @@ kivy.require("1.9.0")
 
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
+    b_checkbox_download = False                    # checkbox status for global use
     b_run_loading = True                            # boolean to stop loading thread from running too late
     animation_loading = Animation()
     anim_bar = None
@@ -169,6 +170,8 @@ class SettingsPopup(Popup):
     """
     checkbox_api_token = ObjectProperty()                   # The checkbox to toggle the usage of the API Token
     label_api_error = ObjectProperty()                      # The Label to Output potential errors
+    checkbox_download = ObjectProperty()                    # The checkbox to toggle the redownload
+    label_download_error = ObjectProperty()                 # The Label to Output potential errors
 
     def __init__(self, windowParent):
         """
@@ -179,6 +182,7 @@ class SettingsPopup(Popup):
         """
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
+        self.checkbox_download.active = StaticVars.b_checkbox_download
         self.windowParent = windowParent
 
     def switch_api(self, b_status):
@@ -199,6 +203,26 @@ class SettingsPopup(Popup):
             print("[ERROR] No Connection could be established: " + str(ce))
             self.checkbox_api_token.active = False                      # update checkbox to display the internal state
             StaticVars.b_api_checkbox_state = False                     # set the internal state to false
+        self.windowParent.update_console()                              # update the window console
+
+    def switch_download(self, b_status):
+        """
+        Called by the Download Checkbox in the Settings Popup.
+        switches accordingly
+
+        :param b_status: provides the current state of the checkbox
+        :return:
+        """
+        try:
+            self.label_download_error.text = ""                              # Reset Error Label
+            InputOutputAgent.setRedownload(b_status)                         # Setting the redownlad on the IOAgent
+            StaticVars.b_checkbox_download = b_status                       # save state of the token
+            print('[INFO] Re-Download updated to: ' + str(b_status))        # print info to console
+        except Exception as ce:
+            self.label_download_error.text = str(ce)
+            print("[ERROR] " + str(ce))
+            self.checkbox_download.active = False                      # update checkbox to display the internal state
+            StaticVars.b_checkbox_download = False                     # set the internal state to false
         self.windowParent.update_console()                              # update the window console
 
 
@@ -294,7 +318,7 @@ class GUILayout(BoxLayout):
         self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
     def start_classification_thread(self, l_text, url_in):
@@ -378,7 +402,7 @@ class GUILayout(BoxLayout):
         else:
             print("Didn't start loading animation")
 
-    @mainthread
+    #@mainthread
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
@@ -391,10 +415,16 @@ class GUILayout(BoxLayout):
         :return:
         """
 
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
+            # pie chart
+            self.render_pie_chart(lstFinalPercentages)
 
+            # the array get's sorted here!
+            # before that the order was 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
             lstFinalPercentages.sort()
             if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
                 self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
@@ -422,15 +452,11 @@ class GUILayout(BoxLayout):
             # net diagram
             self.plot_net_diagram(tmpRepo, iLabel)
 
-            # pie chart
-            self.render_pie_chart(lstFinalPercentages)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
-        # StaticVars.b_run_loading = False
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
     def show_wordcloud(self, text, iLabel, dicFoundWords):
@@ -1160,6 +1186,8 @@ class FileSaverPopup(Popup):
     def __init__(self, windowParent):
         super(FileSaverPopup, self).__init__()
         self.windowParent = windowParent
+        strExportPath = os.path.expanduser('~')
+        print('strExportPath: ', strExportPath)
         self.file_chooser.path = os.path.expanduser('~')
 
     def save_file(self, path, filename):

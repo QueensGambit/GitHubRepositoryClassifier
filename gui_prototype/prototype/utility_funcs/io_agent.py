@@ -109,6 +109,7 @@ class InputOutputAgent:
         # check if the json file has already been requested and was saved
         if os.path.isfile(strPathJSON) and InputOutputAgent.__bRedownload is False:
             # read from it
+            print("[INFO] Using locally cached version of repository")
             with open(strPathJSON) as jsonData:
                 try:
                     if jsonData is None:
@@ -138,13 +139,13 @@ class InputOutputAgent:
     def getReadme(self, strPathReadme):
 
         # Create readme directory
-        if not os.path.exists(strPathReadme) and InputOutputAgent.__bRedownload is False:
+        if not os.path.exists(strPathReadme):
             os.makedirs(strPathReadme)
 
         strPathReadme += '\\' + self.strUser + '_' + self.strName + '.txt'
 
         # Check if readme exists already. If so, open it.
-        if os.path.isfile(strPathReadme):
+        if os.path.isfile(strPathReadme) and InputOutputAgent.__bRedownload is False:
             #print("Open readme..." )
             return open(strPathReadme).read()
 
