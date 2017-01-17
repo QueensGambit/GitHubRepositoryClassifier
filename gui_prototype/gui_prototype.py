@@ -18,23 +18,23 @@ Config.set('graphics', 'height', '800')
 
 # This block is needed to use the right dll-file for building
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# kivy.require("1.9.0")
+kivy.require("1.9.0")
 
-# import ctypes
-# import os
-# import sys
-#
-# if getattr(sys, 'frozen', False):
-#   # Override dll search path.
-#   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
-#   # Init code to load external dll
-#   ctypes.CDLL('mkl_avx2.dll')
-#   ctypes.CDLL('mkl_def.dll')
-#   ctypes.CDLL('mkl_vml_avx2.dll')
-#   ctypes.CDLL('mkl_vml_def.dll')
-#
-#   # Restore dll search path.
-#   ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
+import ctypes
+import os
+import sys
+
+if getattr(sys, 'frozen', False):
+  # Override dll search path.
+  ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
+  # Init code to load external dll
+  ctypes.CDLL('mkl_avx2.dll')
+  ctypes.CDLL('mkl_def.dll')
+  ctypes.CDLL('mkl_vml_avx2.dll')
+  ctypes.CDLL('mkl_vml_def.dll')
+
+  # Restore dll search path.
+  ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
@@ -506,7 +506,7 @@ class GUILayout(BoxLayout):
             # TODO: decide whether to put this in or not
             proxies = [self.create_proxy(item) for item in labelsRev]
             # plt.rcParams['legend.facecolor'] = 'silver'
-            plt.rcParams['text.color'] = 'silver'
+            plt.rcParams['text.color'] = CategoryStr.lstStrColors[iLabel] #'silver'
 
             # text.color: black
 
@@ -794,18 +794,15 @@ class GUILayout(BoxLayout):
 
             # plot the centroid
             handleCentroids = plt.scatter(self.multiDimBackground.centroids2d[:, 0], self.multiDimBackground.centroids2d[:, 1],
-                                          marker='x', s=180, linewidths=3,  #169 marker = x d D
-                        color=CategoryStr.lstStrColors, edgecolor='black', zorder=10)
+                                          marker='x', s=200, linewidths=3,  #169 marker = x d D
+                        color=CategoryStr.lstStrColors, zorder=10) #edgecolor='black',
 
             # plot the current sample via the given integer features
             ptCurRepo = self.multiDimBackground.pca.transform(self.lstNormedInputFeatures)
 
-
             handleCurRepo = plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
                         marker='*', s=400, linewidths=3,
-                        color='white', edgecolor='black', linewidth='3', zorder=10)  #gold violet red
-
-
+                        color='white', zorder=10)  #gold violet red , linewidth='3', edgecolor='white',
 
             # annotation
             # ax.annotate('current repo', xy=(ptCurRepo[0, 0], ptCurRepo[0, 1]), xytext=(0.02, 0.015),
