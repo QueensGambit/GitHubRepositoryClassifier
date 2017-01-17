@@ -11,7 +11,7 @@ from os import path
 
 from .utility_funcs.count_vectorizer_operations import printFeatureOccurences
 from .utility_funcs.preprocessing_operations import initInputParameters, readVocabFromFile
-
+from .interface_repository_classifier import InterfaceRepoClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import RadiusNeighborsClassifier
 from sklearn.svm import SVC
@@ -33,7 +33,8 @@ from numpy import array
 from pathlib import Path
 import math
 
-class RepositoryClassifier:
+
+class RepositoryClassifier(InterfaceRepoClassifier):
 
     def __init__(self, bUseStringFeatures=True):
         """
@@ -102,8 +103,8 @@ class RepositoryClassifier:
         """
 
         # trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
-        trainData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
-        # trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
+        # trainData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
+        trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
 
         # len(trainData.index) gets the number of rows
         iNumTrainData = len(trainData.index)
@@ -346,7 +347,7 @@ class RepositoryClassifier:
             joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
             joblib.dump(self.lstTrainDataRaw, self.strModelPath + self.strLstTrainDataRaw)
 
-    def loadModelFromFile(self, console=None):
+    def loadModelFromFile(self):
         """
         loads / imports the model-object from './model/RepositoryClassifier.pkl'
         and the list of the mean values from './model/lstMeanValues.pkl'
@@ -413,9 +414,9 @@ class RepositoryClassifier:
         print('~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~')
         # classify the result
 
-        # iNumOfPredictions = 7
         # read the unlabeled data set from a csv
-        dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
+        # dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
+        dtUnlabeledData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
 
         # http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
         # len(dtFrame.index) gets the number of rows NaN are included
@@ -439,8 +440,6 @@ class RepositoryClassifier:
             print('strTarget: ', strTarget)
 
             if pd.notnull(strTargetAlt1):
-                # strTargetAlt1 = strTargetAlt1[1:]
-                # print('i:', i)
                 print('strTargetAlt1:', strTargetAlt1)
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt1)] = 1
 
@@ -456,14 +455,9 @@ class RepositoryClassifier:
 
             print()
 
-            # uncomment this later
-            print('normed integer features:', lstNormedInputFeatures[0][:4])
-
             matPredictionRes[i, iLabel] = 1
             matPredictionResWithAlt[i, iLabel] = 1
             matPredictionResWithAlt[i, iLabelAlt] = 1
-
-            # print('len(lstOccurence):', len(lstOccurence))
 
         self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
@@ -539,7 +533,7 @@ class RepositoryClassifier:
 
         if self.bUseCentroids is True:
             matCentroids = self.clf.centroids_
-            lstFinalPercentages = self.predictProbNearestCentroids(matCentroids, lstNormedInputFeatures)
+            lstFinalPercentages = self.predictProbaNearestCentroids(matCentroids, lstNormedInputFeatures)
         else:
             lstFinalPercentages = self.clf.predict_proba(lstNormedInputFeatures)
 
@@ -564,7 +558,7 @@ class RepositoryClassifier:
         return iSecondMaxIndex
 
 
-    def predictProbNearestCentroids(self, matCentroids, lstInputFeatures):
+    def predictProbaNearestCentroids(self, matCentroids, lstInputFeatures):
 
         lstFinalPercentages = []
         fDistSum = 0
@@ -595,9 +589,8 @@ class RepositoryClassifier:
 
         for i, fPercentage in enumerate(lstDistancesReordered):
             lstFinalPercentages.append(fPercentage[1])
-            print(self.lstStrCategories[i], 'pecentage:', fPercentage[1])
-
-        # print(self.clf.centroids_)
+            # print(self.lstStrCategories[i], 'pecentage:', fPercentage[1])
+            print('{:15s} {:3f}'.format(self.lstStrCategories[i],  fPercentage[1]))
 
         return lstFinalPercentages
 

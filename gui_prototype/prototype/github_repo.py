@@ -318,29 +318,17 @@ class GithubRepo:
         :return:
         """
 
-        strStopper1 = "=" * 80
-        strStopper2 = "-" * 80
-        #
-        print(strStopper2)
-        #
-        # print('detected words from the vocabulary:')
-        # i = 0
-        # # dicFoundWords = {}
-        # for iTmpOccurrence in lstOccurrence:
-        #     if iTmpOccurrence > iMinOccurence:
-        #         # for more beautiful print layout {:15s} and {:3d} is used
-        #         print('{:15s} {:3f}'.format(lstFeatureNames[i], iTmpOccurrence)) #{:3d} for integers
-        #         # dicFoundWords[lstFeatureNames[i]] = iTmpOccurrence
-        #     i += 1
-        #
+        if len(dicFoundWords.items()) > 0:
+            strStopper1 = "=" * 80
+            strStopper2 = "-" * 80
+            print(strStopper2)
+            print('detected words from the vocabulary:')
 
-        # dicFoundWords = getFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence)
-        for k, v in dicFoundWords.items():
-            # for more beautiful print layout {:15s} and {:3d} is used
-            print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
-            # print(k, v)
+            for k, v in dicFoundWords.items():
+                # for more beautiful print layout {:15s} and {:3d} is used
+                print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
 
-        print(strStopper2)
+            print(strStopper2)
 
         # return dicFoundWords
 

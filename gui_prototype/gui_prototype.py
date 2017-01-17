@@ -1186,6 +1186,8 @@ class FileSaverPopup(Popup):
     def __init__(self, windowParent):
         super(FileSaverPopup, self).__init__()
         self.windowParent = windowParent
+        strExportPath = os.path.expanduser('~')
+        print('strExportPath: ', strExportPath)
         self.file_chooser.path = os.path.expanduser('~')
 
     def save_file(self, path, filename):
