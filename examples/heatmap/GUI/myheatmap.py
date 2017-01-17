@@ -2,7 +2,6 @@ from scipy.stats.kde import gaussian_kde
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas
-import timeit
 
 '''
 
@@ -11,40 +10,22 @@ This class creates an heatmap of soccer data. It was done by the libaries matplo
 
 class MyHeatMap:
 
-    __iNRows =100
+    __iNRows =3000000
     __lstData = None
 
     def __init__(self, strFile):
-        start = timeit.timeit()
 
         self.__lstData = pandas.read_csv(strFile, delimiter=',', nrows=self.__iNRows, header=None,
-                                         skiprows=500000)  # ,skiprows=500000
+                                         skiprows=500000)
 
-        end = timeit.timeit()
-        time = end - start
-        print("time read_csv: ", time)
         # get a dupletfree list of player id's to set up gui elements
         self.__lstplayer = list(set(self.__lstData.ix[:, 0]))
 
-        #columns x and y
-        self.__xg = self.__lstData.ix[:, 2]
-        self.__yg = self.__lstData.ix[:, 3]
-
-        # filter infinite figures otherwise exception
-        self.__xg = self.__xg[np.logical_not(np.isnan(self.__xg))]
-        self.__yg = self.__yg[np.logical_not(np.isnan(self.__yg))]
-
-        start = timeit.timeit()
-
-        # initialize min and max value of whole data
-        self.__xgmin = self.__xg.min()
-        self.__xgmax = self.__xg.max()
-        self.__ygmin = self.__yg.min()
-        self.__ygmax = self.__yg.max()
-
-        end = timeit.timeit()
-        time = end - start
-        print("min and max values: ", time)
+        #coordinates are from: http://debs.org/?p=41
+        self.__xgmin = -52489
+        self.__xgmax = 52489
+        self.__ygmin = -33939
+        self.__ygmax = 33941
 
     def clean_plot(self):
         plt.clf()
@@ -54,7 +35,7 @@ class MyHeatMap:
         return self.__lstplayer
 
     def get_figure(self, pid):
-        start = timeit.timeit()
+
         #id = pid
         id = pid
         # only get the entries where the id is 4
@@ -68,8 +49,7 @@ class MyHeatMap:
         # x = y[np.logical_not(np.isnan(x))]
         # y = y[np.logical_not(np.isnan(y))]
 
-
-        k = gaussian_kde(np.vstack([x, y]))
+        k = gaussian_kde(np.vstack([x,  y]))
         xi, yi = np.mgrid[self.__xgmin:self.__xgmax:x.size ** 0.5 * 1j, self.__ygmin:self.__ygmax:y.size ** 0.5 * 1j]
         zi = k(np.vstack([xi.flatten(), yi.flatten()]))
 
@@ -94,9 +74,7 @@ class MyHeatMap:
 
         fig = plt.gcf()
         # We need to draw the canvas before we start animating...
-        end = timeit.timeit()
-        time = end - start
-        print("creating plot ", time)
+
 
 
         return fig
