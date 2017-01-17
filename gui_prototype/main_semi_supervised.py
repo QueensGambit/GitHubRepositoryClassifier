@@ -43,9 +43,10 @@ def main(args=None):
     #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     #repoClassifier.trainModel(lstTrainData, lstTrainLabels)
     #repoClassifier.exportModelToFile()
-    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr = repoClassifier.loadModelFromFile()
+    clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr, lstTrainDataRaw = repoClassifier.loadModelFromFile()
     #repoClassifier.predictResultsAndCompare()
 
+    print('Raw: ', lstTrainDataRaw)
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
     # pobox/overwatch

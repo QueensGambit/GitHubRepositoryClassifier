@@ -3,7 +3,7 @@
 Created on 07.01.2017 18:20
 @project: GitHubRepositoryClassifier
 
-@author: Anonym
+@author: QueensGambit
 
 Sample usage of the repository-classifier
 """
@@ -42,8 +42,8 @@ def main(args=None):
 
     lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    repoClassifier.exportModelToFile()
-    # clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr = repoClassifier.loadModelFromFile()
+    # repoClassifier.exportModelToFile()
+    # clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr, _ = repoClassifier.loadModelFromFile()
     repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
@@ -83,6 +83,73 @@ def main(args=None):
 # fPredictionRes: 0.612903225806
 # fAccuracy:  61.2903225806 %
 
+
+### UPDATE
+
+# -> 270 Training Samples
+# Only IntegerAttributes:
+#
+# StandardScaler()
+# fPredictionRes: 0.41935483871
+# fPredictionResWithAlt: 0.612903225806
+# fAccuracy:  41.935483871 %
+#
+# RobustScaler()
+# fPredictionRes: 0.354838709677
+# fPredictionResWithAlt: 0.612903225806
+# fAccuracy:  35.4838709677 %
+#
+# MaxAbsScaler()
+# fPredictionRes: 0.387096774194
+# fPredictionResWithAlt: 0.612903225806
+# fAccuracy:  38.7096774194 %
+#
+# DivideByMeanValue()
+# fPredictionRes: 0.354838709677
+# fPredictionResWithAlt: 0.645161290323
+#
+#
+# # Normalizer only()
+# fPredictionRes: 0.322580645161
+# fPredictionResWithAlt: 0.387096774194
+# fAccuracy:  32.2580645161 %
+#
+#
+# --> with String:
+# StandardScaler() + Normalizer()
+# fPredictionRes: 0.516129032258
+# fPredictionResWithAlt: 0.709677419355
+# fAccuracy:  51.6129032258 %
+#
+# fPredictionRes: 0.516129032258
+# fPredictionResWithAlt: 0.709677419355
+# fAccuracy:  51.6129032258 %
+#
+# # division
+# fPredictionRes: 0.516129032258
+# fPredictionResWithAlt: 0.677419354839
+# fAccuracy:  51.6129032258 %
+#
+# # small Training Set
+# fPredictionRes: 0.483870967742
+# fPredictionResWithAlt: 0.741935483871
+# fAccuracy:  48.3870967742 %
+#
+# --> new Vocab: len(self.lstVoc): 1550
+# fPredictionRes: 0.677419354839
+# fPredictionResWithAlt: 0.838709677419
+#
+#
+# fPredictionRes: 0.677419354839
+# fPredictionResWithAlt: 0.838709677419
+# fAccuracy:  67.7419354839 %
+# --> 1525 without german stop-words
+#
+#
+# fPredictionRes: 0.677419354839
+# fPredictionResWithAlt: 0.838709677419
+# fAccuracy:  67.7419354839 %
+# --> len(lstVoc):  956
 
 if __name__ == "__main__":
     main()

@@ -6,7 +6,7 @@ from nltk.corpus import stopwords   # Import the stop word list
 from nltk.stem.porter import PorterStemmer
 
 # refine the input string
-def prepare_words(raw_text, bApplyStemmer=True):
+def prepare_words(raw_text, bApplyStemmer=True, bCheckStopWords=False):
 
     raw_text = re.sub(r'^http?:\/\/.*[\r\n]*', '', raw_text, flags=re.MULTILINE)                     # remove web-adresses
     # raw_text = raw_text[1:]                                             # remove first letter
@@ -29,7 +29,15 @@ def prepare_words(raw_text, bApplyStemmer=True):
     letters = re.sub("[^a-zA-Z]", " ", raw_text)                        # remove everything that isn't a letter
 
     words = letters.lower().split()                                     # write words into array
-    words = [w for w in words if not w in stopwords.words("english")]   # remove "filler" words
+
+    if bCheckStopWords:
+        # words = [w for w in words if not w in stopwords.words("english")] # and stopwords.words("german")]   # remove "filler" words
+        words = [w for w in words if w not in stopwords.words("english") and w not in stopwords.words("german")]   # remove "filler" words
+
+    # words = []
+    # for w in words:
+    #     if w not in stopwords("english") and w not in stopwords.words("german"):
+    #         words.append(w)
 
     if bApplyStemmer:
         # see: http://www.nltk.org/howto/stem.html for more details
@@ -47,19 +55,20 @@ def validate_url(url_in):
     Performs some simple string checks to validate the URL for further processing
 
     :param url_in: The URL to perform the checks on
-    :return:
+    :return: error: errorcode
     """
+
     if url_in == "":
-        print("[ERROR] Input is empty")
+        error = "[ERROR] Input is empty"
         return False
     elif not url_in.startswith("https://"):
-        print("[ERROR] Input doesn't start with https://")
+        error = "[ERROR] Input doesn't start with https://"
         return False
     elif not url_in.startswith("https://github.com/"):
-        print("[ERROR] Input is not a GitHub URL")
+        error = "[ERROR] Input is not a GitHub URL"
         return False
     else:
-        print("[INFO] Input is a valid URL")
+        error = "[INFO] Input is a valid URL"
         return True
 
 def validate_txtfile(path):

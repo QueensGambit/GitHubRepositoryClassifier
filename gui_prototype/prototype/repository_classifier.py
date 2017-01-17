@@ -55,6 +55,8 @@ class RepositoryClassifier:
         self.normalizer = None
         self.bUseCentroids = True
         self.normalizerIntegerAttr = None
+        # self.scaler = None
+        self.lstTrainDataRaw = None
 
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
@@ -83,6 +85,7 @@ class RepositoryClassifier:
         self.strLstTrainData = 'lstTrainData.pkl'
         self.strNormalizer = 'normalizer.pkl'
         self.strNormalizerIntegerAttr = 'normalizerIntegerAttr.pkl'
+        self.strLstTrainDataRaw = 'lstTrainDataRaw.pkl'
 
         self.iNumCategories = len(self.lstStrCategories)
 
@@ -117,6 +120,7 @@ class RepositoryClassifier:
 
         # fill the train and the label-data
         self.lstTrainData = []
+        self.lstTrainDataRaw = []
         self.lstTrainLabels = []
 
         print('~~~~~~~~~~ CALCULATE THE MEAN VALUES ~~~~~~~~~~')
@@ -159,7 +163,7 @@ class RepositoryClassifier:
         print('len(lstVoc): ', len(self.lstVoc))
 
         lstInputFeatures = []
-
+        lstInputFeaturesRaw = []
 
         for tmpRepo in lstGithubRepo:
 
@@ -179,6 +183,7 @@ class RepositoryClassifier:
             # lstIntegerAttributes = [] # [None] * len(tmpRepo.getIntegerFeatures()) # []
             # lstIntegerAttributes = tmpRepo.getIntegerFeatures()
 
+            lstInputFeaturesRaw = tmpRepo.getIntegerFeatures()
             # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
                 # if x > 0:   #
                 #     tmpRepo:  youtaya
@@ -197,13 +202,15 @@ class RepositoryClassifier:
 
             if self.bUseStringFeatures:
                 lstInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
+                lstInputFeaturesRaw += tmpRepo.getWordOccurences(self.lstVoc)
             lstInputFeatures += tmpRepo.getRepoLanguageAsVector()
-
+            lstInputFeaturesRaw += tmpRepo.getRepoLanguageAsVector()
 
             # test using unnormed features
             # lstInputFeatures = tmpGithubRepo.getIntegerFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
 
             self.lstTrainData.append(lstInputFeatures)
+            self.lstTrainDataRaw.append(lstInputFeaturesRaw)
 
         print("lstTrainData:")
         print(self.lstTrainData)
@@ -231,7 +238,13 @@ class RepositoryClassifier:
         # self.stdScaler = preprocessing.StandardScaler()
         # self.stdScaler.fit(lstTrainData)
         # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
-        #
+
+        # apply robust scaling
+        # self.scaler = preprocessing.StandardScaler()
+        # self.scaler = preprocessing.MaxAbsScaler()
+        # self.scaler = preprocessing.RobustScaler()
+        # self.lstTrainData = self.scaler.fit_transform(self.lstTrainData)
+
         self.normalizer = preprocessing.Normalizer()
         # self.normalizer = ReliableNormalizer()
         self.normalizer.fit(self.lstTrainData)
@@ -251,6 +264,7 @@ class RepositoryClassifier:
     def trainModel(self, lstTrainData, lstTrainLabels):
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
+        # "the shrink_threshold" parameter has only negative impact on the prediction results
         self.clf = NearestCentroid()
 
         # test out other classifiers
@@ -330,6 +344,7 @@ class RepositoryClassifier:
             joblib.dump(self.lstTrainData, self.strModelPath + self.strLstTrainData)
             joblib.dump(self.normalizer, self.strModelPath + self.strNormalizer)
             joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
+            joblib.dump(self.lstTrainDataRaw, self.strModelPath + self.strLstTrainDataRaw)
 
     def loadModelFromFile(self, console=None):
         """
@@ -339,8 +354,8 @@ class RepositoryClassifier:
         :return:
         """
 
-        if console is None:
-            print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
+
+        print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
 
         # load the classifier from the file
         self.clf = joblib.load(self.strModelPath + self.strModelFileName)
@@ -351,29 +366,30 @@ class RepositoryClassifier:
         self.lstTrainData = joblib.load(self.strModelPath + self.strLstTrainData)
         self.normalizer = joblib.load(self.strModelPath + self.strNormalizer)
         self.normalizerIntegerAttr = joblib.dump(self.normalizerIntegerAttr, self.strModelPath + self.strNormalizerIntegerAttr)
+        self.lstTrainDataRaw = joblib.load(self.strModelPath + self.strLstTrainDataRaw)
 
-        if console is None:
-            print('lstMeanValues: ', self.lstMeanValues)
-            print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
+
+        print('lstMeanValues: ', self.lstMeanValues)
+        print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
 
         strVocabPath = self.directory + '/vocab/'
 
-        if console is None:
-            strVocabPath += 'vocabList.dump'
-            self.lstVoc = readVocabFromFile(strVocabPath)
-            # only print out the first 7 and the last 7 entries
-            # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
-            print('len(self.lstVoc):', len(self.lstVoc))
-            if len(self.lstVoc) > 14:
-                print("[", end="")
-                print(*self.lstVoc[:7], sep=", ", end=" ")
-                print('...', end=" ")
-                print(*self.lstVoc[-7:], sep=", ", end="")
-                print("]")
 
-            self.bModelLoaded = True
+        strVocabPath += 'vocabList.dump'
+        self.lstVoc = readVocabFromFile(strVocabPath)
+        # only print out the first 7 and the last 7 entries
+        # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
+        print('len(self.lstVoc):', len(self.lstVoc))
+        if len(self.lstVoc) > 14:
+            print("[", end="")
+            print(*self.lstVoc[:7], sep=", ", end=" ")
+            print('...', end=" ")
+            print(*self.lstVoc[-7:], sep=", ", end="")
+            print("]")
 
-        return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr
+        self.bModelLoaded = True
+
+        return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr, self.lstTrainDataRaw
 
     def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
         """
@@ -449,7 +465,7 @@ class RepositoryClassifier:
 
             # print('len(lstOccurence):', len(lstOccurence))
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
         print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
         print('verity matrix for matPredictionRes:\n ', matPredictionRes)
@@ -504,7 +520,7 @@ class RepositoryClassifier:
         # print('lstInputFeature pre normalize: ', lstInputFeatures)
         lstNormedInputFeatures = np.array(lstNormedInputFeatures).reshape(1, len(lstNormedInputFeatures))
 
-
+        # lstNormedInputFeatures = self.scaler.transform(lstNormedInputFeatures)
         lstNormedInputFeatures = self.normalizer.transform(lstNormedInputFeatures)
         # print('lstInputFeature post normalize: ', lstInputFeatures)
 
@@ -529,7 +545,7 @@ class RepositoryClassifier:
 
         iLabelAlt = self.getLabelAlternative(lstFinalPercentages)
 
-        self.printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
+        self.__printResult(tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False)
 
         return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
 
@@ -586,7 +602,7 @@ class RepositoryClassifier:
         return lstFinalPercentages
 
 
-    def printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
+    def __printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
         """
         prints the repository name and its category by using the iLabel
 

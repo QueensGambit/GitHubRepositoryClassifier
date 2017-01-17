@@ -6,6 +6,9 @@ Created on 07.01.2017 23:06
 @author: Lukas
 
 GUI Prototype using kivy
+Presenting an easily usable GUI to the user to make classification as easy as possible.
+Also includes some visuals like multiple plots and a word cloud as well as some examples
+
 """
 import kivy
 from kivy.config import Config
@@ -15,42 +18,36 @@ Config.set('graphics', 'height', '800')
 
 # This block is needed to use the right dll-file for building
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# kivy.require("1.9.0")
+kivy.require("1.9.0")
 
-# import ctypes
-# import os
-# import sys
-#
-# if getattr(sys, 'frozen', False):
-#   # Override dll search path.
-#   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
-#   # Init code to load external dll
-#   ctypes.CDLL('mkl_avx2.dll')
-#   ctypes.CDLL('mkl_def.dll')
-#   ctypes.CDLL('mkl_vml_avx2.dll')
-#   ctypes.CDLL('mkl_vml_def.dll')
-#
-#   # Restore dll search path.
-#   ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
+import ctypes
+import os
+import sys
+
+if getattr(sys, 'frozen', False):
+  # Override dll search path.
+  ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
+  # Init code to load external dll
+  ctypes.CDLL('mkl_avx2.dll')
+  ctypes.CDLL('mkl_def.dll')
+  ctypes.CDLL('mkl_vml_avx2.dll')
+  ctypes.CDLL('mkl_vml_def.dll')
+
+  # Restore dll search path.
+  ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
 matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
-# matplotlib.use('file://G:/GitHub/spyder_Python/GitHubRepositoryClassifier/gui_prototype/kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.core.window import Window
 from sklearn import preprocessing
-from sklearn import decomposition
 from sklearn.cluster import KMeans
-from kivy.uix.scrollview import ScrollView
-from kivy.properties import StringProperty
-from kivy.uix.button import Button
-from kivy.uix.widget import Widget
 from kivy.uix.label import Label
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
+from lib.kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
 import clipboard
 from sklearn import decomposition
@@ -59,7 +56,6 @@ import matplotlib.patches as mpatches
 import sys, os
 import matplotlib.pyplot as plt
 # from colour import Color
-from scipy.misc import imread
 
 # add the current directory to the system path in order to find the modules in relative path
 # sys.path.insert(0, os.path.abspath(".."))
@@ -75,7 +71,6 @@ import webbrowser
 # threading and animation
 # multithreading in kivy:
 # https://github.com/kivy/kivy/wiki/Working-with-Python-threads-inside-a-Kivy-application
-import time
 import threading
 from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
@@ -84,7 +79,6 @@ from kivy.factory import Factory
 from wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
-from PIL import ImageOps
 import numpy as np
 from pathlib import Path
 
@@ -100,6 +94,7 @@ kivy.require("1.9.0")
 
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
+    b_checkbox_download = False                    # checkbox status for global use
     b_run_loading = True                            # boolean to stop loading thread from running too late
     animation_loading = Animation()
     anim_bar = None
@@ -117,24 +112,34 @@ class StdOut(object):
         self.oldStdOut.write(string)
         StaticVars.str_stdOutPuffer += string
 
-
     def flush(self):
         pass
 
 
 class Radar(object):
+    backgroundcolor = (48 / 255, 48 / 255, 48 / 255) #'w'
+    # http://stackoverflow.com/questions/4804005/matplotlib-figure-facecolor-background-color
+    plt.rcParams['axes.facecolor'] = backgroundcolor
+    plt.rcParams['savefig.facecolor'] = backgroundcolor
+    plt.rcParams['axes.edgecolor'] = 'silver' #''w'
+    plt.rcParams['axes.labelcolor'] = 'silver' #''w'
+    plt.rcParams['grid.color'] = 'silver' #''w'
+    # plt.rcParams['legend.facecolor'] = 'w'
 
-    def __init__(self, fig, titles, labels, rect=None):
+    def __init__(self, fig, titles, labels, color='b', rect=None):
         if rect is None:
-            rect = [0.05, 0.05, 0.95, 0.95]
+            # rect = [0.05, 0.05, 0.95, 0.95]
+            # set a constant offset and scale
+            rect = [0.05, 0.05, 0.9, 0.9]
 
         self.n = len(titles)
+        self.color = color
         self.angles = np.arange(45, 45+360, 360.0/self.n)
         self.axes = [fig.add_axes(rect, projection="polar", label="axes%d" % i)
                          for i in range(self.n)]
 
         self.ax = self.axes[0]
-        self.ax.set_thetagrids(self.angles, labels=titles, fontsize=14)
+        self.ax.set_thetagrids(self.angles, labels=titles, fontsize=14, color=self.color)
 
         for ax in self.axes[1:]:
             ax.patch.set_visible(False)
@@ -142,7 +147,7 @@ class Radar(object):
             ax.xaxis.set_visible(False)
 
         for ax, angle, label in zip(self.axes, self.angles, labels):
-            ax.set_rgrids(range(1, 5), angle=angle, labels=label)
+            ax.set_rgrids(range(1, 5), angle=angle, labels=label, backgroundcolor=self.backgroundcolor)
             ax.spines["polar"].set_visible(False)
             ax.set_ylim(0, 5)
 
@@ -165,6 +170,8 @@ class SettingsPopup(Popup):
     """
     checkbox_api_token = ObjectProperty()                   # The checkbox to toggle the usage of the API Token
     label_api_error = ObjectProperty()                      # The Label to Output potential errors
+    checkbox_download = ObjectProperty()                    # The checkbox to toggle the redownload
+    label_download_error = ObjectProperty()                 # The Label to Output potential errors
 
     def __init__(self, windowParent):
         """
@@ -175,6 +182,7 @@ class SettingsPopup(Popup):
         """
         super(SettingsPopup, self).__init__()
         self.checkbox_api_token.active = StaticVars.b_api_checkbox_state
+        self.checkbox_download.active = StaticVars.b_checkbox_download
         self.windowParent = windowParent
 
     def switch_api(self, b_status):
@@ -197,6 +205,54 @@ class SettingsPopup(Popup):
             StaticVars.b_api_checkbox_state = False                     # set the internal state to false
         self.windowParent.update_console()                              # update the window console
 
+    def switch_download(self, b_status):
+        """
+        Called by the Download Checkbox in the Settings Popup.
+        switches accordingly
+
+        :param b_status: provides the current state of the checkbox
+        :return:
+        """
+        try:
+            self.label_download_error.text = ""                              # Reset Error Label
+            InputOutputAgent.setRedownload(b_status)                         # Setting the redownlad on the IOAgent
+            StaticVars.b_checkbox_download = b_status                       # save state of the token
+            print('[INFO] Re-Download updated to: ' + str(b_status))        # print info to console
+        except Exception as ce:
+            self.label_download_error.text = str(ce)
+            print("[ERROR] " + str(ce))
+            self.checkbox_download.active = False                      # update checkbox to display the internal state
+            StaticVars.b_checkbox_download = False                     # set the internal state to false
+        self.windowParent.update_console()                              # update the window console
+
+
+class MultiDimBackground:
+
+    def __init__(self, lstTrainData, centroids_):
+        # used for plot multi_dim_data
+        self.data2d = None
+        self.pca = None
+        self.centroids2d = None
+
+        if lstTrainData.shape[1] > 2:
+            self.pca = decomposition.PCA(n_components=2)
+            self.data2d = self.pca.fit_transform(lstTrainData)
+            self.centroids2d = self.pca.transform(centroids_)
+
+
+        # calculate the clusters
+        n_clusters = 7
+        kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+        kmeans.fit(self.data2d)
+        h = .02
+
+        x_min, x_max = self.data2d[:, 0].min() - 1, self.data2d[:, 0].max() + 1
+        y_min, y_max = self.data2d[:, 1].min() - 1, self.data2d[:, 1].max() + 1
+        self.xx, self.yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+        self.Z = kmeans.predict(np.c_[self.xx.ravel(), self.yy.ravel()])
+        self.Z = self.Z.reshape(self.xx.shape)
+
 
 class GUILayout(BoxLayout):
     """
@@ -217,6 +273,33 @@ class GUILayout(BoxLayout):
     layout_diagram2 = ObjectProperty()              # ↑
     layout_diagram3 = ObjectProperty()              # ↑
 
+    # def initialize(self):
+    def __init__(self):
+        """
+        Initializes the Main Layout (GUILayout), is called after the its creation in the RepositoryClassifierApp
+
+        :return:
+        """
+        super().__init__()
+
+        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
+
+        # initialize the repositoryClassifier
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr,_ = self.repoClassifier.loadModelFromFile()
+
+        # self.strPath = os.path.dirname(__file__)
+        self.strPath = str(Path())
+
+        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
+
+        self.multiDimBackground = MultiDimBackground(self.lstTrainData, self.clf.centroids_)
+
+    def initialize_std_out_redirection(self):
+        oldStdOut = sys.stdout
+        # overload load the sys.strdout to a class-instance of StdOut
+        sys.stdout = StdOut(self.log_console, oldStdOut)
+
     def update_console(self):
 
         self.log_console.text += StaticVars.str_stdOutPuffer
@@ -235,7 +318,7 @@ class GUILayout(BoxLayout):
         self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
     def start_classification_thread(self, l_text, url_in):
@@ -265,7 +348,7 @@ class GUILayout(BoxLayout):
 
         try:
             iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, self.lstNormedInputFeatures = self.repoClassifier.predictCategoryFromURL(url_in)
-            print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[:4])
+            # print('self.lstNormedInputFeatures: ', self.lstNormedInputFeatures[:4])
 
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
@@ -317,7 +400,7 @@ class GUILayout(BoxLayout):
             StaticVars.animation_loading.repeat = True
             StaticVars.animation_loading.start(StaticVars.anim_bar)
         else:
-            print("didn't start loading animation")
+            print("Didn't start loading animation")
 
     @mainthread
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
@@ -335,7 +418,6 @@ class GUILayout(BoxLayout):
         self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
-            self.renderPieChart(lstFinalPercentages)
 
             lstFinalPercentages.sort()
             if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
@@ -346,31 +428,36 @@ class GUILayout(BoxLayout):
             self.set_info("[INFO] Classification complete")
 
             # Wordcloud
-            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True) + " " + tmpRepo.getFilteredRepoDescription(
-                bApplyStemmer=True))
+            dicFoundWords = tmpRepo.getDicFoundWords()
+            strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True, bCheckStopWords=True) + " " + tmpRepo.getFilteredRepoDescription(
+                bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
-                self.show_wordcloud(strText, iLabel)
+                self.show_wordcloud(strText, iLabel, dicFoundWords)
 
             else:
                 self.layout_diagram1.clear_widgets()
                 self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
+            lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
+            self.plot_multi_dim(lstCurIntegerFeatures)
 
-            self.plot_multi_dim()
-            # self.plot_barchart(self.lstNormedInputFeatures)
-            self.plot_net_diagram(tmpRepo)
+            # net diagram
+            self.plot_net_diagram(tmpRepo, iLabel)
+
+            # pie chart
+            self.render_pie_chart(lstFinalPercentages)
         else:
             self.label_result.text = 'No Result'
             self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
-        StaticVars.b_run_loading = False
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        # StaticVars.b_run_loading = False
+        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
-    def show_wordcloud(self, text, iLabel):
+    def show_wordcloud(self, text, iLabel, dicFoundWords):
         """
         Creates the Wordcloud in the first Diagram Tab.
 
@@ -402,16 +489,71 @@ class GUILayout(BoxLayout):
         # imgGrayVariance = Image.open(self.strPath + "/media/icons/" + "gray_variance.png") #imread(path.join(d, "alice_color.png"))
         img_colors = ImageColorGenerator(img)
         # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
-        wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors).generate(text)
+        wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors, max_words=2000).generate(text)
         self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
         # plt.imshow(wordcloud.recolor(color_func=img_colors))
 
+        # create a custom legend in color
+
+        # https: // docs.python.org / 2 / tutorial / datastructures.html
+        # dicFoundWords = {
+        # 'config': 3.000000,
+        # 'develop':8.000000,
+        # 'discuss': 3.000000,
+        # 'file': 6.000000,
+        # 'instal': 5.000000,
+        # 'interfac': 3.000000,
+        # 'irc': 5.000000,
+        # 'list': 11.000000
+        # }
+
+        # lstPatches = [None] * len(dicFoundWords.keys())
+        # i = 0
+        # for strWord, iOccurence in dicFoundWords.items(): #enumerate(dicFoundWords.items()):
+        #     lstPatches[i] = mpatches.Patch(label=strWord + ': ' + str(iOccurence))
+        #     i += 1
+
+
+        if dicFoundWords.keys() is not None:
+            labels = [l for l in dicFoundWords.keys()]
+            # labels = dicFoundWords.keys() #values() #['A', 'B', 'C']
+            labels = [int(x) for x in labels]
+            #http://stackoverflow.com/questions/3940128/how-can-i-reverse-a-list-in-python
+            labelsRev = labels[::-1] #list(reversed(labels))
+            # positions = [(2, 5), (1, 1), (4, 8)]
+            descriptions = [v for v in dicFoundWords.values()]
+            # descriptions = dicFoundWords.values() #keys() #['Happy Cow', 'Sad Horse', 'Drooling Dog']
+            descriptionsRev = descriptions[::-1] #
+
+            # Create a legend with only labels
+            # http://stackoverflow.com/questions/28739608/completely-custom-legend-in-matplotlib-python
+            # TODO: decide whether to put this in or not
+            proxies = [self.create_proxy(item) for item in labelsRev]
+            # plt.rcParams['legend.facecolor'] = 'silver'
+            plt.rcParams['text.color'] = CategoryStr.lstStrColors[iLabel] #'silver'
+
+            # text.color: black
+
+            ax = plt.gca()
+            # ax.get_legend().get_title()
+            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title='found words in vocab')#loc='upper right'
+            plt.rcParams['text.color'] = 'black'
+
+        # leg = plt.legend(handles=lstPatches, loc=(1.3,0.0)) #'right')
+
+
         plt.axis("off")
+
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))
         self.layout_diagram1.add_widget(FigureCanvas(fig))
+
+    def create_proxy(self, label):
+        line = matplotlib.lines.Line2D([0], [0], linestyle='none', color='silver', mfc='silver', #mfc='black',
+                                       mec='none', marker=r'$\mathregular{{{}}}$'.format(label))
+        return line
 
     def show_info(self):
         """
@@ -461,28 +603,6 @@ class GUILayout(BoxLayout):
         # print('paste-button pressed')
         # print(clipboard.paste())
         print('pasted text:', clipboard.paste())
-
-    def initialize(self):
-        """
-        Initializes the Main Layout (GUILayout), is called after the its creation in the RepositoryClassifierApp
-
-        :return:
-        """
-
-        oldStdOut = sys.stdout
-        # overload load the sys.strdout to a class-instance of StdOut
-        sys.stdout = StdOut(self.log_console, oldStdOut)
-        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
-
-        # initialize the repositoryClassifier
-        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr = self.repoClassifier.loadModelFromFile()
-
-        # self.strPath = os.path.dirname(__file__)
-        self.strPath = str(Path())
-
-        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
-
 
     def validate_url(self, url_in):
         """
@@ -549,14 +669,13 @@ class GUILayout(BoxLayout):
             StaticVars.b_run_loading = True                             # enable loading screen
             self.start_classification_thread(self.label_info.text, url_in)
 
-    def renderPieChart(self, lstFinalPercentages):
+    def render_pie_chart(self, lstFinalPercentages):
         """
         Creates the pie chart
 
         :param lstFinalPercentages: the percentages to use in the piechart
         :return:
         """
-        print("[INFO] Rendering Piechart")
 
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
@@ -614,88 +733,332 @@ class GUILayout(BoxLayout):
         """
         self.textfield_input.text = "https://github.com/" + link
 
-    def plot_multi_dim(self):
+    def plot_multi_dim(self, lstCurIntegerFeatures):
         """
         show multidimensional data in 2D plot
         :return:
         """
 
-        clf = self.clf
-        lstTrainLabels = self.lstTrainLabels
-        data = self.matIntegerTrainingData
+        # --> plot 2 figures (but it get's more and more confusing
+        # f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+        # ax1.plot(x, y)
+        # ax1.set_title('Sharing Y axis')
+        # ax2.scatter(x, y)
+        bPlotAllFeatures = True
 
-        if len(data) < 2:
-            raise Exception('Lenght of array >= 2')
+        if bPlotAllFeatures is True:
+            clf = self.clf
+            lstTrainLabels = self.lstTrainLabels
+            # data = self.matIntegerTrainingData
+            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
 
-        normalizer = preprocessing.Normalizer()
-        normalizer.fit(data)
-        data = normalizer.fit_transform(data)
+            # normalizer = preprocessing.Normalizer()
+            # normalizer = normalizer.fit(data)
+            # data = normalizer.transform(data)
+            # print('data:', data)
 
-        if data.shape[1] > 2:
-            pca = decomposition.PCA(n_components=2)
-            pca.fit(data)
-            data = pca.transform(data)
+            # if len(data) < 2:
+            if len(self.lstTrainData) < 2:
+                raise Exception('Lenght of array >= 2')
 
-        n_clusters = 7
-        kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
-        kmeans.fit(data)
-        h = .02
+            # normalizerPlotting = preprocessing.Normalizer()
+            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
+            # data = normalizerPlotting.fit_transform(self.lstTrainData)
 
-        x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
-        y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
-        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+            # data = None
 
-        Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
-        Z = Z.reshape(xx.shape)
+            # if self.pca is None:
+            #     if self.lstTrainData.shape[1] > 2:
+            #         self.pca = decomposition.PCA(n_components=3)
+            #         self.data2d = self.pca.fit_transform(self.lstTrainData)
+            #         self.centroids2d = clf.centroids_
+            #         self.centroids2d = self.pca.transform(self.centroids2d)
 
-        plt.figure(3)
-        plt.cla()
-        plt.clf()
-        plt.imshow(Z, interpolation='nearest',
-                   extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt.cm.Paired,
-                   aspect='auto', origin='lower')
-        # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+            # calculate the clusters
+            # n_clusters = 7
+            # kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+            # kmeans.fit(self.data)
+            # h = .02
+            #
+            # x_min, x_max = self.data[:, 0].min() - 1, self.data[:, 0].max() + 1
+            # y_min, y_max = self.data[:, 1].min() - 1, self.data[:, 1].max() + 1
+            # xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+            #
+            # Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+            # Z = Z.reshape(xx.shape)
 
-        lstColors = [None] * len(lstTrainLabels)
+            fig = plt.figure(3)
+            plt.cla()
+            plt.clf()
 
-        for i, iLabel in enumerate(lstTrainLabels):
-            lstColors[i] = CategoryStr.lstStrColors[iLabel]
+            # plot the contours of kmeans
+            plt.imshow(self.multiDimBackground.Z, interpolation='nearest',
+                       extent=(self.multiDimBackground.xx.min(), self.multiDimBackground.xx.max(), self.multiDimBackground.yy.min(), self.multiDimBackground.yy.max()),
+                       cmap=plt.cm.Paired, alpha=0.1,
+                       aspect='auto', origin='lower')
 
-        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
+            lstColors = [None] * len(lstTrainLabels)
 
-        centroids = clf.centroids_
-        centroids = normalizer.fit_transform(centroids)
+            rect = [0.05, 0.05, 0.9, 0.9]
 
-        plt.scatter(centroids[:, 0], centroids[:, 1],
-                    marker='x', s=169, linewidths=3,
-                    color=CategoryStr.lstStrColors, zorder=10)
+            # self.n = len(titles)
+            # self.color = color
+            # self.angles = np.arange(45, 45+360, 360.0/self.n)
+            # fig.set_axes(rect)
+            # self.axes = [fig.add_axes(rect label="axes%d" % i)
 
-        plt.xlim(x_min, x_max)
-        plt.ylim(y_min, y_max)
-        plt.xticks(())
-        plt.yticks(())
-        # .show()
+            # set a ceratin aspect ratio
+            ax = plt.gca()
+            ax.set_aspect(0.6)#'equal')
 
-        lstPatches = [None] * len(CategoryStr.lstStrCategories)
-        for i, strCategory in enumerate(CategoryStr.lstStrCategories):
-            lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+            plt.axis("on")
 
-        plt.legend(handles=lstPatches)
+            for i, iLabel in enumerate(lstTrainLabels):
+                lstColors[i] = CategoryStr.lstStrColors[iLabel]
 
-        fig = plt.gcf()
-        fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
-        self.layout_diagram3.clear_widgets()
-        self.layout_diagram3.add_widget(FigureCanvas(fig))
+            plt.scatter(self.multiDimBackground.data2d[:, 0], self.multiDimBackground.data2d[:, 1], cmap=plt.cm.Paired, color=lstColors, alpha=0.3)
+
+            # plot the centroid
+            handleCentroids = plt.scatter(self.multiDimBackground.centroids2d[:, 0], self.multiDimBackground.centroids2d[:, 1],
+                                          marker='x', s=200, linewidths=3,  #169 marker = x d D
+                        color=CategoryStr.lstStrColors, zorder=10) #edgecolor='black',
+
+            # plot the current sample via the given integer features
+            ptCurRepo = self.multiDimBackground.pca.transform(self.lstNormedInputFeatures)
+
+            handleCurRepo = plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
+                        marker='*', s=400, linewidths=3,
+                        color='white', zorder=10)  #gold violet red , linewidth='3', edgecolor='white',
+
+            # annotation
+            # ax.annotate('current repo', xy=(ptCurRepo[0, 0], ptCurRepo[0, 1]), xytext=(0.02, 0.015),
+            #             arrowprops=dict(facecolor='violet', shrink=0.05))
 
 
+            # plt.xlim(x_min, x_max)
+            # plt.ylim(y_min, y_max)
+            # set the xlim and ylim to a custom value
+            # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
+            fMaxVal = 0.4
 
-    def getMedianValue(lstData):
+            xmin = -fMaxVal
+            xmax = fMaxVal
+            ymin = -fMaxVal
+            ymax = fMaxVal
+            plt.xlim(xmin, xmax)
+            plt.ylim(ymin, ymax)
+            plt.xticks(())
+            plt.yticks(())
+
+            # create a custom legend in color
+            lstPatches = [None] * len(CategoryStr.lstStrCategories)
+            for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+                lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+
+            leg = plt.legend(handles=lstPatches, loc=(1.0,0.0)) #'right')
+
+            for i, text in enumerate(leg.get_texts()):
+                text.set_color(CategoryStr.lstStrColors[i])
+
+            plt.rcParams['text.color'] = 'silver'
+
+            plt.legend((handleCentroids, handleCurRepo),
+                       ('Centroids', 'Curent Repository'),
+                       scatterpoints=1,
+                       loc='lower left',
+                       ncol=3,
+                       fontsize=10)
+            plt.rcParams['text.color'] = 'black'
+
+            plt.gca().add_artist(leg)
+
+            # attempt to enable the grid
+            # ax = plt.gca()
+            # plt.rc('grid', color='w')  #linestyle="-",
+            # ax.grid()
+            # plt.grid(True)
+            #
+            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.grid(b=True, which='minor', linewidth=.2)
+            # ax.grid(b=True, which='major', linewidth=1)
+            #
+            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
+            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
+            #
+            # for line in gridlines:
+            #     line.set_linestyle('-')
+            #     line.set_color('w')
+
+            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
+            # ax.set_xticks(np.arange(0, 1, 0.1))
+            # ax.set_yticks(np.arange(0, 1., 0.1))
+
+            fig = plt.gcf()
+            fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
+            self.layout_diagram3.clear_widgets()
+            self.layout_diagram3.add_widget(FigureCanvas(fig))
+        else:
+            clf = self.clf
+            lstTrainLabels = self.lstTrainLabels
+            data = self.matIntegerTrainingData
+            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
+
+            normalizer = preprocessing.Normalizer()
+            normalizer = normalizer.fit(data)
+            data = normalizer.transform(data)
+            print('data:', data)
+
+            # if len(data) < 2:
+            if len(self.lstTrainData) < 2:
+                raise Exception('Lenght of array >= 2')
+
+            # normalizerPlotting = preprocessing.Normalizer()
+            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
+            # data = normalizerPlotting.fit_transform(self.lstTrainData)
+
+            # data = None
+            pca = None
+            # if data.shape[1] > 2:
+            if self.lstTrainData.shape[1] > 2:
+                pca = decomposition.PCA(n_components=2)
+                # data = pca.transform(self.lstTrainData)
+                # pca.fit(data)
+                # data = pca.fit_transform(self.lstTrainData)
+                data = pca.fit_transform(data)
+
+            n_clusters = 7
+            kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+            kmeans.fit(data)
+            h = .02
+
+            x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+            y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
+            xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+            Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+            Z = Z.reshape(xx.shape)
+
+            fig = plt.figure(3)
+            plt.cla()
+            plt.clf()
+
+            # plot the contours of kmeans
+            # plt.imshow(Z, interpolation='nearest',
+            #            extent=(xx.min(), xx.max(), yy.min(), yy.max()),
+            #            cmap=plt.cm.Paired, alpha=0.1,
+            #            aspect='auto', origin='lower')
+            # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+
+            lstColors = [None] * len(lstTrainLabels)
+
+            rect = [0.05, 0.05, 0.9, 0.9]
+
+            # self.n = len(titles)
+            # self.color = color
+            # self.angles = np.arange(45, 45+360, 360.0/self.n)
+            # fig.set_axes(rect)
+            # self.axes = [fig.add_axes(rect label="axes%d" % i)
+
+            # set a ceratin aspect ratio
+            ax = plt.gca()
+            ax.set_aspect(0.6)  # 'equal')
+
+            for i, iLabel in enumerate(lstTrainLabels):
+                lstColors[i] = CategoryStr.lstStrColors[iLabel]
+
+            plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors, alpha=0.5)
+
+            # plot the centroid
+            # centroids = clf.centroids_
+            # centroids = pca.transform(centroids)
+            # plt.scatter(centroids[:, 0], centroids[:, 1],
+            #             marker='x', s=169, linewidths=3,
+            #             color=CategoryStr.lstStrColors, zorder=10)
+
+            # plot the current sample via the given integer features
+            # lstCurIntegerFeatures = self.normalizer.transform(lstCurIntegerFeatures)
+            print('lstCurIntegerFeatures:', lstCurIntegerFeatures)
+            lstCurIntegerFeatures = normalizer.transform(lstCurIntegerFeatures)
+            ptCurRepo = pca.transform(lstCurIntegerFeatures)
+            # ptCurRepo = pca.transform(self.lstNormedInputFeatures)
+
+            plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
+                        marker='*', s=400, linewidths=3,
+                        color='violet', zorder=10)  # gold
+
+            # plt.xlim(x_min, x_max)
+            # plt.ylim(y_min, y_max)
+            # set the xlim and ylim to a custom value
+            # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
+            # fMaxVal = 0.4
+            fMaxVal = 1.4
+
+            xmin = -fMaxVal
+            xmax = fMaxVal
+            ymin = -fMaxVal
+            ymax = fMaxVal
+            plt.xlim(xmin, xmax)
+            plt.ylim(ymin, ymax)
+            plt.xticks(())
+            plt.yticks(())
+
+            # create a custom legend in color
+            lstPatches = [None] * len(CategoryStr.lstStrCategories)
+            for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+                lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+
+            leg = plt.legend(handles=lstPatches, loc=(1.0, 0.0))  # 'right')
+
+            for i, text in enumerate(leg.get_texts()):
+                text.set_color(CategoryStr.lstStrColors[i])
+
+            # attempt to enable the grid
+            # ax = plt.gca()
+            # plt.rc('grid', color='w')  #linestyle="-",
+            # ax.grid()
+            # plt.grid(True)
+            #
+            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.grid(b=True, which='minor', linewidth=.2)
+            # ax.grid(b=True, which='major', linewidth=1)
+            #
+            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
+            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
+            #
+            # for line in gridlines:
+            #     line.set_linestyle('-')
+            #     line.set_color('w')
+
+            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
+            # ax.set_xticks(np.arange(0, 1, 0.1))
+            # ax.set_yticks(np.arange(0, 1., 0.1))
+
+            fig = plt.gcf()
+            fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
+            self.layout_diagram3.clear_widgets()
+            self.layout_diagram3.add_widget(FigureCanvas(fig))
+
+    def get_median_value(lstData):
+        """
+        calculates and returns the median value of a (unsorted) input list.
+
+        :return:
+        """
         sortedlist = sorted(lstData, reverse=False)
         iSize = len(sortedlist)
         return sortedlist[iSize / 2]
 
     def plot_barchart(self, lsIntegerAttributes):
+        """
+        function to plot a barchart using the integer values. not used anymore.
+
+        :param lsIntegerAttributes:
+        :return:
+        """
         plt.figure(4)
         lsIntegerAttribute = lsIntegerAttributes[0][:4]
         iN = len(lsIntegerAttribute)
@@ -724,26 +1087,48 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
-    def plot_net_diagram(self, repo):
+    def plot_net_diagram(self, repo, iLabel):
+        """
+        function to plot a net diagram to display the Integer Attributes.
+
+        :param repo: The Repository to get the values from
+        :param iLabel: The Result of the Classification
+        :return:
+        """
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
         import pylab as pl
-        import math
-
         lsAttributes = self.lstNormedInputFeatures[0][:4]
-        print(lsAttributes)
-        print(repo.getIntegerFeatures())
-        print(self.lstMeanValues)
-        lstNormedMeanValues = self.normalizer.transform([1] * len(self.lstMeanValues))
-        print(lstNormedMeanValues)
 
-        print(math.log2(repo.getIntegerFeatures()[0]))
+        # print(math.log2(repo.getIntegerFeatures()[0]))
 
-        fig = pl.figure(5, figsize=(0.1, 0.1))
+        fig = pl.figure(5, figsize=(0.1, 0.1), dpi=80)
+
+        # --> not working
+        # fig.set_size_inches(0.5, 0.5)
+        #
+        # # http://stackoverflow.com/questions/18619880/matplotlib-adjust-figure-margin
+        # plot_margin = 0.25
+        #
+        # x0, x1, y0, y1 = plt.axis()
+        # plt.axis((x0 - plot_margin,
+        #           x1 + plot_margin,
+        #           y0 - plot_margin,
+        #           y1 + plot_margin))
+
+        # rcParams['figure.figsize'] = 8, 3
         fig.clear()
 
 
 
-        titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
+        # titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
+
+        lstIntegerFeaturesRaw = repo.getIntegerFeatures()
+
+        titles = ['Subscribers\n' + str(lstIntegerFeaturesRaw[0]),
+                  'Open Issues\n' + str(lstIntegerFeaturesRaw[1]),
+                  'DevTime\n' + str(lstIntegerFeaturesRaw[2]),
+                  'Size\n' + str(lstIntegerFeaturesRaw[3])]
+
 
         labels = [
             [],
@@ -752,13 +1137,40 @@ class GUILayout(BoxLayout):
             []
         ]
 
-        radar = Radar(fig, titles, labels)
+        radar = Radar(fig, titles, labels, color='silver')  # color=CategoryStr.lstStrColors[iLabel]
         # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
-        radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
-        radar.ax.legend(loc=(1, .6))
+        # radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
+
+        #http://stackoverflow.com/questions/24076297/how-to-truncate-a-string-using-str-format-in-python
+
+        iMaxStrLen = 33
+
+        # strRepoLongName = repo.getUser() + '/' + repo.getName()
+        strRepoLongName = repo.getUser() + '\n' + repo.getName()
+
+        # iLenRepoLongName = len(strRepoLongName)
+        # strRepoNickname = '{:.33}'.format(strRepoLongName)
+        # if iLenRepoLongName >= iMaxStrLen:
+        #     strRepoNickname += '...'
+        radar.plot(lsAttributes * 10, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label=strRepoLongName) #"This Repo")
+
+        '{:.5}'.format('aaabbbccc')
+
+        leg = radar.ax.legend(loc=(1, .6))
+
+        # http: // stackoverflow.com / questions / 13828246 / matplotlib - text - color - code - in -the - legend - instead - of - a - line
+        # set the color to white
+        # colors = ['w']
+        # for color, text in zip(colors, leg.get_texts()):
+        #     text.set_color(color)
+
+        # set the color to the category
+        for i, text in enumerate(leg.get_texts()):
+            text.set_color(CategoryStr.lstStrColors[iLabel])
 
         fig = pl.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
@@ -768,9 +1180,11 @@ class FileSaverPopup(Popup):
     The Popup to save the console output to a log file. called by save_log() in the GUILayout class.
     """
     label_save = ObjectProperty()           # the label to output potential error messages in the File Saver Popup
+    file_chooser = ObjectProperty()
     def __init__(self, windowParent):
         super(FileSaverPopup, self).__init__()
         self.windowParent = windowParent
+        self.file_chooser.path = os.path.expanduser('~')
 
     def save_file(self, path, filename):
         """
@@ -781,6 +1195,8 @@ class FileSaverPopup(Popup):
         :param filename: The filename to save the file as
         :return:
         """
+        stream = None
+
         try:
             with open(os.path.join(path, filename), 'w') as stream:
                 stream.write(self.log_text)
@@ -791,9 +1207,11 @@ class FileSaverPopup(Popup):
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
-            stream.close()
+            if stream is not None:
+                stream.close()
 
         self.windowParent.update_console()
+
 
 class RepositoryClassifierApp(App):
     """
@@ -820,12 +1238,20 @@ class RepositoryClassifierApp(App):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
 
+
         layGUI = GUILayout()
-        layGUI.initialize()
+        layGUI.initialize_std_out_redirection()
 
         return layGUI
 
+
 def main():
+    """
+    Entry point for the programm
+    Runs the GUI
+
+    :return:
+    """
     gui = RepositoryClassifierApp()
     gui.run()
 
@@ -837,12 +1263,12 @@ if __name__ == "__main__":
 # TODO: VERY HIGH - Build Windows-Excecutable
 # TODO: VERY HIGH - Write Docu
 # TODO: HIGH - Build single console excecutable
-# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling
-# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart)
-# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map)
+# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling - DONE
+# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart) - DONE
+# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map) - DONE
 # TODO: MEDIUM - Build Sphinx-Docu
-# TODO: MEDIUM - Beautifully draw the word clouds in different colors
-# TODO: LOW - Drob-Down-List with nice examples which work well ;)
+# TODO: MEDIUM - Beautifully draw the word clouds in different colors - DONE
+# TODO: LOW - Drob-Down-List with nice examples which work well ;) - DONE
 # TODO: LOW - Add better animation while waiting
 
 

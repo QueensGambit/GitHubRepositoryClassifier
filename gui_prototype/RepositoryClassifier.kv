@@ -19,15 +19,15 @@
     auto_dismiss: False
     size_hint: 0.5, 0.5
 
-    filename_input: filename_input
     label_save: save_label
+    file_chooser: file_chooser
 
     BoxLayout:
         orientation: "vertical"
         FileChooserIconView:
             id: file_chooser
             on_selection: filename_input.text = self.selection and self.selection[0] or ''
-            path: "C:"
+            path: "C:/"
         TextInput:
             id: filename_input
             size_hint_y: None
@@ -202,14 +202,18 @@
 <SettingsPopup>
     title: "Settings"
     auto_dismiss: True
-    size_hint: .8, .2
+    size_hint: .8, .3
 
     checkbox_api_token: use_api_key
     label_api_error: api_error_label
+    checkbox_download: do_redownload
+    label_download_error: redl_error_label
+
+
     BoxLayout:
         orientation: "vertical"
 
-        BoxLayout:
+        BoxLayout:                          # API
             orientation: "horizontal"
             spacing: 10
             padding: 10
@@ -225,13 +229,43 @@
             BoxLayout:
                 orientation: "horizontal"
                 Label:
-                    text: 'use API Token [i](advanced, see documentation)[/i]'
+                    text: 'Use API Token [i](advanced, see documentation)[/i]'
                     markup: True
                     halign: 'left'
                     valign: 'middle'
                     text_size: self.size
                 Label:
                     id: api_error_label
+                    text: ""
+                    color: 1, 0, 0, 1
+                    halign: 'right'
+                    valign: 'middle'
+                    text_size: self.size
+
+
+        BoxLayout:                          #do Redownload
+            orientation: "horizontal"
+            spacing: 10
+            padding: 10
+
+            #size_hint_y: 0.6
+
+            CheckBox:
+                id: do_redownload
+                size_hint_x: .1
+                active: False
+                on_press: root.switch_download(self.active)
+
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    text: 'Re-download cached repositories'
+                    markup: True
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.size
+                Label:
+                    id: redl_error_label
                     text: ""
                     color: 1, 0, 0, 1
                     halign: 'right'
@@ -310,13 +344,47 @@ GUILayout:
                 text: "Examples"
                 mode: "spinner"
                 ActionButton:
-                    text: "DEV"
+                    text: "gimp"  #"DEV"
                     on_press: root.load_example("GNOME/gimp")
+                #ActionButton:
+                #    text: "edX-Learning" #"HW"
+                #    on_press: root.load_example("kirbs-/edX-Learning-From-Data-Solutions")
                 ActionButton:
-                    text: "HW"
+                    text: "hw_tester" #"HW"
+                    on_press: root.load_example("vitaly-chibrikov/homework_tester")
+                ActionButton:
+                    text: "Make_OS" #"EDU"
+                    on_press: root.load_example("SamyPesse/How-to-Make-a-Computer-Operating-System")
+                #ActionButton:
+                #    text: "OKFNat/data" #"DATA"
+                #    on_press: root.load_example("OKFNat/data")
+                ActionButton:
+                    text: "GameSave" #"DATA"
+                    on_press: root.load_example("GameSaveInfo/Data")
+                ActionButton:
+                    text: "InfCup17" #"DOCS"
+                    on_press: root.load_example("InformatiCup/InformatiCup2017")
+                ActionButton:
+                    text: "Chennaipy" #"WEB"
+                    on_press: root.load_example("Chennaipy/website")
+                ActionButton:
+                    text: "Barcode-App" #"DEV"
                     on_press: root.load_example("QueensGambit/Barcode-App")
+                #ActionButton:
+                #    text: "apps-android" #"DEV"
+                    on_press: root.load_example("wikimedia/apps-android-wikipedia")
                 ActionButton:
-                    text: "more..."
+                    text: "Stockfish" #"DEV"
+                    on_press: root.load_example("official-stockfish/Stockfish")
+                ActionButton:
+                    text: "WormBase" #"DEV"
+                    on_press: root.load_example("WormBase/website")  # great example
+                ActionButton:
+                    text: "Colorizer" #"OTHER"
+                    on_press: root.load_example("GnaspGames/MCC-VSCode")
+
+                #ActionButton:
+                #    text: "more..."
 
 
 
@@ -401,7 +469,7 @@ GUILayout:
                     cursor_color: 0, 0, 0, 1
                     multiline: False
                     hint_text: "Paste the full URL of the main branch here, e.g. https://github.com/kivy/kivy"
-                    text: "https://github.com/ghellwig/cmssw"                   # debugging
+                    # text: "https://github.com/ghellwig/cmssw"                   # debugging
 
                 Button:
                     text: "Paste"
@@ -505,6 +573,12 @@ GUILayout:
                 text: "Console"
                 BoxLayout:
                     orientation: "vertical"
+                    canvas.before:
+                        Color:
+                            rgba: (41/255), (105/255), (176/255), 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
 
                     CodeInput:
                         id: log_console
