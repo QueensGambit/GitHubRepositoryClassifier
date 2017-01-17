@@ -294,7 +294,7 @@ class GUILayout(BoxLayout):
         self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
     def start_classification_thread(self, l_text, url_in):
@@ -429,8 +429,8 @@ class GUILayout(BoxLayout):
             self.label_second_result = ""
 
         self.button_classifier.disabled = False                      # re-enable button
-        StaticVars.b_run_loading = False
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        # StaticVars.b_run_loading = False
+        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
     def show_wordcloud(self, text, iLabel, dicFoundWords):

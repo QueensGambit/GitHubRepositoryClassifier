@@ -31,6 +31,7 @@ class InputOutputAgent:
     __gh = None
     __bWithToken = False
     __bWithTokenUpdated = False
+    __bRedownload = False
 
     def __init__(self, strUser, strName):
         """
@@ -48,6 +49,10 @@ class InputOutputAgent:
         self.strAPIUrl = "https://api.github.com/repos/" + strUser + "/" + strName
         self.lstReadmePath = {"https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.md",
                               "https://raw.githubusercontent.com/" + strUser + "/" + strName + "/master/README.rst"}
+
+    @staticmethod
+    def setRedownload(bRedownload):
+        InputOutputAgent.__bRedownload = bRedownload
 
 
     @staticmethod
@@ -102,7 +107,7 @@ class InputOutputAgent:
         jsonAPI = None
 
         # check if the json file has already been requested and was saved
-        if os.path.isfile(strPathJSON):
+        if os.path.isfile(strPathJSON) and InputOutputAgent.__bRedownload is False:
             # read from it
             with open(strPathJSON) as jsonData:
                 try:
@@ -133,7 +138,7 @@ class InputOutputAgent:
     def getReadme(self, strPathReadme):
 
         # Create readme directory
-        if not os.path.exists(strPathReadme):
+        if not os.path.exists(strPathReadme) and InputOutputAgent.__bRedownload is False:
             os.makedirs(strPathReadme)
 
         strPathReadme += '\\' + self.strUser + '_' + self.strName + '.txt'
