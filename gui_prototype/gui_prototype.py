@@ -202,6 +202,34 @@ class SettingsPopup(Popup):
         self.windowParent.update_console()                              # update the window console
 
 
+class MultiDimBackground:
+
+    def __init__(self, lstTrainData, centroids_):
+        # used for plot multi_dim_data
+        self.data2d = None
+        self.pca = None
+        self.centroids2d = None
+
+        if lstTrainData.shape[1] > 2:
+            self.pca = decomposition.PCA(n_components=2)
+            self.data2d = self.pca.fit_transform(lstTrainData)
+            self.centroids2d = self.pca.transform(centroids_)
+
+
+        # calculate the clusters
+        n_clusters = 7
+        kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+        kmeans.fit(self.data2d)
+        h = .02
+
+        x_min, x_max = self.data2d[:, 0].min() - 1, self.data2d[:, 0].max() + 1
+        y_min, y_max = self.data2d[:, 1].min() - 1, self.data2d[:, 1].max() + 1
+        self.xx, self.yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+        self.Z = kmeans.predict(np.c_[self.xx.ravel(), self.yy.ravel()])
+        self.Z = self.Z.reshape(self.xx.shape)
+
+
 class GUILayout(BoxLayout):
     """
     The Main Layout of the Main Window. Handles most events
@@ -220,6 +248,33 @@ class GUILayout(BoxLayout):
     layout_diagram1 = ObjectProperty()              # the three TabbedPanelItems to put a diagram, expand if needed
     layout_diagram2 = ObjectProperty()              # ↑
     layout_diagram3 = ObjectProperty()              # ↑
+
+    # def initialize(self):
+    def __init__(self):
+        """
+        Initializes the Main Layout (GUILayout), is called after the its creation in the RepositoryClassifierApp
+
+        :return:
+        """
+        super().__init__()
+
+        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
+
+        # initialize the repositoryClassifier
+        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
+        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr,_ = self.repoClassifier.loadModelFromFile()
+
+        # self.strPath = os.path.dirname(__file__)
+        self.strPath = str(Path())
+
+        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
+
+        self.multiDimBackground = MultiDimBackground(self.lstTrainData, self.clf.centroids_)
+
+    def initialize_std_out_redirection(self):
+        oldStdOut = sys.stdout
+        # overload load the sys.strdout to a class-instance of StdOut
+        sys.stdout = StdOut(self.log_console, oldStdOut)
 
     def update_console(self):
 
@@ -350,18 +405,20 @@ class GUILayout(BoxLayout):
             self.set_info("[INFO] Classification complete")
 
             # Wordcloud
+            dicFoundWords = tmpRepo.getDicFoundWords()
             strText = str(tmpRepo.getFilteredReadme(bApplyStemmer=True, bCheckStopWords=True) + " " + tmpRepo.getFilteredRepoDescription(
                 bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
-                self.show_wordcloud(strText, iLabel)
+                self.show_wordcloud(strText, iLabel, dicFoundWords)
 
             else:
                 self.layout_diagram1.clear_widgets()
                 self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
-            self.plot_multi_dim()
+            lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
+            self.plot_multi_dim(lstCurIntegerFeatures)
 
             # net diagram
             self.plot_net_diagram(tmpRepo, iLabel)
@@ -374,7 +431,7 @@ class GUILayout(BoxLayout):
         StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.update_console()
 
-    def show_wordcloud(self, text, iLabel):
+    def show_wordcloud(self, text, iLabel, dicFoundWords):
         """
         Creates the Wordcloud in the first Diagram Tab.
 
@@ -412,10 +469,65 @@ class GUILayout(BoxLayout):
         plt.imshow(wordcloud)
         # plt.imshow(wordcloud.recolor(color_func=img_colors))
 
+        # create a custom legend in color
+
+        # https: // docs.python.org / 2 / tutorial / datastructures.html
+        # dicFoundWords = {
+        # 'config': 3.000000,
+        # 'develop':8.000000,
+        # 'discuss': 3.000000,
+        # 'file': 6.000000,
+        # 'instal': 5.000000,
+        # 'interfac': 3.000000,
+        # 'irc': 5.000000,
+        # 'list': 11.000000
+        # }
+
+        # lstPatches = [None] * len(dicFoundWords.keys())
+        # i = 0
+        # for strWord, iOccurence in dicFoundWords.items(): #enumerate(dicFoundWords.items()):
+        #     lstPatches[i] = mpatches.Patch(label=strWord + ': ' + str(iOccurence))
+        #     i += 1
+
+
+        if dicFoundWords.keys() is not None:
+            labels = [l for l in dicFoundWords.keys()]
+            # labels = dicFoundWords.keys() #values() #['A', 'B', 'C']
+            labels = [int(x) for x in labels]
+            #http://stackoverflow.com/questions/3940128/how-can-i-reverse-a-list-in-python
+            labelsRev = labels[::-1] #list(reversed(labels))
+            # positions = [(2, 5), (1, 1), (4, 8)]
+            descriptions = [v for v in dicFoundWords.values()]
+            # descriptions = dicFoundWords.values() #keys() #['Happy Cow', 'Sad Horse', 'Drooling Dog']
+            descriptionsRev = descriptions[::-1] #
+
+            # Create a legend with only labels
+            # http://stackoverflow.com/questions/28739608/completely-custom-legend-in-matplotlib-python
+            # TODO: decide whether to put this in or not
+            proxies = [self.create_proxy(item) for item in labelsRev]
+            # plt.rcParams['legend.facecolor'] = 'silver'
+            plt.rcParams['text.color'] = 'silver'
+
+            # text.color: black
+
+            ax = plt.gca()
+            # ax.get_legend().get_title()
+            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title='found words in vocab')#loc='upper right'
+            plt.rcParams['text.color'] = 'black'
+
+        # leg = plt.legend(handles=lstPatches, loc=(1.3,0.0)) #'right')
+
+
         plt.axis("off")
+
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))
         self.layout_diagram1.add_widget(FigureCanvas(fig))
+
+    def create_proxy(self, label):
+        line = matplotlib.lines.Line2D([0], [0], linestyle='none', color='silver', mfc='silver', #mfc='black',
+                                       mec='none', marker=r'$\mathregular{{{}}}$'.format(label))
+        return line
 
     def show_info(self):
         """
@@ -465,27 +577,6 @@ class GUILayout(BoxLayout):
         # print('paste-button pressed')
         # print(clipboard.paste())
         print('pasted text:', clipboard.paste())
-
-    def initialize(self):
-        """
-        Initializes the Main Layout (GUILayout), is called after the its creation in the RepositoryClassifierApp
-
-        :return:
-        """
-
-        oldStdOut = sys.stdout
-        # overload load the sys.strdout to a class-instance of StdOut
-        sys.stdout = StdOut(self.log_console, oldStdOut)
-        self.log_console.scroll_y = 0                             # makes the console scroll down automatically
-
-        # initialize the repositoryClassifier
-        self.repoClassifier = RepositoryClassifier(bUseStringFeatures=True)  #bUseStringFeatures=False
-        self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr,_ = self.repoClassifier.loadModelFromFile()
-
-        # self.strPath = os.path.dirname(__file__)
-        self.strPath = str(Path())
-
-        self.log_console.scroll_y = 0                                   # makes the console scroll down automatically
 
     def validate_url(self, url_in):
         """
@@ -559,7 +650,6 @@ class GUILayout(BoxLayout):
         :param lstFinalPercentages: the percentages to use in the piechart
         :return:
         """
-        print("[INFO] Rendering Piechart")
 
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
@@ -617,128 +707,317 @@ class GUILayout(BoxLayout):
         """
         self.textfield_input.text = "https://github.com/" + link
 
-    def plot_multi_dim(self):
+    def plot_multi_dim(self, lstCurIntegerFeatures):
         """
         show multidimensional data in 2D plot
         :return:
         """
 
-        clf = self.clf
-        lstTrainLabels = self.lstTrainLabels
-        data = self.matIntegerTrainingData
+        # --> plot 2 figures (but it get's more and more confusing
+        # f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
+        # ax1.plot(x, y)
+        # ax1.set_title('Sharing Y axis')
+        # ax2.scatter(x, y)
+        bPlotAllFeatures = True
 
-        if len(data) < 2:
-            raise Exception('Lenght of array >= 2')
+        if bPlotAllFeatures is True:
+            clf = self.clf
+            lstTrainLabels = self.lstTrainLabels
+            # data = self.matIntegerTrainingData
+            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
 
-        normalizer = preprocessing.Normalizer()
-        normalizer.fit(data)
-        data = normalizer.fit_transform(data)
+            # normalizer = preprocessing.Normalizer()
+            # normalizer = normalizer.fit(data)
+            # data = normalizer.transform(data)
+            # print('data:', data)
 
-        if data.shape[1] > 2:
-            pca = decomposition.PCA(n_components=2)
-            pca.fit(data)
-            data = pca.transform(data)
+            # if len(data) < 2:
+            if len(self.lstTrainData) < 2:
+                raise Exception('Lenght of array >= 2')
 
-        n_clusters = 7
-        kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
-        kmeans.fit(data)
-        h = .02
+            # normalizerPlotting = preprocessing.Normalizer()
+            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
+            # data = normalizerPlotting.fit_transform(self.lstTrainData)
 
-        x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
-        y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
-        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+            # data = None
 
-        Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
-        Z = Z.reshape(xx.shape)
+            # if self.pca is None:
+            #     if self.lstTrainData.shape[1] > 2:
+            #         self.pca = decomposition.PCA(n_components=3)
+            #         self.data2d = self.pca.fit_transform(self.lstTrainData)
+            #         self.centroids2d = clf.centroids_
+            #         self.centroids2d = self.pca.transform(self.centroids2d)
 
-        fig = plt.figure(3)
-        plt.cla()
-        plt.clf()
-        plt.imshow(Z, interpolation='nearest',
-                   extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt.cm.Paired, alpha=0.1,
-                   aspect='auto', origin='lower')
-        # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+            # calculate the clusters
+            # n_clusters = 7
+            # kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+            # kmeans.fit(self.data)
+            # h = .02
+            #
+            # x_min, x_max = self.data[:, 0].min() - 1, self.data[:, 0].max() + 1
+            # y_min, y_max = self.data[:, 1].min() - 1, self.data[:, 1].max() + 1
+            # xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+            #
+            # Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+            # Z = Z.reshape(xx.shape)
 
-        lstColors = [None] * len(lstTrainLabels)
+            fig = plt.figure(3)
+            plt.cla()
+            plt.clf()
 
-        rect = [0.05, 0.05, 0.9, 0.9]
+            # plot the contours of kmeans
+            plt.imshow(self.multiDimBackground.Z, interpolation='nearest',
+                       extent=(self.multiDimBackground.xx.min(), self.multiDimBackground.xx.max(), self.multiDimBackground.yy.min(), self.multiDimBackground.yy.max()),
+                       cmap=plt.cm.Paired, alpha=0.1,
+                       aspect='auto', origin='lower')
 
-        # self.n = len(titles)
-        # self.color = color
-        # self.angles = np.arange(45, 45+360, 360.0/self.n)
-        # fig.set_axes(rect)
-        # self.axes = [fig.add_axes(rect label="axes%d" % i)
+            lstColors = [None] * len(lstTrainLabels)
 
-        # set a ceratin aspect ratio
-        ax = plt.gca()
-        ax.set_aspect(0.6)#'equal')
+            rect = [0.05, 0.05, 0.9, 0.9]
+
+            # self.n = len(titles)
+            # self.color = color
+            # self.angles = np.arange(45, 45+360, 360.0/self.n)
+            # fig.set_axes(rect)
+            # self.axes = [fig.add_axes(rect label="axes%d" % i)
+
+            # set a ceratin aspect ratio
+            ax = plt.gca()
+            ax.set_aspect(0.6)#'equal')
+
+            plt.axis("on")
+
+            for i, iLabel in enumerate(lstTrainLabels):
+                lstColors[i] = CategoryStr.lstStrColors[iLabel]
+
+            plt.scatter(self.multiDimBackground.data2d[:, 0], self.multiDimBackground.data2d[:, 1], cmap=plt.cm.Paired, color=lstColors, alpha=0.3)
+
+            # plot the centroid
+            handleCentroids = plt.scatter(self.multiDimBackground.centroids2d[:, 0], self.multiDimBackground.centroids2d[:, 1],
+                                          marker='x', s=180, linewidths=3,  #169 marker = x d D
+                        color=CategoryStr.lstStrColors, edgecolor='black', zorder=10)
+
+            # plot the current sample via the given integer features
+            ptCurRepo = self.multiDimBackground.pca.transform(self.lstNormedInputFeatures)
 
 
-        for i, iLabel in enumerate(lstTrainLabels):
-            lstColors[i] = CategoryStr.lstStrColors[iLabel]
+            handleCurRepo = plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
+                        marker='*', s=400, linewidths=3,
+                        color='white', edgecolor='black', linewidth='3', zorder=10)  #gold violet red
 
-        plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
 
-        centroids = clf.centroids_
-        centroids = normalizer.fit_transform(centroids)
 
-        plt.scatter(centroids[:, 0], centroids[:, 1],
-                    marker='x', s=169, linewidths=3,
-                    color=CategoryStr.lstStrColors, zorder=10)
+            # annotation
+            # ax.annotate('current repo', xy=(ptCurRepo[0, 0], ptCurRepo[0, 1]), xytext=(0.02, 0.015),
+            #             arrowprops=dict(facecolor='violet', shrink=0.05))
 
-        # plt.xlim(x_min, x_max)
-        # plt.ylim(y_min, y_max)
-        # set the xlim and ylim to a custom value
-        # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
-        fMaxVal = 1.4
-        xmin = -fMaxVal
-        xmax = fMaxVal
-        ymin = -fMaxVal
-        ymax = fMaxVal
 
-        plt.xlim(xmin, xmax)
-        plt.ylim(ymin, ymax)
-        plt.xticks(())
-        plt.yticks(())
+            # plt.xlim(x_min, x_max)
+            # plt.ylim(y_min, y_max)
+            # set the xlim and ylim to a custom value
+            # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
+            fMaxVal = 0.4
 
-        # create a custom legend in color
-        lstPatches = [None] * len(CategoryStr.lstStrCategories)
-        for i, strCategory in enumerate(CategoryStr.lstStrCategories):
-            lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+            xmin = -fMaxVal
+            xmax = fMaxVal
+            ymin = -fMaxVal
+            ymax = fMaxVal
+            plt.xlim(xmin, xmax)
+            plt.ylim(ymin, ymax)
+            plt.xticks(())
+            plt.yticks(())
 
-        leg = plt.legend(handles=lstPatches, loc=(1.0,0.0)) #'right')
+            # create a custom legend in color
+            lstPatches = [None] * len(CategoryStr.lstStrCategories)
+            for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+                lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
 
-        for i, text in enumerate(leg.get_texts()):
-            text.set_color(CategoryStr.lstStrColors[i])
+            leg = plt.legend(handles=lstPatches, loc=(1.0,0.0)) #'right')
 
-        # attempt to enable the grid
-        # ax = plt.gca()
-        # plt.rc('grid', color='w')  #linestyle="-",
-        # ax.grid()
-        # plt.grid(True)
-        #
-        # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-        # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-        # ax.grid(b=True, which='minor', linewidth=.2)
-        # ax.grid(b=True, which='major', linewidth=1)
-        #
-        # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
-        # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
-        #
-        # for line in gridlines:
-        #     line.set_linestyle('-')
-        #     line.set_color('w')
+            for i, text in enumerate(leg.get_texts()):
+                text.set_color(CategoryStr.lstStrColors[i])
 
-        # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
-        # ax.set_xticks(np.arange(0, 1, 0.1))
-        # ax.set_yticks(np.arange(0, 1., 0.1))
+            plt.rcParams['text.color'] = 'silver'
 
-        fig = plt.gcf()
-        fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+            plt.legend((handleCentroids, handleCurRepo),
+                       ('Centroid', 'Curent Repository'),
+                       scatterpoints=1,
+                       loc='lower left',
+                       ncol=3,
+                       fontsize=10)
+            plt.rcParams['text.color'] = 'black'
 
-        self.layout_diagram3.clear_widgets()
-        self.layout_diagram3.add_widget(FigureCanvas(fig))
+            plt.gca().add_artist(leg)
+
+            # attempt to enable the grid
+            # ax = plt.gca()
+            # plt.rc('grid', color='w')  #linestyle="-",
+            # ax.grid()
+            # plt.grid(True)
+            #
+            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.grid(b=True, which='minor', linewidth=.2)
+            # ax.grid(b=True, which='major', linewidth=1)
+            #
+            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
+            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
+            #
+            # for line in gridlines:
+            #     line.set_linestyle('-')
+            #     line.set_color('w')
+
+            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
+            # ax.set_xticks(np.arange(0, 1, 0.1))
+            # ax.set_yticks(np.arange(0, 1., 0.1))
+
+            fig = plt.gcf()
+            fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
+            self.layout_diagram3.clear_widgets()
+            self.layout_diagram3.add_widget(FigureCanvas(fig))
+        else:
+            clf = self.clf
+            lstTrainLabels = self.lstTrainLabels
+            data = self.matIntegerTrainingData
+            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
+
+            normalizer = preprocessing.Normalizer()
+            normalizer = normalizer.fit(data)
+            data = normalizer.transform(data)
+            print('data:', data)
+
+            # if len(data) < 2:
+            if len(self.lstTrainData) < 2:
+                raise Exception('Lenght of array >= 2')
+
+            # normalizerPlotting = preprocessing.Normalizer()
+            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
+            # data = normalizerPlotting.fit_transform(self.lstTrainData)
+
+            # data = None
+            pca = None
+            # if data.shape[1] > 2:
+            if self.lstTrainData.shape[1] > 2:
+                pca = decomposition.PCA(n_components=2)
+                # data = pca.transform(self.lstTrainData)
+                # pca.fit(data)
+                # data = pca.fit_transform(self.lstTrainData)
+                data = pca.fit_transform(data)
+
+            n_clusters = 7
+            kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
+            kmeans.fit(data)
+            h = .02
+
+            x_min, x_max = data[:, 0].min() - 1, data[:, 0].max() + 1
+            y_min, y_max = data[:, 1].min() - 1, data[:, 1].max() + 1
+            xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+            Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
+            Z = Z.reshape(xx.shape)
+
+            fig = plt.figure(3)
+            plt.cla()
+            plt.clf()
+
+            # plot the contours of kmeans
+            # plt.imshow(Z, interpolation='nearest',
+            #            extent=(xx.min(), xx.max(), yy.min(), yy.max()),
+            #            cmap=plt.cm.Paired, alpha=0.1,
+            #            aspect='auto', origin='lower')
+            # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
+
+            lstColors = [None] * len(lstTrainLabels)
+
+            rect = [0.05, 0.05, 0.9, 0.9]
+
+            # self.n = len(titles)
+            # self.color = color
+            # self.angles = np.arange(45, 45+360, 360.0/self.n)
+            # fig.set_axes(rect)
+            # self.axes = [fig.add_axes(rect label="axes%d" % i)
+
+            # set a ceratin aspect ratio
+            ax = plt.gca()
+            ax.set_aspect(0.6)  # 'equal')
+
+            for i, iLabel in enumerate(lstTrainLabels):
+                lstColors[i] = CategoryStr.lstStrColors[iLabel]
+
+            plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors, alpha=0.5)
+
+            # plot the centroid
+            # centroids = clf.centroids_
+            # centroids = pca.transform(centroids)
+            # plt.scatter(centroids[:, 0], centroids[:, 1],
+            #             marker='x', s=169, linewidths=3,
+            #             color=CategoryStr.lstStrColors, zorder=10)
+
+            # plot the current sample via the given integer features
+            # lstCurIntegerFeatures = self.normalizer.transform(lstCurIntegerFeatures)
+            print('lstCurIntegerFeatures:', lstCurIntegerFeatures)
+            lstCurIntegerFeatures = normalizer.transform(lstCurIntegerFeatures)
+            ptCurRepo = pca.transform(lstCurIntegerFeatures)
+            # ptCurRepo = pca.transform(self.lstNormedInputFeatures)
+
+            plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
+                        marker='*', s=400, linewidths=3,
+                        color='violet', zorder=10)  # gold
+
+            # plt.xlim(x_min, x_max)
+            # plt.ylim(y_min, y_max)
+            # set the xlim and ylim to a custom value
+            # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
+            # fMaxVal = 0.4
+            fMaxVal = 1.4
+
+            xmin = -fMaxVal
+            xmax = fMaxVal
+            ymin = -fMaxVal
+            ymax = fMaxVal
+            plt.xlim(xmin, xmax)
+            plt.ylim(ymin, ymax)
+            plt.xticks(())
+            plt.yticks(())
+
+            # create a custom legend in color
+            lstPatches = [None] * len(CategoryStr.lstStrCategories)
+            for i, strCategory in enumerate(CategoryStr.lstStrCategories):
+                lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
+
+            leg = plt.legend(handles=lstPatches, loc=(1.0, 0.0))  # 'right')
+
+            for i, text in enumerate(leg.get_texts()):
+                text.set_color(CategoryStr.lstStrColors[i])
+
+            # attempt to enable the grid
+            # ax = plt.gca()
+            # plt.rc('grid', color='w')  #linestyle="-",
+            # ax.grid()
+            # plt.grid(True)
+            #
+            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
+            # ax.grid(b=True, which='minor', linewidth=.2)
+            # ax.grid(b=True, which='major', linewidth=1)
+            #
+            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
+            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
+            #
+            # for line in gridlines:
+            #     line.set_linestyle('-')
+            #     line.set_color('w')
+
+            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
+            # ax.set_xticks(np.arange(0, 1, 0.1))
+            # ax.set_yticks(np.arange(0, 1., 0.1))
+
+            fig = plt.gcf()
+            fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
+
+            self.layout_diagram3.clear_widgets()
+            self.layout_diagram3.add_widget(FigureCanvas(fig))
 
     def get_median_value(lstData):
         """
@@ -795,14 +1074,7 @@ class GUILayout(BoxLayout):
         """
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
         import pylab as pl
-        import math
-
         lsAttributes = self.lstNormedInputFeatures[0][:4]
-        print(lsAttributes)
-        print(repo.getIntegerFeatures())
-        print(self.lstMeanValues)
-        lstNormedMeanValues = self.normalizer.transform([1] * len(self.lstMeanValues))
-        print(lstNormedMeanValues)
 
         # print(math.log2(repo.getIntegerFeatures()[0]))
 
@@ -825,7 +1097,15 @@ class GUILayout(BoxLayout):
 
 
 
-        titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
+        # titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
+
+        lstIntegerFeaturesRaw = repo.getIntegerFeatures()
+
+        titles = ['Subscribers\n' + str(lstIntegerFeaturesRaw[0]),
+                  'Open Issues\n' + str(lstIntegerFeaturesRaw[1]),
+                  'DevTime\n' + str(lstIntegerFeaturesRaw[2]),
+                  'Size\n' + str(lstIntegerFeaturesRaw[3])]
+
 
         labels = [
             [],
@@ -837,7 +1117,21 @@ class GUILayout(BoxLayout):
         radar = Radar(fig, titles, labels, color='silver')  # color=CategoryStr.lstStrColors[iLabel]
         # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
         # radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
-        radar.plot(lsAttributes * 10, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label= repo.getUser() + '/' + repo.getName()) #"This Repo")
+
+        #http://stackoverflow.com/questions/24076297/how-to-truncate-a-string-using-str-format-in-python
+
+        iMaxStrLen = 33
+
+        # strRepoLongName = repo.getUser() + '/' + repo.getName()
+        strRepoLongName = repo.getUser() + '\n' + repo.getName()
+
+        # iLenRepoLongName = len(strRepoLongName)
+        # strRepoNickname = '{:.33}'.format(strRepoLongName)
+        # if iLenRepoLongName >= iMaxStrLen:
+        #     strRepoNickname += '...'
+        radar.plot(lsAttributes * 10, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label=strRepoLongName) #"This Repo")
+
+        '{:.5}'.format('aaabbbccc')
 
         leg = radar.ax.legend(loc=(1, .6))
 
@@ -920,8 +1214,9 @@ class RepositoryClassifierApp(App):
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
         # Window.size = (1200, 800)
 
+
         layGUI = GUILayout()
-        layGUI.initialize()
+        layGUI.initialize_std_out_redirection()
 
         return layGUI
 
