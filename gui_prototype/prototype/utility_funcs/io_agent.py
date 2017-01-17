@@ -109,6 +109,7 @@ class InputOutputAgent:
         # check if the json file has already been requested and was saved
         if os.path.isfile(strPathJSON) and InputOutputAgent.__bRedownload is False:
             # read from it
+            print("[INFO] Using locally cached version of repository")
             with open(strPathJSON) as jsonData:
                 try:
                     if jsonData is None:
