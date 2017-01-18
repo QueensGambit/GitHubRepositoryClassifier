@@ -1,5 +1,4 @@
 from sklearn.feature_extraction.text import CountVectorizer
-from wordcloud import WordCloud, STOPWORDS
 import os
 import pickle
 import logging

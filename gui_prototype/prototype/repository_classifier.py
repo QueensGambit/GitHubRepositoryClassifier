@@ -43,7 +43,7 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         """
 
         # if bOverloadPrintFunc:
-            # import print_overloading
+        # import print_overloading
 
         self.bModelLoaded = False
         self.bModelTrained = False
@@ -99,11 +99,10 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         the CATEGORY is given by one of these options 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
 
         :param strProjPathFileNameCSV: file path relative to the project-path where the csv-file is stored
-        :return:
+        :return: self.lstTrainData (the scaled and normed data with which the model was trained with),
+         self.lstTrainLabels (the used training labels)
         """
 
-        # trainData = pd.read_csv(directory + "/example_repos.csv", header=0, delimiter=",",
-        # trainData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")
         trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
 
         # len(trainData.index) gets the number of rows
@@ -116,7 +115,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         for i in range(iNumTrainData):
             # fill the list with GithubRepo-Objects
-            # print('string_operations.extractProjectNameUser: ', string_operations.extractProjectNameUser(trainData["URL"][i]))
             lstGithubRepo.append(GithubRepo.fromURL(trainData["URL"][i]))
 
         # fill the train and the label-data
@@ -128,9 +126,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         self.lstMeanValues = [0] * 7
         i = 0
         for tmpRepo in lstGithubRepo:
-            # print out the description
-            # print('descr:', tmpGithubRepo.getFilteredRepoDescription())
-            # print('lang:', tmpGithubRepo.getRepoLanguage())
 
             # lstMeanValues += tmpGithubRepo.getIntegerFeatures()
             self.lstMeanValues = list(map(add, self.lstMeanValues, tmpRepo.getIntegerFeatures()))
@@ -186,15 +181,15 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
             lstInputFeaturesRaw = tmpRepo.getIntegerFeatures()
             # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
-                # if x > 0:   #
-                #     tmpRepo:  youtaya
-                #     objective - c - style - guide
-                # x: -1   -> open_issues was detected as -1
-                #    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
-                #    print('x:', x)
-                #    lstIntegerAttributes[i] = math.log2(x)
-                #else:
-                #   lstIntegerAttributes[i] = 0
+            # if x > 0:   #
+            #     tmpRepo:  youtaya
+            #     objective - c - style - guide
+            # x: -1   -> open_issues was detected as -1
+            #    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
+            #    print('x:', x)
+            #    lstIntegerAttributes[i] = math.log2(x)
+            #else:
+            #   lstIntegerAttributes[i] = 0
             # lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures() if x != 0]
             lstInputFeatures = lstIntegerAttributes
 
@@ -263,6 +258,13 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         return self.lstTrainData, self.lstTrainLabels
 
     def trainModel(self, lstTrainData, lstTrainLabels):
+        """
+        trains the model called self.clf with the given trainData and trainLabels
+
+        :param lstTrainData: list
+        :param lstTrainLabels:
+        :return:
+        """
         print('~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~')
         # train the nearest neighbour-model
         # "the shrink_threshold" parameter has only negative impact on the prediction results
@@ -593,7 +595,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
             print('{:15s} {:3f}'.format(self.lstStrCategories[i],  fPercentage[1]))
 
         return lstFinalPercentages
-
 
     def __printResult(self, tmpRepo, iLabel, iLabelAlt, bPrintWordHits=False):
         """
