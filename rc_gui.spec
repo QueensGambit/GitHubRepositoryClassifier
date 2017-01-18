@@ -3,14 +3,22 @@ from kivy.deps import sdl2, glew #, gstreamer
 
 
 # steps to build:
-# (1) all needed dependecies to run the .py must be installed
+# (0) all needed dependecies to run the .py must be installed
+# (1) in addition you must install:
+#     pip install --upgrade pyinstaller
+#     (when this doesn't work: pip install --ignore-installed --upgrade pyinstaller)
+#     install sdl2 by downloading and installing the .whl from: https://pypi.python.org/pypi/kivy.deps.sdl2
+#     pip install kivy.deps.sdl2-0.1.17-cp35-cp35m-win_amd64.whl
+#     install glew by downloading and installing the .whl from: https://pypi.python.org/pypi/kivy.deps.glew
+#     pip install kivy.deps.glew-0.1.9-cp35-cp35m-win_amd64.whl
 # (2) -> setup tools must be downgraded to version 19.2
+#     pip uninstall setuptools
 #	  pip install --ignore-installed setuptools==19.2
 # (3) copy ".\GitHubRepositoryClassifier\gui_prototype\prototype\__pycache__\__init__.cpython-35.pyc" to
 #	  ".\GitHubRepositoryClassifier\gui_prototype\prototype\__init__.pyc"
-# (5) run "python -m compile all"
+# (5) run "python -m compileall ." in directory ./GithubClassifier/
 # (4) now you can build .exe via:
-#     "python -m PyInstaller rc_gui.spec"
+#     python -m PyInstaller rc_gui.spec
 
 
 block_cipher = None
