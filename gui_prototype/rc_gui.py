@@ -96,8 +96,8 @@ kivy.require("1.9.0")
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
     b_checkbox_download = False                    # checkbox status for global use
-    # b_run_loading = True                            # boolean to stop loading thread from running too late
-    # animation_loading = Animation()
+    b_run_loading = True                            # boolean to stop loading thread from running too late
+    animation_loading = Animation()
     anim_bar = None
     str_stdOutPuffer = ""
 
@@ -315,13 +315,13 @@ class GUILayout(BoxLayout):
         :return:
         """
 
-        # StaticVars.b_run_loading = False
+        StaticVars.b_run_loading = False
         self.layout_pie_chart.clear_widgets()
         self.label_result.text = "ERROR"
         self.label_second_result.text = ""
         self.button_classifier.disabled = False
         self.update_console()
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
     @mainthread
@@ -396,29 +396,30 @@ class GUILayout(BoxLayout):
         self.label_second_result.text = ""
 
         # Create and add a new widget.
-        # StaticVars.anim_bar = Factory.AnimWidget()
-        anim_bar = Factory.AnimWidget()
-        # self.layout_pie_chart.add_widget(StaticVars.anim_bar)
-        self.layout_pie_chart.add_widget(anim_bar)
+        StaticVars.anim_bar = Factory.AnimWidget()
+        # anim_bar = Factory.AnimWidget()
+
 
         # Animate the added widget.
-        # StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
-        # StaticVars.animation_loading += Animation(opacity=1, width=400, duration=0.8)
-        # StaticVars.animation_loading.repeat = True
-        # StaticVars.animation_loading.start(StaticVars.anim_bar)
+        StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
+        StaticVars.animation_loading += Animation(opacity=1, width=400, duration=0.8)
+        StaticVars.animation_loading.repeat = True
+        StaticVars.animation_loading.start(StaticVars.anim_bar)
 
-        animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
-        animation_loading += Animation(opacity=1, width=400, duration=0.8)
-        animation_loading.repeat = True
-        animation_loading.start(anim_bar)
+        # animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
+        # animation_loading += Animation(opacity=1, width=400, duration=0.8)
+        # animation_loading.repeat = True
+        # animation_loading.start(anim_bar)
 
+        self.layout_pie_chart.add_widget(StaticVars.anim_bar)
+        # self.layout_pie_chart.add_widget(anim_bar)
         # else:
         #     print("Didn't start loading animation")
 
     @mainthread
     def update_pie_chart(self, fig):
-        # StaticVars.b_run_loading = False
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.layout_pie_chart.clear_widgets()
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
 
