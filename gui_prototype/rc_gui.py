@@ -307,6 +307,7 @@ class GUILayout(BoxLayout):
         self.log_console.text += StaticVars.str_stdOutPuffer
         StaticVars.str_stdOutPuffer = ""
 
+    @mainthread
     def reset_result_layout(self):
         """
         gets called whenever some operation failed to allow for another try.
@@ -323,6 +324,7 @@ class GUILayout(BoxLayout):
         StaticVars.animation_loading.cancel(StaticVars.anim_bar)
 
     # threading
+    @mainthread
     def start_classification_thread(self, l_text, url_in):
         """
         start the classification Thread to run parallel to the GUI so it doesn't freeze in the meantime
@@ -378,42 +380,48 @@ class GUILayout(BoxLayout):
         :return:
         """
 
-        if StaticVars.b_run_loading:
+        # if StaticVars.b_run_loading:
 
-            # print("Start loading animation")
+        # print("Start loading animation")
 
-            # self.button_classifier.disabled = True                      # disable button
+        # self.button_classifier.disabled = True                      # disable button
 
-            # Remove the button.
-            self.layout_pie_chart.clear_widgets()
-            # self.remove_widget(self.but_1)
+        # Remove the button.
+        self.layout_pie_chart.clear_widgets()
+        # self.remove_widget(self.but_1)
 
-            # Update a widget property.
-            self.set_info("[INFO] Classification in progress")
-            self.label_result.text = "Loading..."
-            self.label_second_result.text = ""
+        # Update a widget property.
+        self.set_info("[INFO] Classification in progress")
+        self.label_result.text = "Loading..."
+        self.label_second_result.text = ""
 
-            # Create and add a new widget.
-            StaticVars.anim_bar = Factory.AnimWidget()
-            self.layout_pie_chart.add_widget(StaticVars.anim_bar)
+        # Create and add a new widget.
+        StaticVars.anim_bar = Factory.AnimWidget()
+        # anim_bar = Factory.AnimWidget()
 
-            # Animate the added widget.
-            StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
-            StaticVars.animation_loading += Animation(opacity=1, width=400, duration=0.8)
-            StaticVars.animation_loading.repeat = True
-            StaticVars.animation_loading.start(StaticVars.anim_bar)
-        else:
-            print("Didn't start loading animation")
+
+        # Animate the added widget.
+        StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
+        StaticVars.animation_loading += Animation(opacity=1, width=400, duration=0.8)
+        StaticVars.animation_loading.repeat = True
+        StaticVars.animation_loading.start(StaticVars.anim_bar)
+
+        # animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
+        # animation_loading += Animation(opacity=1, width=400, duration=0.8)
+        # animation_loading.repeat = True
+        # animation_loading.start(anim_bar)
+
+        self.layout_pie_chart.add_widget(StaticVars.anim_bar)
+        # self.layout_pie_chart.add_widget(anim_bar)
+        # else:
+        #     print("Didn't start loading animation")
 
     @mainthread
-    def update_pie_chart(self, figCanvas):
+    def update_pie_chart(self, fig):
         StaticVars.b_run_loading = False
         StaticVars.animation_loading.cancel(StaticVars.anim_bar)
-
         self.layout_pie_chart.clear_widgets()
-
-        self.layout_pie_chart.clear_widgets()
-        self.layout_pie_chart.add_widget(figCanvas)
+        self.layout_pie_chart.add_widget(FigureCanvas(fig))
 
     @mainthread
     def update_result_label(self, iLabel, iLabelAlt, lstFinalPercentagesSorted):
@@ -433,8 +441,9 @@ class GUILayout(BoxLayout):
         self.label_second_result = ""
 
     @mainthread
-    def update_wordcloud(self, figCanvas):
-        self.layout_diagram1.add_widget(figCanvas)
+    def update_wordcloud(self, fig):
+        self.layout_diagram1.clear_widgets()
+        self.layout_diagram1.add_widget(FigureCanvas(fig))
 
     @mainthread
     def update_no_wordcloud(self):
@@ -442,16 +451,22 @@ class GUILayout(BoxLayout):
         self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
     @mainthread
-    def update_multi_dim(self, figCanvas):
+    def update_multi_dim(self, fig):
         self.layout_diagram3.clear_widgets()
-        self.layout_diagram3.add_widget(figCanvas)
+        self.layout_diagram3.add_widget(FigureCanvas(fig))
 
     @mainthread
-    def update_plot_net_diagram(self, figCanvas):
+    def update_plot_net_diagram(self, fig):
         self.layout_diagram2.clear_widgets()
-        self.layout_diagram2.add_widget(figCanvas)
+        self.layout_diagram2.add_widget(FigureCanvas(fig))
 
-    # @mainthread
+    # TODO: Enable parallel plotting for a nicer feedback
+    @mainthread   # uncomment this for parallel-plotting, if it doesn't give errors like
+    # [WARNING           ] <kivy.uix.gridlayout.GridLayout object at 0x000000ADEC7EC590> have no cols or rows set, layout is not triggered.
+    # I think the GUI widget elements must only be set in @mainthread methods!
+    # otherwise strange errors can occurr -> unfortunately still error occured
+    # maybe you must start the classification thread with specific arguments
+    # self.start_classification_thread(self.label_info.text, arg=???)
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
@@ -463,8 +478,6 @@ class GUILayout(BoxLayout):
         :param tmpRepo: a Repository object
         :return:
         """
-        # the GUI widget elements must only be set in @mainthread methods!
-        # otherwise strange errors can occurr
 
         # StaticVars.b_run_loading = False
         # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
@@ -505,10 +518,12 @@ class GUILayout(BoxLayout):
             # multidimensional
             lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
 
-            figCanvasMultiDim = self.plot_multi_dim(lstCurIntegerFeatures)
+            # figCanvasMultiDim = self.plot_multi_dim(lstCurIntegerFeatures)
+            #
+            # if figCanvasMultiDim is not None:
 
-            if figCanvasMultiDim is not None:
-                self.update_multi_dim(figCanvasMultiDim)
+
+            self.update_multi_dim(self.plot_multi_dim(lstCurIntegerFeatures))
 
             # net diagram
             self.update_plot_net_diagram(self.plot_net_diagram(tmpRepo, iLabel))
@@ -555,7 +570,7 @@ class GUILayout(BoxLayout):
         img_colors = ImageColorGenerator(img)
         # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
         wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors, max_words=2000).generate(text)
-        self.layout_diagram1.clear_widgets()
+        # self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
         # plt.imshow(wordcloud.recolor(color_func=img_colors))
@@ -614,7 +629,8 @@ class GUILayout(BoxLayout):
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))
         # self.layout_diagram1.add_widget(FigureCanvas(fig))
-        return FigureCanvas(fig)
+        # return FigureCanvas(fig)
+        return fig
 
     def create_proxy(self, label):
         line = matplotlib.lines.Line2D([0], [0], linestyle='none', color='silver', mfc='silver', #mfc='black',
@@ -709,6 +725,7 @@ class GUILayout(BoxLayout):
         self.label_info.color = 1, 1, 1, 1
         self.label_info.text = info
 
+    @mainthread
     def set_error(self, error):
         """
         put the info text as error text, text color to red
@@ -719,6 +736,7 @@ class GUILayout(BoxLayout):
         self.label_info.color = 1, 0, 0, 1
         self.label_info.text = error
 
+    @mainthread
     def classify_button_pressed(self):
         """
         Gets called from the "Classify" button, starts the classification thread function
@@ -730,8 +748,8 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = url_in
         print("[INFO] Starting Process with \"" + url_in + "\"")        # print info to console
         valid = self.validate_url(url_in)                               # validate input and handle Errors
-
-        if valid:
+        print('valid: ', valid)
+        if valid is True:
             self.button_classifier.disabled = True                      # disable button
             StaticVars.b_run_loading = True                             # enable loading screen
             self.start_classification_thread(self.label_info.text, url_in)
@@ -787,7 +805,8 @@ class GUILayout(BoxLayout):
 
         # plt.show()
 
-        return FigureCanvas(fig)
+        # return FigureCanvas(fig)
+        return fig
         # self.layout_pie_chart.clear_widgets()
         # self.layout_pie_chart.add_widget(FigureCanvas(fig))
         # fig.clear()
@@ -965,8 +984,10 @@ class GUILayout(BoxLayout):
             fig = plt.gcf()
             fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-            self.layout_diagram3.clear_widgets()
-            self.layout_diagram3.add_widget(FigureCanvas(fig))
+            return fig
+            # return FigureCanvas(fig)
+            # self.layout_diagram3.clear_widgets()
+            # self.layout_diagram3.add_widget(FigureCanvas(fig))
         else:
             clf = self.clf
             lstTrainLabels = self.lstTrainLabels
@@ -1107,7 +1128,8 @@ class GUILayout(BoxLayout):
             fig = plt.gcf()
             fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-            return FigureCanvas(fig)
+            # return FigureCanvas(fig)
+            return fig
             # self.layout_diagram3.clear_widgets()
             # self.layout_diagram3.add_widget(FigureCanvas(fig))
 
@@ -1121,6 +1143,7 @@ class GUILayout(BoxLayout):
         iSize = len(sortedlist)
         return sortedlist[iSize / 2]
 
+    @mainthread
     def plot_barchart(self, lsIntegerAttributes):
         """
         function to plot a barchart using the integer values. not used anymore.
@@ -1240,7 +1263,8 @@ class GUILayout(BoxLayout):
         fig = pl.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-        return FigureCanvas(fig)
+        # return FigureCanvas(fig)
+        return fig
         # self.layout_diagram2.clear_widgets()
         # self.layout_diagram2.add_widget(FigureCanvas(fig))
 
