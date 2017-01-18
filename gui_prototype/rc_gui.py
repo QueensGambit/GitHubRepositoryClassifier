@@ -38,7 +38,8 @@ if getattr(sys, 'frozen', False):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
-matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+# matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+matplotlib.use('module://lib.kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -76,7 +77,7 @@ from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
-from wordcloud import WordCloud, ImageColorGenerator
+from lib.wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
 import numpy as np
@@ -300,6 +301,7 @@ class GUILayout(BoxLayout):
         # overload load the sys.strdout to a class-instance of StdOut
         sys.stdout = StdOut(self.log_console, oldStdOut)
 
+    @mainthread
     def update_console(self):
 
         self.log_console.text += StaticVars.str_stdOutPuffer
@@ -367,6 +369,7 @@ class GUILayout(BoxLayout):
             self.set_error("[ERROR] An unknown Error occurred")
             self.reset_result_layout()
 
+    @mainthread
     def start_loading_animation(self, *args):
         """
         Creates the User-Feedback while loading, such as setting the label_error and showing the loading animation.
@@ -377,7 +380,7 @@ class GUILayout(BoxLayout):
 
         if StaticVars.b_run_loading:
 
-            print("Start loading animation")
+            # print("Start loading animation")
 
             # self.button_classifier.disabled = True                      # disable button
 
@@ -402,7 +405,53 @@ class GUILayout(BoxLayout):
         else:
             print("Didn't start loading animation")
 
-    #@mainthread
+    @mainthread
+    def update_pie_chart(self, figCanvas):
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+
+        self.layout_pie_chart.clear_widgets()
+
+        self.layout_pie_chart.clear_widgets()
+        self.layout_pie_chart.add_widget(figCanvas)
+
+    @mainthread
+    def update_result_label(self, iLabel, iLabelAlt, lstFinalPercentagesSorted):
+
+        if lstFinalPercentagesSorted[5] > lstFinalPercentagesSorted[6] - .5:
+            self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
+
+        self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+
+    @mainthread
+    def enable_classification(self):
+        self.button_classifier.disabled = False                      # re-enable button
+
+    @mainthread
+    def update_result_label_no_result(self):
+        self.label_result.text = 'No Result'
+        self.label_second_result = ""
+
+    @mainthread
+    def update_wordcloud(self, figCanvas):
+        self.layout_diagram1.add_widget(figCanvas)
+
+    @mainthread
+    def update_no_wordcloud(self):
+        self.layout_diagram1.clear_widgets()
+        self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
+
+    @mainthread
+    def update_multi_dim(self, figCanvas):
+        self.layout_diagram3.clear_widgets()
+        self.layout_diagram3.add_widget(figCanvas)
+
+    @mainthread
+    def update_plot_net_diagram(self, figCanvas):
+        self.layout_diagram2.clear_widgets()
+        self.layout_diagram2.add_widget(figCanvas)
+
+    # @mainthread
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
         """
         Creates the user output for the final result:
@@ -414,22 +463,29 @@ class GUILayout(BoxLayout):
         :param tmpRepo: a Repository object
         :return:
         """
+        # the GUI widget elements must only be set in @mainthread methods!
+        # otherwise strange errors can occurr
 
-        StaticVars.b_run_loading = False
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
-        self.layout_pie_chart.clear_widgets()
+        # StaticVars.b_run_loading = False
+        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+        # self.layout_pie_chart.clear_widgets()
 
         if iLabel is not None:
             # pie chart
-            self.render_pie_chart(lstFinalPercentages)
+            self.update_pie_chart(self.render_pie_chart(lstFinalPercentages))
 
             # the array get's sorted here!
             # before that the order was 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
+            # print('lstFinalPercentages: ',lstFinalPercentages)
             lstFinalPercentages.sort()
-            if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
-                self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
 
-            self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+            # exported in method for mainthread
+            # if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
+            #     self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
+            #
+            # self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
+
+            self.update_result_label(iLabel, iLabelAlt, lstFinalPercentages)
 
             self.set_info("[INFO] Classification complete")
 
@@ -439,24 +495,31 @@ class GUILayout(BoxLayout):
                 bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
-                self.show_wordcloud(strText, iLabel, dicFoundWords)
+                self.update_wordcloud(self.show_wordcloud(strText, iLabel, dicFoundWords))
 
             else:
-                self.layout_diagram1.clear_widgets()
-                self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
+                self.update_no_wordcloud()
+                # self.layout_diagram1.clear_widgets()
+                # self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
             lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
-            self.plot_multi_dim(lstCurIntegerFeatures)
+
+            figCanvasMultiDim = self.plot_multi_dim(lstCurIntegerFeatures)
+
+            if figCanvasMultiDim is not None:
+                self.update_multi_dim(figCanvasMultiDim)
 
             # net diagram
-            self.plot_net_diagram(tmpRepo, iLabel)
+            self.update_plot_net_diagram(self.plot_net_diagram(tmpRepo, iLabel))
 
         else:
-            self.label_result.text = 'No Result'
-            self.label_second_result = ""
+            self.update_result_label_no_result()
+            # self.label_result.text = 'No Result'
+            # self.label_second_result = ""
 
-        self.button_classifier.disabled = False                      # re-enable button
+        self.enable_classification()
+        # self.button_classifier.disabled = False                      # re-enable button
         self.update_console()
 
     def show_wordcloud(self, text, iLabel, dicFoundWords):
@@ -550,7 +613,8 @@ class GUILayout(BoxLayout):
 
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))
-        self.layout_diagram1.add_widget(FigureCanvas(fig))
+        # self.layout_diagram1.add_widget(FigureCanvas(fig))
+        return FigureCanvas(fig)
 
     def create_proxy(self, label):
         line = matplotlib.lines.Line2D([0], [0], linestyle='none', color='silver', mfc='silver', #mfc='black',
@@ -634,6 +698,7 @@ class GUILayout(BoxLayout):
             self.update_console()
             return True
 
+    @mainthread
     def set_info(self, info):
         """
         put the info text as info text, text color to white
@@ -722,8 +787,9 @@ class GUILayout(BoxLayout):
 
         # plt.show()
 
-        self.layout_pie_chart.clear_widgets()
-        self.layout_pie_chart.add_widget(FigureCanvas(fig))
+        return FigureCanvas(fig)
+        # self.layout_pie_chart.clear_widgets()
+        # self.layout_pie_chart.add_widget(FigureCanvas(fig))
         # fig.clear()
 
     def load_example(self, link):
@@ -1041,8 +1107,9 @@ class GUILayout(BoxLayout):
             fig = plt.gcf()
             fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-            self.layout_diagram3.clear_widgets()
-            self.layout_diagram3.add_widget(FigureCanvas(fig))
+            return FigureCanvas(fig)
+            # self.layout_diagram3.clear_widgets()
+            # self.layout_diagram3.add_widget(FigureCanvas(fig))
 
     def get_median_value(lstData):
         """
@@ -1173,8 +1240,9 @@ class GUILayout(BoxLayout):
         fig = pl.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-        self.layout_diagram2.clear_widgets()
-        self.layout_diagram2.add_widget(FigureCanvas(fig))
+        return FigureCanvas(fig)
+        # self.layout_diagram2.clear_widgets()
+        # self.layout_diagram2.add_widget(FigureCanvas(fig))
 
 
 class FileSaverPopup(Popup):

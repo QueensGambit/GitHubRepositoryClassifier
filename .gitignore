@@ -249,3 +249,6 @@ gui_prototype/prototype/readme/vhf_free-programming-books.txt
 gui_prototype/prototype/readme/xabier_comunes-conocimiento-democracia.txt
 gui_prototype/prototype/readme/yelhouari_20141019-Moolah-Investigation.txt
 gui_prototype/site-packages/
+!/gui_prototype/lib/wordcloud/query_integral_image.cp35-win_amd64.pyd
+!/rc_gui.spec
+!/gui_prototype/prototype/__init__.pyc

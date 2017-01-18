@@ -30,6 +30,12 @@ from prototype.definitions.categories import CategoryStr
 
 
 def main(args=None):
+    """
+    main-method for the main_console.py
+
+    :param args: possible command line arguments (these are ignored at the moment)
+    :return:
+    """
 
     if args is None:
         args = sys.argv[1:]
