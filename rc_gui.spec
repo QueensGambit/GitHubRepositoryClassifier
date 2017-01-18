@@ -1,8 +1,19 @@
 # -*- mode: python -*-
 from kivy.deps import sdl2, glew #, gstreamer
 
-block_cipher = None
 
+# steps to build:
+# (1) all needed dependecies to run the .py must be installed
+# (2) -> setup tools must be downgraded to version 19.2
+#	  pip install --ignore-installed setuptools==19.2
+# (3) copy ".\GitHubRepositoryClassifier\gui_prototype\prototype\__pycache__\__init__.cpython-35.pyc" to
+#	  ".\GitHubRepositoryClassifier\gui_prototype\prototype\__init__.pyc"
+# (5) run "python -m compile all"
+# (4) now you can build .exe via:
+#     "python -m PyInstaller rc_gui.spec"
+
+
+block_cipher = None
 
 a = Analysis(['.\\gui_prototype\\rc_gui.py'],
              pathex=['G:\\Programming\\Projects\\Python\\PyInstallerTest\\GithubClassifier'],
