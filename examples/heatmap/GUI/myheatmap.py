@@ -49,12 +49,24 @@ class MyHeatMap:
         # x = y[np.logical_not(np.isnan(x))]
         # y = y[np.logical_not(np.isnan(y))]
 
+        #Kernel Density Estimation via Scipy Lib
+        #generell: each point is a rectangle
+        #if rectangles overlape so their colors getting added.
+        #-->Smooth picture
+        #-->no end points
+        #-->depend on bandwidth
+
         k = gaussian_kde(np.vstack([x,  y]))
         xi, yi = np.mgrid[self.__xgmin:self.__xgmax:x.size ** 0.5 * 1j, self.__ygmin:self.__ygmax:y.size ** 0.5 * 1j]
         zi = k(np.vstack([xi.flatten(), yi.flatten()]))
 
-        fig = plt.figure(figsize=(9, 10))
+        # Alternative
+        #-->not smooth pictures
+        #-->depend on end points of bins
+        #-->depend on width of bins
+        # plt.hist2d([x,y)
 
+        fig = plt.figure(figsize=(9, 10))
         # alpha=0.5 will make the plots semitransparent
         plt.pcolormesh(xi, yi, zi.reshape(xi.shape), alpha=0.5)
 
