@@ -652,7 +652,7 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-        webbrowser.open("http://google.com")
+        webbrowser.open("https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation")
 
     def show_settings(self):
         """
@@ -950,7 +950,7 @@ class GUILayout(BoxLayout):
             plt.rcParams['text.color'] = 'silver'
 
             plt.legend((handleCentroids, handleCurRepo),
-                       ('Centroids', 'Curent Repository'),
+                       ('Centroids', 'Current Repository'),
                        scatterpoints=1,
                        loc='lower left',
                        ncol=3,
