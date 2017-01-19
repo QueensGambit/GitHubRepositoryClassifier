@@ -394,7 +394,7 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         return self.clf, self.lstMeanValues, self.matIntegerTrainingData, self.lstTrainLabels, self.lstTrainData, self.normalizer, self.normalizerIntegerAttr, self.lstTrainDataRaw
 
-    def predictResultsAndCompare(self, strProjPathFileNameCSV = '/data/csv/manual_classification_appendix_b.csv'):
+    def predictResultsAndCompare(self, strProjPathFileNameCSV =  '/data/csv/manual_classification_appendix_b.csv'):  # '/data/csv/additional_data_sets_cleaned.csv'):
         """
         loads a csv-file with of layout 'URL, CATEGORY, CATEGORY_ALTERNATIVE_1,CATEGORY_ALTERNATIVE_2'
         the URL is given in the format 'https://github.com/owner/repository-name'
@@ -423,6 +423,7 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         # http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
         # len(dtFrame.index) gets the number of rows NaN are included
         iNumOfPredictions = len(dtUnlabeledData.index)
+        # iNumOfPredictions = 20
 
 
         print('~~~~~~~~~~~ CREATE VERITY MATRIX ~~~~~~~~~~~~')
@@ -461,6 +462,27 @@ class RepositoryClassifier(InterfaceRepoClassifier):
             matPredictionResWithAlt[i, iLabel] = 1
             matPredictionResWithAlt[i, iLabelAlt] = 1
 
+        matPredictionResultByCategory = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        # print("matPredictionTarget:", matPredictionTarget)
+
+        for i in range(0, iNumOfPredictions):
+            for j in range(0, 7):
+                if matPredictionRes[i][j] == 1:
+                    if matPredictionRes[i][j] == matPredictionTarget[i][j]:
+                        matPredictionResultByCategory[j][0] += 1
+                        matPredictionResultByCategory[j][1] += 1
+                        print("i, j", i, j, matPredictionResultByCategory)
+                    else:
+                        matPredictionResultByCategory[j][0] += 1
+                        print("i, j, not", i, j, matPredictionResultByCategory)
+
+        for i in range (0, len(matPredictionResultByCategory)):
+            matPredictionResultByCategory[i][2] = matPredictionResultByCategory[i][1] / matPredictionResultByCategory[i][0]
+        # print("matPredictionResultByCategory:", matPredictionResultByCategory)
+
+
+
+
         self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
         print('verity matrix for matPredictionTarget:\n ', matPredictionTarget)
@@ -473,7 +495,15 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         print('fPredictionRes:', fPredictionRes)
         print('fPredictionResWithAlt:', fPredictionResWithAlt)
         fAccuracy = fPredictionRes * 100
-        print('fAccuracy: ', fAccuracy, '%')
+        print('fAccuracy: ', fAccuracy, '%\n')
+
+        print('DEV: found:', matPredictionResultByCategory[0][0], ', correct:', matPredictionResultByCategory[0][1], ', reliability:', matPredictionResultByCategory[0][2] * 100, '%',
+              '\nHW: found:', matPredictionResultByCategory[1][0], ', correct:', matPredictionResultByCategory[1][1], ', reliability:', matPredictionResultByCategory[1][2] * 100, '%',
+              '\nEDU: found:', matPredictionResultByCategory[2][0], ', correct:', matPredictionResultByCategory[2][1], ', reliability:', matPredictionResultByCategory[2][2] * 100, '%',
+              '\nDOCS: found:', matPredictionResultByCategory[3][0], ', correct:', matPredictionResultByCategory[3][1], ', reliability:', matPredictionResultByCategory[3][2] * 100, '%',
+              '\nWEB: found:', matPredictionResultByCategory[4][0], ', correct:', matPredictionResultByCategory[4][1], ', reliability:', matPredictionResultByCategory[4][2] * 100, '%',
+              '\nDATA: found:', matPredictionResultByCategory[5][0], ', correct:', matPredictionResultByCategory[5][1], ', reliability:', matPredictionResultByCategory[5][2] * 100, '%',
+              '\nOTHER: found:', matPredictionResultByCategory[6][0], ', correct:', matPredictionResultByCategory[6][1], ', reliability:', matPredictionResultByCategory[6][2] * 100, '%')
 
         return fPredictionRes
 
