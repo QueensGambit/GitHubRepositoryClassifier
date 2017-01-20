@@ -16,7 +16,7 @@ Installation
 ------------
 
 The matplotlib backend for kivy can be used by using the garden extension in
-kivy following this .. _link: http://kivy.org/docs/api-kivy.garden.html ::
+kivy following this .. _link: http://kivy.org/docs/api-lib.kivy.garden.html ::
 
     garden install matplotlib
 
@@ -34,7 +34,7 @@ as explained
 .. _here: http://matplotlib.org/faq/usage_faq.html#what-is-a-backend::
 
     import matplotlib
-    matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+    matplotlib.use('module://lib.kivy.garden.matplotlib.backend_kivy')
 
 Once this is done, any figure instantiated after will be wrapped by a
 :class:`FigureCanvasKivy` ready to use. From here there are two options to
@@ -48,9 +48,9 @@ the first example in the following section.
 
     One can create a matplotlib widget by importing FigureCanvas::
 
-        from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
+        from lib.kivy.garden.matplotlib.backend_kivyagg import FigureCanvas
         or
-        from kivy.garden.matplotlib.backend_kivy import FigureCanvas
+        from lib.kivy.garden.matplotlib.backend_kivy import FigureCanvas
 
     and then instantiate an object::
 
