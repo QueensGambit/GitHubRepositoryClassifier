@@ -83,7 +83,6 @@ from lib.wordcloud import WordCloud, ImageColorGenerator
 from PIL import Image
 import numpy as np
 from pathlib import Path
-from asyncio import Lock
 
 kivy.require("1.9.0")
 
@@ -325,7 +324,6 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-        print('------------------------------> reset')
         StaticVars.b_run_loading = False
         self.layout_pie_chart.clear_widgets()
         self.label_result.text = "ERROR"
@@ -538,7 +536,7 @@ class GUILayout(BoxLayout):
                 bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
-                self.update_wordcloud(self.show_wordcloud(strText, iLabel, dicFoundWords))
+                self.update_wordcloud(self.show_wordcloud(strText, iLabel, dicFoundWords, tmpRepo.getRepoLanguage()))
 
             else:
                 self.update_no_wordcloud()
@@ -565,7 +563,7 @@ class GUILayout(BoxLayout):
 
         self.enable_classification()
 
-    def show_wordcloud(self, text, iLabel, dicFoundWords):
+    def show_wordcloud(self, text, iLabel, dicFoundWords, strRepoLanguage):
         """
         Creates the Wordcloud in the first Diagram Tab.
 
@@ -626,7 +624,7 @@ class GUILayout(BoxLayout):
         if dicFoundWords.keys() is not None:
             labels = [l for l in dicFoundWords.keys()]
             # labels = dicFoundWords.keys() #values() #['A', 'B', 'C']
-            iMaxNumberLabels = 13
+            iMaxNumberLabels = 12
             labels = [int(x) for i, x in enumerate(labels) if i < iMaxNumberLabels]
             #http://stackoverflow.com/questions/3940128/how-can-i-reverse-a-list-in-python
             labelsRev = labels[::-1] #list(reversed(labels))
@@ -651,7 +649,9 @@ class GUILayout(BoxLayout):
 
             ax = plt.gca()
             # ax.get_legend().get_title()
-            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title='found words in vocab')#loc='upper right'
+            strTitle = 'language: ' + strRepoLanguage + '\n'
+            strTitle += 'found words in vocab:'
+            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title=strTitle)#loc='upper right'
             plt.rcParams['text.color'] = 'black'
 
         # leg = plt.legend(handles=lstPatches, loc=(1.3,0.0)) #'right')
@@ -669,6 +669,24 @@ class GUILayout(BoxLayout):
         line = matplotlib.lines.Line2D([0], [0], linestyle='none', color='silver', mfc='silver', #mfc='black',
                                        mec='none', marker=r'$\mathregular{{{}}}$'.format(label))
         return line
+
+    def open_repo_url(self):
+        """
+        opens the current url in the preferred web-browser in case if the valid check was OK
+
+        :return:
+        """
+        str_url_in = self.textfield_input.text
+        if self.validate_url(str_url_in) is True:
+            webbrowser.open(str_url_in)
+
+    def open_github_project_url(self):
+        """
+        opens the url of the github source code of the project
+
+        :return:
+        """
+        webbrowser.open("https://github.com/QueensGambit/GitHubRepositoryClassifier")
 
     def show_info(self):
         """
@@ -717,7 +735,8 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = clipboard.paste()
         # print('paste-button pressed')
         # print(clipboard.paste())
-        print('pasted text:', clipboard.paste())
+        print('[INFO] pasted text:', clipboard.paste())
+        self.update_console()
 
     def validate_url(self, url_in):
         """

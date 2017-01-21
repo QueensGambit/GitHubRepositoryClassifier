@@ -325,6 +325,14 @@ GUILayout:
                 title: ""
                 with_previous: False
                 app_icon: 'media/logo_small.png'
+                on_press: root.open_github_project_url()
+
+            ActionButton:
+                icon: 'media/globe-8x_white.png' #'media/GitHub-Mark-32px.png'
+                #title: ""
+                #with_previous: False
+                #important: True
+                on_press: root.open_repo_url()
 
             ActionOverflow:
             ActionButton:
@@ -394,10 +402,6 @@ GUILayout:
 
                 #ActionButton:
                 #    text: "more..."
-
-
-
-
 
     #########################
     # upper area

@@ -3,32 +3,25 @@ from kivy.deps import sdl2, glew #, gstreamer
 
 
 # steps to build:
-# (0) all needed dependecies to run the .py must be installed
-# (1) in addition you must install:
-#     pip install --upgrade pyinstaller
-#     (when this doesn't work: pip install --ignore-installed --upgrade pyinstaller)
-#     install sdl2 by downloading and installing the .whl from: https://pypi.python.org/pypi/kivy.deps.sdl2
-#     pip install kivy.deps.sdl2-0.1.17-cp35-cp35m-win_amd64.whl
-#     install glew by downloading and installing the .whl from: https://pypi.python.org/pypi/kivy.deps.glew
-#     pip install kivy.deps.glew-0.1.9-cp35-cp35m-win_amd64.whl
+# (1) all needed dependecies to run the .py must be installed
 # (2) -> setup tools must be downgraded to version 19.2
-#     pip uninstall setuptools
 #	  pip install --ignore-installed setuptools==19.2
 # (3) copy ".\GitHubRepositoryClassifier\gui_prototype\prototype\__pycache__\__init__.cpython-35.pyc" to
 #	  ".\GitHubRepositoryClassifier\gui_prototype\prototype\__init__.pyc"
-# (5) run "python -m compileall ." in directory ./GithubClassifier/
+# (5) run "python -m compile all"
 # (4) now you can build .exe via:
-#     python -m PyInstaller rc_gui.spec
+#     "python -m PyInstaller rc_gui.spec"
 
 
 block_cipher = None
 
 a = Analysis(['.\\gui_prototype\\rc_gui.py'],
              pathex=['G:\\Programming\\Projects\\Python\\PyInstallerTest\\GithubClassifier'],
-             binaries=None,
              datas=None,
+             binaries=None,
 			 # 'wordcloud', 'wordcloud.WordCloud', 'wordcloud.ImageColorGenerator' is not recognized
-             hiddenimports=['kivy.garden', 'matplotlib.pyplot', 'kivy.garden.matplotlib', 'cython', 'sklearn', 'sklearn.neighbors.typedefs', 'os.path.expanduser', 'win32timezone'],
+			 # 'kivy.garden.matplotlib', 'kivy.garden',  -> are used locally now						used to access the home directory
+             hiddenimports=['matplotlib.pyplot', 'cython', 'sklearn', 'sklearn.neighbors.typedefs', 'os.path.expanduser', 'win32timezone'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
