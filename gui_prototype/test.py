@@ -3,8 +3,12 @@ import numpy as np
 from sklearn.neighbors.nearest_centroid import NearestCentroid
 from prototype.utility_funcs.io_agent import InputOutputAgent
 from os import path
+from prototype.definitions import githubLanguages
 
 # read all input files
+print('language list:')
+print(githubLanguages.lstLanguages)
+print('.................')
 
 emojiRepo = GithubRepo("WebpageFX", "emoji-cheat-sheet.com")
 

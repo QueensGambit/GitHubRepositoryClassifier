@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="plot">
+    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="integrated nltk_data (which is need for a single exe)&#10;added browser button&#10;removed kivy.matplotlib  from hidden imports  rc_gui.spec: &#10;">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords.zip" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/README" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/danish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/dutch" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/english" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/finnish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/french" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/german" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/hungarian" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/italian" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/kazakh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/norwegian" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/portuguese" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/russian" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/spanish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/swedish" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/turkish" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" afterPath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/gui_prototype.py" afterPath="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv" afterPath="$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/rc_gui.py" afterPath="$PROJECT_DIR$/gui_prototype/rc_gui.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rc_gui.spec" afterPath="$PROJECT_DIR$/rc_gui.spec" />
     </list>
     <ignored path="GitHubRepositoryClassifier.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,44 +44,103 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="gui_prototype.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
+      <file leaf-file-name="rc_gui.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/rc_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="568" column="12" selection-start-line="568" selection-start-column="12" selection-end-line="568" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_console.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/main_console.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2500">
-              <caret line="45" column="135" selection-start-line="45" selection-start-column="135" selection-end-line="45" selection-end-column="135" />
+            <state relative-caret-position="334">
+              <caret line="696" column="26" selection-start-line="696" selection-start-column="26" selection-end-line="696" selection-end-column="26" />
               <folding>
-                <element signature="e#151#182#0" expanded="true" />
-                <marker date="1484414348245" expanded="false" signature="2136:4319" ph="..." />
+                <element signature="e#316#327#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="categories.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/categories.py">
+      <file leaf-file-name="spanish" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/spanish">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state relative-caret-position="162">
+              <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="repository_classifier.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
+      <file leaf-file-name="additional_data_sets_cleaned.csv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/data/csv/additional_data_sets_cleaned.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3403">
-              <caret line="350" column="0" selection-start-line="349" selection-start-column="136" selection-end-line="349" selection-end-column="157" />
+            <state relative-caret-position="257">
+              <caret line="244" column="45" selection-start-line="244" selection-start-column="45" selection-end-line="244" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="githubLanguages.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/githubLanguages.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="317">
+              <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rc_gui.spec" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rc_gui.spec">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="german" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/german">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="436">
+              <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="english" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/english">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="147" column="4" selection-start-line="147" selection-start-column="4" selection-end-line="147" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="swedish" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/swedish">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1332">
+              <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RepositoryClassifier.kv" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="333" column="0" selection-start-line="333" selection-start-column="0" selection-end-line="333" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -78,76 +156,71 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="Bjoern2409 &lt;bjoern_2409@hotmail.de&gt;" />
-      </list>
-    </option>
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/prototype/vocab/vocabList.dump" />
-        <option value="$PROJECT_DIR$/prototype/utility_funcs/count_vectorizer_operations.py" />
-        <option value="$PROJECT_DIR$/data/csv/unclassified_repos.csv" />
-        <option value="$PROJECT_DIR$/examples/kivy/plots/test_plt.py" />
-        <option value="$PROJECT_DIR$/examples/kivy/plots/pie_demo_features.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/data/screens/layout.kv" />
-        <option value="$PROJECT_DIR$/gui_prototype/data/screens/controller.kv" />
-        <option value="$PROJECT_DIR$/examples/kivy/screen/controller_gui.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/layout.kv" />
-        <option value="$PROJECT_DIR$/gui_prototype/mykv.kv" />
-        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/test.kv" />
-        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestingLayout.py" />
-        <option value="$PROJECT_DIR$/examples/kivy/screen/NestingLayouts/nestlayout.kv" />
-        <option value="$PROJECT_DIR$/gui_prototype/generatePieChart.py" />
-        <option value="$PROJECT_DIR$/examples/heatmap/GUI/gui_heatmap.py" />
-        <option value="$PROJECT_DIR$/examples/heatmap/GUI/myheatmap.py" />
-        <option value="$PROJECT_DIR$/data/csv/ghtorrent/sql_query_on_webapp.txt" />
-        <option value="$PROJECT_DIR$/prototype/utility_funcs/io_agent.py" />
-        <option value="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/repository_word_cloud.py" />
-        <option value="$PROJECT_DIR$/prototype/mainRepoClassifier.py" />
-        <option value="$PROJECT_DIR$/data/csv/manual_classification_appendix_b.csv" />
-        <option value="$PROJECT_DIR$/examples/clustering/clustering.py" />
-        <option value="$PROJECT_DIR$/examples/kivy/examples/demo/multistroke/historymanager.py" />
-        <option value="$PROJECT_DIR$/prototype/main.py" />
-        <option value="$PROJECT_DIR$/prototype/utility_funcs/string_operation.py" />
-        <option value="$PROJECT_DIR$/prototype/utility_funcs/preprocessing_operations.py" />
-        <option value="$PROJECT_DIR$/prototype/features/learning_features.py" />
-        <option value="$PROJECT_DIR$/data/csv/GitHubLanguages/source.txt" />
-        <option value="$PROJECT_DIR$/definitions/categories.py" />
-        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
-        <option value="$PROJECT_DIR$/examples/kivy/examples/demo/showcase/main.py" />
-        <option value="$PROJECT_DIR$/examples/kivy/textInput/textinput.py" />
-        <option value="$PROJECT_DIR$/definitions/githubLanguages.py" />
         <option value="$PROJECT_DIR$/gui_prototype/my.kv" />
         <option value="$PROJECT_DIR$/examples/kivy/plots/kivy_pie_chart_plot.py" />
         <option value="$PROJECT_DIR$/examples/kivy/showcase/data/screens/codeinput.kv" />
         <option value="$PROJECT_DIR$/examples/kivy/testfiles_ls/5_gui_prototype/gui_protoype.py" />
-        <option value="$PROJECT_DIR$/prototype/prototype.py" />
-        <option value="$PROJECT_DIR$/examples/fasff.py" />
-        <option value="$PROJECT_DIR$/examples/plot_label_propagation_versus_svm_iris.py" />
-        <option value="$PROJECT_DIR$/examples/semisupervised.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/prototype/main.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/prototype/semisupervised.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/prototype/github_repo.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/prototype/plotter.py" />
+        <option value="$PROJECT_DIR$/prototype/features/string attributes.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/concept/my.kv" />
+        <option value="$PROJECT_DIR$/gui_prototype/concept/gui_prototype.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/GUI.kv" />
         <option value="$PROJECT_DIR$/examples/plot_multidim_data/plot_kmeans_digits.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/prototype/multidimplot.py" />
+        <option value="$PROJECT_DIR$/data/csv/manual_classification_appendix_b.csv" />
+        <option value="$PROJECT_DIR$/data/csv/unclassified_repos.csv" />
+        <option value="$PROJECT_DIR$/data/csv/removed_repos_from list.txt" />
+        <option value="$PROJECT_DIR$/prototype/prototype.py" />
+        <option value="$PROJECT_DIR$/prototype/githubRepo.py" />
+        <option value="$PROJECT_DIR$/prototype/main.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/prototype.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/static_vars.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/print_overloading.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/githubRepo.py" />
+        <option value="$PROJECT_DIR$/data/csv/ghtorrent/sql_query_on_webapp.txt" />
         <option value="$PROJECT_DIR$/gui_prototype/semisupervised.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/__init__.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/definitions/__init__.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/__init__.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/__init__.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/main.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/__main__.py" />
+        <option value="$PROJECT_DIR$/examples/text_analysis/wordcloud/repositories_category/repository_word_cloud.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/test.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/test.py" />
         <option value="$PROJECT_DIR$/gui_prototype/prototype/definitions/categories.py" />
-        <option value="$PROJECT_DIR$/gui_prototype/main_console.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/string_operation.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/features/string attributes.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/rc_cli.py" />
+        <option value="$PROJECT_DIR$/examples/preprocessing/plot_robust_scaling.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/main_semi_supervised.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/interface_repository_classifier.py" />
         <option value="$PROJECT_DIR$/gui_prototype/gui_prototype.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/github_repo.py" />
+        <option value="G:/Programming/Projects/Python/PyInstallerTest/GithubClassifier/dist/rc_gui/rc_cli.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/preprocessing_operations.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/main_console.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/rc_gui.spec" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py" />
+        <option value="$PROJECT_DIR$/examples/kivy/multi_threading/main.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/prototype/definitions/githubLanguages.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv" />
+        <option value="$PROJECT_DIR$/gui_prototype/rc_gui.py" />
+        <option value="$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/spanish" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-13" />
-    <option name="y" value="-13" />
-    <option name="width" value="3226" />
-    <option name="height" value="1746" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -174,6 +247,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -242,14 +317,16 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="definitions" />
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="csv" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -260,17 +337,17 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\gui_prototype" />
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\data\csv\ghtorrent" />
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\examples" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\examples\preprocessing" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype\prototype" />
+      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\plot_multidim_data" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\kivy\textInput" />
-      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\data\csv\GitHubLanguages" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\data\csv\ghtorrent" />
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\examples" />
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\gui_prototype" />
-      <recent name="C:\Users\Björn\Documents\GitHubRepositoryClassifier\examples\text_analysis" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype\prototype" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype" />
+      <recent name="G:\GitHub\spyder_Python\GitHubRepositoryClassifier" />
+      <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\gui_prototype" />
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\clustering" />
     </key>
   </component>
@@ -288,20 +365,10 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="UPDATED" />
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/misc.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/.idea/workspace.xml</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/gui_prototype.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/main_console.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/features/learning_features.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/github_repo.py</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/RepositoryClassifier.pkl</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/lstMeanValues.pkl</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/lstTrainData.pkl</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/matIntegerTrainingData.pkl</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/normalizer.pkl</PATH>
-          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/model/normalizerIntegerAttr.pkl</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/examples/heatmap/GUI/myheatmap.py</PATH>
           <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/rc_cli.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/rc_gui.py</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Created" />
@@ -397,58 +464,7 @@
       </FILE-GROUP>
     </UpdatedFiles>
   </component>
-  <component name="RunManager" selected="Python.main_console">
-    <configuration default="false" name="semisupervised (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype/prototype" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="C:\Users\Björn\Documents\GitHubRepositoryClassifier\examples\semisupervised.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="semisupervised (2)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="C:\Users\Björn\Documents\GitHubRepositoryClassifier\examples\semisupervised.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="plot_kmeans_digits" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/plot_multidim_data" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/plot_multidim_data/plot_kmeans_digits.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Python.rc_gui">
     <configuration default="false" name="main_console" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -466,19 +482,70 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <configuration default="false" name="semisupervised" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration default="false" name="gui_prototype" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/semisupervised.py" />
+      <option name="SCRIPT_NAME" value="G:\GitHub\spyder_Python\GitHubRepositoryClassifier\gui_prototype\rc_gui.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="rc_cli" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GitHubRepositoryClassifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/rc_cli.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="rc_gui" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GitHubRepositoryClassifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/rc_gui.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/kivy/showcase" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="GitHubRepositoryClassifier" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/kivy/showcase/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -618,24 +685,27 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.semisupervised (1)" />
-      <item index="1" class="java.lang.String" itemvalue="Python.semisupervised (2)" />
-      <item index="2" class="java.lang.String" itemvalue="Python.plot_kmeans_digits" />
-      <item index="3" class="java.lang.String" itemvalue="Python.main_console" />
-      <item index="4" class="java.lang.String" itemvalue="Python.semisupervised" />
+      <item index="0" class="java.lang.String" itemvalue="Python.main_console" />
+      <item index="1" class="java.lang.String" itemvalue="Python.gui_prototype" />
+      <item index="2" class="java.lang.String" itemvalue="Python.rc_cli" />
+      <item index="3" class="java.lang.String" itemvalue="Python.rc_gui" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.main_console" />
-        <item index="1" class="java.lang.String" itemvalue="Python.semisupervised" />
-        <item index="2" class="java.lang.String" itemvalue="Python.semisupervised (2)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.plot_kmeans_digits" />
-        <item index="4" class="java.lang.String" itemvalue="Python.semisupervised (1)" />
+        <item index="0" class="java.lang.String" itemvalue="Python.rc_gui" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.main_console" />
+        <item index="3" class="java.lang.String" itemvalue="Python.rc_cli" />
+        <item index="4" class="java.lang.String" itemvalue="Python.gui_prototype" />
       </list>
     </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS,SHOW_INHERITED" />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -645,150 +715,356 @@
       <option name="presentableId" value="Default" />
       <updated>1477497692750</updated>
     </task>
-    <task id="LOCAL-00001" summary="added plt.show() to show the graph in pychar&#10;added examples for the github-API: octikit &#10;- github3&#10;- pygithub&#10;- no API, JSON only">
-      <created>1478121161166</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1478121161166</updated>
-    </task>
-    <task id="LOCAL-00002" summary="adapted github3 import">
-      <created>1481529841815</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1481529841815</updated>
-    </task>
-    <task id="LOCAL-00003" summary="added norming of the integer attributes&#10;temporarily removed numBranches from IntegerAttribute because a new request was created&#10;">
-      <created>1481896037628</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1481896037628</updated>
-    </task>
-    <task id="LOCAL-00004" summary="added unclassified_repos.csv">
-      <created>1481896132461</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1481896132461</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added documentation for io_agent.py">
-      <created>1481978773714</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1481978773714</updated>
-    </task>
-    <task id="LOCAL-00006" summary="create vocab-directory if needed">
-      <created>1482311946510</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1482311946510</updated>
-    </task>
-    <task id="LOCAL-00007" summary="alternative to divide with the number of hits instead of the number of words">
-      <created>1482485436615</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1482485436615</updated>
-    </task>
-    <task id="LOCAL-00008" summary="added matplotlib-examples for kivy">
-      <created>1482488726114</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1482488726114</updated>
-    </task>
-    <task id="LOCAL-00009" summary="example for a pie-chart in kivy&#10;">
-      <created>1482491268400</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1482491268400</updated>
-    </task>
-    <task id="LOCAL-00010" summary="created initial gui_prototype&#10;- general layout&#10;- matplotlib.plot integration">
-      <created>1482501809114</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1482501809114</updated>
-    </task>
-    <task id="LOCAL-00011" summary="added a csv with roughly 10000 random repos via the ghtorrent wep-api&#10;+ now all repos from appendix b are predicted">
-      <created>1483749784034</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1483749784034</updated>
-    </task>
-    <task id="LOCAL-00012" summary="corrected DOC to DOCS in appendix_b.csv&#10;corrected OTHERS to OTHER in category.py&#10;added connectToGithub in io_agent.py&#10;changed getWordOccurence to keep it as is&#10;added verity matrix comparision in prototype">
-      <created>1483800836267</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1483800836267</updated>
-    </task>
-    <task id="LOCAL-00013" summary="refactored the prototyp.py to the class RepoClassifierNearestNeighbour">
-      <created>1483816816969</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1483816816969</updated>
-    </task>
-    <task id="LOCAL-00014" summary="added main.py which demonstrates the usage of the classifier as well as voabList.dump">
-      <created>1483816900429</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1483816900429</updated>
-    </task>
-    <task id="LOCAL-00015" summary="semi supervised">
-      <created>1484071382323</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1484071382323</updated>
-    </task>
-    <task id="LOCAL-00016" summary="pca">
-      <created>1484214858224</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1484214858224</updated>
-    </task>
-    <task id="LOCAL-00017" summary="plot">
-      <created>1484314799985</created>
+    <task id="LOCAL-00017" summary="overloaded the print() function for the official gui&#10;-&gt; ctrl+c and ctrl+v is now working thanks to import clipboard ;)">
+      <created>1483912957305</created>
       <option name="number" value="00017" />
       <option name="presentableId" value="LOCAL-00017" />
       <option name="project" value="LOCAL" />
-      <updated>1484314799985</updated>
+      <updated>1483912957306</updated>
     </task>
-    <task id="LOCAL-00018" summary="multidimensional plot">
-      <created>1484326879964</created>
+    <task id="LOCAL-00018" summary="added example of plotting multidimensional data">
+      <created>1483918603517</created>
       <option name="number" value="00018" />
       <option name="presentableId" value="LOCAL-00018" />
       <option name="project" value="LOCAL" />
-      <updated>1484326879964</updated>
+      <updated>1483918603517</updated>
     </task>
-    <task id="LOCAL-00019" summary="plot_multi_dim, semi supervised">
-      <created>1484402227078</created>
+    <task id="LOCAL-00019" summary="resolved naming issues for widgets in .kv">
+      <created>1483994461826</created>
       <option name="number" value="00019" />
       <option name="presentableId" value="LOCAL-00019" />
       <option name="project" value="LOCAL" />
-      <updated>1484402227078</updated>
+      <updated>1483994461826</updated>
     </task>
-    <task id="LOCAL-00020" summary="semi supervised">
-      <created>1484414375021</created>
+    <task id="LOCAL-00020" summary="removed our addations to appendix b&#10;renamed getFeatures() to getIntegerFeatures()&#10;seperated trainModel() into&#10;loadTrainingData() and trainModel()&#10;added bUseStringFeatures() as an additional Attribute">
+      <created>1484000898412</created>
       <option name="number" value="00020" />
       <option name="presentableId" value="LOCAL-00020" />
       <option name="project" value="LOCAL" />
-      <updated>1484414375022</updated>
+      <updated>1484000898412</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="connected gui with prototype&#10;now prototype is a sub-folder of gui">
+      <created>1484034412132</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1484034412132</updated>
+    </task>
+    <task id="LOCAL-00022" summary="added missing .py in utility_funcs/">
+      <created>1484035195296</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1484035195296</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fixed path issues">
+      <created>1484045270715</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1484045270715</updated>
+    </task>
+    <task id="LOCAL-00024" summary="added getterFunctions for IntegerAttributes">
+      <created>1484065386538</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1484065386538</updated>
+    </task>
+    <task id="LOCAL-00025" summary="stdOut works now on both consoles">
+      <created>1484070370157</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1484070370157</updated>
+    </task>
+    <task id="LOCAL-00026" summary="changed pre-processing and added legend for plotting">
+      <created>1484082202449</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1484082202449</updated>
+    </task>
+    <task id="LOCAL-00027" summary="changed pre-processing and added legend for plotting">
+      <created>1484084409820</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1484084409820</updated>
+    </task>
+    <task id="LOCAL-00028" summary="added general excepetion handling in gui&#10;added param to __conectToGithub">
+      <created>1484238037513</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1484238037513</updated>
+    </task>
+    <task id="LOCAL-00029" summary="added getReadme()">
+      <created>1484240957209</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1484240957209</updated>
+    </task>
+    <task id="LOCAL-00030" summary="plotting of word clouds -&gt; not stable atm">
+      <created>1484246408610</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1484246408610</updated>
+    </task>
+    <task id="LOCAL-00031" summary="added return self.clf in loadModelFromFile&#10;and improved thread for classification">
+      <created>1484306578358</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1484306578358</updated>
+    </task>
+    <task id="LOCAL-00032" summary="lstIntegerFeatures is now given properly&#10;return lstMeanValues added for loadingModel">
+      <created>1484315546051</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1484315546051</updated>
+    </task>
+    <task id="LOCAL-00033" summary="added multi-threading example for kivy">
+      <created>1484318843127</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1484318843127</updated>
+    </task>
+    <task id="LOCAL-00034" summary="now matIntegerTrainingData is exported as well&#10;you can load it via loadModel()">
+      <created>1484323899564</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1484323899564</updated>
+    </task>
+    <task id="LOCAL-00035" summary="improved plotting of multi dim data in main_console.py&#10;now a normalizer is used as well as dividing by the mean values">
+      <created>1484393309479</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1484393309479</updated>
+    </task>
+    <task id="LOCAL-00036" summary="added second iLabelAlternative as result">
+      <created>1484396299206</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1484396299206</updated>
+    </task>
+    <task id="LOCAL-00037" summary="added missing model pkl files">
+      <created>1484396362568</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1484396362568</updated>
+    </task>
+    <task id="LOCAL-00038" summary="moved bUseCentroid in __init__">
+      <created>1484396458144</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1484396458144</updated>
+    </task>
+    <task id="LOCAL-00039" summary="fixed issues: NNearestNeighbour&#10;added test for &quot; &quot; for sowingWordcloud">
+      <created>1484401782355</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1484401782355</updated>
+    </task>
+    <task id="LOCAL-00040" summary="now the normalizer for IntegerAttributes is exported as well">
+      <created>1484407776776</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1484407776776</updated>
+    </task>
+    <task id="LOCAL-00041" summary="retrained model">
+      <created>1484408024131</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1484408024131</updated>
+    </task>
+    <task id="LOCAL-00042" summary="added missing &quot;.pkl&quot; for file name of normalizerIntegerAttr">
+      <created>1484408244072</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1484408244072</updated>
+    </task>
+    <task id="LOCAL-00043" summary="the normedFeatures are now returned from classification from url">
+      <created>1484410180076</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1484410180076</updated>
+    </task>
+    <task id="LOCAL-00044" summary="changed path input for gui_prototype">
+      <created>1484482082988</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1484482082988</updated>
+    </task>
+    <task id="LOCAL-00045" summary="added option to apply log2 for the integer data&#10;fixed indetion problem fro string_attributes.py">
+      <created>1484490184067</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1484490184067</updated>
+    </task>
+    <task id="LOCAL-00046" summary="pushed pkl-files for log2-strategy">
+      <created>1484490599688</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1484490599688</updated>
+    </task>
+    <task id="LOCAL-00047" summary="added if __name__ == ... in github_prototype.py&#10;the normalizer is now saved explicity&#10;fixed path import in rc_cli.py">
+      <created>1484496204059</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1484496204059</updated>
+    </task>
+    <task id="LOCAL-00048" summary="added default path to 'C:' for the saving menu">
+      <created>1484510012036</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1484510012036</updated>
+    </task>
+    <task id="LOCAL-00049" summary="added lstTrainDataRaw export&#10;kiv.matplotlib is now used via relative path">
+      <created>1484576559958</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1484576559958</updated>
+    </task>
+    <task id="LOCAL-00050" summary="added lstTrainDataRaw export&#10;kiv.matplotlib is now used via relative path">
+      <created>1484577350272</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1484577350272</updated>
+    </task>
+    <task id="LOCAL-00051" summary="made start white in integer plot">
+      <created>1484648918888</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1484648918888</updated>
+    </task>
+    <task id="LOCAL-00052" summary="added bRedownload &#10;and commented out ani.cancel">
+      <created>1484652635573</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1484652635573</updated>
+    </task>
+    <task id="LOCAL-00053" summary="now the pruned string object is stored for the githubRepo-Object&#10;fixed problem, that the animation was cancelled after the widget were removed&#10;-&gt; this caused crashes sometimes">
+      <created>1484685492538</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1484685492538</updated>
+    </task>
+    <task id="LOCAL-00054" summary="moved direcotry dir/ into prototype&#10;updated examples in gui&#10;added interface for repository classifier&#10;improved console print() style">
+      <created>1484692838759</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1484692838759</updated>
+    </task>
+    <task id="LOCAL-00055" summary="new rc_icon.ico">
+      <created>1484693006275</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1484693006275</updated>
+    </task>
+    <task id="LOCAL-00056" summary="renamed gui_prototype.py to rc_gui.py&#10;added interace_repository_classifier.py">
+      <created>1484695552559</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1484695552559</updated>
+    </task>
+    <task id="LOCAL-00057" summary="fixed threading problems in gui&#10;now all layout changes are done in a @mainthread method">
+      <created>1484727521325</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1484727521325</updated>
+    </task>
+    <task id="LOCAL-00058" summary="added missing wordcloud lib files">
+      <created>1484728491320</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1484728491320</updated>
+    </task>
+    <task id="LOCAL-00059" summary="the .pyd file is needed as well">
+      <created>1484728580424</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1484728580424</updated>
+    </task>
+    <task id="LOCAL-00060" summary="this file is now an exception in .gitignore -&gt; ! ... .pyd">
+      <created>1484728823761</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1484728823761</updated>
+    </task>
+    <task id="LOCAL-00061" summary="now you can easily rebuild the exe:&#10;open cmd.exe / terminal here:&#10;&lt;cmd&gt;&#10;python -m PyInstaller rc_gui.spec&#10;&lt;/cmd&gt;&#10;(note this may not work for other version of setuptools than 19.2)&#10;use:&#10;&lt;cmd&gt;&#10;pip install --ignore-installed setuptools==19.2&#10;&lt;/cmd&gt;&#10;to install a compatible version">
+      <created>1484729338356</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1484729338356</updated>
+    </task>
+    <task id="LOCAL-00062" summary="added instructions to build the .exe">
+      <created>1484731275256</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1484731275256</updated>
+    </task>
+    <task id="LOCAL-00063" summary="disabled parallel plotting because it's seems to unstable">
+      <created>1484738305448</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1484738305448</updated>
+    </task>
+    <task id="LOCAL-00064" summary="the animation widget is now stored in the StaticVars again">
+      <created>1484739037580</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1484739037580</updated>
+    </task>
+    <task id="LOCAL-00065" summary="the plotting seems now to be  finally stable multi-threaded&#10;the kivy backend should work now via relative path&#10;added &quot;...&quot; if there are too many vocab-hits">
+      <created>1484944595295</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1484944595297</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TestHistory">
+    <history-entry file="Nosetests_in_TestApp - 2017.01.02 at 21h 48m 40s.xml">
+      <configuration name="Nosetests in TestApp" configurationId="tests" />
+    </history-entry>
     <history-entry file="Nosetests_in_animate - 2017.01.02 at 21h 59m 43s.xml">
       <configuration name="Nosetests in animate" configurationId="tests" />
     </history-entry>
@@ -816,11 +1092,8 @@
     <history-entry file="Nosetests_in_nestingLayout_(1) - 2016.12.23 at 12h 43m 53s.xml">
       <configuration name="Nosetests in nestingLayout (1)" configurationId="tests" />
     </history-entry>
-    <history-entry file="Nosetests_in_semisupervised - 2017.01.10 at 11h 22m 39s.xml">
-      <configuration name="Nosetests in semisupervised" configurationId="tests" />
-    </history-entry>
   </component>
-  <component name="TodoView">
+  <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -830,26 +1103,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-13" y="-13" width="3226" height="1746" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.124375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32870865" sideWeight="0.4953027" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35309446" sideWeight="0.3821875" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29967427" sideWeight="0.38625" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32637075" sideWeight="0.483125" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31270358" sideWeight="0.6178125" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.238125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32767624" sideWeight="0.490625" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34725848" sideWeight="0.31" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34725848" sideWeight="0.69" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.365" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32506528" sideWeight="0.480625" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34986946" sideWeight="0.803125" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3994778" sideWeight="0.495" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32635984" sideWeight="0.45416668" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -865,359 +1138,438 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added plt.show() to show the graph in pychar&#10;added examples for the github-API: octikit &#10;- github3&#10;- pygithub&#10;- no API, JSON only" />
-    <MESSAGE value="adapted github3 import" />
-    <MESSAGE value="added norming of the integer attributes&#10;temporarily removed numBranches from IntegerAttribute because a new request was created&#10;" />
-    <MESSAGE value="added unclassified_repos.csv" />
-    <MESSAGE value="added documentation for io_agent.py" />
-    <MESSAGE value="create vocab-directory if needed" />
-    <MESSAGE value="alternative to divide with the number of hits instead of the number of words" />
-    <MESSAGE value="added matplotlib-examples for kivy" />
-    <MESSAGE value="example for a pie-chart in kivy&#10;" />
-    <MESSAGE value="created initial gui_prototype&#10;- general layout&#10;- matplotlib.plot integration" />
-    <MESSAGE value="added all official kivy examples" />
-    <MESSAGE value="added a csv with roughly 10000 random repos via the ghtorrent wep-api&#10;+ now all repos from appendix b are predicted" />
-    <MESSAGE value="corrected DOC to DOCS in appendix_b.csv&#10;corrected OTHERS to OTHER in category.py&#10;added connectToGithub in io_agent.py&#10;changed getWordOccurence to keep it as is&#10;added verity matrix comparision in prototype" />
-    <MESSAGE value="refactored the prototyp.py to the class RepoClassifierNearestNeighbour" />
-    <MESSAGE value="added main.py which demonstrates the usage of the classifier as well as voabList.dump" />
-    <MESSAGE value="pca" />
-    <MESSAGE value="plot" />
-    <MESSAGE value="multidimensional plot" />
-    <MESSAGE value="plot_multi_dim, semi supervised" />
-    <MESSAGE value="semi supervised" />
-    <option name="LAST_COMMIT_MESSAGE" value="semi supervised" />
+    <MESSAGE value="retrained model" />
+    <MESSAGE value="added missing &quot;.pkl&quot; for file name of normalizerIntegerAttr" />
+    <MESSAGE value="the normedFeatures are now returned from classification from url" />
+    <MESSAGE value="changed path input for gui_prototype" />
+    <MESSAGE value="added option to apply log2 for the integer data&#10;fixed indetion problem fro string_attributes.py" />
+    <MESSAGE value="pushed pkl-files for log2-strategy" />
+    <MESSAGE value="added if __name__ == ... in github_prototype.py&#10;the normalizer is now saved explicity&#10;fixed path import in rc_cli.py" />
+    <MESSAGE value="added default path to 'C:' for the saving menu" />
+    <MESSAGE value="added lstTrainDataRaw export&#10;kiv.matplotlib is now used via relative path" />
+    <MESSAGE value="made start white in integer plot" />
+    <MESSAGE value="added bRedownload &#10;and commented out ani.cancel" />
+    <MESSAGE value="now the pruned string object is stored for the githubRepo-Object&#10;fixed problem, that the animation was cancelled after the widget were removed&#10;-&gt; this caused crashes sometimes" />
+    <MESSAGE value="moved direcotry dir/ into prototype&#10;updated examples in gui&#10;added interface for repository classifier&#10;improved console print() style" />
+    <MESSAGE value="new rc_icon.ico" />
+    <MESSAGE value="renamed gui_prototype.py to rc_gui.py&#10;added interace_repository_classifier.py" />
+    <MESSAGE value="fixed threading problems in gui&#10;now all layout changes are done in a @mainthread method" />
+    <MESSAGE value="added missing wordcloud lib files" />
+    <MESSAGE value="the .pyd file is needed as well" />
+    <MESSAGE value="this file is now an exception in .gitignore -&gt; ! ... .pyd" />
+    <MESSAGE value="now you can easily rebuild the exe:&#10;open cmd.exe / terminal here:&#10;&lt;cmd&gt;&#10;python -m PyInstaller rc_gui.spec&#10;&lt;/cmd&gt;&#10;(note this may not work for other version of setuptools than 19.2)&#10;use:&#10;&lt;cmd&gt;&#10;pip install --ignore-installed setuptools==19.2&#10;&lt;/cmd&gt;&#10;to install a compatible version" />
+    <MESSAGE value="added instructions to build the .exe" />
+    <MESSAGE value="disabled parallel plotting because it's seems to unstable" />
+    <MESSAGE value="the animation widget is now stored in the StaticVars again" />
+    <MESSAGE value="the plotting seems now to be  finally stable multi-threaded&#10;the kivy backend should work now via relative path&#10;added &quot;...&quot; if there are too many vocab-hits" />
+    <MESSAGE value="integrated nltk_data (which is need for a single exe)&#10;added browser button&#10;removed kivy.matplotlib  from hidden imports  rc_gui.spec: &#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="integrated nltk_data (which is need for a single exe)&#10;added browser button&#10;removed kivy.matplotlib  from hidden imports  rc_gui.spec: &#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="1" />
+      <option name="time" value="24" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/prototype/githubRepo.py" />
-    <entry file="file://$PROJECT_DIR$/data/csv/removed_repos_from list.txt">
+    <entry file="file://$PROJECT_DIR$/gui_prototype/rc_cli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/statsmodels/discrete/discrete_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1498">
-          <caret line="386" column="15" selection-start-line="386" selection-start-column="8" selection-end-line="386" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/fasff.py" />
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/datasets/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="495" column="26" selection-start-line="495" selection-start-column="26" selection-end-line="495" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/datasets/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/plot_label_propagation_versus_svm_iris.py" />
-    <entry file="file://$PROJECT_DIR$/prototype/prototype.py" />
-    <entry file="file://$PROJECT_DIR$/prototype/main.py" />
-    <entry file="file://C:/Anaconda3/Lib/json/encoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="178" column="0" selection-start-line="178" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/kivy/base.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="486" column="0" selection-start-line="486" selection-start-column="0" selection-end-line="486" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/kivy/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="827" column="0" selection-start-line="827" selection-start-column="0" selection-end-line="827" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/json/decoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="338" column="0" selection-start-line="338" selection-start-column="0" selection-end-line="338" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/json/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="267" column="0" selection-start-line="267" selection-start-column="0" selection-end-line="267" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="19" column="9" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/githubLanguages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="20" column="11" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/numpy/lib/npyio.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="1768" column="0" selection-start-line="1768" selection-start-column="0" selection-end-line="1768" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/unclassified_repos.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/ghtorrent/sql_query_on_webapp.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="306" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/ntpath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="73" column="12" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/ghtorrent.csv" />
-    <entry file="file://$PROJECT_DIR$/data/csv/ghtorrent/ghtorrent.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2013">
-          <caret line="61" column="27" selection-start-line="61" selection-start-column="27" selection-end-line="61" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/ghtorrent/semisupervised_ghtorrent.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="7" column="145" selection-start-line="7" selection-start-column="145" selection-end-line="7" selection-end-column="145" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="561" column="0" selection-start-line="561" selection-start-column="0" selection-end-line="561" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/main.py" />
-    <entry file="file://$PROJECT_DIR$/data/csv/ghtorrent/semisupervised_ghtorrent2.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-22341">
-          <caret line="1" column="63" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/csv/ghtorrent/semisupervised_ghtorrent.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="1" column="63" selection-start-line="1" selection-start-column="44" selection-end-line="1" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/numpy/core/numeric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
+        <state relative-caret-position="3111">
           <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/numpy/lib/function_base.py">
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/behaviors/focus.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="4114" column="0" selection-start-line="4114" selection-start-column="0" selection-end-line="4114" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/multidimplot.py" />
-    <entry file="file://$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="499">
-          <caret line="382" column="39" selection-start-line="382" selection-start-column="39" selection-end-line="382" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/github3/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/github3/repos/repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="1731" column="0" selection-start-line="1731" selection-start-column="0" selection-end-line="1731" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/metrics/pairwise.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="1077" column="0" selection-start-line="1077" selection-start-column="0" selection-end-line="1077" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/neighbors/nearest_centroid.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="718">
-          <caret line="190" column="0" selection-start-line="190" selection-start-column="0" selection-end-line="190" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/cluster/k_means_.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="858" column="0" selection-start-line="858" selection-start-column="0" selection-end-line="858" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1213">
-          <caret line="132" column="14" selection-start-line="132" selection-start-column="14" selection-end-line="132" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/plot_multidim_data/plot_kmeans_digits.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/semisupervised.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4075">
-          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        <state relative-caret-position="5525">
+          <caret line="328" column="0" selection-start-line="328" selection-start-column="0" selection-end-line="328" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/utils/validation.py">
+    <entry file="file://G:/Programming/Projects/Python/PyInstallerTest/GithubClassifier/dist/rc_gui/rc_cli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="394" column="0" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/examples/semisupervised.py">
+    <entry file="file://G:/Programming/Projects/Python/PyInstallerTest/GithubClassifier/gui_prototype/lib/kivy/garden/garden.matplotlib/backend_kivy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        <state relative-caret-position="1003">
+          <caret line="59" column="36" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="36" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/matplotlib/axes/_subplots.py">
+    <entry file="file://G:/Program Files/Anaconda3/Lib/threading.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+        <state relative-caret-position="12716">
+          <caret line="754" column="8" selection-start-line="754" selection-start-column="8" selection-end-line="754" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/semisupervised.py">
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/animation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="710">
-          <caret line="77" column="0" selection-start-line="77" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
+        <state relative-caret-position="6885">
+          <caret line="409" column="0" selection-start-line="409" selection-start-column="0" selection-end-line="409" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/github_repo.py">
+    <entry file="file://$PROJECT_DIR$/gui_prototype/main_semi_supervised.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="221" column="80" selection-start-line="221" selection-start-column="77" selection-end-line="221" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/sklearn/semi_supervised/label_propagation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="275" column="6" selection-start-line="275" selection-start-column="6" selection-end-line="275" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="2781" column="4" selection-start-line="2781" selection-start-column="4" selection-end-line="2781" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/main_console.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2500">
-          <caret line="45" column="135" selection-start-line="45" selection-start-column="135" selection-end-line="45" selection-end-column="135" />
-          <folding>
-            <element signature="e#151#182#0" expanded="true" />
-            <marker date="1484414348245" expanded="false" signature="2136:4319" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/categories.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+        <state relative-caret-position="1275">
+          <caret line="94" column="13" selection-start-line="94" selection-start-column="13" selection-end-line="94" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3403">
-          <caret line="350" column="0" selection-start-line="349" selection-start-column="136" selection-end-line="349" selection-end-column="157" />
+        <state relative-caret-position="284">
+          <caret line="454" column="82" selection-start-line="454" selection-start-column="82" selection-end-line="454" selection-end-column="82" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/gui_prototype.py">
+    <entry file="file://$PROJECT_DIR$/gui_prototype/main_console.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="568" column="12" selection-start-line="568" selection-start-column="12" selection-end-line="568" selection-end-column="12" />
+        <state relative-caret-position="169">
+          <caret line="51" column="80" selection-start-line="51" selection-start-column="80" selection-end-line="51" selection-end-column="80" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/data/csv/manual_classification_appendix_b.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="23" column="43" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/categories.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/reliableNormalizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/count_vectorizer_operations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="26" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/core/window/window_sdl2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="616" column="0" selection-start-line="616" selection-start-column="0" selection-end-line="616" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/lang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="1981" column="0" selection-start-line="1981" selection-start-column="0" selection-end-line="1981" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/widget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="319" column="0" selection-start-line="319" selection-start-column="0" selection-end-line="319" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/label.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="265" column="0" selection-start-line="265" selection-start-column="0" selection-end-line="265" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/behaviors/button.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="827" column="0" selection-start-line="827" selection-start-column="0" selection-end-line="827" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/lib/kivy/garden/matplotlib/backend_kivy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="313" column="9" selection-start-line="313" selection-start-column="2" selection-end-line="313" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/figure.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="555" column="8" selection-start-line="555" selection-start-column="8" selection-end-line="555" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/backend_bases.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="66" selection-start-line="5" selection-start-column="66" selection-end-line="5" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="326" column="0" selection-start-line="326" selection-start-column="0" selection-end-line="326" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/clock.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="199">
+          <caret line="700" column="0" selection-start-line="700" selection-start-column="0" selection-end-line="700" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/matplotlib/pyplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="319">
+          <caret line="563" column="0" selection-start-line="563" selection-start-column="0" selection-end-line="563" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/multi_threading/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="106" column="28" selection-start-line="106" selection-start-column="28" selection-end-line="106" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://G:/Program Files/Anaconda3/Lib/asyncio/locks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="142" column="8" selection-start-line="142" selection-start-column="8" selection-end-line="142" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice_color.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice_colored.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/alice_mask.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/colored_by_group.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/text_analysis/wordcloud/examples/colored_by_group.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="109" column="35" selection-start-line="109" selection-start-column="35" selection-end-line="109" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/preprocessing_operations.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="28" selection-start-line="10" selection-start-column="28" selection-end-line="10" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/string_operation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/github_repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="84" column="23" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/togglebutton.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/data/screens/dropdown.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-87">
+          <caret line="11" column="32" selection-start-line="11" selection-start-column="32" selection-end-line="11" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/showcase.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="71" column="43" selection-start-line="71" selection-start-column="43" selection-end-line="71" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/kivy/showcase/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/german">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/english">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="147" column="4" selection-start-line="147" selection-start-column="4" selection-end-line="147" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/swedish">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1332">
+          <caret line="14" column="3" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/definitions/githubLanguages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rc_gui.spec">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/data/csv/additional_data_sets_cleaned.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="244" column="45" selection-start-line="244" selection-start-column="45" selection-end-line="244" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/RepositoryClassifier.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="333" column="0" selection-start-line="333" selection-start-column="0" selection-end-line="333" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/nltk_data/corpora/stopwords/spanish">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/rc_gui.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="696" column="26" selection-start-line="696" selection-start-column="26" selection-end-line="696" selection-end-column="26" />
+          <folding>
+            <element signature="e#316#327#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

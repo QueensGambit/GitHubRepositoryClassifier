@@ -56,6 +56,7 @@ import matplotlib.patches as mpatches
 
 import sys, os
 import matplotlib.pyplot as plt
+import pylab as pl
 # from colour import Color
 
 # add the current directory to the system path in order to find the modules in relative path
@@ -100,6 +101,7 @@ class StaticVars:
     animation_loading = Animation()
     anim_bar = None
     str_stdOutPuffer = ""
+    fig_pie_chart = None
 
 
 class StdOut(object):
@@ -107,11 +109,18 @@ class StdOut(object):
         # self.txtctrl = txtctrl
         self.log_console = log_console
         self.oldStdOut = oldStdOut
+        # see more informations about thread-synchronisation
+        # https://docs.python.org/3/library/asyncio-sync.html
+        self.lock = threading.Lock()
 
     def write(self, string):
-
-        self.oldStdOut.write(string)
-        StaticVars.str_stdOutPuffer += string
+        # https://docs.python.org/3/library/asyncio-sync.html
+        try:
+            self.lock.acquire()
+            self.oldStdOut.write(string)
+            StaticVars.str_stdOutPuffer += string
+        finally:
+            self.lock.release()
 
     def flush(self):
         pass
@@ -300,6 +309,7 @@ class GUILayout(BoxLayout):
         oldStdOut = sys.stdout
         # overload load the sys.strdout to a class-instance of StdOut
         sys.stdout = StdOut(self.log_console, oldStdOut)
+        self.init_plotting()
 
     @mainthread
     def update_console(self):
@@ -314,7 +324,6 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-
         StaticVars.b_run_loading = False
         self.layout_pie_chart.clear_widgets()
         self.label_result.text = "ERROR"
@@ -356,7 +365,13 @@ class GUILayout(BoxLayout):
 
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
+            # self.init_plotting()
             self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
+            # threading.Thread(target=self.show_classification_result, args=(l_text, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo), daemon=True).start()
+
+            # Clock.schedule_once(self.start_test, 0)
+            # Clock.schedule_once(self.show_classification_result, args=(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo))
+
 
         except ConnectionError as ce:
             print("[ERROR] A connection error occurred: " + str(ce))
@@ -417,11 +432,18 @@ class GUILayout(BoxLayout):
         #     print("Didn't start loading animation")
 
     @mainthread
-    def update_pie_chart(self, fig):
-        StaticVars.b_run_loading = False
-        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
+    def init_plotting(self):
+        iNumOfFigures = 5
+        for i in range(1, iNumOfFigures+1):
+            plt.figure(i)
+            # print('[INFO] figure', i, 'initialized')
+
+    @mainthread
+    def update_pie_chart(self, fig): #*args):
+        # #fig):
         self.layout_pie_chart.clear_widgets()
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
+        # self.layout_pie_chart.add_widget(FigureCanvas(StaticVars.fig_pie_chart))
 
     @mainthread
     def update_result_label(self, iLabel, iLabelAlt, lstFinalPercentagesSorted):
@@ -433,7 +455,10 @@ class GUILayout(BoxLayout):
 
     @mainthread
     def enable_classification(self):
+        StaticVars.b_run_loading = False
+        StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.button_classifier.disabled = False                      # re-enable button
+        self.update_console()
 
     @mainthread
     def update_result_label_no_result(self):
@@ -461,13 +486,14 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
     # TODO: Enable parallel plotting for a nicer feedback
-    @mainthread   # uncomment this for parallel-plotting, if it doesn't give errors like
+    # @mainthread   # uncomment this for parallel-plotting, if it doesn't give errors like
     # [WARNING           ] <kivy.uix.gridlayout.GridLayout object at 0x000000ADEC7EC590> have no cols or rows set, layout is not triggered.
     # I think the GUI widget elements must only be set in @mainthread methods!
     # otherwise strange errors can occurr -> unfortunately still error occured
     # maybe you must start the classification thread with specific arguments
     # self.start_classification_thread(self.label_info.text, arg=???)
-    def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):
+    def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):  #l_text,
+    # def show_classification_result(self, *args):
         """
         Creates the user output for the final result:
         The pie chart as well as the label in the top right corner
@@ -486,6 +512,8 @@ class GUILayout(BoxLayout):
         if iLabel is not None:
             # pie chart
             self.update_pie_chart(self.render_pie_chart(lstFinalPercentages))
+            # fig_pie_chart = self.render_pie_chart(lstFinalPercentages)
+            # Clock.schedule_once(self.update_pie_chart, 0)
 
             # the array get's sorted here!
             # before that the order was 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
@@ -508,7 +536,7 @@ class GUILayout(BoxLayout):
                 bApplyStemmer=True, bCheckStopWords=True))
 
             if not strText.isspace():
-                self.update_wordcloud(self.show_wordcloud(strText, iLabel, dicFoundWords))
+                self.update_wordcloud(self.show_wordcloud(strText, iLabel, dicFoundWords, tmpRepo.getRepoLanguage()))
 
             else:
                 self.update_no_wordcloud()
@@ -516,12 +544,12 @@ class GUILayout(BoxLayout):
                 # self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
             # multidimensional
+
             lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
 
             # figCanvasMultiDim = self.plot_multi_dim(lstCurIntegerFeatures)
             #
             # if figCanvasMultiDim is not None:
-
 
             self.update_multi_dim(self.plot_multi_dim(lstCurIntegerFeatures))
 
@@ -534,10 +562,8 @@ class GUILayout(BoxLayout):
             # self.label_second_result = ""
 
         self.enable_classification()
-        # self.button_classifier.disabled = False                      # re-enable button
-        self.update_console()
 
-    def show_wordcloud(self, text, iLabel, dicFoundWords):
+    def show_wordcloud(self, text, iLabel, dicFoundWords, strRepoLanguage):
         """
         Creates the Wordcloud in the first Diagram Tab.
 
@@ -595,17 +621,22 @@ class GUILayout(BoxLayout):
         #     lstPatches[i] = mpatches.Patch(label=strWord + ': ' + str(iOccurence))
         #     i += 1
 
-
         if dicFoundWords.keys() is not None:
             labels = [l for l in dicFoundWords.keys()]
             # labels = dicFoundWords.keys() #values() #['A', 'B', 'C']
-            labels = [int(x) for x in labels]
+            iMaxNumberLabels = 12
+            labels = [int(x) for i, x in enumerate(labels) if i < iMaxNumberLabels]
             #http://stackoverflow.com/questions/3940128/how-can-i-reverse-a-list-in-python
             labelsRev = labels[::-1] #list(reversed(labels))
             # positions = [(2, 5), (1, 1), (4, 8)]
-            descriptions = [v for v in dicFoundWords.values()]
+            descriptions = [v for i, v in enumerate(dicFoundWords.values()) if i < iMaxNumberLabels]
+
             # descriptions = dicFoundWords.values() #keys() #['Happy Cow', 'Sad Horse', 'Drooling Dog']
             descriptionsRev = descriptions[::-1] #
+
+            if len(dicFoundWords.keys()) > iMaxNumberLabels:
+                labelsRev.append(0)
+                descriptionsRev.append("...")
 
             # Create a legend with only labels
             # http://stackoverflow.com/questions/28739608/completely-custom-legend-in-matplotlib-python
@@ -618,7 +649,9 @@ class GUILayout(BoxLayout):
 
             ax = plt.gca()
             # ax.get_legend().get_title()
-            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title='found words in vocab')#loc='upper right'
+            strTitle = 'language: ' + strRepoLanguage + '\n'
+            strTitle += 'found words in vocab:'
+            ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title=strTitle)#loc='upper right'
             plt.rcParams['text.color'] = 'black'
 
         # leg = plt.legend(handles=lstPatches, loc=(1.3,0.0)) #'right')
@@ -637,6 +670,24 @@ class GUILayout(BoxLayout):
                                        mec='none', marker=r'$\mathregular{{{}}}$'.format(label))
         return line
 
+    def open_repo_url(self):
+        """
+        opens the current url in the preferred web-browser in case if the valid check was OK
+
+        :return:
+        """
+        str_url_in = self.textfield_input.text
+        if self.validate_url(str_url_in) is True:
+            webbrowser.open(str_url_in)
+
+    def open_github_project_url(self):
+        """
+        opens the url of the github source code of the project
+
+        :return:
+        """
+        webbrowser.open("https://github.com/QueensGambit/GitHubRepositoryClassifier")
+
     def show_info(self):
         """
         Displays the info popup, called by the ActionBar
@@ -652,7 +703,7 @@ class GUILayout(BoxLayout):
 
         :return:
         """
-        webbrowser.open("http://google.com")
+        webbrowser.open("https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation")
 
     def show_settings(self):
         """
@@ -684,7 +735,8 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = clipboard.paste()
         # print('paste-button pressed')
         # print(clipboard.paste())
-        print('pasted text:', clipboard.paste())
+        print('[INFO] pasted text:', clipboard.paste())
+        self.update_console()
 
     def validate_url(self, url_in):
         """
@@ -748,7 +800,6 @@ class GUILayout(BoxLayout):
         self.textfield_input.text = url_in
         print("[INFO] Starting Process with \"" + url_in + "\"")        # print info to console
         valid = self.validate_url(url_in)                               # validate input and handle Errors
-        print('valid: ', valid)
         if valid is True:
             self.button_classifier.disabled = True                      # disable button
             StaticVars.b_run_loading = True                             # enable loading screen
@@ -761,7 +812,6 @@ class GUILayout(BoxLayout):
         :param lstFinalPercentages: the percentages to use in the piechart
         :return:
         """
-
         # The slices will be ordered and plotted counter-clockwise.
         labels = CategoryStr.lstStrCategories
 
@@ -779,11 +829,12 @@ class GUILayout(BoxLayout):
         lstExplode = [0] * len(lstFinalPercentages)
         lstExplode[iMaxIndex] = 0.1
         explode = lstExplode                                            # only "explode" the biggest slice
-        fig = plt.figure(1, figsize=(10, 10), dpi=70)
+        fig = plt.figure(1, figsize=(10, 10), dpi=70)                   # this causes an error when multi-threading is active and it wasn't intialized via the main thread
+        #  <kivy.uix.gridlayout.GridLayout object at 0x000000D503F5F8D0> have no cols or rows set, layout is not triggered.
         fig.clear()
 
         plt.pie(lstFinalPercentages, explode=explode, colors=CategoryStr.lstStrColors, labels=labels, autopct='%1.1f%%', shadow=True,
-                  startangle=90)
+                startangle=90)
 
         # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
         #  -> this causes a warning; alternative us fig,set_tight_layout(True)
@@ -803,8 +854,7 @@ class GUILayout(BoxLayout):
         # fig.patch.set_alpha(0.0)
         fig.patch.set_alpha(0.3)
 
-        # plt.show()
-
+        # StaticVars.fig_pie_chart = fig
         # return FigureCanvas(fig)
         return fig
         # self.layout_pie_chart.clear_widgets()
@@ -950,7 +1000,7 @@ class GUILayout(BoxLayout):
             plt.rcParams['text.color'] = 'silver'
 
             plt.legend((handleCentroids, handleCurRepo),
-                       ('Centroids', 'Curent Repository'),
+                       ('Centroids', 'Current Repository'),
                        scatterpoints=1,
                        loc='lower left',
                        ncol=3,
@@ -1188,12 +1238,13 @@ class GUILayout(BoxLayout):
         :return:
         """
         # http://stackoverflow.com/questions/24659005/radar-chart-with-multiple-scales-on-multiple-axes
-        import pylab as pl
+        # import pylab as pl -> moved to the top
         lsAttributes = self.lstNormedInputFeatures[0][:4]
 
         # print(math.log2(repo.getIntegerFeatures()[0]))
 
-        fig = pl.figure(5, figsize=(0.1, 0.1), dpi=80)
+        # fig = pl.figure(5, figsize=(0.1, 0.1), dpi=80)
+        fig = plt.figure(5, figsize=(0.1, 0.1), dpi=80)
 
         # --> not working
         # fig.set_size_inches(0.5, 0.5)
@@ -1260,7 +1311,8 @@ class GUILayout(BoxLayout):
         for i, text in enumerate(leg.get_texts()):
             text.set_color(CategoryStr.lstStrColors[iLabel])
 
-        fig = pl.gcf()
+        # fig = pl.gcf()
+        fig = plt.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
         # return FigureCanvas(fig)
