@@ -49,6 +49,11 @@ strLogoRC = "\
    ;;;;;;;;;;;;;;;;;;;;;;;\n\
 "
 
+help = "This application classifies github repositories. There are 7 Categories: DEV, HW, EDU, DOCS, WEB, DATA, OTHER. \
+ The classification method is based on Nearest Centroid algorithm of the skicit learn libary. To navigte through the application" \
+       "use the given menu."
+
+info = "This application is developed by  Björn Beha, Johannes Chzech, Lukas Scheuerle and Suhay Sevinc. "
 # pip install prettytable
 # ...
 # Successfully installed prettytable-0.7.2
@@ -132,10 +137,18 @@ def main():
             InputOutputAgent.setWithToken(token)
 
         elif strInput == 'f':
-            print('Show Info')
+            print(info)
+
+        elif strInput == 't':
+            print("Enter a valid path of train data (.csv)")
+            strTrain = input()
+            lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+            repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+            repoClassifier.exportModelToFile()
+            print("Model is trained and exported")
 
         elif strInput == 'h':
-            print('help...')
+            print(help)
 
         #striagt url
         elif len(strInput) > 1 and string_operation.validate_url(strInput):
@@ -162,7 +175,7 @@ def predictFromFile(repoClassifier, strFileInput):
         strReadFileName = os.path.basename(strFileInput)
 
         print(strReadFileName + 'was read successfully')
-        strFileClassified = strReadFileName + '_classified' + '.txt'
+        strFileClassified = "classiefied_" + strReadFileName
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
     else:
@@ -179,6 +192,7 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
     :return:
     """
     classifiedFile = None
+
     try:
 
         classifiedFile = open(strReadFileDirectory + '/' + strFileClassified, 'w')  # Trying to create a new file or open one

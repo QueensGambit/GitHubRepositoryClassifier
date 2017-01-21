@@ -92,7 +92,7 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         self.matIntegerTrainingData = []
 
-    def loadTrainingData(self, strProjPathFileNameCSV ='/data/csv/additional_data_sets_cleaned.csv'):
+    def loadTrainingData(self, strProjPathFileNameCSV ='/data/csv/additional_data_sets_cleaned.csv', externalpath=None):
         """
         trains the model with a given csv-file. the csv file must have 2 columns URL and CATEGORY.
         the URL is given in the form 'https://github.com/owner/repository-name'
@@ -102,8 +102,12 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         :return: self.lstTrainData (the scaled and normed data with which the model was trained with),
          self.lstTrainLabels (the used training labels)
         """
+        trainData = None
 
-        trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
+        if externalpath is None:
+            trainData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")
+        else:
+            trainData = pd.read_csv(strProjPathFileNameCSV, header=0, delimiter=",")
 
         # len(trainData.index) gets the number of rows
         iNumTrainData = len(trainData.index)
