@@ -382,6 +382,9 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         self.lstVoc = readVocabFromFile(strVocabPath)
         # only print out the first 7 and the last 7 entries
         # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
+        # print('***********************')
+        # print(self.lstVoc)
+        # print('***********************')
         print('len(self.lstVoc):', len(self.lstVoc))
         if len(self.lstVoc) > 14:
             print("[", end="")
