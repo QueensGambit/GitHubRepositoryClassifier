@@ -140,12 +140,24 @@ def main():
             print(info)
 
         elif strInput == 't':
-            print("Enter a valid path of train data (.csv)")
-            strTrain = input()
-            lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
-            repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-            repoClassifier.exportModelToFile()
-            print("Model is trained and exported")
+            print("Enter a valid path of train data (.csv) hint: You will override the given train model. Are you sure you want to do this?  <y/n>")
+
+            strAwnser = input()
+
+            if strAwnser == "y" or strAwnser == "yes":
+                strTrain = input()
+                lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+                repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+                repoClassifier.exportModelToFile()
+                print("Model is trained and exported")
+            elif strAwnser == "":
+                print("Standard model will be loaded")
+                lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/additional_data_sets_cleaned.csv')
+                repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+                repoClassifier.exportModelToFile()
+                print("standard model is loaded")
+            else:
+                print("User refused to learn new model")
 
         elif strInput == 'h':
             print(help)
