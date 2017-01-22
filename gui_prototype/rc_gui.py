@@ -365,13 +365,7 @@ class GUILayout(BoxLayout):
 
             # Remove some widgets and update some properties in the main thread
             # by decorating the called function with @mainthread.
-            # self.init_plotting()
             self.show_classification_result(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo)
-            # threading.Thread(target=self.show_classification_result, args=(l_text, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo), daemon=True).start()
-
-            # Clock.schedule_once(self.start_test, 0)
-            # Clock.schedule_once(self.show_classification_result, args=(iLabel, iLabelAlt, lstFinalPercentages, tmpRepo))
-
 
         except ConnectionError as ce:
             print("[ERROR] A connection error occurred: " + str(ce))
@@ -394,13 +388,6 @@ class GUILayout(BoxLayout):
         :param args:
         :return:
         """
-
-        # if StaticVars.b_run_loading:
-
-        # print("Start loading animation")
-
-        # self.button_classifier.disabled = True                      # disable button
-
         # Remove the button.
         self.layout_pie_chart.clear_widgets()
         # self.remove_widget(self.but_1)
@@ -412,8 +399,6 @@ class GUILayout(BoxLayout):
 
         # Create and add a new widget.
         StaticVars.anim_bar = Factory.AnimWidget()
-        # anim_bar = Factory.AnimWidget()
-
 
         # Animate the added widget.
         StaticVars.animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
@@ -421,29 +406,18 @@ class GUILayout(BoxLayout):
         StaticVars.animation_loading.repeat = True
         StaticVars.animation_loading.start(StaticVars.anim_bar)
 
-        # animation_loading = Animation(opacity=0.3, width=100, duration=0.6)
-        # animation_loading += Animation(opacity=1, width=400, duration=0.8)
-        # animation_loading.repeat = True
-        # animation_loading.start(anim_bar)
-
         self.layout_pie_chart.add_widget(StaticVars.anim_bar)
-        # self.layout_pie_chart.add_widget(anim_bar)
-        # else:
-        #     print("Didn't start loading animation")
 
     @mainthread
     def init_plotting(self):
         iNumOfFigures = 5
         for i in range(1, iNumOfFigures+1):
             plt.figure(i)
-            # print('[INFO] figure', i, 'initialized')
 
     @mainthread
     def update_pie_chart(self, fig): #*args):
-        # #fig):
         self.layout_pie_chart.clear_widgets()
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
-        # self.layout_pie_chart.add_widget(FigureCanvas(StaticVars.fig_pie_chart))
 
     @mainthread
     def update_result_label(self, iLabel, iLabelAlt, lstFinalPercentagesSorted):
@@ -485,15 +459,7 @@ class GUILayout(BoxLayout):
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
-    # TODO: Enable parallel plotting for a nicer feedback
-    # @mainthread   # uncomment this for parallel-plotting, if it doesn't give errors like
-    # [WARNING           ] <kivy.uix.gridlayout.GridLayout object at 0x000000ADEC7EC590> have no cols or rows set, layout is not triggered.
-    # I think the GUI widget elements must only be set in @mainthread methods!
-    # otherwise strange errors can occurr -> unfortunately still error occured
-    # maybe you must start the classification thread with specific arguments
-    # self.start_classification_thread(self.label_info.text, arg=???)
     def show_classification_result(self, iLabel, iLabelAlt, lstFinalPercentages, tmpRepo):  #l_text,
-    # def show_classification_result(self, *args):
         """
         Creates the user output for the final result:
         The pie chart as well as the label in the top right corner
@@ -505,26 +471,11 @@ class GUILayout(BoxLayout):
         :return:
         """
 
-        # StaticVars.b_run_loading = False
-        # StaticVars.animation_loading.cancel(StaticVars.anim_bar)
-        # self.layout_pie_chart.clear_widgets()
-
         if iLabel is not None:
             # pie chart
             self.update_pie_chart(self.render_pie_chart(lstFinalPercentages))
-            # fig_pie_chart = self.render_pie_chart(lstFinalPercentages)
-            # Clock.schedule_once(self.update_pie_chart, 0)
 
-            # the array get's sorted here!
-            # before that the order was 'DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER'
-            # print('lstFinalPercentages: ',lstFinalPercentages)
             lstFinalPercentages.sort()
-
-            # exported in method for mainthread
-            # if lstFinalPercentages[5] > lstFinalPercentages[6] - .5:
-            #     self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
-            #
-            # self.label_result.text = 'Result: ' + CategoryStr.lstStrCategories[iLabel]
 
             self.update_result_label(iLabel, iLabelAlt, lstFinalPercentages)
 
@@ -540,16 +491,8 @@ class GUILayout(BoxLayout):
 
             else:
                 self.update_no_wordcloud()
-                # self.layout_diagram1.clear_widgets()
-                # self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
-
-            # multidimensional
 
             lstCurIntegerFeatures = tmpRepo.getNormedFeatures(lstMeanValues=self.lstMeanValues)
-
-            # figCanvasMultiDim = self.plot_multi_dim(lstCurIntegerFeatures)
-            #
-            # if figCanvasMultiDim is not None:
 
             self.update_multi_dim(self.plot_multi_dim(lstCurIntegerFeatures))
 
@@ -558,8 +501,6 @@ class GUILayout(BoxLayout):
 
         else:
             self.update_result_label_no_result()
-            # self.label_result.text = 'No Result'
-            # self.label_second_result = ""
 
         self.enable_classification()
 
@@ -572,58 +513,18 @@ class GUILayout(BoxLayout):
         :return:
         """
 
-        # print('text: ', text)
-        # img = (Image.open(self.strPath + "/media/icons/" + CategoryStr.lstStrIcons[iLabel])).split()[-1]
-        # img = np.array((Image.open(self.strPath + "/media/icons/colored/" + 'code_v2_-8x_colored.png')))
         img = np.array((Image.open(self.strPath + "/media/icons/colored/" + CategoryStr.lstStrIcons[iLabel])))
 
-        # imgColor = img.clone()
-        # imgColor[:] = (24, 45, 23)
-        # im1arrF = img.astype('float')
-        # im2arrF = imgColor.astype('float')
-        # additionF = (im1arrF + im2arrF) / 2
-        # img = additionF.astype('uint8')
-
-        # addition = (img + im2arr) / 2
-
-        # the mask is inverted, so invert it again
-        # img = ImageOps.invert(img)
-        # img = img.resize((512, 512), Image.NONE)
-        # imgMask = np.array(img)
-
         # create coloring from image
-        # imgGrayVariance = Image.open(self.strPath + "/media/icons/" + "gray_variance.png") #imread(path.join(d, "alice_color.png"))
         img_colors = ImageColorGenerator(img)
         # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
         wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors, max_words=2000).generate(text)
         # self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
-        # plt.imshow(wordcloud.recolor(color_func=img_colors))
-
-        # create a custom legend in color
-
-        # https: // docs.python.org / 2 / tutorial / datastructures.html
-        # dicFoundWords = {
-        # 'config': 3.000000,
-        # 'develop':8.000000,
-        # 'discuss': 3.000000,
-        # 'file': 6.000000,
-        # 'instal': 5.000000,
-        # 'interfac': 3.000000,
-        # 'irc': 5.000000,
-        # 'list': 11.000000
-        # }
-
-        # lstPatches = [None] * len(dicFoundWords.keys())
-        # i = 0
-        # for strWord, iOccurence in dicFoundWords.items(): #enumerate(dicFoundWords.items()):
-        #     lstPatches[i] = mpatches.Patch(label=strWord + ': ' + str(iOccurence))
-        #     i += 1
 
         if dicFoundWords.keys() is not None:
             labels = [l for l in dicFoundWords.keys()]
-            # labels = dicFoundWords.keys() #values() #['A', 'B', 'C']
             iMaxNumberLabels = 12
             labels = [int(x) for i, x in enumerate(labels) if i < iMaxNumberLabels]
             #http://stackoverflow.com/questions/3940128/how-can-i-reverse-a-list-in-python
@@ -631,7 +532,6 @@ class GUILayout(BoxLayout):
             # positions = [(2, 5), (1, 1), (4, 8)]
             descriptions = [v for i, v in enumerate(dicFoundWords.values()) if i < iMaxNumberLabels]
 
-            # descriptions = dicFoundWords.values() #keys() #['Happy Cow', 'Sad Horse', 'Drooling Dog']
             descriptionsRev = descriptions[::-1] #
 
             if len(dicFoundWords.keys()) > iMaxNumberLabels:
@@ -642,10 +542,7 @@ class GUILayout(BoxLayout):
             # http://stackoverflow.com/questions/28739608/completely-custom-legend-in-matplotlib-python
             # TODO: decide whether to put this in or not
             proxies = [self.create_proxy(item) for item in labelsRev]
-            # plt.rcParams['legend.facecolor'] = 'silver'
             plt.rcParams['text.color'] = CategoryStr.lstStrColors[iLabel] #'silver'
-
-            # text.color: black
 
             ax = plt.gca()
             # ax.get_legend().get_title()
@@ -654,15 +551,10 @@ class GUILayout(BoxLayout):
             ax.legend(proxies, descriptionsRev, numpoints=1, markerscale=2, loc=(1.3,0.0), title=strTitle)#loc='upper right'
             plt.rcParams['text.color'] = 'black'
 
-        # leg = plt.legend(handles=lstPatches, loc=(1.3,0.0)) #'right')
-
-
         plt.axis("off")
 
         fig = plt.gcf()
         fig.patch.set_facecolor((48/255, 48/255, 48/255))
-        # self.layout_diagram1.add_widget(FigureCanvas(fig))
-        # return FigureCanvas(fig)
         return fig
 
     def create_proxy(self, label):
@@ -836,12 +728,6 @@ class GUILayout(BoxLayout):
         plt.pie(lstFinalPercentages, explode=explode, colors=CategoryStr.lstStrColors, labels=labels, autopct='%1.1f%%', shadow=True,
                 startangle=90)
 
-        # plt.axis('equal')                                        # this was the actual cause of the resizing !!!
-        #  -> this causes a warning; alternative us fig,set_tight_layout(True)
-        # plt.tight_layout()                                       # http://matplotlib.org/users/tight_layout_guide.html
-
-        # plt.legend(patches, lstLabelsPieChart, loc=(0.97, 0.3), prop={'size':10})
-
         fig = plt.gcf()
 
         # an alternative to get a round pie-chart is to use .set_aspect(1)
@@ -854,12 +740,7 @@ class GUILayout(BoxLayout):
         # fig.patch.set_alpha(0.0)
         fig.patch.set_alpha(0.3)
 
-        # StaticVars.fig_pie_chart = fig
-        # return FigureCanvas(fig)
         return fig
-        # self.layout_pie_chart.clear_widgets()
-        # self.layout_pie_chart.add_widget(FigureCanvas(fig))
-        # fig.clear()
 
     def load_example(self, link):
         """
@@ -875,54 +756,14 @@ class GUILayout(BoxLayout):
         show multidimensional data in 2D plot
         :return:
         """
-
-        # --> plot 2 figures (but it get's more and more confusing
-        # f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
-        # ax1.plot(x, y)
-        # ax1.set_title('Sharing Y axis')
-        # ax2.scatter(x, y)
         bPlotAllFeatures = True
 
         if bPlotAllFeatures is True:
             clf = self.clf
             lstTrainLabels = self.lstTrainLabels
-            # data = self.matIntegerTrainingData
-            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
 
-            # normalizer = preprocessing.Normalizer()
-            # normalizer = normalizer.fit(data)
-            # data = normalizer.transform(data)
-            # print('data:', data)
-
-            # if len(data) < 2:
             if len(self.lstTrainData) < 2:
                 raise Exception('Lenght of array >= 2')
-
-            # normalizerPlotting = preprocessing.Normalizer()
-            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
-            # data = normalizerPlotting.fit_transform(self.lstTrainData)
-
-            # data = None
-
-            # if self.pca is None:
-            #     if self.lstTrainData.shape[1] > 2:
-            #         self.pca = decomposition.PCA(n_components=3)
-            #         self.data2d = self.pca.fit_transform(self.lstTrainData)
-            #         self.centroids2d = clf.centroids_
-            #         self.centroids2d = self.pca.transform(self.centroids2d)
-
-            # calculate the clusters
-            # n_clusters = 7
-            # kmeans = KMeans(init='k-means++', n_clusters=n_clusters, n_init=10)
-            # kmeans.fit(self.data)
-            # h = .02
-            #
-            # x_min, x_max = self.data[:, 0].min() - 1, self.data[:, 0].max() + 1
-            # y_min, y_max = self.data[:, 1].min() - 1, self.data[:, 1].max() + 1
-            # xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-            #
-            # Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
-            # Z = Z.reshape(xx.shape)
 
             fig = plt.figure(3)
             plt.cla()
@@ -937,12 +778,6 @@ class GUILayout(BoxLayout):
             lstColors = [None] * len(lstTrainLabels)
 
             rect = [0.05, 0.05, 0.9, 0.9]
-
-            # self.n = len(titles)
-            # self.color = color
-            # self.angles = np.arange(45, 45+360, 360.0/self.n)
-            # fig.set_axes(rect)
-            # self.axes = [fig.add_axes(rect label="axes%d" % i)
 
             # set a ceratin aspect ratio
             ax = plt.gca()
@@ -967,13 +802,6 @@ class GUILayout(BoxLayout):
                         marker='*', s=400, linewidths=3,
                         color='white', zorder=10)  #gold violet red , linewidth='3', edgecolor='white',
 
-            # annotation
-            # ax.annotate('current repo', xy=(ptCurRepo[0, 0], ptCurRepo[0, 1]), xytext=(0.02, 0.015),
-            #             arrowprops=dict(facecolor='violet', shrink=0.05))
-
-
-            # plt.xlim(x_min, x_max)
-            # plt.ylim(y_min, y_max)
             # set the xlim and ylim to a custom value
             # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
             fMaxVal = 0.4
@@ -992,7 +820,7 @@ class GUILayout(BoxLayout):
             for i, strCategory in enumerate(CategoryStr.lstStrCategories):
                 lstPatches[i] = mpatches.Patch(color=CategoryStr.lstStrColors[i], label=strCategory)
 
-            leg = plt.legend(handles=lstPatches, loc=(1.0,0.0)) #'right')
+            leg = plt.legend(handles=lstPatches, loc=(1.0,0.0))
 
             for i, text in enumerate(leg.get_texts()):
                 text.set_color(CategoryStr.lstStrColors[i])
@@ -1009,40 +837,14 @@ class GUILayout(BoxLayout):
 
             plt.gca().add_artist(leg)
 
-            # attempt to enable the grid
-            # ax = plt.gca()
-            # plt.rc('grid', color='w')  #linestyle="-",
-            # ax.grid()
-            # plt.grid(True)
-            #
-            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-            # ax.grid(b=True, which='minor', linewidth=.2)
-            # ax.grid(b=True, which='major', linewidth=1)
-            #
-            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
-            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
-            #
-            # for line in gridlines:
-            #     line.set_linestyle('-')
-            #     line.set_color('w')
-
-            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
-            # ax.set_xticks(np.arange(0, 1, 0.1))
-            # ax.set_yticks(np.arange(0, 1., 0.1))
-
             fig = plt.gcf()
             fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
             return fig
-            # return FigureCanvas(fig)
-            # self.layout_diagram3.clear_widgets()
-            # self.layout_diagram3.add_widget(FigureCanvas(fig))
         else:
             clf = self.clf
             lstTrainLabels = self.lstTrainLabels
             data = self.matIntegerTrainingData
-            # data = self.normalizerIntegerAttr.transform(self.matIntegerTrainingData)
 
             normalizer = preprocessing.Normalizer()
             normalizer = normalizer.fit(data)
@@ -1053,18 +855,9 @@ class GUILayout(BoxLayout):
             if len(self.lstTrainData) < 2:
                 raise Exception('Lenght of array >= 2')
 
-            # normalizerPlotting = preprocessing.Normalizer()
-            # normalizerPlotting = preprocessing.StandardScaler() #RobustScaler()
-            # data = normalizerPlotting.fit_transform(self.lstTrainData)
-
-            # data = None
             pca = None
-            # if data.shape[1] > 2:
             if self.lstTrainData.shape[1] > 2:
                 pca = decomposition.PCA(n_components=2)
-                # data = pca.transform(self.lstTrainData)
-                # pca.fit(data)
-                # data = pca.fit_transform(self.lstTrainData)
                 data = pca.fit_transform(data)
 
             n_clusters = 7
@@ -1083,22 +876,9 @@ class GUILayout(BoxLayout):
             plt.cla()
             plt.clf()
 
-            # plot the contours of kmeans
-            # plt.imshow(Z, interpolation='nearest',
-            #            extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-            #            cmap=plt.cm.Paired, alpha=0.1,
-            #            aspect='auto', origin='lower')
-            # plt.plot(multidimarray[:, 0], multidimarray[:, 1], 'k.', markersize=2)
-
             lstColors = [None] * len(lstTrainLabels)
 
             rect = [0.05, 0.05, 0.9, 0.9]
-
-            # self.n = len(titles)
-            # self.color = color
-            # self.angles = np.arange(45, 45+360, 360.0/self.n)
-            # fig.set_axes(rect)
-            # self.axes = [fig.add_axes(rect label="axes%d" % i)
 
             # set a ceratin aspect ratio
             ax = plt.gca()
@@ -1110,25 +890,17 @@ class GUILayout(BoxLayout):
             plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors, alpha=0.5)
 
             # plot the centroid
-            # centroids = clf.centroids_
-            # centroids = pca.transform(centroids)
-            # plt.scatter(centroids[:, 0], centroids[:, 1],
-            #             marker='x', s=169, linewidths=3,
-            #             color=CategoryStr.lstStrColors, zorder=10)
 
             # plot the current sample via the given integer features
             # lstCurIntegerFeatures = self.normalizer.transform(lstCurIntegerFeatures)
             print('lstCurIntegerFeatures:', lstCurIntegerFeatures)
             lstCurIntegerFeatures = normalizer.transform(lstCurIntegerFeatures)
             ptCurRepo = pca.transform(lstCurIntegerFeatures)
-            # ptCurRepo = pca.transform(self.lstNormedInputFeatures)
 
             plt.scatter(ptCurRepo[:, 0], ptCurRepo[:, 1],
                         marker='*', s=400, linewidths=3,
                         color='violet', zorder=10)  # gold
 
-            # plt.xlim(x_min, x_max)
-            # plt.ylim(y_min, y_max)
             # set the xlim and ylim to a custom value
             # http://stackoverflow.com/questions/11400579/pyplot-zooming-in
             # fMaxVal = 0.4
@@ -1153,45 +925,10 @@ class GUILayout(BoxLayout):
             for i, text in enumerate(leg.get_texts()):
                 text.set_color(CategoryStr.lstStrColors[i])
 
-            # attempt to enable the grid
-            # ax = plt.gca()
-            # plt.rc('grid', color='w')  #linestyle="-",
-            # ax.grid()
-            # plt.grid(True)
-            #
-            # ax.get_xaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-            # ax.get_yaxis().set_minor_locator(matplotlib.ticker.AutoMinorLocator())
-            # ax.grid(b=True, which='minor', linewidth=.2)
-            # ax.grid(b=True, which='major', linewidth=1)
-            #
-            # gridlines = ax.get_xgridlines() + ax.get_ygridlines()
-            # # ticklabels = ax.get_xticklabels() + ax.get_yticklabels()
-            #
-            # for line in gridlines:
-            #     line.set_linestyle('-')
-            #     line.set_color('w')
-
-            # # http: // stackoverflow.com / questions / 8209568 / how - do - i - draw - a - grid - onto - a - plot - in -python
-            # ax.set_xticks(np.arange(0, 1, 0.1))
-            # ax.set_yticks(np.arange(0, 1., 0.1))
-
             fig = plt.gcf()
             fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-            # return FigureCanvas(fig)
             return fig
-            # self.layout_diagram3.clear_widgets()
-            # self.layout_diagram3.add_widget(FigureCanvas(fig))
-
-    def get_median_value(lstData):
-        """
-        calculates and returns the median value of a (unsorted) input list.
-
-        :return:
-        """
-        sortedlist = sorted(lstData, reverse=False)
-        iSize = len(sortedlist)
-        return sortedlist[iSize / 2]
 
     @mainthread
     def plot_barchart(self, lsIntegerAttributes):
@@ -1241,29 +978,9 @@ class GUILayout(BoxLayout):
         # import pylab as pl -> moved to the top
         lsAttributes = self.lstNormedInputFeatures[0][:4]
 
-        # print(math.log2(repo.getIntegerFeatures()[0]))
-
-        # fig = pl.figure(5, figsize=(0.1, 0.1), dpi=80)
         fig = plt.figure(5, figsize=(0.1, 0.1), dpi=80)
 
-        # --> not working
-        # fig.set_size_inches(0.5, 0.5)
-        #
-        # # http://stackoverflow.com/questions/18619880/matplotlib-adjust-figure-margin
-        # plot_margin = 0.25
-        #
-        # x0, x1, y0, y1 = plt.axis()
-        # plt.axis((x0 - plot_margin,
-        #           x1 + plot_margin,
-        #           y0 - plot_margin,
-        #           y1 + plot_margin))
-
-        # rcParams['figure.figsize'] = 8, 3
         fig.clear()
-
-
-
-        # titles = ['Subscribers', 'Open Issues', 'DevTime', 'Size']
 
         lstIntegerFeaturesRaw = repo.getIntegerFeatures()
 
@@ -1281,9 +998,6 @@ class GUILayout(BoxLayout):
         ]
 
         radar = Radar(fig, titles, labels, color='silver')  # color=CategoryStr.lstStrColors[iLabel]
-        # radar.plot(lstNormedMeanValues[0] * 5, "-", lw=2, color="purple", alpha=0.4, label="Average")
-        # radar.plot(lsAttributes * 5, "-", lw=2, color="r", alpha=0.4, label="This Repo")
-
         #http://stackoverflow.com/questions/24076297/how-to-truncate-a-string-using-str-format-in-python
 
         iMaxStrLen = 33
@@ -1291,10 +1005,6 @@ class GUILayout(BoxLayout):
         # strRepoLongName = repo.getUser() + '/' + repo.getName()
         strRepoLongName = repo.getUser() + '\n' + repo.getName()
 
-        # iLenRepoLongName = len(strRepoLongName)
-        # strRepoNickname = '{:.33}'.format(strRepoLongName)
-        # if iLenRepoLongName >= iMaxStrLen:
-        #     strRepoNickname += '...'
         radar.plot(lsAttributes * 10, "-", lw=2, color=CategoryStr.lstStrColors[iLabel], alpha=0.4, label=strRepoLongName) #"This Repo")
 
         '{:.5}'.format('aaabbbccc')
@@ -1302,24 +1012,14 @@ class GUILayout(BoxLayout):
         leg = radar.ax.legend(loc=(1, .6))
 
         # http: // stackoverflow.com / questions / 13828246 / matplotlib - text - color - code - in -the - legend - instead - of - a - line
-        # set the color to white
-        # colors = ['w']
-        # for color, text in zip(colors, leg.get_texts()):
-        #     text.set_color(color)
-
         # set the color to the category
         for i, text in enumerate(leg.get_texts()):
             text.set_color(CategoryStr.lstStrColors[iLabel])
 
-        # fig = pl.gcf()
         fig = plt.gcf()
         fig.patch.set_facecolor((48 / 255, 48 / 255, 48 / 255))
 
-        # return FigureCanvas(fig)
         return fig
-        # self.layout_diagram2.clear_widgets()
-        # self.layout_diagram2.add_widget(FigureCanvas(fig))
-
 
 class FileSaverPopup(Popup):
     """
@@ -1351,7 +1051,6 @@ class FileSaverPopup(Popup):
                 stream.close()
             self.dismiss()
             print("[INFO] Logfile saved to: " + path + "\\" + filename)
-            # print("[INFO] Logfile saved to: " + os.path.join(path, filename) + "\\" + filename)
         except PermissionError as err:
             print("[ERROR] Logfile couldn't be saved. Permission denied. Path: " + path + "\nError: " + str(err))
             self.label_save.text = "[ERROR] Couldn't save. Permission denied."
@@ -1373,9 +1072,6 @@ class RepositoryClassifierApp(App):
 
         :return:
         """
-        # The Kivy event loop is about to stop, set a stop signal;
-        # otherwise the app window will close, but the Python process will
-        # keep running until all secondary threads exit.
         self.root.stop.set()
 
     def build(self):
@@ -1384,8 +1080,6 @@ class RepositoryClassifierApp(App):
         :return:
         """
         Window.clearcolor = ((41/255), (105/255), (176/255), 1)
-        # Window.size = (1200, 800)
-
 
         layGUI = GUILayout()
         layGUI.initialize_std_out_redirection()
@@ -1405,18 +1099,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# TODO: PRIORITY - DESCRIPTION
-# TODO: VERY HIGH - Build Windows-Excecutable
-# TODO: VERY HIGH - Write Docu
-# TODO: HIGH - Build single console excecutable
-# TODO: HIGH - Sometimes the program crashes maybe because of thread scheduling - DONE
-# TODO: HIGH - Sometimes the plots are drawn in the wrong windows/layouts (wordcloud and pie-chart) - DONE
-# TODO: HIGH - Add missing plots (bar-chart as well as visual-2D-Map) - DONE
-# TODO: MEDIUM - Build Sphinx-Docu
-# TODO: MEDIUM - Beautifully draw the word clouds in different colors - DONE
-# TODO: LOW - Drob-Down-List with nice examples which work well ;) - DONE
-# TODO: LOW - Add better animation while waiting
-
-

@@ -1,7 +1,7 @@
 # interfaces / abstract classes in python
 from abc import ABCMeta, abstractmethod
 
-class InterfaceRepoClassifier(metaclass=ABCMeta):
+class Interface_RepoClassifier(metaclass=ABCMeta):
 
     @abstractmethod
     def loadTrainingData(self, strProjPathFileNameCSV):

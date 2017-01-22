@@ -3,7 +3,6 @@
 # sys.path.insert(0, __path__)
 # sys.path.append(os.path.abspath(".."))
 
-from .utility_funcs import *
 # from definitions import *
 
 # from github_repo import GithubRepo

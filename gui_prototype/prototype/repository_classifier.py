@@ -9,9 +9,8 @@ from sklearn.neighbors.nearest_centroid import NearestCentroid
 
 from os import path
 
-from .utility_funcs.count_vectorizer_operations import printFeatureOccurences
 from .utility_funcs.preprocessing_operations import initInputParameters, readVocabFromFile
-from .interface_repository_classifier import InterfaceRepoClassifier
+from .interface_repository_classifier import Interface_RepoClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neighbors import RadiusNeighborsClassifier
 from sklearn.svm import SVC
@@ -34,16 +33,13 @@ from pathlib import Path
 import math
 
 
-class RepositoryClassifier(InterfaceRepoClassifier):
+class RepositoryClassifier(Interface_RepoClassifier):
 
     def __init__(self, bUseStringFeatures=True):
         """
         constructor which initializes member variables
 
         """
-
-        # if bOverloadPrintFunc:
-        # import print_overloading
 
         self.bModelLoaded = False
         self.bModelTrained = False
@@ -62,14 +58,11 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         self.lstStrCategories = ['DEV', 'HW', 'EDU', 'DOCS', 'WEB', 'DATA', 'OTHER']
 
         self.directory = path.dirname(__file__)
-        # self.directory = str(Path())
-
         print(self.directory)
 
         self.bUseStringFeatures = bUseStringFeatures
 
         # get the project-directory
-        # self.strProjectDir = str(Path().resolve().parent.parent)
         self.strProjectDir = str(Path().resolve().parent)
 
         print('strProjectDir:', self.strProjectDir)
@@ -109,7 +102,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         else:
             trainData = pd.read_csv(strProjPathFileNameCSV, header=0, delimiter=",")
 
-        # len(trainData.index) gets the number of rows
         iNumTrainData = len(trainData.index)
         print("iNumTrainData: ", iNumTrainData)
 
@@ -139,15 +131,8 @@ class RepositoryClassifier(InterfaceRepoClassifier):
             self.lstTrainLabels.append(self.lstStrCategories.index(trainData["CATEGORY"][i]))
             i += 1
 
-        # replace every 0 with 1, otherwise division by 0 occurs
-        # http://stackoverflow.com/questions/2582138/finding-and-replacing-elements-in-a-list-python
-        # self.lstMeanValues[:] = [1 if x == 0 else x for x in self.lstMeanValues]
-
         # Divide each element with the number of training data
         self.lstMeanValues[:] = [x / iNumTrainData for x in self.lstMeanValues]
-
-        # set all mean values to 1
-        # self.lstMeanValues[:] = [1 for x in self.lstMeanValues]
 
         print('lstMeanValues: ', self.lstMeanValues)
 
@@ -167,34 +152,9 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         for tmpRepo in lstGithubRepo:
 
-            # fill the Training-Data
-            # ordinary integer-attributes
-            # lstTrainData.append(tmpGithubRepo.getNormedFeatures(lstMeanValues))
-
-            # lstInputFeatures = tmpGithubRepo.getNormedFeatures(lstMeanValues)
-            # with the word occurrence vector
-            # lstInputFeatures = lstInputFeatures + (tmpGithubRepo.getWordSparseMatrix(lstVoc))
-            # print(tmpGithubRepo.getNormedFeatures(lstMeanValues))
-            # print(tmpGithubRepo.getWordSparseMatrix(lstVoc))
-
-            # np.vstack  concates to numpy-arrays
             lstIntegerAttributes = tmpRepo.getNormedFeatures(self.lstMeanValues)
 
-            # lstIntegerAttributes = [] # [None] * len(tmpRepo.getIntegerFeatures()) # []
-            # lstIntegerAttributes = tmpRepo.getIntegerFeatures()
-
             lstInputFeaturesRaw = tmpRepo.getIntegerFeatures()
-            # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
-            # if x > 0:   #
-            #     tmpRepo:  youtaya
-            #     objective - c - style - guide
-            # x: -1   -> open_issues was detected as -1
-            #    print('tmpRepo: ',  tmpRepo.getUser(), tmpRepo.getName())
-            #    print('x:', x)
-            #    lstIntegerAttributes[i] = math.log2(x)
-            #else:
-            #   lstIntegerAttributes[i] = 0
-            # lstIntegerAttributes[:] = [math.log2(x) for x in tmpRepo.getIntegerFeatures() if x != 0]
             lstInputFeatures = lstIntegerAttributes
 
             self.matIntegerTrainingData.append(tmpRepo.getNormedFeatures(self.lstMeanValues))
@@ -207,7 +167,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
             lstInputFeaturesRaw += tmpRepo.getRepoLanguageAsVector()
 
             # test using unnormed features
-            # lstInputFeatures = tmpGithubRepo.getIntegerFeatures() + tmpGithubRepo.getWordOccurences(lstVoc)
 
             self.lstTrainData.append(lstInputFeatures)
             self.lstTrainDataRaw.append(lstInputFeaturesRaw)
@@ -215,49 +174,20 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         print("lstTrainData:")
         print(self.lstTrainData)
 
-
-        # calculate median values:
-        # npArr = np.array(self.matIntegerTrainingData)
-        # npMean = np.mean(npArr.value[:])
-        # npMean = npArr.mean(axis=1)
-
-        # calculate the mean values:
-        # npMedian = np.median(npArr,axis=1)
-
-        # lstMeanValues = npMedian.tolist()
-        # print('lstMedianValues:', lstMeanValues)
-        # print('npMean:', npMean)
-        # print('npMedian:', npMedian)
-
         print("lstTrainLabels:")
         print(self.lstTrainLabels)
 
         print('self.matIntegerTrainingData')
         print(self.matIntegerTrainingData)
         print('~~~~~~~~~~ NORMALIZE ~~~~~~~~~~~~~')
-        # self.stdScaler = preprocessing.StandardScaler()
-        # self.stdScaler.fit(lstTrainData)
-        # print('stdScaler.mean:', self.stdScaler.mean_, 'stdScaler.scale:', self.stdScaler.scale_)
-
-        # apply robust scaling
-        # self.scaler = preprocessing.StandardScaler()
-        # self.scaler = preprocessing.MaxAbsScaler()
-        # self.scaler = preprocessing.RobustScaler()
-        # self.lstTrainData = self.scaler.fit_transform(self.lstTrainData)
 
         self.normalizer = preprocessing.Normalizer()
-        # self.normalizer = ReliableNormalizer()
         self.normalizer.fit(self.lstTrainData)
 
         self.normalizerIntegerAttr = preprocessing.Normalizer()
         self.normalizerIntegerAttr.fit(self.matIntegerTrainingData)
 
         self.lstTrainData = self.normalizer.transform(self.lstTrainData)
-
-        # lstTrainData = self.stdScaler.fit_transform(lstTrainData)
-        # lstTrainData = preprocessing.normalize(lstTrainData)
-
-        # print("lstTrainDataNormalized:", lstTrainData)
 
         return self.lstTrainData, self.lstTrainLabels
 
@@ -292,43 +222,15 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
 
     def plotTheResult(self,lstTrainData, lstTrainLabels):
-        reduced_data = PCA(n_components=2).fit_transform(lstTrainData)
-        kmeans = KMeans(init='k-means++', n_clusters=7, n_init=10)
-        kmeans.fit(reduced_data)
+        """
+        this is currently empty -> see the plots in the GUI instead
 
-        # Step size of the mesh. Decrease to increase the quality of the VQ.
-        h = .02  # point in the mesh [x_min, x_max]x[y_min, y_max].
+        :param lstTrainData: matrix which was used for training
+        :param lstTrainLabels: labels which were used for training
+        :return:
+        """
+        pass
 
-        # Plot the decision boundary. For that, we will assign a color to each
-        x_min, x_max = reduced_data[:, 0].min() - 1, reduced_data[:, 0].max() + 1
-        y_min, y_max = reduced_data[:, 1].min() - 1, reduced_data[:, 1].max() + 1
-        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-
-        # Obtain labels for each point in mesh. Use last trained model.
-        Z = kmeans.predict(np.c_[xx.ravel(), yy.ravel()])
-
-        # Put the result into a color plot
-        Z = Z.reshape(xx.shape)
-        plt.figure(1)
-        plt.clf()
-        plt.imshow(Z, interpolation='nearest',
-                   extent=(xx.min(), xx.max(), yy.min(), yy.max()),
-                   cmap=plt.cm.Paired,
-                   aspect='auto', origin='lower')
-
-        plt.plot(reduced_data[:, 0], reduced_data[:, 1], 'k.', markersize=2)
-        # Plot the centroids as a white X
-        centroids = kmeans.cluster_centers_
-        plt.scatter(centroids[:, 0], centroids[:, 1],
-                    marker='x', s=169, linewidths=3,
-                    color='w', zorder=10)
-        plt.title('K-means clustering on the digits dataset (PCA-reduced data)\n'
-                  'Centroids are marked with white cross')
-        plt.xlim(x_min, x_max)
-        plt.ylim(y_min, y_max)
-        plt.xticks(())
-        plt.yticks(())
-        plt.show()
 
     def exportModelToFile(self):
         """
@@ -361,7 +263,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         :return:
         """
 
-
         print('~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~')
 
         # load the classifier from the file
@@ -386,9 +287,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         self.lstVoc = readVocabFromFile(strVocabPath)
         # only print out the first 7 and the last 7 entries
         # http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python
-        # print('***********************')
-        # print(self.lstVoc)
-        # print('***********************')
         print('len(self.lstVoc):', len(self.lstVoc))
         if len(self.lstVoc) > 14:
             print("[", end="")
@@ -424,14 +322,10 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         # classify the result
 
         # read the unlabeled data set from a csv
-        # dtUnlabeledData = pd.read_csv(self.strProjectDir + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
         dtUnlabeledData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
 
         # http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
-        # len(dtFrame.index) gets the number of rows NaN are included
         iNumOfPredictions = len(dtUnlabeledData.index)
-        # iNumOfPredictions = 20
-
 
         print('~~~~~~~~~~~ CREATE VERITY MATRIX ~~~~~~~~~~~~')
         matPredictionTarget = np.zeros((iNumOfPredictions, self.iNumCategories))
@@ -485,10 +379,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         for i in range (0, len(matPredictionResultByCategory)):
             matPredictionResultByCategory[i][2] = matPredictionResultByCategory[i][1] / matPredictionResultByCategory[i][0]
-        # print("matPredictionResultByCategory:", matPredictionResultByCategory)
-
-
-
 
         self.__printResult(tmpRepo, iLabel, iLabelAlt)
 
@@ -515,6 +405,13 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         return fPredictionRes
 
     def predictCategoryFromOwnerRepoName(self, strUser, strRepoName):
+        """
+        predicts the category for a repository which is given by the user and repo-name
+
+        :param strUser: owner of the repository
+        :param strRepoName: name of the repository
+        :return:
+        """
         tmpRepo = GithubRepo(strUser, strRepoName)
 
         return self.predictCategoryFromGitHubRepoObj(tmpRepo)
@@ -534,41 +431,24 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         return self.predictCategoryFromGitHubRepoObj(tmpRepo)
 
     def predictCategoryFromGitHubRepoObj(self, tmpRepo):
+        """
+        predicts the category for a GithubRepo-Object
+        :param tmpRepo: GithubRepo-Object
+        :return: iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
+        """
 
         lstNormedInputFeatures = tmpRepo.getNormedFeatures(self.lstMeanValues)
-        # lstNormedInputFeatures = [None] * len(tmpRepo.getIntegerFeatures()) #[]
-        # for i, x in enumerate(tmpRepo.getIntegerFeatures()):
-        #     if x > 0:
-        #         # print('x:', x)
-        #         lstNormedInputFeatures[i] = math.log2(x)
-        #     else:
-        #         lstNormedInputFeatures[i] = 0
-        # lstNormedInputFeatures = [math.log2(abs(x)) for x in tmpRepo.getIntegerFeatures() if x != 0]
         if self.bUseStringFeatures:
             lstNormedInputFeatures += tmpRepo.getWordOccurences(self.lstVoc)
         lstNormedInputFeatures += tmpRepo.getRepoLanguageAsVector()
 
         # apply pre-processing
-        # lstInputFeatures = self.stdScaler.fit_transform(lstInputFeatures)
-        # print('lstInputFeature pre normalize: ', lstInputFeatures)
         lstNormedInputFeatures = np.array(lstNormedInputFeatures).reshape(1, len(lstNormedInputFeatures))
 
-        # lstNormedInputFeatures = self.scaler.transform(lstNormedInputFeatures)
         lstNormedInputFeatures = self.normalizer.transform(lstNormedInputFeatures)
-        # print('lstInputFeature post normalize: ', lstInputFeatures)
-
-        # lstInputFeatures = lstInputFeatures.tolist()
 
         # reshape Input Features -> otherwise a deprecation warning occurs
         iLabel = int(self.clf.predict(lstNormedInputFeatures))
-
-        # res = self.clf.predict_proba([lstInputFeatures])
-        # print('self.clf.predict_proba()', res)
-        # score = self.clf.score(self.clf.predict([lstInputFeatures]), [0] * 7)
-        # print('score:', score)
-
-
-        # self.bUseCentroids = False
 
         if self.bUseCentroids is True:
             matCentroids = self.clf.centroids_
@@ -583,7 +463,12 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         return iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures
 
     def getLabelAlternative(self, lstFinalPercentages):
+        """
+        gets the first alternative (the seoond result)
 
+        :param lstFinalPercentages: percentages lsit for the single categories
+        :return: integer label which describes the category
+        """
         # copy the percentages in an additional list
         lstFinalPercentagesCopy = []
         lstFinalPercentagesCopy = lstFinalPercentages[:]
@@ -598,21 +483,24 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
 
     def predictProbaNearestCentroids(self, matCentroids, lstInputFeatures):
+        """
+        because predictProba was missing in the default functionality for nearest-centroid
+        the probability is now calculated via the distances to the different centroids
 
+        :param matCentroids: matrix of the centroids for each category
+        :param lstInputFeatures: full normed input feature list for which the prediction is based on
+        :return:
+        """
         lstFinalPercentages = []
         fDistSum = 0
         lstDistances = []
 
         for i, centroid in enumerate(matCentroids):
-            # print(centroid)
             fDist = np.linalg.norm([lstInputFeatures] - centroid)
             lstDistances.append((i, fDist))
-            # print('fDist:', fDist)
             fDistSum += fDist
 
         lstDistances.sort(key=lambda x: x[1])
-
-        # print('sorted:', lstDistances)
 
         lstPercentages = []
 
@@ -628,7 +516,6 @@ class RepositoryClassifier(InterfaceRepoClassifier):
 
         for i, fPercentage in enumerate(lstDistancesReordered):
             lstFinalPercentages.append(fPercentage[1])
-            # print(self.lstStrCategories[i], 'pecentage:', fPercentage[1])
             print('{:15s} {:3f}'.format(self.lstStrCategories[i],  fPercentage[1]))
 
         return lstFinalPercentages
@@ -649,7 +536,9 @@ class RepositoryClassifier(InterfaceRepoClassifier):
         if bPrintWordHits is True:
             if self.bUseStringFeatures:
                 lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
-                printFeatureOccurences(self.lstVoc, lstOccurence, 0)
+                tmpRepo.printFeatureOccurences(tmpRepo.getDicFoundWords())
+                # printFeatureOccurences(self.lstVoc, lstOccurence, 0)
+
 
         print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
 
