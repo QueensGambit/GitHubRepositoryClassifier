@@ -108,7 +108,7 @@ def main():
     predicting repositories headless
     :return:
     """
-    print(sys.argv)
+
     if len(sys.argv) != 0:
         strParameter = sys.argv[1]
 

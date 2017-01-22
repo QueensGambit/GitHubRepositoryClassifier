@@ -31,9 +31,42 @@
       <file leaf-file-name="rc_gui.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/rc_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="696" column="26" selection-start-line="696" selection-start-column="26" selection-end-line="696" selection-end-column="26" />
-              <folding />
+            <state relative-caret-position="-3451">
+              <caret line="492" column="26" selection-start-line="492" selection-start-column="26" selection-end-line="492" selection-end-column="26" />
+              <folding>
+                <marker date="1485110158219" expanded="false" signature="316:358" ph="import ..." />
+                <marker date="1485110158219" expanded="true" signature="439:609" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="702:1063" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="2315:2456" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="2735:2902" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="2921:3304" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="3376:3643" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="3492:3606" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="3978:5621" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="4505:5425" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="5467:5621" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="5647:5753" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="5652:5744" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="5783:9152" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="6330:6825" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="6339:6594" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="6871:7110" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="8288:8703" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="10163:14688" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="10168:10239" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="11337:12277" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="12324:12511" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="12558:12661" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="12713:13146" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="12722:12832" ph="&quot;&quot;&quot;gets called whenever some operation failed to allow for another try....&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="13238:13644" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="13247:13540" ph="&quot;&quot;&quot;start the classification Thread to run parallel to the GUI so it doesn't freeze in the meantime...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="13698:14688" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="13707:14047" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+                <marker date="1485110158219" expanded="true" signature="14057:14225" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="14300:14688" ph="..." />
+                <marker date="1485110158219" expanded="true" signature="14455:14688" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,8 +74,8 @@
       <file leaf-file-name="rc_cli.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gui_prototype/rc_cli.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2348">
-              <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
+            <state relative-caret-position="153">
+              <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -71,8 +104,8 @@
       <file leaf-file-name="io_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="127" column="37" selection-start-line="127" selection-start-column="37" selection-end-line="127" selection-end-column="37" />
+            <state relative-caret-position="488">
+              <caret line="141" column="37" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -81,8 +114,8 @@
       <file leaf-file-name="github_repo.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/github_repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-612">
-              <caret line="84" column="23" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="23" />
+            <state relative-caret-position="-204">
+              <caret line="107" column="23" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -91,8 +124,8 @@
       <file leaf-file-name="repository_classifier.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="94" column="115" selection-start-line="94" selection-start-column="115" selection-end-line="94" selection-end-column="115" />
+            <state relative-caret-position="435">
+              <caret line="87" column="115" selection-start-line="87" selection-start-column="115" selection-end-line="87" selection-end-column="115" />
               <folding />
             </state>
           </provider>
@@ -101,9 +134,12 @@
       <file leaf-file-name="string_operation.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/string_operation.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-              <folding />
+            <state relative-caret-position="170">
+              <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+              <folding>
+                <element signature="e#0#29#0" expanded="true" />
+                <marker date="1485110158213" expanded="true" signature="274:275" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -303,6 +339,125 @@
       <recent name="D:\GitHub\Python\GitHubRepositoryClassifier\examples\clustering" />
     </key>
   </component>
+  <component name="RestoreUpdateTree" date="Moments ago" ActionInfo="_Update">
+    <UpdatedFiles>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Updated from server" />
+        <option name="myStatusName" value="Changed on server" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="CHANGED_ON_SERVER" />
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated" />
+          <option name="myStatusName" value="Changed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UPDATED" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/__init__.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/github_repo.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/interface_repository_classifier.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/preprocessing_operations.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/reliableNormalizer.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/string_operation.py</PATH>
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/rc_gui.py</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Created" />
+          <option name="myStatusName" value="Created" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CREATED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Deleted" />
+          <option name="myStatusName" value="Deleted" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="true" />
+          <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          <PATH vcs="Git" revision="">$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/count_vectorizer_operations.py</PATH>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Restored" />
+          <option name="myStatusName" value="Will be restored" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="RESTORED" />
+        </FILE-GROUP>
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Modified" />
+        <option name="myStatusName" value="Modified" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MODIFIED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Skipped" />
+        <option name="myStatusName" value="Skipped" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SKIPPED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with conflicts" />
+        <option name="myStatusName" value="Will be merged with conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_CONFLICTS" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with tree conflicts" />
+        <option name="myStatusName" value="Merged with tree conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged with property conflicts" />
+        <option name="myStatusName" value="Will be merged with property conflicts" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Merged" />
+        <option name="myStatusName" value="Will be merged" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="MERGED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Not in repository" />
+        <option name="myStatusName" value="Not in repository" />
+        <option name="mySupportsDeletion" value="true" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="UNKNOWN" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally added" />
+        <option name="myStatusName" value="Locally added" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_ADDED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Locally removed" />
+        <option name="myStatusName" value="Locally removed" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="LOCALLY_REMOVED" />
+      </FILE-GROUP>
+      <FILE-GROUP>
+        <option name="myUpdateName" value="Switched" />
+        <option name="myStatusName" value="Switched" />
+        <option name="mySupportsDeletion" value="false" />
+        <option name="myCanBeAbsent" value="false" />
+        <option name="myId" value="SWITCHED" />
+      </FILE-GROUP>
+    </UpdatedFiles>
+  </component>
   <component name="RunManager" selected="Python.rc_cli">
     <configuration default="false" name="main_console" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -351,7 +506,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/rc_cli.py" />
-      <option name="PARAMETERS" value="https://github.com/NexusHero/Trunk" />
+      <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -553,13 +708,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477497692750</updated>
-    </task>
-    <task id="LOCAL-00024" summary="added getterFunctions for IntegerAttributes">
-      <created>1484065386538</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1484065386538</updated>
     </task>
     <task id="LOCAL-00025" summary="stdOut works now on both consoles">
       <created>1484070370157</created>
@@ -897,7 +1045,14 @@
       <option name="project" value="LOCAL" />
       <updated>1485108029517</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="headless paramter">
+      <created>1485110140855</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1485110140855</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -943,18 +1098,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1984375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767624" sideWeight="0.490625" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34725848" sideWeight="0.31" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.365" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.365" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32506528" sideWeight="0.480625" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2832981" sideWeight="0.803125" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2832981" sideWeight="0.803125" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39852008" sideWeight="0.495" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39852008" sideWeight="0.495" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -977,7 +1132,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added default path to 'C:' for the saving menu" />
     <MESSAGE value="added lstTrainDataRaw export&#10;kiv.matplotlib is now used via relative path" />
     <MESSAGE value="made start white in integer plot" />
     <MESSAGE value="added bRedownload &#10;and commented out ani.cancel" />
@@ -1002,7 +1156,8 @@
     <MESSAGE value="else block removed." />
     <MESSAGE value="menu block. Grammer...&#10;" />
     <MESSAGE value="classified." />
-    <option name="LAST_COMMIT_MESSAGE" value="classified." />
+    <MESSAGE value="headless paramter" />
+    <option name="LAST_COMMIT_MESSAGE" value="headless paramter" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1238,32 +1393,68 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/rc_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="696" column="26" selection-start-line="696" selection-start-column="26" selection-end-line="696" selection-end-column="26" />
-          <folding />
+        <state relative-caret-position="-3451">
+          <caret line="492" column="26" selection-start-line="492" selection-start-column="26" selection-end-line="492" selection-end-column="26" />
+          <folding>
+            <marker date="1485110158219" expanded="false" signature="316:358" ph="import ..." />
+            <marker date="1485110158219" expanded="true" signature="439:609" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="702:1063" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="2315:2456" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="2735:2902" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="2921:3304" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="3376:3643" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="3492:3606" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="3978:5621" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="4505:5425" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="5467:5621" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="5647:5753" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="5652:5744" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="5783:9152" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="6330:6825" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="6339:6594" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="6871:7110" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="8288:8703" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="10163:14688" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="10168:10239" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="11337:12277" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="12324:12511" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="12558:12661" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="12713:13146" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="12722:12832" ph="&quot;&quot;&quot;gets called whenever some operation failed to allow for another try....&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="13238:13644" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="13247:13540" ph="&quot;&quot;&quot;start the classification Thread to run parallel to the GUI so it doesn't freeze in the meantime...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="13698:14688" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="13707:14047" ph="&quot;&quot;&quot;...&quot;&quot;&quot;" />
+            <marker date="1485110158219" expanded="true" signature="14057:14225" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="14300:14688" ph="..." />
+            <marker date="1485110158219" expanded="true" signature="14455:14688" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/string_operation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="170">
+          <caret line="10" column="10" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+            <marker date="1485110158213" expanded="true" signature="274:275" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/github_repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
-          <caret line="84" column="23" selection-start-line="84" selection-start-column="8" selection-end-line="84" selection-end-column="23" />
+        <state relative-caret-position="-204">
+          <caret line="107" column="23" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="127" column="37" selection-start-line="127" selection-start-column="37" selection-end-line="127" selection-end-column="37" />
+        <state relative-caret-position="488">
+          <caret line="141" column="37" selection-start-line="141" selection-start-column="37" selection-end-line="141" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1286,16 +1477,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="94" column="115" selection-start-line="94" selection-start-column="115" selection-end-line="94" selection-end-column="115" />
+        <state relative-caret-position="435">
+          <caret line="87" column="115" selection-start-line="87" selection-start-column="115" selection-end-line="87" selection-end-column="115" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/rc_cli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2348">
-          <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
+        <state relative-caret-position="153">
+          <caret line="110" column="0" selection-start-line="110" selection-start-column="0" selection-end-line="110" selection-end-column="0" />
           <folding />
         </state>
       </provider>
