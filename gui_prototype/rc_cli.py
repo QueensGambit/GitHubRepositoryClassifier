@@ -186,9 +186,6 @@ def main():
         elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
             predictFromFile(repoClassifier, strInput)
 
-        else:
-            print("no valid parameter entered")
-
 def predictFromFile(repoClassifier, strFileInput):
     """
     Classifies a Repository list in txt file and creates a new file which contains the classified repositories
@@ -224,7 +221,7 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
 
     try:
 
-        classifiedFile = open(strReadFileDirectory + '/' + strFileClassified, 'w')  # Trying to create a new file or open one
+        classifiedFile = open(strReadFileDirectory + '/q' + strFileClassified, 'w')  # Trying to create a new file or open one
 
         for line in file:
             strRepoUrl = line.strip(os.linesep)
