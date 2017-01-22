@@ -203,7 +203,7 @@ def predictFromFile(repoClassifier, strFileInput):
         strReadFileName = os.path.basename(strFileInput)
 
         print(strReadFileName + 'was read successfully')
-        strFileClassified = "classimfied_" + strReadFileName
+        strFileClassified = "classified_" + strReadFileName
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
     else:
