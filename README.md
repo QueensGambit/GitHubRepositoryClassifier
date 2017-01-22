@@ -24,6 +24,8 @@ The rc_cli will provide a way for you to use the classifier with the commandline
 This even accepts arguments directly so you can automate the process if you wish to do so.
 You can even give it a .txt file with many repositories to classify and it will create a new file with the results for you.
 
+*Note: If you have troble executing the GUI, try starting the script from the commandline first. After that you should be able to use the batch or exe file without any problems.*
+
 ## Documentation
 
 Please see the [wiki](https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation)
