@@ -1,0 +1,7 @@
+repository_classifier module
+============================
+
+.. automodule:: repository_classifier
+    :members:
+    :undoc-members:
+    :show-inheritance:

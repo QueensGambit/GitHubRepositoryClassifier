@@ -1,0 +1,7 @@
+rc_cli module
+=============
+
+.. automodule:: rc_cli
+    :members:
+    :undoc-members:
+    :show-inheritance:

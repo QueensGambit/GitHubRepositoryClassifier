@@ -1,0 +1,7 @@
+rc_gui module
+=============
+
+.. automodule:: rc_gui
+    :members:
+    :undoc-members:
+    :show-inheritance:

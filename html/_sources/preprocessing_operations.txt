@@ -1,0 +1,7 @@
+preprocessing_operations module
+===============================
+
+.. automodule:: preprocessing_operations
+    :members:
+    :undoc-members:
+    :show-inheritance:

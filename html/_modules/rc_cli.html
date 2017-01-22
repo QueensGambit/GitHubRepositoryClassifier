@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rc_cli &#8212; Github Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Github Classifier 1.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for rc_cli</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@file: rc_cli.py</span>
+<span class="sd">Created on 15.01.2017 02:36</span>
+<span class="sd">@project: GitHubRepositoryClassifier</span>
+
+<span class="sd">@author: NexusHero</span>
+
+<span class="sd">Your description goes here...</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># This block is needed to use the right dll-file for building</span>
+<span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+  <span class="c1"># Override dll search path.</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">SetDllDirectoryW</span><span class="p">(</span><span class="s1">&#39;G:/Program Files/Anaconda3/Library/bin&#39;</span><span class="p">)</span>
+  <span class="c1"># Init code to load external dll</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s1">&#39;mkl_avx2.dll&#39;</span><span class="p">)</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s1">&#39;mkl_def.dll&#39;</span><span class="p">)</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s1">&#39;mkl_vml_avx2.dll&#39;</span><span class="p">)</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">CDLL</span><span class="p">(</span><span class="s1">&#39;mkl_vml_def.dll&#39;</span><span class="p">)</span>
+
+  <span class="c1"># Restore dll search path.</span>
+  <span class="n">ctypes</span><span class="o">.</span><span class="n">windll</span><span class="o">.</span><span class="n">kernel32</span><span class="o">.</span><span class="n">SetDllDirectoryW</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">_MEIPASS</span><span class="p">)</span>
+<span class="c1"># ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+
+
+<span class="n">strStopper1</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">79</span>
+<span class="n">strStopper2</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">79</span>
+
+<span class="c1"># this ascii-art was created with:</span>
+<span class="c1"># https://gist.github.com/cdiener/10567484</span>
+
+<span class="n">strLogoGithub</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\</span>
+<span class="s2">        ;;;; :;;;;.;;;;</span><span class="se">\n\</span>
+<span class="s2">        ;;;;;;;;;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">        ;;;;;;;;;;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">       ;;;;;;;;;;;;;;;;;;          iiii,</span><span class="se">\n\</span>
+<span class="s2">       ;;;            ;;;        iiiiiii  iii  iii   ii    ii          iii</span><span class="se">\n\</span>
+<span class="s2">       ;;             :;        iii            iii   ii    ii          iii</span><span class="se">\n\</span>
+<span class="s2">        ;;            ;;        ii   ;;;; iii iiiii  iiiiiiii iii  iii iiiiiii;</span><span class="se">\n\</span>
+<span class="s2">          ;;;      :;;          ii   iiii iii  iii   iiiiiiii iii  iii iii  iii</span><span class="se">\n\</span>
+<span class="s2">             ;;;;;;             iii   iii iii  iii   ii    ii iii  iii iii  iii</span><span class="se">\n\</span>
+<span class="s2">         ;;;;;;;;;;.             iiiiiiii iii  iiiir ii    ii .iiiiiii iiiiiiii</span><span class="se">\n\</span>
+<span class="s2">            ;;;;;;;.               iiii   ;;;   ,ii  ii    ii   iii ii ii iii </span><span class="se">\n\</span>
+<span class="s2">            ;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">              ;;;;&quot;</span>
+
+
+<span class="n">strLogoRC</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\</span>
+<span class="s2">         iiiiiiii;</span><span class="se">\n\</span>
+<span class="s2">     iiiiiiiiiiiiiiiiii</span><span class="se">\n\</span>
+<span class="s2">      iiiiiiiiiiiiiii</span><span class="se">\n\</span>
+<span class="s2">     iiiiiiiiiiiiiiiii</span><span class="se">\n\</span>
+<span class="s2"> .   iiiiiiiiiiiiiiiii   .</span><span class="se">\n\</span>
+<span class="s2">  ;; i ;iiiiiiiiiii; i ;;   ;;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; i ,iiii               ;;;;;;             ;;;;;;;;;;;   ;;;;;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; iiiiii ;;;;;;;;;;;;;;;;;;;;;;;        :;;;;;  ;;;;;  ;;;;;  ;;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; iiiii;;;;;;;;;;;;;;;;;;;;;;;;.       ;;;;;;  ;;;;; ;;;;;;  ;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; iii ;;;;;;;;;;;;;;;;;;;;;;;         ;;;;;         ;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; ii ;;;;;;;  ; :  :  ;;;;;;         ;;;;;         ;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; i ;;;;;;;  ;;,    ;;;;;;;.       ;;;;;;        ;;;;;;  ;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ;; ;;;;;;;;;;;;;;;;;;;;;;;         ;;;;;         ;;;;;;  ;;;;;</span><span class="se">\n\</span>
+<span class="s2">  ; ;;;;;;;;;;;;;;;;;;;;;;;          ;;            ;;;;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">   ;;;;;;;;;;;;;;;;;;;;;;;</span><span class="se">\n\</span>
+<span class="s2">&quot;</span>
+
+<span class="n">help</span> <span class="o">=</span> <span class="s2">&quot;This application classifies github repositories. There are 7 Categories: DEV, HW, EDU, DOCS, WEB, DATA, OTHER.</span><span class="se">\</span>
+<span class="s2"> The classification method is based on the Nearest Centroid algorithm of the scikit learn libary to navigate through the application&quot;</span>\
+       <span class="s2">&quot;use the given menu.&quot;</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;This application is developed by Björn Beha, Johannes Chzech, Lukas Scheuerle and Suhay Sevinc. &quot;</span>
+<span class="c1"># pip install prettytable</span>
+<span class="c1"># ...</span>
+<span class="c1"># Successfully installed prettytable-0.7.2</span>
+
+
+<span class="kn">from</span> <span class="nn">prettytable</span> <span class="k">import</span> <span class="n">PrettyTable</span>
+<span class="kn">from</span> <span class="nn">prototype.repository_classifier</span> <span class="k">import</span> <span class="n">RepositoryClassifier</span>
+<span class="kn">from</span> <span class="nn">prototype.utility_funcs</span> <span class="k">import</span> <span class="n">string_operation</span>
+<span class="kn">from</span> <span class="nn">prototype.definitions.categories</span> <span class="k">import</span> <span class="n">CategoryStr</span>
+<span class="kn">from</span> <span class="nn">prototype.utility_funcs.io_agent</span> <span class="k">import</span> <span class="n">InputOutputAgent</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="printMenu"><a class="viewcode-back" href="../rc_cli.html#rc_cli.printMenu">[docs]</a><span class="k">def</span> <span class="nf">printMenu</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    prints menu guide for headless</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># tWelc = PrettyTable([&#39;Welcome to the CLI-of the repository classifier&#39;])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Welcome to the CLI of the repository classifier&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strStopper1</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">PrettyTable</span><span class="p">([</span><span class="s1">&#39;Action&#39;</span><span class="p">,</span> <span class="s1">&#39;    Shortcute   &#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Show Menu&#39;</span><span class="p">,</span> <span class="s1">&#39;- m -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;     Predict repositories form txt-file     &#39;</span><span class="p">,</span> <span class="s1">&#39;- i -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Input URL&#39;</span><span class="p">,</span> <span class="s1">&#39;- u -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Show Info&#39;</span><span class="p">,</span> <span class="s1">&#39;- f -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Train Model&#39;</span><span class="p">,</span> <span class="s1">&#39;- t -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;set GitHub-Token&#39;</span><span class="p">,</span> <span class="s1">&#39;- g -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Help&#39;</span><span class="p">,</span> <span class="s1">&#39;- h -&#39;</span><span class="p">])</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="s1">&#39;Quit&#39;</span><span class="p">,</span> <span class="s1">&#39;- q -&#39;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="init"><a class="viewcode-back" href="../rc_cli.html#rc_cli.init">[docs]</a><span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strStopper2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strLogoGithub</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strStopper2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strLogoRC</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">strStopper2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">()</span>
+    <span class="n">printMenu</span><span class="p">()</span></div>
+
+<span class="c1"># initialize the repositoryClassifier</span>
+<span class="n">repoClassifier</span> <span class="o">=</span> <span class="n">RepositoryClassifier</span><span class="p">(</span><span class="n">bUseStringFeatures</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">repoClassifier</span><span class="o">.</span><span class="n">loadModelFromFile</span><span class="p">()</span>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../rc_cli.html#rc_cli.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    predicting repositories headless</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">strParameter</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">string_operation</span><span class="o">.</span><span class="n">validate_url</span><span class="p">(</span><span class="n">strParameter</span><span class="p">):</span>
+            <span class="n">repoClassifier</span><span class="o">.</span><span class="n">predictCategoryFromURL</span><span class="p">(</span><span class="n">strParameter</span><span class="p">)</span>
+
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">init</span><span class="p">()</span>
+        <span class="n">strInput</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+        <span class="n">token</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="n">strInput</span> <span class="o">!=</span> <span class="s1">&#39;q&#39;</span><span class="p">:</span>
+            <span class="n">strInput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+
+            <span class="n">strInput</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strInput</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;m&#39;</span><span class="p">:</span>
+                <span class="n">printMenu</span><span class="p">()</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;i&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enter path of file&quot;</span><span class="p">)</span>
+                <span class="n">strFileInput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+                <span class="n">predictFromFile</span><span class="p">(</span><span class="n">repoClassifier</span><span class="p">,</span> <span class="n">strFileInput</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;u&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enter the URL to a Repository.&quot;</span><span class="p">)</span>
+
+                <span class="n">strUrlInput</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+                <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strUrlInput</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">string_operation</span><span class="o">.</span><span class="n">validate_url</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+                        <span class="n">repoClassifier</span><span class="o">.</span><span class="n">predictCategoryFromURL</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Make sure that you entered a correct url&quot;</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Exception has occured.&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;g&#39;</span><span class="p">:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">token</span>
+                <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">setWithToken</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;t&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. load external train data set.&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. load standard train data set.&quot;</span><span class="p">)</span>
+
+                <span class="n">strOption</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">strOption</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hint: You will override the given train model. Are you sure you want to do this?  &lt;y&gt;&quot;</span><span class="p">)</span>
+
+                        <span class="n">strAwnser</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+
+                        <span class="k">if</span> <span class="n">strAwnser</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="ow">or</span> <span class="n">strAwnser</span> <span class="o">==</span> <span class="s2">&quot;yes&quot;</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enter a valid path of train data (.csv)&quot;</span><span class="p">)</span>
+                            <span class="n">strTrain</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+                            <span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span> <span class="o">=</span> <span class="n">repoClassifier</span><span class="o">.</span><span class="n">loadTrainingData</span><span class="p">(</span><span class="n">strTrain</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                            <span class="n">repoClassifier</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span><span class="p">)</span>
+                            <span class="n">repoClassifier</span><span class="o">.</span><span class="n">exportModelToFile</span><span class="p">()</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model is trained and exported&quot;</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User refused to learn new model&quot;</span><span class="p">)</span>
+
+                    <span class="k">elif</span> <span class="n">strOption</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Standard model will be loaded&quot;</span><span class="p">)</span>
+                        <span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span> <span class="o">=</span> <span class="n">repoClassifier</span><span class="o">.</span><span class="n">loadTrainingData</span><span class="p">(</span>
+                            <span class="s1">&#39;/data/csv/additional_data_sets_cleaned.csv&#39;</span><span class="p">)</span>
+                        <span class="n">repoClassifier</span><span class="o">.</span><span class="n">trainModel</span><span class="p">(</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span><span class="p">)</span>
+                        <span class="n">repoClassifier</span><span class="o">.</span><span class="n">exportModelToFile</span><span class="p">()</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;standard model is loaded&quot;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;User refused to learn new model&quot;</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error occured while training. Pls try again!&quot;</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">==</span> <span class="s1">&#39;h&#39;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">help</span><span class="p">)</span>
+
+            <span class="c1">#striagt url</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">strInput</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">string_operation</span><span class="o">.</span><span class="n">validate_url</span><span class="p">(</span><span class="n">strInput</span><span class="p">):</span>
+                <span class="n">repoClassifier</span><span class="o">.</span><span class="n">predictCategoryFromURL</span><span class="p">(</span><span class="n">strInput</span><span class="p">)</span>
+
+            <span class="c1">#straigt file</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">strInput</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">string_operation</span><span class="o">.</span><span class="n">validate_txtfile</span><span class="p">(</span><span class="n">strInput</span><span class="p">):</span>
+                <span class="n">predictFromFile</span><span class="p">(</span><span class="n">repoClassifier</span><span class="p">,</span> <span class="n">strInput</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">strInput</span> <span class="o">!=</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no valid input! Use given menu&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="predictFromFile"><a class="viewcode-back" href="../rc_cli.html#rc_cli.predictFromFile">[docs]</a><span class="k">def</span> <span class="nf">predictFromFile</span><span class="p">(</span><span class="n">repoClassifier</span><span class="p">,</span> <span class="n">strFileInput</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classifies a Repository list in txt file and creates a new file which contains the classified repositories</span>
+<span class="sd">    :param repoClassifier:</span>
+<span class="sd">    :param strFileInput:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1">#Checks file exists and txt file</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">strFileInput</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">string_operation</span><span class="o">.</span><span class="n">validate_txtfile</span><span class="p">(</span><span class="n">strFileInput</span><span class="p">):</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strFileInput</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+        <span class="n">strReadFileDirectory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">strFileInput</span><span class="p">)</span>
+        <span class="n">strReadFileName</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">strFileInput</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">strReadFileName</span> <span class="o">+</span> <span class="s1">&#39;was read successfully&#39;</span><span class="p">)</span>
+        <span class="n">strFileClassified</span> <span class="o">=</span> <span class="s2">&quot;classified_&quot;</span> <span class="o">+</span> <span class="n">strReadFileName</span>
+
+        <span class="n">writeClassifiedTxtFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">strReadFileDirectory</span><span class="p">,</span> <span class="n">strFileClassified</span><span class="p">,</span> <span class="n">repoClassifier</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;File could no be read. Make sure you have permission or entered correct File (txt)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="writeClassifiedTxtFile"><a class="viewcode-back" href="../rc_cli.html#rc_cli.writeClassifiedTxtFile">[docs]</a><span class="k">def</span> <span class="nf">writeClassifiedTxtFile</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">strReadFileDirectory</span><span class="p">,</span> <span class="n">strFileClassified</span><span class="p">,</span> <span class="n">repoClassifier</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    creates  txt file which contains classified repositories.</span>
+<span class="sd">    :param file:</span>
+<span class="sd">    :param strReadFileDirectory:</span>
+<span class="sd">    :param strFileClassified:</span>
+<span class="sd">    :param repoClassifier:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">classifiedFile</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="n">classifiedFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strReadFileDirectory</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">strFileClassified</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>  <span class="c1"># Trying to create a new file or open one</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">strRepoUrl</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">linesep</span><span class="p">)</span>
+            <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">,</span> <span class="n">lstFinalPercentages</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="p">,</span> <span class="n">lstNormedInputFeatures</span> <span class="o">=</span> <span class="n">repoClassifier</span><span class="o">.</span><span class="n">predictCategoryFromURL</span><span class="p">(</span><span class="n">strRepoUrl</span><span class="p">)</span>
+
+            <span class="n">classifiedFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">strRepoUrl</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">CategoryStr</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="p">[</span><span class="n">iLabel</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">strFileClassified</span> <span class="o">+</span> <span class="s1">&#39; was created and classified.&#39;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not create file. Make sure you have permission in created Directory&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">err</span><span class="p">))</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">classifiedFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Johannes.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

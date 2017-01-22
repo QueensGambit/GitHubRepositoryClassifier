@@ -1,0 +1,7 @@
+github_repo module
+==================
+
+.. automodule:: github_repo
+    :members:
+    :undoc-members:
+    :show-inheritance:

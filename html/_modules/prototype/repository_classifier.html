@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>prototype.repository_classifier &#8212; Github Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Github Classifier 1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for prototype.repository_classifier</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">add</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.externals</span> <span class="k">import</span> <span class="n">joblib</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors.nearest_centroid</span> <span class="k">import</span> <span class="n">NearestCentroid</span>
+
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.utility_funcs.preprocessing_operations</span> <span class="k">import</span> <span class="n">initInputParameters</span><span class="p">,</span> <span class="n">readVocabFromFile</span>
+<span class="kn">from</span> <span class="nn">.interface_repository_classifier</span> <span class="k">import</span> <span class="n">Interface_RepoClassifier</span>
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">preprocessing</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">.github_repo</span> <span class="k">import</span> <span class="n">GithubRepo</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+
+<div class="viewcode-block" id="RepositoryClassifier"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier">[docs]</a><span class="k">class</span> <span class="nc">RepositoryClassifier</span><span class="p">(</span><span class="n">Interface_RepoClassifier</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bUseStringFeatures</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        constructor which initializes member variables</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bModelLoaded</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bModelTrained</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stdScaler</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bUseCentroids</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># self.scaler = None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DEV&#39;</span><span class="p">,</span> <span class="s1">&#39;HW&#39;</span><span class="p">,</span> <span class="s1">&#39;EDU&#39;</span><span class="p">,</span> <span class="s1">&#39;DOCS&#39;</span><span class="p">,</span> <span class="s1">&#39;WEB&#39;</span><span class="p">,</span> <span class="s1">&#39;DATA&#39;</span><span class="p">,</span> <span class="s1">&#39;OTHER&#39;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bUseStringFeatures</span> <span class="o">=</span> <span class="n">bUseStringFeatures</span>
+
+        <span class="c1"># get the project-directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strProjectDir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;strProjectDir:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strProjectDir</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s1">&#39;/model/&#39;</span>
+
+        <span class="c1"># Create model-directory if needed</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strModelFileName</span> <span class="o">=</span> <span class="s1">&#39;RepositoryClassifier.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strLstMeanValuesFileName</span> <span class="o">=</span> <span class="s1">&#39;lstMeanValues.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strMatIntegerTrainingData</span> <span class="o">=</span> <span class="s1">&#39;matIntegerTrainingData.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainLabels</span> <span class="o">=</span> <span class="s1">&#39;lstTrainLabels.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainData</span> <span class="o">=</span> <span class="s1">&#39;lstTrainData.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizer</span> <span class="o">=</span> <span class="s1">&#39;normalizer.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizerIntegerAttr</span> <span class="o">=</span> <span class="s1">&#39;normalizerIntegerAttr.pkl&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainDataRaw</span> <span class="o">=</span> <span class="s1">&#39;lstTrainDataRaw.pkl&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">iNumCategories</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="RepositoryClassifier.loadTrainingData"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.loadTrainingData">[docs]</a>    <span class="k">def</span> <span class="nf">loadTrainingData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strProjPathFileNameCSV</span> <span class="o">=</span><span class="s1">&#39;/data/csv/additional_data_sets_cleaned.csv&#39;</span><span class="p">,</span> <span class="n">externalpath</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        trains the model with a given csv-file. the csv file must have 2 columns URL and CATEGORY.</span>
+<span class="sd">        the URL is given in the form &#39;https://github.com/owner/repository-name&#39;</span>
+<span class="sd">        the CATEGORY is given by one of these options &#39;DEV&#39;, &#39;HW&#39;, &#39;EDU&#39;, &#39;DOCS&#39;, &#39;WEB&#39;, &#39;DATA&#39;, &#39;OTHER&#39;</span>
+
+<span class="sd">        :param strProjPathFileNameCSV: file path relative to the project-path where the csv-file is stored</span>
+<span class="sd">        :return: self.lstTrainData (the scaled and normed data with which the model was trained with),</span>
+<span class="sd">         self.lstTrainLabels (the used training labels)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">trainData</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">externalpath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">trainData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="n">strProjPathFileNameCSV</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">trainData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">strProjPathFileNameCSV</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+
+        <span class="n">iNumTrainData</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">trainData</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;iNumTrainData: &quot;</span><span class="p">,</span> <span class="n">iNumTrainData</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ EXTRACTING FEATURES ~~~~~~~~~~&#39;</span><span class="p">)</span>
+
+        <span class="n">lstGithubRepo</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iNumTrainData</span><span class="p">):</span>
+            <span class="c1"># fill the list with GithubRepo-Objects</span>
+            <span class="n">lstGithubRepo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GithubRepo</span><span class="o">.</span><span class="n">fromURL</span><span class="p">(</span><span class="n">trainData</span><span class="p">[</span><span class="s2">&quot;URL&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+
+        <span class="c1"># fill the train and the label-data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ CALCULATE THE MEAN VALUES ~~~~~~~~~~&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">7</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">tmpRepo</span> <span class="ow">in</span> <span class="n">lstGithubRepo</span><span class="p">:</span>
+
+            <span class="c1"># lstMeanValues += tmpGithubRepo.getIntegerFeatures()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getIntegerFeatures</span><span class="p">()))</span>
+
+            <span class="c1"># find the according label as an intger for the current repository</span>
+            <span class="c1"># the label is defined in trainData</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">trainData</span><span class="p">[</span><span class="s2">&quot;CATEGORY&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Divide each element with the number of training data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">/</span> <span class="n">iNumTrainData</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lstMeanValues: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~&#39;</span><span class="p">)</span>
+        <span class="n">strVocabPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s1">&#39;/vocab/&#39;</span>
+        <span class="c1"># Create vocab-directory if needed directory</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">strVocabPath</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">strVocabPath</span><span class="p">)</span>
+        <span class="n">strVocabPath</span> <span class="o">+=</span> <span class="s1">&#39;vocabList.dump&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span> <span class="o">=</span> <span class="n">initInputParameters</span><span class="p">(</span><span class="n">strVocabPath</span><span class="p">,</span> <span class="n">lstGithubRepo</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lstVoc: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len(lstVoc): &#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">))</span>
+
+        <span class="n">lstInputFeatures</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lstInputFeaturesRaw</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">tmpRepo</span> <span class="ow">in</span> <span class="n">lstGithubRepo</span><span class="p">:</span>
+
+            <span class="n">lstIntegerAttributes</span> <span class="o">=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getNormedFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">)</span>
+
+            <span class="n">lstInputFeaturesRaw</span> <span class="o">=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getIntegerFeatures</span><span class="p">()</span>
+            <span class="n">lstInputFeatures</span> <span class="o">=</span> <span class="n">lstIntegerAttributes</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmpRepo</span><span class="o">.</span><span class="n">getNormedFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">))</span>
+
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bUseStringFeatures</span><span class="p">:</span>
+                <span class="n">lstInputFeatures</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getWordOccurences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span>
+                <span class="n">lstInputFeaturesRaw</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getWordOccurences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span>
+            <span class="n">lstInputFeatures</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getRepoLanguageAsVector</span><span class="p">()</span>
+            <span class="n">lstInputFeaturesRaw</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getRepoLanguageAsVector</span><span class="p">()</span>
+
+            <span class="c1"># test using unnormed features</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lstInputFeatures</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lstInputFeaturesRaw</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lstTrainData:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;lstTrainLabels:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;self.matIntegerTrainingData&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ NORMALIZE ~~~~~~~~~~~~~&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">Normalizer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="o">.</span><span class="n">Normalizer</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.trainModel"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.trainModel">[docs]</a>    <span class="k">def</span> <span class="nf">trainModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        trains the model called self.clf with the given trainData and trainLabels</span>
+
+<span class="sd">        :param lstTrainData: list</span>
+<span class="sd">        :param lstTrainLabels:</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ TRAIN THE MODEL ~~~~~~~~~~&#39;</span><span class="p">)</span>
+        <span class="c1"># train the nearest neighbour-model</span>
+        <span class="c1"># &quot;the shrink_threshold&quot; parameter has only negative impact on the prediction results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="n">NearestCentroid</span><span class="p">()</span>
+
+        <span class="c1"># test out other classifiers</span>
+        <span class="c1"># self.clf = KNeighborsClassifier()</span>
+        <span class="c1"># self.clf = SVC()</span>
+        <span class="c1"># self.clf = RadiusNeighborsClassifier(radius=100)</span>
+        <span class="c1"># self.clf = MLPClassifier()</span>
+        <span class="c1"># self.clf = GaussianProcessClassifier()</span>
+        <span class="c1"># self.clf = LogisticRegression()</span>
+
+        <span class="c1"># self.fit_transform()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span><span class="p">)</span>
+
+        <span class="c1"># this will break the machine</span>
+        <span class="c1"># self.plotTheResult(lstTrainData, lstTrainLabels)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bModelTrained</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="RepositoryClassifier.plotTheResult"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.plotTheResult">[docs]</a>    <span class="k">def</span> <span class="nf">plotTheResult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="n">lstTrainLabels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        this is currently empty -&gt; see the plots in the GUI instead</span>
+
+<span class="sd">        :param lstTrainData: matrix which was used for training</span>
+<span class="sd">        :param lstTrainLabels: labels which were used for training</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="RepositoryClassifier.exportModelToFile"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.exportModelToFile">[docs]</a>    <span class="k">def</span> <span class="nf">exportModelToFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        exports the trained model and the mean values of the input variables to &#39;./model/&#39;</span>
+<span class="sd">        the export is done via joblib.dump() to .pkl-file</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bModelTrained</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ SAVE MODEL TO FILE ~~~~~~~&#39;</span><span class="p">)</span>
+            <span class="c1"># http://scikit-learn.org/stable/modules/model_persistence.html</span>
+            <span class="c1"># http://stackoverflow.com/questions/10592605/save-classifier-to-disk-in-scikit-learn</span>
+
+            <span class="c1"># save the trained classifier to a file</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelFileName</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstMeanValuesFileName</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strMatIntegerTrainingData</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainLabels</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainData</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizer</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizerIntegerAttr</span><span class="p">)</span>
+            <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainDataRaw</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.loadModelFromFile"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.loadModelFromFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadModelFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        loads / imports the model-object from &#39;./model/RepositoryClassifier.pkl&#39;</span>
+<span class="sd">        and the list of the mean values from &#39;./model/lstMeanValues.pkl&#39;</span>
+
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ LOAD THE MODEL ~~~~~~~~~~~&#39;</span><span class="p">)</span>
+
+        <span class="c1"># load the classifier from the file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clf</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelFileName</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstMeanValuesFileName</span><span class="p">)</span>
+        <span class="c1"># load the integer training data for later plotting</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strMatIntegerTrainingData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainLabels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainData</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strNormalizerIntegerAttr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strModelPath</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strLstTrainDataRaw</span><span class="p">)</span>
+
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;lstMeanValues: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~&#39;</span><span class="p">)</span>
+
+        <span class="n">strVocabPath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="s1">&#39;/vocab/&#39;</span>
+        <span class="n">strVocabPath</span> <span class="o">+=</span> <span class="s1">&#39;vocabList.dump&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span> <span class="o">=</span> <span class="n">readVocabFromFile</span><span class="p">(</span><span class="n">strVocabPath</span><span class="p">)</span>
+        <span class="c1"># only print out the first 7 and the last 7 entries</span>
+        <span class="c1"># http://stackoverflow.com/questions/646644/how-to-get-last-items-of-a-list-in-python</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;len(self.lstVoc):&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">14</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">[:</span><span class="mi">7</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;...&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">:],</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;]&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bModelLoaded</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">matIntegerTrainingData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainLabels</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainData</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizerIntegerAttr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstTrainDataRaw</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.predictResultsAndCompare"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.predictResultsAndCompare">[docs]</a>    <span class="k">def</span> <span class="nf">predictResultsAndCompare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strProjPathFileNameCSV</span> <span class="o">=</span>  <span class="s1">&#39;/data/csv/manual_classification_appendix_b.csv&#39;</span><span class="p">):</span>  <span class="c1"># &#39;/data/csv/additional_data_sets_cleaned.csv&#39;):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        loads a csv-file with of layout &#39;URL, CATEGORY, CATEGORY_ALTERNATIVE_1,CATEGORY_ALTERNATIVE_2&#39;</span>
+<span class="sd">        the URL is given in the format &#39;https://github.com/owner/repository-name&#39;</span>
+<span class="sd">        the CATEGORY, CATEGORY_ALTERNATIVE_1,CATEGORY_ALTERNATIVE_2 is given by one of these options &#39;DEV&#39;, &#39;HW&#39;, &#39;EDU&#39;,</span>
+<span class="sd">         &#39;DOCS&#39;, &#39;WEB&#39;, &#39;DATA&#39;, &#39;OTHER&#39;</span>
+<span class="sd">        After the predicition phase the result is compared with the given CATEGORY and CATEGORY_ALTERNATIVES</span>
+<span class="sd">        A verification matrix is created and the accuracy is calculated from 0.0 to 1.0</span>
+
+<span class="sd">        :param strProjPathFileNameCSV: path relative to the project-path where the csv file is stored</span>
+<span class="sd">        :return: the accuracy value (0.0 - 1.0)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bModelLoaded</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">bModelTrained</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;the model hasn</span><span class="se">\&#39;</span><span class="s1">t been loaded or trained yet&#39;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ CREATE VERITY COMP MATRIX ~~~~~~~~&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~&#39;</span><span class="p">)</span>
+        <span class="c1"># classify the result</span>
+        <span class="c1"># read the unlabeled data set from a csv</span>
+        <span class="n">dtUnlabeledData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directory</span> <span class="o">+</span> <span class="n">strProjPathFileNameCSV</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>  <span class="c1"># , nrows=iNumOfPredictions)</span>
+
+        <span class="c1"># http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe</span>
+        <span class="n">iNumOfPredictions</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dtUnlabeledData</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;~~~~~~~~~~~ CREATE VERITY MATRIX ~~~~~~~~~~~~&#39;</span><span class="p">)</span>
+        <span class="n">matPredictionTarget</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">iNumOfPredictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iNumCategories</span><span class="p">))</span>
+
+        <span class="c1"># use a verity matrix to validate the result</span>
+        <span class="n">matPredictionRes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">matPredictionTarget</span><span class="p">)</span>
+        <span class="n">matPredictionResWithAlt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">matPredictionTarget</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iNumOfPredictions</span><span class="p">):</span>
+
+            <span class="c1"># set the verity matrix</span>
+            <span class="n">strTarget</span> <span class="o">=</span> <span class="n">dtUnlabeledData</span><span class="p">[</span><span class="s2">&quot;CATEGORY&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">strTargetAlt1</span> <span class="o">=</span> <span class="n">dtUnlabeledData</span><span class="p">[</span><span class="s2">&quot;CATEGORY_ALTERNATIVE_1&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">strTargetAlt2</span> <span class="o">=</span> <span class="n">dtUnlabeledData</span><span class="p">[</span><span class="s2">&quot;CATEGORY_ALTERNATIVE_2&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;strTarget: &#39;</span><span class="p">,</span> <span class="n">strTarget</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">strTargetAlt1</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;strTargetAlt1:&#39;</span><span class="p">,</span> <span class="n">strTargetAlt1</span><span class="p">)</span>
+                <span class="n">matPredictionTarget</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">strTargetAlt1</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">strTargetAlt2</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;strTargetAlt2:&#39;</span><span class="p">,</span> <span class="n">strTargetAlt2</span><span class="p">)</span>
+                <span class="n">matPredictionTarget</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">strTargetAlt2</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">,</span> <span class="n">lstFinalPercentages</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="p">,</span> <span class="n">lstNormedInputFeatures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictCategoryFromURL</span><span class="p">(</span><span class="n">dtUnlabeledData</span><span class="p">[</span><span class="s2">&quot;URL&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+
+            <span class="n">matPredictionTarget</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">strTarget</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="nb">print</span><span class="p">()</span>
+
+            <span class="n">matPredictionRes</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">iLabel</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">matPredictionResWithAlt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">iLabel</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">matPredictionResWithAlt</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">matPredictionResultByCategory</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">iNumOfPredictions</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">matPredictionRes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">matPredictionRes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="n">matPredictionTarget</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]:</span>
+                        <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;i, j&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;i, j, not&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">matPredictionResultByCategory</span><span class="p">)):</span>
+            <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__printResult</span><span class="p">(</span><span class="n">tmpRepo</span><span class="p">,</span> <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;verity matrix for matPredictionTarget:</span><span class="se">\n</span><span class="s1"> &#39;</span><span class="p">,</span> <span class="n">matPredictionTarget</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;verity matrix for matPredictionRes:</span><span class="se">\n</span><span class="s1"> &#39;</span><span class="p">,</span> <span class="n">matPredictionRes</span><span class="p">)</span>
+
+        <span class="n">matCompRes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">matPredictionTarget</span><span class="p">,</span> <span class="n">matPredictionRes</span><span class="p">)</span>
+        <span class="n">matCompResAlt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">matPredictionTarget</span><span class="p">,</span> <span class="n">matPredictionResWithAlt</span><span class="p">)</span>
+        <span class="n">fPredictionRes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">matCompRes</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">/</span> <span class="n">iNumOfPredictions</span>
+        <span class="n">fPredictionResWithAlt</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">matCompResAlt</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span> <span class="o">/</span> <span class="n">iNumOfPredictions</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fPredictionRes:&#39;</span><span class="p">,</span> <span class="n">fPredictionRes</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fPredictionResWithAlt:&#39;</span><span class="p">,</span> <span class="n">fPredictionResWithAlt</span><span class="p">)</span>
+        <span class="n">fAccuracy</span> <span class="o">=</span> <span class="n">fPredictionRes</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;fAccuracy: &#39;</span><span class="p">,</span> <span class="n">fAccuracy</span><span class="p">,</span> <span class="s1">&#39;%</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;DEV: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">HW: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">EDU: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">DOCS: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">WEB: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">DATA: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">OTHER: found:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;, correct:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;, reliability:&#39;</span><span class="p">,</span> <span class="n">matPredictionResultByCategory</span><span class="p">[</span><span class="mi">6</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;%&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fPredictionRes</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.predictCategoryFromOwnerRepoName"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.predictCategoryFromOwnerRepoName">[docs]</a>    <span class="k">def</span> <span class="nf">predictCategoryFromOwnerRepoName</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strUser</span><span class="p">,</span> <span class="n">strRepoName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        predicts the category for a repository which is given by the user and repo-name</span>
+
+<span class="sd">        :param strUser: owner of the repository</span>
+<span class="sd">        :param strRepoName: name of the repository</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tmpRepo</span> <span class="o">=</span> <span class="n">GithubRepo</span><span class="p">(</span><span class="n">strUser</span><span class="p">,</span> <span class="n">strRepoName</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictCategoryFromGitHubRepoObj</span><span class="p">(</span><span class="n">tmpRepo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.predictCategoryFromURL"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.predictCategoryFromURL">[docs]</a>    <span class="k">def</span> <span class="nf">predictCategoryFromURL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strGitHubRepoURL</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        loads the features of a given repository by URL and the model predicts its category-label</span>
+
+<span class="sd">        :param strGitHubRepoURL: url to the repository</span>
+<span class="sd">        :return: label value form 0 - 6, lst of the precentages for the other categories</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">tmpRepo</span> <span class="o">=</span> <span class="n">GithubRepo</span><span class="o">.</span><span class="n">fromURL</span><span class="p">(</span><span class="n">strGitHubRepoURL</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ex</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictCategoryFromGitHubRepoObj</span><span class="p">(</span><span class="n">tmpRepo</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.predictCategoryFromGitHubRepoObj"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.predictCategoryFromGitHubRepoObj">[docs]</a>    <span class="k">def</span> <span class="nf">predictCategoryFromGitHubRepoObj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        predicts the category for a GithubRepo-Object</span>
+<span class="sd">        :param tmpRepo: GithubRepo-Object</span>
+<span class="sd">        :return: iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">lstNormedInputFeatures</span> <span class="o">=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getNormedFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstMeanValues</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bUseStringFeatures</span><span class="p">:</span>
+            <span class="n">lstNormedInputFeatures</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getWordOccurences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span>
+        <span class="n">lstNormedInputFeatures</span> <span class="o">+=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getRepoLanguageAsVector</span><span class="p">()</span>
+
+        <span class="c1"># apply pre-processing</span>
+        <span class="n">lstNormedInputFeatures</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lstNormedInputFeatures</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lstNormedInputFeatures</span><span class="p">))</span>
+
+        <span class="n">lstNormedInputFeatures</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">lstNormedInputFeatures</span><span class="p">)</span>
+
+        <span class="c1"># reshape Input Features -&gt; otherwise a deprecation warning occurs</span>
+        <span class="n">iLabel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">lstNormedInputFeatures</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bUseCentroids</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">matCentroids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">centroids_</span>
+            <span class="n">lstFinalPercentages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predictProbaNearestCentroids</span><span class="p">(</span><span class="n">matCentroids</span><span class="p">,</span> <span class="n">lstNormedInputFeatures</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lstFinalPercentages</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clf</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">lstNormedInputFeatures</span><span class="p">)</span>
+
+        <span class="n">iLabelAlt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getLabelAlternative</span><span class="p">(</span><span class="n">lstFinalPercentages</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__printResult</span><span class="p">(</span><span class="n">tmpRepo</span><span class="p">,</span> <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">,</span> <span class="n">bPrintWordHits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">,</span> <span class="n">lstFinalPercentages</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="p">,</span> <span class="n">lstNormedInputFeatures</span></div>
+
+<div class="viewcode-block" id="RepositoryClassifier.getLabelAlternative"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.getLabelAlternative">[docs]</a>    <span class="k">def</span> <span class="nf">getLabelAlternative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lstFinalPercentages</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets the first alternative (the seoond result)</span>
+
+<span class="sd">        :param lstFinalPercentages: percentages lsit for the single categories</span>
+<span class="sd">        :return: integer label which describes the category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># copy the percentages in an additional list</span>
+        <span class="n">lstFinalPercentagesCopy</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">lstFinalPercentagesCopy</span> <span class="o">=</span> <span class="n">lstFinalPercentages</span><span class="p">[:]</span>
+
+        <span class="c1"># get the s</span>
+        <span class="n">iMaxIndex</span> <span class="o">=</span> <span class="n">lstFinalPercentagesCopy</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">lstFinalPercentagesCopy</span><span class="p">))</span>
+
+        <span class="n">lstFinalPercentagesCopy</span><span class="p">[</span><span class="n">iMaxIndex</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">iSecondMaxIndex</span> <span class="o">=</span> <span class="n">lstFinalPercentagesCopy</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">lstFinalPercentagesCopy</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">iSecondMaxIndex</span></div>
+
+
+<div class="viewcode-block" id="RepositoryClassifier.predictProbaNearestCentroids"><a class="viewcode-back" href="../../prototype.html#prototype.repository_classifier.RepositoryClassifier.predictProbaNearestCentroids">[docs]</a>    <span class="k">def</span> <span class="nf">predictProbaNearestCentroids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matCentroids</span><span class="p">,</span> <span class="n">lstInputFeatures</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        because predictProba was missing in the default functionality for nearest-centroid</span>
+<span class="sd">        the probability is now calculated via the distances to the different centroids</span>
+
+<span class="sd">        :param matCentroids: matrix of the centroids for each category</span>
+<span class="sd">        :param lstInputFeatures: full normed input feature list for which the prediction is based on</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lstFinalPercentages</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">fDistSum</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">lstDistances</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">matCentroids</span><span class="p">):</span>
+            <span class="n">fDist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">([</span><span class="n">lstInputFeatures</span><span class="p">]</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">)</span>
+            <span class="n">lstDistances</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">fDist</span><span class="p">))</span>
+            <span class="n">fDistSum</span> <span class="o">+=</span> <span class="n">fDist</span>
+
+        <span class="n">lstDistances</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">lstPercentages</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fDist</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lstDistances</span><span class="p">):</span>
+            <span class="n">lstPercentages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lstDistances</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">fDistSum</span><span class="p">)</span>
+
+        <span class="n">lstDistancesReordered</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fPercentage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">lstPercentages</span><span class="p">)):</span>
+            <span class="n">lstDistancesReordered</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lstDistances</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fPercentage</span><span class="p">))</span>
+
+        <span class="n">lstDistancesReordered</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">fPercentage</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lstDistancesReordered</span><span class="p">):</span>
+            <span class="n">lstFinalPercentages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fPercentage</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:15s}</span><span class="s1"> </span><span class="si">{:3f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>  <span class="n">fPercentage</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="k">return</span> <span class="n">lstFinalPercentages</span></div>
+
+    <span class="k">def</span> <span class="nf">__printResult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tmpRepo</span><span class="p">,</span> <span class="n">iLabel</span><span class="p">,</span> <span class="n">iLabelAlt</span><span class="p">,</span> <span class="n">bPrintWordHits</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        prints the repository name and its category by using the iLabel</span>
+
+<span class="sd">        :param tmpRepo: given repository</span>
+<span class="sd">        :param iLabel: previously predicted label</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">strStopper1</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span>
+        <span class="n">strStopper2</span> <span class="o">=</span> <span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">strStopper1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bPrintWordHits</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bUseStringFeatures</span><span class="p">:</span>
+                <span class="n">lstOccurence</span> <span class="o">=</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getWordOccurences</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstVoc</span><span class="p">)</span>
+                <span class="n">tmpRepo</span><span class="o">.</span><span class="n">printFeatureOccurences</span><span class="p">(</span><span class="n">tmpRepo</span><span class="o">.</span><span class="n">getDicFoundWords</span><span class="p">())</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Prediction for &#39;</span> <span class="o">+</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;, &#39;</span> <span class="o">+</span> <span class="n">tmpRepo</span><span class="o">.</span><span class="n">getUser</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="p">[</span><span class="n">iLabel</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">iLabelAlt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Alternative: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstStrCategories</span><span class="p">[</span><span class="n">iLabelAlt</span><span class="p">])</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="n">strStopper2</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Johannes.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

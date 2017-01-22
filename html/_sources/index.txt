@@ -1,0 +1,33 @@
+.. Github Classifier documentation master file, created by
+   sphinx-quickstart on Thu Jan  5 20:49:54 2017.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to GitHub Classifier's documentation!
+=============================================
+
+This project was created in course of the InformatiCup 2017, hosted by the German Association for Computer Science.
+The goal is to provide a detailed overview over the implementation of a software system which was built for the automatic classification of GitHub-Repositories.
+ 
+.. image:: /media/gi.png
+
+Contents:
+
+.. toctree::
+   :maxdepth: 4
+
+   introduction
+   quickstart
+   project
+   .. tutorial
+   code
+   .. modules
+.. image:: /media/screenshot.png
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+

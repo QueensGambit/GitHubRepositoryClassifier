@@ -1,0 +1,7 @@
+string attributes module
+========================
+
+.. automodule:: string attributes
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,14 @@
+Quickstart
+==========
+
+Guide
+-----
+
+Download the GithubClassifier.zip from Dropbox Link:
+https://www.dropbox.com/s/p6dvmt5xtdazjaz/GitHubClassifier.zip?dl=0
+
+Extract the .zip-file in a directory.
+
+Start the Graphical user interface by running rc_gui.bat.
+
+For advanced users you can use the rc_cli.bat

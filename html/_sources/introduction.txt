@@ -1,0 +1,12 @@
+Introduction
+============
+
+.. image:: /media/github.png
+
+Abstract
+--------
+In many areas of our daily life, more and more intelligent systems are developed to support us. 
+The goal of this paper is to provide a detailed overview over the implementation of a software system which was built for the automatic classification of GitHub-Repositories.
+This task has been the subject of the InformatiCup 2017, hosted by the German Association for Computer Science.
+The overview extensively covers the algorithms and procedures of this system as well as the underlying theoretical concepts of artificial intelligence and machine learning.
+The achieved results are discussed and compared in great detail. Apart from a manual on how to use the developed program, this paper also lists approaches to alternative methods how a system like this could be implemented.

@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rc_cli module &#8212; Github Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Github Classifier 1.0.0 documentation" href="index.html" />
+    <link rel="up" title="Auto Generated Documentation" href="code.html" />
+    <link rel="next" title="rc_gui module" href="rc_gui.html" />
+    <link rel="prev" title="Auto Generated Documentation" href="code.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rc_gui.html" title="rc_gui module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="Auto Generated Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="code.html" accesskey="U">Auto Generated Documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-rc_cli">
+<span id="rc-cli-module"></span><h1>rc_cli module<a class="headerlink" href="#module-rc_cli" title="Permalink to this headline">¶</a></h1>
+<p>&#64;file: rc_cli.py
+Created on 15.01.2017 02:36
+&#64;project: GitHubRepositoryClassifier</p>
+<p>&#64;author: NexusHero</p>
+<p>Your description goes here...</p>
+<dl class="function">
+<dt id="rc_cli.init">
+<code class="descclassname">rc_cli.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rc_cli.html#init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rc_cli.init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="rc_cli.main">
+<code class="descclassname">rc_cli.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rc_cli.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rc_cli.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>predicting repositories headless
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="rc_cli.predictFromFile">
+<code class="descclassname">rc_cli.</code><code class="descname">predictFromFile</code><span class="sig-paren">(</span><em>repoClassifier</em>, <em>strFileInput</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rc_cli.html#predictFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rc_cli.predictFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies a Repository list in txt file and creates a new file which contains the classified repositories
+:param repoClassifier:
+:param strFileInput:
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="rc_cli.printMenu">
+<code class="descclassname">rc_cli.</code><code class="descname">printMenu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rc_cli.html#printMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rc_cli.printMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>prints menu guide for headless
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="rc_cli.writeClassifiedTxtFile">
+<code class="descclassname">rc_cli.</code><code class="descname">writeClassifiedTxtFile</code><span class="sig-paren">(</span><em>file</em>, <em>strReadFileDirectory</em>, <em>strFileClassified</em>, <em>repoClassifier</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rc_cli.html#writeClassifiedTxtFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rc_cli.writeClassifiedTxtFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates  txt file which contains classified repositories.
+:param file:
+:param strReadFileDirectory:
+:param strFileClassified:
+:param repoClassifier:
+:return:</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="code.html"
+                        title="previous chapter">Auto Generated Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="rc_gui.html"
+                        title="next chapter">rc_gui module</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/rc_cli.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rc_gui.html" title="rc_gui module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="code.html" title="Auto Generated Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Github Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="code.html" >Auto Generated Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Johannes.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

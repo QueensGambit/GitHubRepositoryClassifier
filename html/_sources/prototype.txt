@@ -1,0 +1,45 @@
+prototype package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    prototype.utility_funcs
+
+Submodules
+----------
+
+prototype.github_repo module
+----------------------------
+
+.. automodule:: prototype.github_repo
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+prototype.interface_repository_classifier module
+------------------------------------------------
+
+.. automodule:: prototype.interface_repository_classifier
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+prototype.repository_classifier module
+--------------------------------------
+
+.. automodule:: prototype.repository_classifier
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: prototype
+    :members:
+    :undoc-members:
+    :show-inheritance:

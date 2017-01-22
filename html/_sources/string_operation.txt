@@ -1,0 +1,7 @@
+string_operation module
+=======================
+
+.. automodule:: string_operation
+    :members:
+    :undoc-members:
+    :show-inheritance:

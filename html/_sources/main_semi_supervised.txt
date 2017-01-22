@@ -1,0 +1,7 @@
+main_semi_supervised module
+===========================
+
+.. automodule:: main_semi_supervised
+    :members:
+    :undoc-members:
+    :show-inheritance:

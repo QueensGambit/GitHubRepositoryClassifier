@@ -1,0 +1,7 @@
+reliableNormalizer module
+=========================
+
+.. automodule:: reliableNormalizer
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,10 @@
+Auto Generated Documentation
+============================
+
+.. toctree::
+   :maxdepth: 4
+	
+   rc_cli
+   rc_gui
+   main_console
+   prototype

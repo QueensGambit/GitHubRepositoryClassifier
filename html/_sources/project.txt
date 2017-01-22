@@ -1,0 +1,15 @@
+Project-Page
+============
+
+.. image:: /media/HFU.png
+
+The project was created at the Hochschule Furtwangen University in the year 2016/17
+
+
+Team Members
+------------
+Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc
+
+Supervisor
+----------
+Prof. Dr. Friedbert Kaspar
