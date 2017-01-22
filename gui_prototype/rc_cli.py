@@ -124,6 +124,8 @@ def main():
         while strInput != 'q':
             strInput = input()
 
+            strInput = "".join(strInput.split())
+
             if strInput == 'm':
                 printMenu()
 
@@ -136,9 +138,10 @@ def main():
                 print("Enter the URL to a Repository.")
 
                 strUrlInput = input()
+                url = "".join(strUrlInput.split())
                 try:
-                    if string_operation.validate_url(strUrlInput):
-                        repoClassifier.predictCategoryFromURL(strUrlInput)
+                    if len(url) > 1 and string_operation.validate_url(url):
+                        repoClassifier.predictCategoryFromURL(url)
                     else:
                         print("Make sure that you entered a correct url")
                 except:
