@@ -49,8 +49,8 @@ strLogoRC = "\
    ;;;;;;;;;;;;;;;;;;;;;;;\n\
 "
 
-help = "This application classifies github repositories. There are 7 Categories: DEV, HW, EDU, DOCS, WEB, DATA, OTHER. \
- The classification method is based on Nearest Centroid algorithm of the skicit learn libary. To navigte through the application" \
+help = "This application classifies github repositories. There are 7 Categories: DEV, HW, EDU, DOCS, WEB, DATA, OTHER.\
+ The classification method is based on the Nearest Centroid algorithm of the scikit learn libary to navigate through the application"\
        "use the given menu."
 
 info = "This application is developed by Björn Beha, Johannes Chzech, Lukas Scheuerle and Suhay Sevinc. "
@@ -173,7 +173,7 @@ def main():
                 else:
                     print("User refused to learn new model")
             except:
-                print ("Error occured while training. Pls try again!")
+                print("Error occured while training. Pls try again!")
 
         elif strInput == 'h':
             print(help)
@@ -186,6 +186,8 @@ def main():
         elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
             predictFromFile(repoClassifier, strInput)
 
+        elif strInput != "q":
+            print("no valid input! Use given menu")
 def predictFromFile(repoClassifier, strFileInput):
     """
     Classifies a Repository list in txt file and creates a new file which contains the classified repositories
@@ -201,7 +203,7 @@ def predictFromFile(repoClassifier, strFileInput):
         strReadFileName = os.path.basename(strFileInput)
 
         print(strReadFileName + 'was read successfully')
-        strFileClassified = "classiefied_" + strReadFileName
+        strFileClassified = "classimfied_" + strReadFileName
 
         writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoClassifier)
     else:
