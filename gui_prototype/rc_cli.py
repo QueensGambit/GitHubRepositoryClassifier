@@ -108,86 +108,97 @@ def main():
     predicting repositories headless
     :return:
     """
-    init()
-    strInput = ""
+    print(sys.argv)
+    if len(sys.argv) != 0:
+        strParameter = sys.argv[1]
 
-    token = False
-    while strInput != 'q':
-        strInput = input()
+        if string_operation.validate_url(strParameter):
+            repoClassifier.predictCategoryFromURL(strParameter)
 
-        if strInput == 'm':
-            printMenu()
 
-        elif strInput == 'i':
-            print("Enter path of file")
-            strFileInput = input()
-            predictFromFile(repoClassifier, strFileInput)
+    else:
+        init()
+        strInput = ""
 
-        elif strInput == 'u':
-            print("Enter the URL to a Repository.")
+        token = False
+        while strInput != 'q':
+            strInput = input()
 
-            strUrlInput = input()
-            try:
-                if string_operation.validate_url(strUrlInput):
-                    repoClassifier.predictCategoryFromURL(strUrlInput)
-                else:
-                    print("Make sure that you entered a correct url")
-            except:
-                print("Exception has occured.")
+            if strInput == 'm':
+                printMenu()
 
-        elif strInput == 'g':
-            token = not token
-            InputOutputAgent.setWithToken(token)
+            elif strInput == 'i':
+                print("Enter path of file")
+                strFileInput = input()
+                predictFromFile(repoClassifier, strFileInput)
 
-        elif strInput == 'f':
-            print(info)
+            elif strInput == 'u':
+                print("Enter the URL to a Repository.")
 
-        elif strInput == 't':
-            print("1. load external train data set.")
-            print("2. load standard train data set.")
+                strUrlInput = input()
+                try:
+                    if string_operation.validate_url(strUrlInput):
+                        repoClassifier.predictCategoryFromURL(strUrlInput)
+                    else:
+                        print("Make sure that you entered a correct url")
+                except:
+                    print("Exception has occured.")
 
-            strOption = input()
-            try:
-                if strOption == "1":
-                    print("hint: You will override the given train model. Are you sure you want to do this?  <y>")
+            elif strInput == 'g':
+                token = not token
+                InputOutputAgent.setWithToken(token)
 
-                    strAwnser = input()
+            elif strInput == 'f':
+                print(info)
 
-                    if strAwnser == "y" or strAwnser == "yes":
-                        print("Enter a valid path of train data (.csv)")
-                        strTrain = input()
-                        lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+            elif strInput == 't':
+                print("1. load external train data set.")
+                print("2. load standard train data set.")
+
+                strOption = input()
+                try:
+                    if strOption == "1":
+                        print("hint: You will override the given train model. Are you sure you want to do this?  <y>")
+
+                        strAwnser = input()
+
+                        if strAwnser == "y" or strAwnser == "yes":
+                            print("Enter a valid path of train data (.csv)")
+                            strTrain = input()
+                            lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+                            repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+                            repoClassifier.exportModelToFile()
+                            print("Model is trained and exported")
+                        else:
+                            print("User refused to learn new model")
+
+                    elif strOption == "2":
+                        print("Standard model will be loaded")
+                        lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(
+                            '/data/csv/additional_data_sets_cleaned.csv')
                         repoClassifier.trainModel(lstTrainData, lstTrainLabels)
                         repoClassifier.exportModelToFile()
-                        print("Model is trained and exported")
+                        print("standard model is loaded")
                     else:
                         print("User refused to learn new model")
+                except:
+                    print("Error occured while training. Pls try again!")
 
-                elif strOption == "2":
-                    print("Standard model will be loaded")
-                    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(
-                        '/data/csv/additional_data_sets_cleaned.csv')
-                    repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-                    repoClassifier.exportModelToFile()
-                    print("standard model is loaded")
-                else:
-                    print("User refused to learn new model")
-            except:
-                print("Error occured while training. Pls try again!")
+            elif strInput == 'h':
+                print(help)
 
-        elif strInput == 'h':
-            print(help)
+            #striagt url
+            elif len(strInput) > 1 and string_operation.validate_url(strInput):
+                repoClassifier.predictCategoryFromURL(strInput)
 
-        #striagt url
-        elif len(strInput) > 1 and string_operation.validate_url(strInput):
-            repoClassifier.predictCategoryFromURL(strInput)
+            #straigt file
+            elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
+                predictFromFile(repoClassifier, strInput)
 
-        #straigt file
-        elif len(strInput) > 1 and string_operation.validate_txtfile(strInput):
-            predictFromFile(repoClassifier, strInput)
+            elif strInput != "q":
+                print("no valid input! Use given menu")
 
-        elif strInput != "q":
-            print("no valid input! Use given menu")
+
 def predictFromFile(repoClassifier, strFileInput):
     """
     Classifies a Repository list in txt file and creates a new file which contains the classified repositories

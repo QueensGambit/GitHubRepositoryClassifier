@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="integrated nltk_data (which is need for a single exe)&#10;added browser button&#10;removed kivy.matplotlib  from hidden imports  rc_gui.spec: &#10;">
+    <list default="true" id="ce7c8b15-2b4a-4da7-9d57-1afe913537a7" name="Default" comment="headless paramter">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/RepositoryClassifier.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/RepositoryClassifier.pkl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/lstTrainData.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/lstTrainData.pkl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/lstTrainDataRaw.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/lstTrainDataRaw.pkl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/matIntegerTrainingData.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/matIntegerTrainingData.pkl" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/normalizer.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/normalizer.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/prototype/model/normalizerIntegerAttr.pkl" afterPath="$PROJECT_DIR$/gui_prototype/prototype/model/normalizerIntegerAttr.pkl" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" afterPath="$PROJECT_DIR$/.idea/GitHubRepositoryClassifier.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gui_prototype/rc_cli.py" afterPath="$PROJECT_DIR$/gui_prototype/rc_cli.py" />
     </list>
@@ -44,8 +41,28 @@
       <file leaf-file-name="rc_cli.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gui_prototype/rc_cli.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="205" column="40" selection-start-line="205" selection-start-column="40" selection-end-line="205" selection-end-column="40" />
+            <state relative-caret-position="2348">
+              <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pydevd.py" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="537">
+              <caret line="963" column="0" selection-start-line="963" selection-start-column="0" selection-end-line="963" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="asciinator.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/etc/ascii_art/asciinator.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-846">
+              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -74,8 +91,8 @@
       <file leaf-file-name="repository_classifier.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="521" column="8" selection-start-line="521" selection-start-column="8" selection-end-line="521" selection-end-column="8" />
+            <state relative-caret-position="180">
+              <caret line="94" column="115" selection-start-line="94" selection-start-column="115" selection-end-line="94" selection-end-column="115" />
               <folding />
             </state>
           </provider>
@@ -96,26 +113,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="731">
               <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="additional_data_sets_cleaned.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/data/csv/additional_data_sets_cleaned.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4148">
-              <caret line="244" column="45" selection-start-line="244" selection-start-column="45" selection-end-line="244" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rc_gui.spec" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rc_gui.spec">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -274,59 +271,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="gui_prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui_prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utility_funcs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GitHubRepositoryClassifier" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gui_prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prototype" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="csv" />
+              <option name="myItemId" value="examples" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -399,14 +344,14 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="D:\Program Files\Anaconda3\python.exe" />
+      <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui_prototype" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="GitHubRepositoryClassifier" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_prototype/rc_cli.py" />
-      <option name="PARAMETERS" value="" />
+      <option name="PARAMETERS" value="https://github.com/NexusHero/Trunk" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
@@ -608,13 +553,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477497692750</updated>
-    </task>
-    <task id="LOCAL-00023" summary="fixed path issues">
-      <created>1484045270715</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1484045270715</updated>
     </task>
     <task id="LOCAL-00024" summary="added getterFunctions for IntegerAttributes">
       <created>1484065386538</created>
@@ -952,7 +890,14 @@
       <option name="project" value="LOCAL" />
       <updated>1485107730746</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="classified.">
+      <created>1485108029517</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1485108029517</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -998,18 +943,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1984375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32767624" sideWeight="0.490625" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34725848" sideWeight="0.31" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0" sideWeight="0.365" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32506528" sideWeight="0.480625" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2832981" sideWeight="0.803125" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2832981" sideWeight="0.803125" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3994778" sideWeight="0.495" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39852008" sideWeight="0.495" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1032,7 +977,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added if __name__ == ... in github_prototype.py&#10;the normalizer is now saved explicity&#10;fixed path import in rc_cli.py" />
     <MESSAGE value="added default path to 'C:' for the saving menu" />
     <MESSAGE value="added lstTrainDataRaw export&#10;kiv.matplotlib is now used via relative path" />
     <MESSAGE value="made start white in integer plot" />
@@ -1057,20 +1001,31 @@
     <MESSAGE value="try and catch." />
     <MESSAGE value="else block removed." />
     <MESSAGE value="menu block. Grammer...&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="menu block. Grammer...&#10;" />
+    <MESSAGE value="classified." />
+    <option name="LAST_COMMIT_MESSAGE" value="classified." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gui_prototype/rc_cli.py</url>
+          <line>111</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gui_prototype/rc_cli.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="24" />
+      <option name="time" value="28" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/uix/behaviors/focus.py" />
-    <entry file="file://G:/Programming/Projects/Python/PyInstallerTest/GithubClassifier/dist/rc_gui/rc_cli.py" />
     <entry file="file://G:/Programming/Projects/Python/PyInstallerTest/GithubClassifier/gui_prototype/lib/kivy/garden/garden.matplotlib/backend_kivy.py" />
     <entry file="file://G:/Program Files/Anaconda3/Lib/threading.py" />
     <entry file="file://G:/Program Files/Anaconda3/Lib/site-packages/kivy/animation.py" />
@@ -1305,14 +1260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="521" column="8" selection-start-line="521" selection-start-column="8" selection-end-line="521" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/utility_funcs/io_agent.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
@@ -1321,10 +1268,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examples/etc/ascii_art/asciinator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-846">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="963" column="0" selection-start-line="963" selection-start-column="0" selection-end-line="963" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gui_prototype/prototype/repository_classifier.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="94" column="115" selection-start-line="94" selection-start-column="115" selection-end-line="94" selection-end-column="115" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/gui_prototype/rc_cli.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="205" column="40" selection-start-line="205" selection-start-column="40" selection-end-line="205" selection-end-column="40" />
+        <state relative-caret-position="2348">
+          <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
           <folding />
         </state>
       </provider>
