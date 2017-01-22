@@ -125,8 +125,8 @@ def main():
 
         elif strInput == 'u':
             print("Enter the URL to a Repository.")
-            strUrlInput = input()
 
+            strUrlInput = input()
             try:
                 if string_operation.validate_url(strUrlInput):
                     repoClassifier.predictCategoryFromURL(strUrlInput)
@@ -147,31 +147,33 @@ def main():
             print("2. load standard train data set.")
 
             strOption = input()
+            try:
+                if strOption == "1":
+                    print("hint: You will override the given train model. Are you sure you want to do this?  <y>")
 
-            if strOption == "1":
-                print("hint: You will override the given train model. Are you sure you want to do this?  <y>")
+                    strAwnser = input()
 
-                strAwnser = input()
+                    if strAwnser == "y" or strAwnser == "yes":
+                        print("Enter a valid path of train data (.csv)")
+                        strTrain = input()
+                        lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+                        repoClassifier.trainModel(lstTrainData, lstTrainLabels)
+                        repoClassifier.exportModelToFile()
+                        print("Model is trained and exported")
+                    else:
+                        print("User refused to learn new model")
 
-                if strAwnser == "y" or strAwnser == "yes":
-                    print("Enter a valid path of train data (.csv)")
-                    strTrain = input()
-                    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(strTrain, True)
+                elif strOption == "2":
+                    print("Standard model will be loaded")
+                    lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(
+                        '/data/csv/additional_data_sets_cleaned.csv')
                     repoClassifier.trainModel(lstTrainData, lstTrainLabels)
                     repoClassifier.exportModelToFile()
-                    print("Model is trained and exported")
+                    print("standard model is loaded")
                 else:
                     print("User refused to learn new model")
-
-            elif strOption == "2":
-                print("Standard model will be loaded")
-                lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData(
-                    '/data/csv/additional_data_sets_cleaned.csv')
-                repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-                repoClassifier.exportModelToFile()
-                print("standard model is loaded")
-            else:
-                print("User refused to learn new model")
+            except:
+                print ("Error occured while training. Pls try again!")
 
         elif strInput == 'h':
             print(help)
