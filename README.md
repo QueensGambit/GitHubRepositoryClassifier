@@ -2,7 +2,6 @@
 
 ## subject of the [informatiCup 2016/2017](https://github.com/InformatiCup/InformatiCup2017/)
 
-![Logo](https://cloud.githubusercontent.com/assets/7681159/22186900/a9de142e-e0fd-11e6-86f7-b83946130515.jpeg)
 
 This Programm will take an URL of a github repository as the input and will try to assign it to one of seven Categories.
 
