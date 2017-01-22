@@ -53,7 +53,7 @@ help = "This application classifies github repositories. There are 7 Categories:
  The classification method is based on Nearest Centroid algorithm of the skicit learn libary. To navigte through the application" \
        "use the given menu."
 
-info = "This application is developed by  Björn Beha, Johannes Chzech, Lukas Scheuerle and Suhay Sevinc. "
+info = "This application is developed by Björn Beha, Johannes Chzech, Lukas Scheuerle and Suhay Sevinc. "
 # pip install prettytable
 # ...
 # Successfully installed prettytable-0.7.2
@@ -127,10 +127,13 @@ def main():
             print("Enter the URL to a Repository.")
             strUrlInput = input()
 
-            if string_operation.validate_url(strUrlInput):
-                repoClassifier.predictCategoryFromURL(strInput)
-            else:
-                print("Make sure that you entered a correct url")
+            try:
+                if string_operation.validate_url(strUrlInput):
+                    repoClassifier.predictCategoryFromURL(strInput)
+                else:
+                    print("Make sure that you entered a correct url")
+            except:
+                print("Exception has occured.")
 
         elif strInput == 'g':
             token = not token
