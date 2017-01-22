@@ -38,7 +38,6 @@ if getattr(sys, 'frozen', False):
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import matplotlib
-# matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 matplotlib.use('module://lib.kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
@@ -56,13 +55,6 @@ import matplotlib.patches as mpatches
 
 import sys, os
 import matplotlib.pyplot as plt
-import pylab as pl
-# from colour import Color
-
-# add the current directory to the system path in order to find the modules in relative path
-# sys.path.insert(0, os.path.abspath(".."))
-# sys.path.append(os.path.abspath("../prototype"))
-
 
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs.io_agent import InputOutputAgent  # this import is used to enable or disable the GithubToken
@@ -70,8 +62,6 @@ from prototype.utility_funcs.io_agent import InputOutputAgent  # this import is 
 from prototype.definitions.categories import CategoryStr
 import webbrowser
 
-# threading and animation
-# multithreading in kivy:
 # https://github.com/kivy/kivy/wiki/Working-with-Python-threads-inside-a-Kivy-application
 import threading
 from kivy.animation import Animation
@@ -87,13 +77,6 @@ from pathlib import Path
 kivy.require("1.9.0")
 
 
-# http://stackoverflow.com/questions/2297933/creating-a-custom-sys-stdout-class
-# other options:
-# - redirect_stdout
-# - contextlib
-# - overload print() function
-# ...
-
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
     b_checkbox_download = False                    # checkbox status for global use
@@ -106,7 +89,6 @@ class StaticVars:
 
 class StdOut(object):
     def __init__(self, log_console, oldStdOut):
-        # self.txtctrl = txtctrl
         self.log_console = log_console
         self.oldStdOut = oldStdOut
         # see more informations about thread-synchronisation
@@ -137,9 +119,16 @@ class Radar(object):
     # plt.rcParams['legend.facecolor'] = 'w'
 
     def __init__(self, fig, titles, labels, color='b', rect=None):
+        """
+        constructor
+
+        :param fig: given figure-object
+        :param titles: title-list
+        :param labels: lable-list
+        :param color: used color for plotting
+        :param rect: area for plotting
+        """
         if rect is None:
-            # rect = [0.05, 0.05, 0.95, 0.95]
-            # set a constant offset and scale
             rect = [0.05, 0.05, 0.9, 0.9]
 
         self.n = len(titles)
@@ -162,6 +151,14 @@ class Radar(object):
             ax.set_ylim(0, 5)
 
     def plot(self, values, *args, **kw):
+        """
+        starts the plotting process
+
+        :param values: values to be plottet
+        :param args: custom arguments
+        :param kw: custom arguments
+        :return:
+        """
         angle = np.deg2rad(np.r_[self.angles, self.angles[0]])
         values = np.r_[values, values[0]]
         self.ax.plot(angle, values, *args, **kw)
@@ -410,17 +407,36 @@ class GUILayout(BoxLayout):
 
     @mainthread
     def init_plotting(self):
+        """
+        Initialias the plotting by setting up all figures.
+        This is needed to enable multi-threading
+
+        :return:
+        """
         iNumOfFigures = 5
         for i in range(1, iNumOfFigures+1):
             plt.figure(i)
 
     @mainthread
-    def update_pie_chart(self, fig): #*args):
+    def update_pie_chart(self, fig):
+        """
+        updates the wordcloud plot
+
+        :param fig: given figure
+        :return:
+        """
         self.layout_pie_chart.clear_widgets()
         self.layout_pie_chart.add_widget(FigureCanvas(fig))
 
     @mainthread
     def update_result_label(self, iLabel, iLabelAlt, lstFinalPercentagesSorted):
+        """
+        updates the result label
+        :param iLabel: integer which
+        :param iLabelAlt:
+        :param lstFinalPercentagesSorted:
+        :return:
+        """
 
         if lstFinalPercentagesSorted[5] > lstFinalPercentagesSorted[6] - .5:
             self.label_second_result.text = "Secondary Result: " + CategoryStr.lstStrCategories[iLabelAlt]
@@ -429,6 +445,11 @@ class GUILayout(BoxLayout):
 
     @mainthread
     def enable_classification(self):
+        """
+        enables the classification-button
+
+        :return:
+        """
         StaticVars.b_run_loading = False
         StaticVars.animation_loading.cancel(StaticVars.anim_bar)
         self.button_classifier.disabled = False                      # re-enable button
@@ -436,26 +457,54 @@ class GUILayout(BoxLayout):
 
     @mainthread
     def update_result_label_no_result(self):
+        """
+        shows that no result has been found
+
+        :return:
+        """
         self.label_result.text = 'No Result'
         self.label_second_result = ""
 
     @mainthread
     def update_wordcloud(self, fig):
+        """
+        updates the wordcloud plot
+
+        :param fig: given figure
+        :return:
+        """
         self.layout_diagram1.clear_widgets()
         self.layout_diagram1.add_widget(FigureCanvas(fig))
 
     @mainthread
     def update_no_wordcloud(self):
+        """
+        shows a message in the plot windows that the repository doesn't contain any words
+
+        :return:
+        """
         self.layout_diagram1.clear_widgets()
         self.layout_diagram1.add_widget(Label(text="The Repository doesn't contain any words"))
 
     @mainthread
     def update_multi_dim(self, fig):
+        """
+        updates the plot with the multi-dimensional data
+
+        :param fig: given figure
+        :return:
+        """
         self.layout_diagram3.clear_widgets()
         self.layout_diagram3.add_widget(FigureCanvas(fig))
 
     @mainthread
     def update_plot_net_diagram(self, fig):
+        """
+        updates the radar diagram
+
+        :param fig: given figure
+        :return:
+        """
         self.layout_diagram2.clear_widgets()
         self.layout_diagram2.add_widget(FigureCanvas(fig))
 
@@ -517,9 +566,7 @@ class GUILayout(BoxLayout):
 
         # create coloring from image
         img_colors = ImageColorGenerator(img)
-        # wordcloud = WordCloud(background_color=(48, 48, 48), mask=imgMask).generate(text)
         wordcloud = WordCloud(background_color=(48, 48, 48), mask=img, color_func=img_colors, max_words=2000).generate(text)
-        # self.layout_diagram1.clear_widgets()
         plt.figure(2)
         plt.imshow(wordcloud)
 
@@ -625,8 +672,6 @@ class GUILayout(BoxLayout):
         """
         # get clipboard data
         self.textfield_input.text = clipboard.paste()
-        # print('paste-button pressed')
-        # print(clipboard.paste())
         print('[INFO] pasted text:', clipboard.paste())
         self.update_console()
 
@@ -892,7 +937,6 @@ class GUILayout(BoxLayout):
             # plot the centroid
 
             # plot the current sample via the given integer features
-            # lstCurIntegerFeatures = self.normalizer.transform(lstCurIntegerFeatures)
             print('lstCurIntegerFeatures:', lstCurIntegerFeatures)
             lstCurIntegerFeatures = normalizer.transform(lstCurIntegerFeatures)
             ptCurRepo = pca.transform(lstCurIntegerFeatures)

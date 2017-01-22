@@ -3,7 +3,7 @@
 Created on 07.01.2017 18:20
 @project: GitHubRepositoryClassifier
 
-@author: Anonym
+@author: QueensGambit
 
 Sample usage of the repository-classifier
 """
@@ -11,18 +11,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from sklearn import svm
-from sklearn import preprocessing
 from sklearn import decomposition
 from sklearn.cluster import KMeans
 from sklearn.semi_supervised import label_propagation
 from prototype.repository_classifier import RepositoryClassifier
 from prototype.utility_funcs.io_agent import InputOutputAgent
-from prototype.github_repo import GithubRepo
 from matplotlib.colors import colorConverter
 
-from sklearn import datasets
-from sklearn.semi_supervised import LabelPropagation
 import matplotlib.patches as mpatches
 
 import sys
@@ -37,7 +32,6 @@ def main(args=None):
     InputOutputAgent.setWithToken(True)
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
 
-    # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
     #lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
@@ -102,20 +96,7 @@ def plot_multi_dim(clf, data, lstTrainLabels):
     lstColors = [None] * len(lstTrainLabels)
     lstStrLabels = [None] * len(lstTrainLabels)
 
-#    for i, iLabel in enumerate(lstTrainLabels):
-#        lstColors[i] = CategoryStr.lstStrColors[iLabel]
-#        lstStrLabels = CategoryStr.lstStrCategories[iLabel]
-
-    # plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired, color=lstColors)
     plt.scatter(data[:, 0], data[:, 1], cmap=plt.cm.Paired)
-
-    # if clf is not None:
-    #     centroids = clf.centroids_
-    #     centroids = normalizer.fit_transform(centroids)
-    #
-    #     plt.scatter(centroids[:, 0], centroids[:, 1],
-    #                 marker='x', s=169, linewidths=3,
-    #                 color=CategoryStr.lstStrColors, zorder=10)
 
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
@@ -227,10 +208,6 @@ def plot(X, y, lstStrCategories):
 
     plt.legend(proxy, lstStrCategories)
     plt.show()
-
-
-
-#### RESULTS
 
 
 if __name__ == "__main__":

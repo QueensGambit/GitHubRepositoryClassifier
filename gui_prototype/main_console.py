@@ -43,24 +43,17 @@ def main(args=None):
     InputOutputAgent.setWithToken(True)
     repoClassifier = RepositoryClassifier(bUseStringFeatures=True)
 
-    # strFilenameCSV = 'example_repos.csv'
     strFilenameCSV = 'additional_data_sets_cleaned.csv'
 
     lstTrainData, lstTrainLabels = repoClassifier.loadTrainingData('/data/csv/' + strFilenameCSV)
     repoClassifier.trainModel(lstTrainData, lstTrainLabels)
-    # repoClassifier.exportModelToFile()
-    # clf, lstMeanValues, matIntegerTrainingData, lstTrainLabels, lstTrainData, normalizer, normalizerIntegerAttr, _ = repoClassifier.loadModelFromFile()
     repoClassifier.predictResultsAndCompare()
 
     print('~~~~~~~~~~~~~ PREDICTION FROM SINGLE URL ~~~~~~~~~~~~~~~')
     iLabel, iLabelAlt, lstFinalPercentages, tmpRepo, lstNormedInputFeatures = repoClassifier.predictCategoryFromURL('https://github.com/akitaonrails/vimfiles')
-    # pobox/overwatch
-    # pobox
     repoClassifier.predictCategoryFromOwnerRepoName('pobox', 'overwatch')
     repoClassifier.predictCategoryFromOwnerRepoName('QueensGambit', 'Barcode-App')
     print('lstNormedInputFeatures')
-
-
 
 
 #### RESULTS

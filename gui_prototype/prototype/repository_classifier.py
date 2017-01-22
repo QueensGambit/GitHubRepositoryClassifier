@@ -1,6 +1,4 @@
 from operator import add
-from os import path
-from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -11,27 +9,12 @@ from os import path
 
 from .utility_funcs.preprocessing_operations import initInputParameters, readVocabFromFile
 from .interface_repository_classifier import Interface_RepoClassifier
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neighbors import RadiusNeighborsClassifier
-from sklearn.svm import SVC
-from sklearn.neural_network import MLPClassifier
-from sklearn.gaussian_process import GaussianProcessClassifier
-from sklearn.linear_model import  LogisticRegression
 
 from sklearn import preprocessing
-from sklearn.decomposition import PCA
-from sklearn.cluster import KMeans
-import matplotlib.pyplot as plt
 
 import os
-#logging.basicConfig(level=logging.DEBUG)
-from .utility_funcs.io_agent import InputOutputAgent
-# import prototype.github_repo
 from .github_repo import GithubRepo
-from numpy import array
 from pathlib import Path
-import math
-
 
 class RepositoryClassifier(Interface_RepoClassifier):
 
@@ -167,7 +150,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
             lstInputFeaturesRaw += tmpRepo.getRepoLanguageAsVector()
 
             # test using unnormed features
-
             self.lstTrainData.append(lstInputFeatures)
             self.lstTrainDataRaw.append(lstInputFeaturesRaw)
 
@@ -281,8 +263,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
         print('~~~~~~~~~~ GET THE VOCABULARY ~~~~~~~~~~')
 
         strVocabPath = self.directory + '/vocab/'
-
-
         strVocabPath += 'vocabList.dump'
         self.lstVoc = readVocabFromFile(strVocabPath)
         # only print out the first 7 and the last 7 entries
@@ -320,7 +300,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
 
         print('~~~~~~~~~~ PREDICT RESULTS ~~~~~~~~~~')
         # classify the result
-
         # read the unlabeled data set from a csv
         dtUnlabeledData = pd.read_csv(self.directory + strProjPathFileNameCSV, header=0, delimiter=",")  # , nrows=iNumOfPredictions)
 
@@ -348,8 +327,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt1)] = 1
 
             if pd.notnull(strTargetAlt2):
-                # strTargetAlt2 = strTargetAlt2[1:]
-                # print('i:', i)
                 print('strTargetAlt2:', strTargetAlt2)
                 matPredictionTarget[i, self.lstStrCategories.index(strTargetAlt2)] = 1
 
@@ -364,7 +341,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
             matPredictionResWithAlt[i, iLabelAlt] = 1
 
         matPredictionResultByCategory = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
-        # print("matPredictionTarget:", matPredictionTarget)
 
         for i in range(0, iNumOfPredictions):
             for j in range(0, 7):
@@ -537,8 +513,6 @@ class RepositoryClassifier(Interface_RepoClassifier):
             if self.bUseStringFeatures:
                 lstOccurence = tmpRepo.getWordOccurences(self.lstVoc)
                 tmpRepo.printFeatureOccurences(tmpRepo.getDicFoundWords())
-                # printFeatureOccurences(self.lstVoc, lstOccurence, 0)
-
 
         print('Prediction for ' + tmpRepo.getName() + ', ' + tmpRepo.getUser() + ': ', end="")
 
