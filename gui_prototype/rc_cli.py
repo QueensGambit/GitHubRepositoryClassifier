@@ -141,7 +141,7 @@ def main():
 
         elif strInput == 't':
             print("1. load external train data set.")
-            print("2. load standard train data set")
+            print("2. load standard train data set.")
 
             strOption = input()
 
