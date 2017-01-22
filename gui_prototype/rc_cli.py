@@ -257,7 +257,7 @@ def writeClassifiedTxtFile(file, strReadFileDirectory, strFileClassified, repoCl
 
     try:
 
-        classifiedFile = open(strReadFileDirectory + '/q' + strFileClassified, 'w')  # Trying to create a new file or open one
+        classifiedFile = open(strReadFileDirectory + '/' + strFileClassified, 'w')  # Trying to create a new file or open one
 
         for line in file:
             strRepoUrl = line.strip(os.linesep)
