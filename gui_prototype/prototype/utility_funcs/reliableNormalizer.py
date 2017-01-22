@@ -5,7 +5,7 @@ Created on 15.01.2017 15:53
 
 @author: Lukas
 
-don't use this, apparently I'm stupid
+don't use this
 """
 
 import math

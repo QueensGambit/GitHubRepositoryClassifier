@@ -4,6 +4,12 @@ import pickle
 import logging
 
 def createVoabularyFeatures(lstRepos):
+    """
+    Here the vocabulary-list is created by using the given list of GithubRepo-Objects
+
+    :param lstRepos: list of GithubRepo-Objects
+    :return: vocabList - list of the feature names
+    """
     # lstAllReadmes = []
 
     lstRepoStringInfo = []
@@ -11,7 +17,6 @@ def createVoabularyFeatures(lstRepos):
     for tmpRepo in lstRepos:
 
         # load the single lines to an array
-        #print('tmpRepo.getFilteredREADME(): ', tmpRepo.getFilteredREADME())
         lstRepoStringInfo.append(tmpRepo.getFilteredReadme(bApplyStemmer=True, bCheckStopWords=True))
         lstRepoStringInfo.append(tmpRepo.getFilteredRepoDescription(bApplyStemmer=True, bCheckStopWords=True))
 
@@ -25,18 +30,20 @@ def createVoabularyFeatures(lstRepos):
     # return a sparse matrix
     # each column is mapped to a specific feature (see lstFeatureNames)
     # the value describes the occurrence of the word in the current line
-    # matSparse = vectorizer.fit_transform(lstAllReadmes)
     matSparse = vectorizer.fit_transform(lstRepoStringInfo)
 
     lstFeatureNames = vectorizer.get_feature_names()
-
-    # Generating word cloud image -> Only 20 plots are supported at once by default
-
 
     return lstFeatureNames
 
 
 def readVocabFromFile(strVocabPath):
+    """
+    reads the stored vocab list from a given file-path
+
+    :param strVocabPath: path where the vocab is stored
+    :return:
+    """
     # http://stackoverflow.com/questions/899103/writing-a-list-to-a-file-with-python
     # read dump file
     with open(strVocabPath, 'rb') as fp:
@@ -67,11 +74,5 @@ def initInputParameters(strVocabPath, lstGithubRepo):
         with open(strVocabPath, 'wb') as fb:
             logging.debug('dump vocab to file...')
             pickle.dump(lstVoc, fb)
-
-    # for tmpGithubRepo in lstGithubRepo:
-    #     lstOccurence = tmpGithubRepo.getWordOccurences(lstVoc)
-    #     # print('sum(sparseMatrix):', sum(matSparse))
-    #     # print('lstOccurence: ', lstOccurence)
-    #     # print('len(Occurence): ', len(lstOccurence))
 
     return lstVoc

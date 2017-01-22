@@ -9,12 +9,11 @@ from .definitions.githubLanguages import lstLanguages
 from .features.learning_features import IntFeatures
 from .utility_funcs import string_operation
 from .utility_funcs.io_agent import InputOutputAgent
-from .utility_funcs import count_vectorizer_operations
 from pathlib import Path
 # http://stackoverflow.com/questions/32910096/is-there-a-way-to-auto-generate-a-str-implementation-in-python
 def auto_str(cls):
     """
-    method for auto-generating a to string-function which prints out all member-attributes
+    Method for auto-generating a to string-function which prints out all member-attributes
 
     :param cls: current class
     :return: cls
@@ -22,7 +21,6 @@ def auto_str(cls):
     def __str__(self):
         return '%s(%s)' % (
             type(self).__name__,
-            # ', '.join('%s=%s' % item for item in vars(self).items())
             '\n '.join('%s=%s' % item for item in vars(self).items())
         )
 
@@ -35,10 +33,10 @@ class GithubRepo:
 
     def __init__(self, strUser, strName):
         """
-        Simple constructor
+        Constructor which takes two arguments to initialize the repository
 
-        :param strUser: user of the repository
-        :param strName: name of the repository
+        :param strUser: user of the repository (e.g. "GNOME")
+        :param strName: name of the repository (e.g. "gimp")
         """
         self.user = strUser
         self.name = strName
@@ -68,6 +66,12 @@ class GithubRepo:
 
 
     def getRepoDescription(self):
+        """
+        Gets the full description of the repository which is stored in the json-Api
+        If the description wasn't set, an empty string "" will be returned
+
+        :return: string which contains the description
+        """
         strDescr = self.apiJSON['description']
         if strDescr is None:
             return ""
@@ -75,6 +79,14 @@ class GithubRepo:
             return strDescr
 
     def getFilteredRepoDescription(self, bApplyStemmer=True, bCheckStopWords=False):
+        """
+        gets a filtered version of the description of the repository
+        if the description wasn't set, an empty string "" will be returned
+
+        :param bApplyStemmer: true if the words should be stripped to the stem
+        :param bCheckStopWords: true if known stopwords such as (the, he, and,...) should be ignored
+        :return: string which contains the filtered form of the description
+        """
         strDescription = self.getRepoDescription()
         if strDescription is not "":
             # return strDescription
@@ -83,32 +95,49 @@ class GithubRepo:
             return ""
 
     def getRepoLanguage(self):
+        """
+        Gets the language from the main json-Api-page which was assigned by github to this repository.
+        If no language was allocated "undetected" will be returned
+
+        :return: string which contains the language (e.g. C++, Java, Python,...)
+        """
         strLanguage = self.apiJSON['language']
-        # return string_operation.prepare_words(strLanguage)
         if strLanguage is not None:
             return strLanguage
         else:
             return "undetected"
 
     def getRepoLanguageAsVector(self):
+        """
+        Returns an integer-list with 102 entries
+        All of them are set to 0 except the language which is used
+
+        :return: list
+        """
         lstLangVec = [0] * len(lstLanguages)
         try:
             iLangIndex = lstLanguages.index(self.getRepoLanguage())
         except ValueError:
             iLangIndex = lstLanguages.index("rare")
 
-        lstLangVec[iLangIndex] = 1 #1 # you can enable and disable here
+        lstLangVec[iLangIndex] = 1
 
         return lstLangVec
 
 
     def getReadme(self):
+        """
+        Gets the raw content of the readme of the repository which can either be a README.md or README.rst file.
+        The job for loading and exporting the readme is done by it's Io-Agent.
+
+        :return: string with the raw content
+        """
         strMyREADME = self.ioAgent.getReadme(self.strDirPath_readme)
         return strMyREADME
 
     def getFilteredReadme(self, bApplyStemmer=True, bCheckStopWords=False):
         """
-        returns the filtered readme with prepare_words() being applied
+        Returns the filtered readme with prepare_words() being applied
 
         :return: string of the filtered readme
         """
@@ -118,6 +147,12 @@ class GithubRepo:
         return self.strFilteredReadme
 
     def getDevTime(self):
+        """
+        Gets the devolpment time of the repository in days.
+        This is calculated via the difference of 'created_at' - 'updated_at'
+
+        :return: integer which
+        """
         # a usual Github-Time stamp looks like this:
         # "2011-10-17T15:09:52Z"
 
@@ -135,9 +170,18 @@ class GithubRepo:
         return iDevTime
 
     def getNumOpenIssue(self):
+        """
+        gets the number of open issues from the json-main-page
+
+        :return:
+        """
         return self.apiJSON['open_issues']
 
     def getNumWatchers(self):
+        """
+        gets the number of watcher from the json-main-page
+        :return:
+        """
         return self.apiJSON['watchers_count']
 
     @classmethod
@@ -160,35 +204,12 @@ class GithubRepo:
 
         :return:
         """
-        # print('readAttributes...')
-
-        # strUrl = 'https://api.github.com/repos/WebpageFX/emoji-cheat-sheet.com'
-
-        # self.apiJSON = requests.get(strUrl)
-        # self.apiJSON = requests.get(self.apiUrl)
-
-
-
         iDevTime = self.getDevTime()
-
-
-        # print('iDevTime:', iDevTime)
-
-        # jsBranches = self.apiJSON['branches_url'])).json()
-        # iNumBranches = len(jsBranches)
 
         self.intFeatures = IntFeatures(iSubscriberCount=self.apiJSON['subscribers_count'],
                                        iOpenIssues=self.getNumOpenIssue(),
                                        iDevTime=iDevTime,
-                                       #dRepoActivity=0,
-                                       #dCommitIntervals=0,
-                                       #iWatchersCount=0, #self.apiJSON['watchers_count'],
                                        iSize=self.apiJSON['size'])
-
-        # print(self.apiJSON['contributors_url'])
-        # jsContrib = (requests.get(self.apiJSON['contributors_url'])).json()
-
-        # print('len(jsContrib):', len(jsContrib)) # better use subscriber-count ther contributor length only lists the top contributors
 
 
     def getIntegerFeatures(self):
@@ -200,14 +221,8 @@ class GithubRepo:
         lstFeatures = [self.intFeatures.iSubscriberCount,
                        self.intFeatures.iOpenIssues,
                        self.intFeatures.iDevTime,
-                       #self.intFeatures.dRepoActivity, #dCodeFrequency
-                       #self.intFeatures.dCommitIntervals,
-                       #self.intFeatures.iWatchersCount,  #iNumBranches
                        self.intFeatures.iSize
                        ]
-
-        # skip int features
-        # lstFeatures = [0] * 7
 
         return lstFeatures
 
@@ -232,9 +247,6 @@ class GithubRepo:
         :param lstVocab: vocabulary which is used in the CountVectorizer of scikit-learn
         :return: integer list representing the percentage-usage of the vocabulary words
         """
-
-        # test skipping word occurrences completly in the evaluation
-        # return [0] * len(lstVocab)
 
         vectorizer = CountVectorizer(min_df=0.5, vocabulary=lstVocab)
 
@@ -272,38 +284,36 @@ class GithubRepo:
         if iHits == 0:
             iHits = 1
 
-        # fFacEffectiveness = 1.0
-        # fFacEffectiveness = 10.0
-        # fFacEffectiveness = 20.0
-
-        # 10 is the factor between string and integer attributes
-        # lstOccurence[:] = [(x / iLen) * fFacEffectiveness for x in lstOccurence]
-
-        # keep as is
-        # lstOccurence[:] = [x for x in lstOccurence]
-
-        # make a binarized vector
-        # lstOccurence[:] = [1 if x > 0 else 0 for x in lstOccurence]
-
-        # dicFoundWords = count_vectorizer_operations.printFeatureOccurences(lstFeatureNames, lstOccurence, 2)
         self.dicFoundWords = self.getFeatureOccurences(lstFeatureNames, lstOccurrence, iMinOccurence=1)
         self.printFeatureOccurences(self.dicFoundWords)
 
         return lstOccurrence
 
     def getFeatureOccurences(self, lstFeatureNames, lstOccurrence, iMinOccurence=1):
+        """
+        gets the found words with it's number of occurrences in form of a dictionary
+
+        :param lstFeatureNames: vocab list
+        :param lstOccurrence: list of number of occurrences
+        :param iMinOccurence: minimum number of hits which are needed
+        :return: dictionaryObject
+        """
         assert (len(lstFeatureNames) == len(lstOccurrence))
         i = 0
         dicFoundWords = {}
         for iTmpOccurrence in lstOccurrence:
             if iTmpOccurrence > iMinOccurence:
-                # dicFoundWords[lstFeatureNames[i]] = iTmpOccurrence
                 dicFoundWords[iTmpOccurrence] = lstFeatureNames[i]
             i += 1
 
         return dicFoundWords
 
     def getDicFoundWords(self):
+        """
+        gets the stored dictionary-object
+        :return: dictionaryObject
+        """
+
         if self.dicFoundWords is None:
             raise Exception('getWordOccurences() hasn\'t been called yet')
         return self.dicFoundWords
@@ -329,15 +339,6 @@ class GithubRepo:
                 print('{:15s} {:3f}'.format(v, k))  # {:3d} for integers
 
             print(strStopper2)
-
-        # return dicFoundWords
-
-    def getWordDict(self):
-        if self.lstOccurrence is not None:
-            count_vectorizer_operations.getFeatureOccurences
-        else:
-            raise MemoryError('the list for the word occurrence list is still empty')
-
 
     def getName(self):
         """

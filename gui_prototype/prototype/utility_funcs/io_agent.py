@@ -52,11 +52,23 @@ class InputOutputAgent:
 
     @staticmethod
     def setRedownload(bRedownload):
+        """
+        sets up if the readme and json-file shall get redownload
+
+        :param bRedownload: true, false
+        :return:
+        """
         InputOutputAgent.__bRedownload = bRedownload
 
 
     @staticmethod
     def setWithToken(bWithToken):
+        """
+        sets up if the github token shall be used for connection to github
+
+        :param bWithToken: true, false
+        :return:
+        """
         if bWithToken is not InputOutputAgent.__bWithToken:
             # if InputOutputAgent.__gh:
             #     InputOutputAgent.__gh.close()         # there is no .close() method
@@ -69,6 +81,12 @@ class InputOutputAgent:
 
     @staticmethod
     def __connectToGitHub(bWithToken):
+        """
+        private method to establish a connection to github
+
+        :param bWithToken: true, false
+        :return:
+        """
         if InputOutputAgent.__gh is None or InputOutputAgent.__bWithTokenUpdated:
             if bWithToken:
                 # the TokenGithubAPI is stored as an environment-variable
@@ -86,12 +104,6 @@ class InputOutputAgent:
                     print('No GithubToken is used for connection')
                 except Exception as ex:
                     raise ConnectionError('no connection to GitHub could be established')
-
-            # https://github3py.readthedocs.io/en/master/
-            # InputOutputAgent.gh.refresh()
-            # InputOutputAgent.gh.refresh(True)  # Will send the GET with a header such that if nothing
-            # has changed, it will not count against your ratelimit
-            # otherwise you'll get the updated user object.
 
             # get rate limit information
             rates = InputOutputAgent.__gh.rate_limit()
@@ -135,8 +147,14 @@ class InputOutputAgent:
         return jsonAPI, self.strAPIUrl, self.lstReadmePath
 
 
-    # Get content from readme as string
     def getReadme(self, strPathReadme):
+        """
+        Gets the content from the Redme as a string.
+        The Readme is either loaded from file or web.
+
+        :param strPathReadme: path were the readme is loaded and exported to
+        :return:
+        """
 
         # Create readme directory
         if not os.path.exists(strPathReadme):
@@ -146,12 +164,10 @@ class InputOutputAgent:
 
         # Check if readme exists already. If so, open it.
         if os.path.isfile(strPathReadme) and InputOutputAgent.__bRedownload is False:
-            #print("Open readme..." )
             return open(strPathReadme).read()
 
         else:
             InputOutputAgent.__connectToGitHub(InputOutputAgent.__bWithToken)
-            #print("Get readme...")
 
             repo = InputOutputAgent.__gh.repository(self.strUser, self.strName)
             code64readme = repo.readme().content
@@ -173,6 +189,3 @@ class InputOutputAgent:
                 raise ConnectionError('the given repository is not accessible')
 
             return strReadme
-
-
-
