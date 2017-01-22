@@ -109,7 +109,7 @@ def main():
     :return:
     """
 
-    if len(sys.argv) != 0:
+    if len(sys.argv) != 1:
         strParameter = sys.argv[1]
 
         if string_operation.validate_url(strParameter):
