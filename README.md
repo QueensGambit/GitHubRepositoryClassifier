@@ -16,9 +16,15 @@ The Categories are:
 
 ## Installation
 
-[installation guide for users]
+[Download the zip file from here](https://www.dropbox.com/s/p6dvmt5xtdazjaz/GitHubClassifier.zip?dl=0), unzip it wherever you want and execute one of the batch files.  
+
+The rc_gui will open up a GUI for you to use comfortably.  
+
+The rc_cli will provide a way for you to use the classifier with the commandline, including a console-menu.  
+This even accepts arguments directly so you can automate the process if you wish to do so.
+You can even give it a .txt file with many repositories to classify and it will create a new file with the results for you.
 
 ## Documentation
 
-[code documentation for devs]
+Please see the [wiki](https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation)
 
