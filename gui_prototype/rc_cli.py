@@ -129,7 +129,7 @@ def main():
 
             try:
                 if string_operation.validate_url(strUrlInput):
-                    repoClassifier.predictCategoryFromURL(strInput)
+                    repoClassifier.predictCategoryFromURL(strUrlInput)
                 else:
                     print("Make sure that you entered a correct url")
             except:
