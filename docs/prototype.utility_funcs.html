@@ -1,0 +1,343 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>prototype.utility_funcs package &#8212; GitHub Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="GitHub Classifier 1.0.0 documentation" href="index.html" />
+    <link rel="up" title="prototype package" href="prototype.html" />
+    <link rel="prev" title="prototype package" href="prototype.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="prototype.html" title="prototype package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="code.html" >Auto Generated Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="prototype.html" accesskey="U">prototype package</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="prototype-utility-funcs-package">
+<h1>prototype.utility_funcs package<a class="headerlink" href="#prototype-utility-funcs-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-prototype.utility_funcs.io_agent">
+<span id="prototype-utility-funcs-io-agent-module"></span><h2>prototype.utility_funcs.io_agent module<a class="headerlink" href="#module-prototype.utility_funcs.io_agent" title="Permalink to this headline">¶</a></h2>
+<p>&#64;file: io_agent.py
+Created on 11.12.2016 19:59
+&#64;project: GitHubRepositoryClassifier</p>
+<p>&#64;author: QueensGambit</p>
+<dl class="docutils">
+<dt>The InputOutputAgent loads data (json-Data, README...) from a given repository which</dt>
+<dd>is defined by strUser and strName. If the needed data has already been requested before,
+then is loaded from a file. Otherwise a new connection is created.
+By default the autorization of the connection is done with an API-Token</dd>
+</dl>
+<dl class="class">
+<dt id="prototype.utility_funcs.io_agent.InputOutputAgent">
+<em class="property">class </em><code class="descclassname">prototype.utility_funcs.io_agent.</code><code class="descname">InputOutputAgent</code><span class="sig-paren">(</span><em>strUser</em>, <em>strName</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/io_agent.html#InputOutputAgent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.io_agent.InputOutputAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="prototype.utility_funcs.io_agent.InputOutputAgent.getReadme">
+<code class="descname">getReadme</code><span class="sig-paren">(</span><em>strPathReadme</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/io_agent.html#InputOutputAgent.getReadme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.io_agent.InputOutputAgent.getReadme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the content from the Redme as a string.
+The Readme is either loaded from file or web.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strPathReadme</strong> &#8211; path were the readme is loaded and exported to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="prototype.utility_funcs.io_agent.InputOutputAgent.loadJSONdata">
+<code class="descname">loadJSONdata</code><span class="sig-paren">(</span><em>strPathJSON</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/io_agent.html#InputOutputAgent.loadJSONdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.io_agent.InputOutputAgent.loadJSONdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads the requested json-data either from a file or alternatively from the web
+files are exported in the &#8216;./json/&#8217; directory if they were requested</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="prototype.utility_funcs.io_agent.InputOutputAgent.setRedownload">
+<em class="property">static </em><code class="descname">setRedownload</code><span class="sig-paren">(</span><em>bRedownload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/io_agent.html#InputOutputAgent.setRedownload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.io_agent.InputOutputAgent.setRedownload" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets up if the readme and json-file shall get redownload</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bRedownload</strong> &#8211; true, false</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="prototype.utility_funcs.io_agent.InputOutputAgent.setWithToken">
+<em class="property">static </em><code class="descname">setWithToken</code><span class="sig-paren">(</span><em>bWithToken</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/io_agent.html#InputOutputAgent.setWithToken"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.io_agent.InputOutputAgent.setWithToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets up if the github token shall be used for connection to github</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bWithToken</strong> &#8211; true, false</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-prototype.utility_funcs.preprocessing_operations">
+<span id="prototype-utility-funcs-preprocessing-operations-module"></span><h2>prototype.utility_funcs.preprocessing_operations module<a class="headerlink" href="#module-prototype.utility_funcs.preprocessing_operations" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="prototype.utility_funcs.preprocessing_operations.createVoabularyFeatures">
+<code class="descclassname">prototype.utility_funcs.preprocessing_operations.</code><code class="descname">createVoabularyFeatures</code><span class="sig-paren">(</span><em>lstRepos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/preprocessing_operations.html#createVoabularyFeatures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.preprocessing_operations.createVoabularyFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here the vocabulary-list is created by using the given list of GithubRepo-Objects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lstRepos</strong> &#8211; list of GithubRepo-Objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vocabList - list of the feature names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="prototype.utility_funcs.preprocessing_operations.initInputParameters">
+<code class="descclassname">prototype.utility_funcs.preprocessing_operations.</code><code class="descname">initInputParameters</code><span class="sig-paren">(</span><em>strVocabPath</em>, <em>lstGithubRepo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/preprocessing_operations.html#initInputParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.preprocessing_operations.initInputParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialies the vocabulary set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strVocabPath</strong> &#8211; path were the vocab list is stored</li>
+<li><strong>lstGithubRepo</strong> &#8211; list of the githubRepository-objects</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="prototype.utility_funcs.preprocessing_operations.readVocabFromFile">
+<code class="descclassname">prototype.utility_funcs.preprocessing_operations.</code><code class="descname">readVocabFromFile</code><span class="sig-paren">(</span><em>strVocabPath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/preprocessing_operations.html#readVocabFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.preprocessing_operations.readVocabFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>reads the stored vocab list from a given file-path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strVocabPath</strong> &#8211; path where the vocab is stored</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-prototype.utility_funcs.reliableNormalizer">
+<span id="prototype-utility-funcs-reliablenormalizer-module"></span><h2>prototype.utility_funcs.reliableNormalizer module<a class="headerlink" href="#module-prototype.utility_funcs.reliableNormalizer" title="Permalink to this headline">¶</a></h2>
+<p>&#64;file: reliableNormalizer.py
+Created on 15.01.2017 15:53
+&#64;project: GitHubRepositoryClassifier</p>
+<p>&#64;author: Lukas</p>
+<p>don&#8217;t use this</p>
+<dl class="class">
+<dt id="prototype.utility_funcs.reliableNormalizer.ReliableNormalizer">
+<em class="property">class </em><code class="descclassname">prototype.utility_funcs.reliableNormalizer.</code><code class="descname">ReliableNormalizer</code><span class="sig-paren">(</span><em>use_log=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/reliableNormalizer.html#ReliableNormalizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.reliableNormalizer.ReliableNormalizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>input_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/reliableNormalizer.html#ReliableNormalizer.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.fit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.fit_transform">
+<code class="descname">fit_transform</code><span class="sig-paren">(</span><em>input_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/reliableNormalizer.html#ReliableNormalizer.fit_transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.fit_transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>input_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/reliableNormalizer.html#ReliableNormalizer.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>input_array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/reliableNormalizer.html#ReliableNormalizer.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.reliableNormalizer.ReliableNormalizer.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-prototype.utility_funcs.string_operation">
+<span id="prototype-utility-funcs-string-operation-module"></span><h2>prototype.utility_funcs.string_operation module<a class="headerlink" href="#module-prototype.utility_funcs.string_operation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="prototype.utility_funcs.string_operation.prepare_words">
+<code class="descclassname">prototype.utility_funcs.string_operation.</code><code class="descname">prepare_words</code><span class="sig-paren">(</span><em>raw_text</em>, <em>bApplyStemmer=True</em>, <em>bCheckStopWords=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/string_operation.html#prepare_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.string_operation.prepare_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>prepares the word for the comparision with the vocab list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>raw_text</strong> &#8211; text with control characters, number,</li>
+<li><strong>bApplyStemmer</strong> &#8211; true if is stemming shall be applied</li>
+<li><strong>bCheckStopWords</strong> &#8211; true if stopwords shall be removed</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">normed word list</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="prototype.utility_funcs.string_operation.validate_txtfile">
+<code class="descclassname">prototype.utility_funcs.string_operation.</code><code class="descname">validate_txtfile</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/string_operation.html#validate_txtfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.string_operation.validate_txtfile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks file type whether its txt or not
+:param path: path to file
+:return:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="prototype.utility_funcs.string_operation.validate_url">
+<code class="descclassname">prototype.utility_funcs.string_operation.</code><code class="descname">validate_url</code><span class="sig-paren">(</span><em>url_in</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/prototype/utility_funcs/string_operation.html#validate_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#prototype.utility_funcs.string_operation.validate_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs some simple string checks to validate the URL for further processing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url_in</strong> &#8211; The URL to perform the checks on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">error: errorcode</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="module-prototype.utility_funcs"></span></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">prototype.utility_funcs package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-prototype.utility_funcs.io_agent">prototype.utility_funcs.io_agent module</a></li>
+<li><a class="reference internal" href="#module-prototype.utility_funcs.preprocessing_operations">prototype.utility_funcs.preprocessing_operations module</a></li>
+<li><a class="reference internal" href="#module-prototype.utility_funcs.reliableNormalizer">prototype.utility_funcs.reliableNormalizer module</a></li>
+<li><a class="reference internal" href="#module-prototype.utility_funcs.string_operation">prototype.utility_funcs.string_operation module</a></li>
+<li><a class="reference internal" href="#module-contents">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="prototype.html"
+                        title="previous chapter">prototype package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/prototype.utility_funcs.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="prototype.html" title="prototype package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="code.html" >Auto Generated Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="prototype.html" >prototype package</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

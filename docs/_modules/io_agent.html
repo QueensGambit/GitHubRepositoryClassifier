@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>io_agent &#8212; GitHub Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="GitHub Classifier 1.0.0 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for io_agent</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@file: io_agent.py</span>
+<span class="sd">Created on 11.12.2016 19:59</span>
+<span class="sd">@project: GitHubRepositoryClassifier</span>
+
+<span class="sd">@author: QueensGambit</span>
+
+<span class="sd">The InputOutputAgent loads data (json-Data, README...) from a given repository which</span>
+<span class="sd"> is defined by strUser and strName. If the needed data has already been requested before,</span>
+<span class="sd"> then is loaded from a file. Otherwise a new connection is created.</span>
+<span class="sd"> By default the autorization of the connection is done with an API-Token</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">_ast</span> <span class="k">import</span> <span class="n">In</span>
+
+<span class="kn">from</span> <span class="nn">clyent</span> <span class="k">import</span> <span class="n">json_help</span>
+<span class="kn">from</span> <span class="nn">docutils.io</span> <span class="k">import</span> <span class="n">Input</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="c1"># for installtion use:</span>
+<span class="c1"># pip install github3.py</span>
+<span class="kn">from</span> <span class="nn">github3</span> <span class="k">import</span> <span class="n">GitHub</span>
+<span class="kn">from</span> <span class="nn">github3</span> <span class="k">import</span> <span class="n">login</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<div class="viewcode-block" id="InputOutputAgent"><a class="viewcode-back" href="../io_agent.html#io_agent.InputOutputAgent">[docs]</a><span class="k">class</span> <span class="nc">InputOutputAgent</span><span class="p">:</span>
+
+    <span class="n">__gh</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">__bWithToken</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">__bWithTokenUpdated</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">__bRedownload</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strUser</span><span class="p">,</span> <span class="n">strName</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the member variables</span>
+
+<span class="sd">        :param strUser: username of the owner of the repository</span>
+<span class="sd">        :param strName: name of the repository</span>
+<span class="sd">        :param bWithToken:  checks if a github-token shall be used for a higher api-limit</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">strUser</span> <span class="o">=</span> <span class="n">strUser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">strName</span> <span class="o">=</span> <span class="n">strName</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">strAPIUrl</span> <span class="o">=</span> <span class="s2">&quot;https://api.github.com/repos/&quot;</span> <span class="o">+</span> <span class="n">strUser</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">strName</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lstReadmePath</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;https://raw.githubusercontent.com/&quot;</span> <span class="o">+</span> <span class="n">strUser</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">strName</span> <span class="o">+</span> <span class="s2">&quot;/master/README.md&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;https://raw.githubusercontent.com/&quot;</span> <span class="o">+</span> <span class="n">strUser</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">strName</span> <span class="o">+</span> <span class="s2">&quot;/master/README.rst&quot;</span><span class="p">}</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="InputOutputAgent.setRedownload"><a class="viewcode-back" href="../io_agent.html#io_agent.InputOutputAgent.setRedownload">[docs]</a>    <span class="k">def</span> <span class="nf">setRedownload</span><span class="p">(</span><span class="n">bRedownload</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        sets up if the readme and json-file shall get redownload</span>
+
+<span class="sd">        :param bRedownload: true, false</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bRedownload</span> <span class="o">=</span> <span class="n">bRedownload</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="InputOutputAgent.setWithToken"><a class="viewcode-back" href="../io_agent.html#io_agent.InputOutputAgent.setWithToken">[docs]</a>    <span class="k">def</span> <span class="nf">setWithToken</span><span class="p">(</span><span class="n">bWithToken</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        sets up if the github token shall be used for connection to github</span>
+
+<span class="sd">        :param bWithToken: true, false</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">bWithToken</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithToken</span><span class="p">:</span>
+            <span class="c1"># if InputOutputAgent.__gh:</span>
+            <span class="c1">#     InputOutputAgent.__gh.close()         # there is no .close() method</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__connectToGitHub</span><span class="p">(</span><span class="n">bWithToken</span><span class="p">)</span>
+                <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithToken</span> <span class="o">=</span> <span class="n">bWithToken</span>
+                <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithTokenUpdated</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">e</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__connectToGitHub</span><span class="p">(</span><span class="n">bWithToken</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        private method to establish a connection to github</span>
+
+<span class="sd">        :param bWithToken: true, false</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithTokenUpdated</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">bWithToken</span><span class="p">:</span>
+                <span class="c1"># the TokenGithubAPI is stored as an environment-variable</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TokenGithubAPI&#39;</span><span class="p">]))</span>
+                    <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithTokenUpdated</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GithubToken is used for connection&#39;</span><span class="p">)</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s1">&#39;no connection to GitHub could be established&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span> <span class="o">=</span> <span class="n">GitHub</span><span class="p">()</span>
+                    <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithTokenUpdated</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No GithubToken is used for connection&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s1">&#39;no connection to GitHub could be established&#39;</span><span class="p">)</span>
+
+            <span class="c1"># get rate limit information</span>
+            <span class="n">rates</span> <span class="o">=</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span><span class="o">.</span><span class="n">rate_limit</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;normal ratelimit info: &#39;</span><span class="p">,</span> <span class="n">rates</span><span class="p">[</span><span class="s1">&#39;resources&#39;</span><span class="p">][</span><span class="s1">&#39;core&#39;</span><span class="p">])</span>  <span class="c1"># =&gt; your normal ratelimit info</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;search ratelimit info: &#39;</span><span class="p">,</span> <span class="n">rates</span><span class="p">[</span><span class="s1">&#39;resources&#39;</span><span class="p">][</span><span class="s1">&#39;search&#39;</span><span class="p">])</span>  <span class="c1"># =&gt; your search ratelimit info</span>
+
+<div class="viewcode-block" id="InputOutputAgent.loadJSONdata"><a class="viewcode-back" href="../io_agent.html#io_agent.InputOutputAgent.loadJSONdata">[docs]</a>    <span class="k">def</span> <span class="nf">loadJSONdata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strPathJSON</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        loads the requested json-data either from a file or alternatively from the web</span>
+<span class="sd">        files are exported in the &#39;./json/&#39; directory if they were requested</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">jsonAPI</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># check if the json file has already been requested and was saved</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">strPathJSON</span><span class="p">)</span> <span class="ow">and</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bRedownload</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="c1"># read from it</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[INFO] Using locally cached version of repository&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">strPathJSON</span><span class="p">)</span> <span class="k">as</span> <span class="n">jsonData</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">jsonData</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;jsonData=None exception: &quot;</span><span class="p">,</span> <span class="n">strPathJSON</span><span class="p">)</span>
+                    <span class="n">jsonAPI</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jsonData</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">ex</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">&#39;the json-data couldn</span><span class="se">\&#39;</span><span class="s1">t be loaded from the file: &#39;</span> <span class="o">+</span> <span class="n">strPathJSON</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">ex</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__connectToGitHub</span><span class="p">(</span><span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithToken</span><span class="p">)</span>
+            <span class="n">repo</span> <span class="o">=</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span><span class="o">.</span><span class="n">repository</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strUser</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strName</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">repo</span><span class="p">:</span>
+                <span class="n">jsonAPI</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">as_dict</span><span class="p">()</span>  <span class="c1"># .as_json() returns json.dumps(obj.as_dict())</span>
+
+                <span class="c1"># export to json-file</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">strPathJSON</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">jsonAPI</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;json-data was exported to: &#39;</span><span class="p">,</span> <span class="n">strPathJSON</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s1">&#39;the given repository is not accessible&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">jsonAPI</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strAPIUrl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lstReadmePath</span></div>
+
+
+<div class="viewcode-block" id="InputOutputAgent.getReadme"><a class="viewcode-back" href="../io_agent.html#io_agent.InputOutputAgent.getReadme">[docs]</a>    <span class="k">def</span> <span class="nf">getReadme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strPathReadme</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the content from the Redme as a string.</span>
+<span class="sd">        The Readme is either loaded from file or web.</span>
+
+<span class="sd">        :param strPathReadme: path were the readme is loaded and exported to</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Create readme directory</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">strPathReadme</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">strPathReadme</span><span class="p">)</span>
+
+        <span class="n">strPathReadme</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strUser</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">strName</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span>
+
+        <span class="c1"># Check if readme exists already. If so, open it.</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">strPathReadme</span><span class="p">)</span> <span class="ow">and</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bRedownload</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="n">strPathReadme</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__connectToGitHub</span><span class="p">(</span><span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__bWithToken</span><span class="p">)</span>
+
+            <span class="n">repo</span> <span class="o">=</span> <span class="n">InputOutputAgent</span><span class="o">.</span><span class="n">__gh</span><span class="o">.</span><span class="n">repository</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">strUser</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">strName</span><span class="p">)</span>
+            <span class="n">code64readme</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">readme</span><span class="p">()</span><span class="o">.</span><span class="n">content</span>
+
+            <span class="c1"># If the content of the received readme is a string and not a NullObject create</span>
+            <span class="c1"># a new file in directory. Otherwise create an empty file to prevent checking a</span>
+            <span class="c1"># repo twice.</span>
+            <span class="k">if</span> <span class="n">repo</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">code64readme</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                    <span class="n">strReadme</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span><span class="n">code64readme</span><span class="p">))</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">strReadme</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+                <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">strPathReadme</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+                <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">strReadme</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;readme was exported to: &#39;</span><span class="p">,</span> <span class="n">strPathReadme</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="s1">&#39;the given repository is not accessible&#39;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">strReadme</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

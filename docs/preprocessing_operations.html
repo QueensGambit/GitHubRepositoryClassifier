@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>preprocessing_operations module &#8212; GitHub Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="GitHub Classifier 1.0.0 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-preprocessing_operations">
+<span id="preprocessing-operations-module"></span><h1>preprocessing_operations module<a class="headerlink" href="#module-preprocessing_operations" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="preprocessing_operations.createVoabularyFeatures">
+<code class="descclassname">preprocessing_operations.</code><code class="descname">createVoabularyFeatures</code><span class="sig-paren">(</span><em>lstRepos</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing_operations.html#createVoabularyFeatures"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing_operations.createVoabularyFeatures" title="Permalink to this definition">¶</a></dt>
+<dd><p>Here the vocabulary-list is created by using the given list of GithubRepo-Objects</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lstRepos</strong> &#8211; list of GithubRepo-Objects</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">vocabList - list of the feature names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="preprocessing_operations.initInputParameters">
+<code class="descclassname">preprocessing_operations.</code><code class="descname">initInputParameters</code><span class="sig-paren">(</span><em>strVocabPath</em>, <em>lstGithubRepo</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing_operations.html#initInputParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing_operations.initInputParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialies the vocabulary set</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strVocabPath</strong> &#8211; path were the vocab list is stored</li>
+<li><strong>lstGithubRepo</strong> &#8211; list of the githubRepository-objects</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="preprocessing_operations.readVocabFromFile">
+<code class="descclassname">preprocessing_operations.</code><code class="descname">readVocabFromFile</code><span class="sig-paren">(</span><em>strVocabPath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/preprocessing_operations.html#readVocabFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#preprocessing_operations.readVocabFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>reads the stored vocab list from a given file-path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strVocabPath</strong> &#8211; path where the vocab is stored</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/preprocessing_operations.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>

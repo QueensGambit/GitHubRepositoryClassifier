@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="Python">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>interface_repository_classifier module &#8212; GitHub Classifier 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="GitHub Classifier 1.0.0 documentation" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-interface_repository_classifier">
+<span id="interface-repository-classifier-module"></span><h1>interface_repository_classifier module<a class="headerlink" href="#module-interface_repository_classifier" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="interface_repository_classifier.Interface_RepoClassifier">
+<em class="property">class </em><code class="descclassname">interface_repository_classifier.</code><code class="descname">Interface_RepoClassifier</code><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.exportModelToFile">
+<code class="descname">exportModelToFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.exportModelToFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.exportModelToFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+Export the model and all prequisites to the directory model/</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.loadModelFromFile">
+<code class="descname">loadModelFromFile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.loadModelFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.loadModelFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+Loading of the exported model</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.loadTrainingData">
+<code class="descname">loadTrainingData</code><span class="sig-paren">(</span><em>strProjPathFileNameCSV</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.loadTrainingData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.loadTrainingData" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+The classifier loads the sample data from a given csv-file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strProjPathFileNameCSV</strong> &#8211; path to the csv-file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.plotTheResult">
+<code class="descname">plotTheResult</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.plotTheResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.plotTheResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+A plot in which the classification is illustrated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.predictCategoryFromOwnerRepoName">
+<code class="descname">predictCategoryFromOwnerRepoName</code><span class="sig-paren">(</span><em>strUser</em>, <em>strRepoName</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.predictCategoryFromOwnerRepoName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.predictCategoryFromOwnerRepoName" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+Predict the category for a repository</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strUser</strong> &#8211; </li>
+<li><strong>strRepoName</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.predictCategoryFromURL">
+<code class="descname">predictCategoryFromURL</code><span class="sig-paren">(</span><em>strGitHubRepoURL</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.predictCategoryFromURL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.predictCategoryFromURL" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+Predict the category</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strGitHubRepoURL</strong> &#8211; </td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.predictResultsAndCompare">
+<code class="descname">predictResultsAndCompare</code><span class="sig-paren">(</span><em>strProjPathFileNameCSV</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.predictResultsAndCompare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.predictResultsAndCompare" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+Predict a given csv-file and compare the result with the manual classification</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strProjPathFileNameCSV</strong> &#8211; path to the csv-file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="interface_repository_classifier.Interface_RepoClassifier.trainModel">
+<code class="descname">trainModel</code><span class="sig-paren">(</span><em>lstTrainData</em>, <em>lstTrainLabels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/interface_repository_classifier.html#Interface_RepoClassifier.trainModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#interface_repository_classifier.Interface_RepoClassifier.trainModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>abstract method
+The model shall be trained via supervised learning</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>lstTrainData</strong> &#8211; matrix of the training data</li>
+<li><strong>lstTrainLabels</strong> &#8211; list of the associated labels</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/interface_repository_classifier.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">GitHub Classifier 1.0.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2017, Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.6.
+    </div>
+  </body>
+</html>
