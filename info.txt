@@ -1,0 +1,42 @@
+# if not installed already, do
+pip install virtualenv
+# To make the install process as easy as possible we provided a dropbox-link
+# the zip has been sucessfully tested on more than 5 different windows pc
+# should you encounter problems or you want to dive into the code we provdided a
+# install instructions
+# create virtual env for the project
+virtualenv --no-site-packages env
+# activate it (Linux)
+source my_project/bin/activate
+# Windows
+env/Scripts/activate.bat
+# first run
+# this needs to be done first in order to install the other packages (Kivy)
+pip install Cython
+# install all needed packages by
+pip install -r requirements.txt
+
+
+# Because some people experienced issues for not having OpenGL 2.0
+# The mutlisamples have been set to 0
+# Config.set('graphics', 'multisamples', '0')
+# See 
+# http://stackoverflow.com/questions/34969990/kivy-does-not-detect-opengl-2-0
+# for more informations
+
+
+# to install kivy via pip install
+# you must have Microsoft Visual C++ Build Tools installed
+# or Visual Studion 2015 or 2017
+# alternatively just use the .whl on this website
+#
+# Visual Studio 2015
+# For Python 3.5 we use the MSVC compiler.
+# The project has been developed for Python 3.5
+# For more infos see: https://kivy.org/docs/installation/installation-windows.html
+
++ you need the glew-library
+https://sourceforge.net/projects/glew/files/glew/2.0.0/glew-2.0.0-win32.zip/download
+pip install glew==0.1.9
+(env) G:\GitHub\spyder_Python\GitHubRepositoryClassifier>pip install kivy.deps.g
+lew==0.1.9
