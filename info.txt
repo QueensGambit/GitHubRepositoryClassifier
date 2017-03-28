@@ -40,3 +40,13 @@ https://sourceforge.net/projects/glew/files/glew/2.0.0/glew-2.0.0-win32.zip/down
 pip install glew==0.1.9
 (env) G:\GitHub\spyder_Python\GitHubRepositoryClassifier>pip install kivy.deps.g
 lew==0.1.9
+
+
+# Linux-Ubuntu Guide
+sudo apt-get install git
+
+git clone https://github.com/QueensGambit/GitHubRepositoryClassifier
+
+cd GitHubRepositoryClassifier/
+
+sudo apt-get install python3-kivy
