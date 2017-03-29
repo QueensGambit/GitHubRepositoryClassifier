@@ -12,9 +12,9 @@
 ## Introduction
 ### subject of the [informatiCup 2016/2017](https://github.com/InformatiCup/InformatiCup2017/)
 
-This program will take an URL of a github repository as the input and will try to assign it to one of seven Categories.
+This program will take an URL of a GitHub repository as the input and will try to assign it to one of seven categories.
 
-The Categories are:
+The categories are:
 * **DEV** - a repository primarily used for development of a tool, component, application, app or API
 * **HW** - a repository primarily used for homework, assignments and other course-related work and code.
 * **EDU** - a repository primarily used to host tutorials, lectures, educational information and code related to teaching
@@ -30,23 +30,26 @@ The Categories are:
 
 We built an executable for **Windows-x64** systems which should work on most systems.
 No Python installation and no external library, except Open-GL 2.0 (which should be installed by default on your system) is required to run the executable.
-Should you encounter any problem you can follow the guide to run the [python-version](#python-version).
 
-*(e. g. the Python version support Open-GL Versions < 2.0 now)*
 
 [You can download the zip-file from here](https://www.dropbox.com/s/p6dvmt5xtdazjaz/GitHubClassifier.zip?dl=0), unzip it to an arbitrary location and execute one of the batch files.
 
 You can launch the GUI via **rc_gui.bat** and the CLI via **rc_cli.bat**.
+
+*If you have trouble executing the GUI, you can first try to start the .exe directly in the command-line.*
+
+*If the problem still persists, you can follow the guide to run the [python-version](#python-version).*
+
+*(e. g. the Python version support Open-GL Versions < 2.0 now)*
+
 
 ![RC_GUI WINDOWS](https://raw.githubusercontent.com/QueensGambit/GithubRepositoryClassifier/master/gui_prototype/media/readme/rc_gui_windows.png "rc")
 
 ![RC_CLI WINDOWS](https://raw.githubusercontent.com/QueensGambit/GithubRepositoryClassifier/master/gui_prototype/media/readme/rc_cli_windows.png)
 
 The rc_cli will provide a way for you to use the classifier with the commandline, including a console-menu.
-This even accepts arguments directly so you can automate the process if you wish to do so.
-You can even give it a .txt file with many repositories to classify and it will create a new file with the results for you.
-
-*Note: If you have trouble executing the GUI, try starting the script from the commandline first. After that you should be able to use the batch or exe file without any problems.*
+It also accepts a GitHub-Url as a console-argument if you wish to automate the classification process.
+Besides, you can also transfer a path to a .txt file with repositories urls separated by a line break. The repositories will be classified and a result file will be created in the same directory.
 
 ### Python-Version
 
