@@ -97,7 +97,7 @@ def printMenu():
     # tWelc = PrettyTable(['Welcome to the CLI-of the repository classifier'])
     print('Welcome to the CLI of the repository classifier')
     print(strStopper1)
-    t = PrettyTable(['Action', '    Shortcute   '])
+    t = PrettyTable(['Action', '    Shortcut    '])
     t.add_row(['Show Menu', '- m -'])
     t.add_row(['     Predict repositories form txt-file     ', '- i -'])
     t.add_row(['Input URL', '- u -'])
@@ -133,7 +133,9 @@ def main():
     # change the dirctory to the current file
     # this is needed to run the script form every location on the system
     # http://stackoverflow.com/questions/1432924/python-change-the-scripts-working-directory-to-the-scripts-own-directory
-    os.chdir(os.path.dirname(sys.argv[0]))
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
 
     if len(sys.argv) != 1:
         strParameter = sys.argv[1]

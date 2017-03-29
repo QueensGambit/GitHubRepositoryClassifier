@@ -15,6 +15,7 @@ import ctypes
 import os
 import sys
 
+# this was needed to build the windows executable
 if getattr(sys, 'frozen', False):
   # Override dll search path.
   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
@@ -129,6 +130,13 @@ def main():
     :return:
     """
 
+    # change the dirctory to the current file
+    # this is needed to run the script form every location on the system
+    # http://stackoverflow.com/questions/1432924/python-change-the-scripts-working-directory-to-the-scripts-own-directory
+    abspath = os.path.abspath(__file__)
+    dname = os.path.dirname(abspath)
+    os.chdir(dname)
+
     if len(sys.argv) != 1:
         strParameter = sys.argv[1]
 
@@ -159,14 +167,17 @@ def main():
 
                 strUrlInput = input()
                 url = "".join(strUrlInput.split())
-                #try:
-                if len(url) > 1 and string_operation.validate_url(url):
-                     repoClassifier.predictCategoryFromURL(url)
-                else:
-                     print("Make sure that you entered a correct url")
-                #except(Exception e):
-                #    print("Exception has occured.")
-                #    print(e.msg)
+                try:
+                    if len(url) > 1 and string_operation.validate_url(url):
+                         repoClassifier.predictCategoryFromURL(url)
+                    else:
+                        print("Make sure that you entered a correct url")
+                except Exception as ex:
+                    print("Exception has occured.")
+                    if hasattr(ex, 'message'):
+                        print(ex.message)
+                    else:
+                        print(ex)
 
             elif strInput == 'g':
                 token = not token

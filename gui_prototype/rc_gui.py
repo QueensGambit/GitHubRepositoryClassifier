@@ -93,7 +93,6 @@ from pathlib import Path
 
 kivy.require("1.9.0")
 
-
 class StaticVars:
     b_api_checkbox_state = False                    # checkbox status for global use
     b_checkbox_download = False                    # checkbox status for global use
@@ -1162,11 +1161,10 @@ def main():
 
     :return:
     """
-    # change the dirctory to the current file
-    os.chdir(os.path.dirname(sys.argv[0]))
-
+    
     gui = RepositoryClassifierApp()
     gui.run()
+
 
 if __name__ == "__main__":
     main()
