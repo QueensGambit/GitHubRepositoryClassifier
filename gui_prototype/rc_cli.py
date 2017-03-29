@@ -130,6 +130,11 @@ def main():
     :return:
     """
 
+    # change the dirctory to the current file
+    # this is needed to run the script form every location on the system
+    # http://stackoverflow.com/questions/1432924/python-change-the-scripts-working-directory-to-the-scripts-own-directory
+    os.chdir(os.path.dirname(sys.argv[0]))
+
     if len(sys.argv) != 1:
         strParameter = sys.argv[1]
 

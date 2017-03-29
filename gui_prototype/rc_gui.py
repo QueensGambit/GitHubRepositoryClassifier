@@ -1162,6 +1162,9 @@ def main():
 
     :return:
     """
+    # change the dirctory to the current file
+    os.chdir(os.path.dirname(sys.argv[0]))
+
     gui = RepositoryClassifierApp()
     gui.run()
 
