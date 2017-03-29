@@ -15,6 +15,7 @@ import ctypes
 import os
 import sys
 
+# this was needed to build the windows executable
 if getattr(sys, 'frozen', False):
   # Override dll search path.
   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
@@ -159,17 +160,17 @@ def main():
 
                 strUrlInput = input()
                 url = "".join(strUrlInput.split())
-                #try:
-                if len(url) > 1 and string_operation.validate_url(url):
-                     repoClassifier.predictCategoryFromURL(url)
-                else:
-                     print("Make sure that you entered a correct url")
+                try:
+                    if len(url) > 1 and string_operation.validate_url(url):
+                         repoClassifier.predictCategoryFromURL(url)
+                    else:
+                        print("Make sure that you entered a correct url")
                 except Exception as ex:
-                     print("Exception has occured.")
-                if hasattr(ex, 'message'):
-                    print(ex.message)
-                else:
-                    print(ex)
+                    print("Exception has occured.")
+                    if hasattr(ex, 'message'):
+                        print(ex.message)
+                    else:
+                        print(ex)
 
             elif strInput == 'g':
                 token = not token

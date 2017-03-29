@@ -20,11 +20,16 @@ Config.set('graphics', 'height', '800')
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 kivy.require("1.9.0")
 
+# add the following 2 lines to solve OpenGL 2.0 bug:
+# http://stackoverflow.com/questions/34969990/kivy-does-not-detect-opengl-2-0
+from kivy import Config
+Config.set('graphics', 'multisamples', '0')
+
 import ctypes
 import os
 import sys
 
-"""
+# this was needed to build the windows executable
 if getattr(sys, 'frozen', False):
   # Override dll search path.
   ctypes.windll.kernel32.SetDllDirectoryW('G:/Program Files/Anaconda3/Library/bin')
@@ -37,10 +42,13 @@ if getattr(sys, 'frozen', False):
   # Restore dll search path.
   ctypes.windll.kernel32.SetDllDirectoryW(sys._MEIPASS)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"""
+
 import matplotlib
-#matplotlib.use('module://lib.kivy.garden.matplotlib.backend_kivy')
-#matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
+# try loading it relatively
+try:
+    matplotlib.use('module://lib.kivy.garden.matplotlib.backend_kivy')
+except Exception:
+    matplotlib.use('module://kivy.garden.matplotlib.backend_kivy')
 
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
@@ -49,8 +57,11 @@ from kivy.core.window import Window
 from sklearn import preprocessing
 from sklearn.cluster import KMeans
 from kivy.uix.label import Label
-#from lib.kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
+# try to load the matplotlib directly (doesn't work on windows)
+try:
+    from lib.kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
+except ImportError:
+    from kivy.garden.matplotlib.backend_kivyagg import FigureCanvas     # don't worry, it works even though its red
 from kivy.uix.popup import Popup
 import clipboard
 from sklearn import decomposition
@@ -71,8 +82,10 @@ from kivy.animation import Animation
 from kivy.clock import Clock, mainthread
 from kivy.factory import Factory
 
-#from lib.wordcloud import WordCloud, ImageColorGenerator
-from wordcloud import WordCloud, ImageColorGenerator
+try:
+    from lib.wordcloud import WordCloud, ImageColorGenerator
+except ImportError:
+    from wordcloud import WordCloud, ImageColorGenerator
 
 from PIL import Image
 import numpy as np
