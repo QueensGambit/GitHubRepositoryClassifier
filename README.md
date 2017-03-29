@@ -148,12 +148,20 @@ You should now be able to start the GUI via **./rc_gui.sh** and the CLI via **./
 *If you still encounter problems by installing the program you're advised to create an issue at the [issue-page](https://github.com/QueensGambit/GitHubRepositoryClassifier/issues).*
 ## Documentation
 
-For further documentation you can visit our wiki:
+For further documentation about the code and the software-architecture you can visit our wiki:
 
  [https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation](https://github.com/QueensGambit/GitHubRepositoryClassifier/wiki/Documentation)
 
 # Info
 
 The project has been devoloped by students of the Hochschule Furtwangen University.
+
+
+* Team Members
+    * Björn Beha, Johannes Czech, Lukas Scheuerle, Suhay Sevinc
+
+* Supervisor
+    * Prof. Dr. Friedbert Kaspar
+
 <!--![HFU](https://cloud.githubusercontent.com/assets/7681159/22186901/aaf6289c-e0fd-11e6-8b87-590aa5606871.png)-->
 ![RC_GUI UBUNTU](https://raw.githubusercontent.com/QueensGambit/GithubRepositoryClassifier/master/gui_prototype/media/readme/hfu-logo.png)
