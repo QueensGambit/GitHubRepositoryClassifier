@@ -1,0 +1,23 @@
+Software Architecture & UML-Diagrams
+====================================
+
+Architecture
+
+.. image:: /media/architecture.png
+
+GUI-Scrabble
+
+.. image:: /media/gui_scrabble.png
+
+Class Diagram
+
+.. image:: /media/class_diagram.png
+
+Sequence Diagram 1
+
+.. image:: /media/sequence_diagram_1.png
+
+Sequence Diagram 2
+
+.. image:: /media/sequence_diagram_2.png
+
