@@ -164,12 +164,9 @@ def main():
                      repoClassifier.predictCategoryFromURL(url)
                 else:
                      print("Make sure that you entered a correct url")
-                except Exception as ex:
-                     print("Exception has occured.")
-                if hasattr(ex, 'message'):
-                    print(ex.message)
-                else:
-                    print(ex)
+                #except(Exception e):
+                #    print("Exception has occured.")
+                #    print(e.msg)
 
             elif strInput == 'g':
                 token = not token

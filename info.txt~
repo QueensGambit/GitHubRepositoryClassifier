@@ -53,11 +53,3 @@ sudo apt-get install python3-kivy
 
 
 sudo pip3 install scipy==0.18.1
-
-
-python3
-nltk.download()
-# select 'stopwords' in the dialog 'All Packages'
-
-
-

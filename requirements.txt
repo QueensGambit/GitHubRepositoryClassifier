@@ -1,4 +1,5 @@
-Kivy==1.9.1
+#Kivy==1.9.1
+matplotlib==1.5.3
 github3.py==1.0.0.a4
 wordcloud
 Kivy_Garden==0.1.4
@@ -6,7 +7,7 @@ clipboard==0.0.4
 clyent #==1.2.2
 nltk==3.2.1
 numpy==1.11.3
-pandas==0.18.1
+pandas #==0.18.1
 prettytable==0.7.2
 requests==2.13.0
 xlwt==1.1.2
@@ -15,3 +16,4 @@ BeautifulSoup4==4.5.3
 docutils==0.13.1
 six==1.10.0
 scikit_learn==0.18.1
+scipy==0.18.1
