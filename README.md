@@ -122,6 +122,11 @@ sudo apt-get install python3-kivy
 # sudo apt-get install python-kivy-examples
 ````
 
+_if you use an Anaconda Environment [https://stackoverflow.com/questions/38981491/installing-kivy-in-anaconda](https://stackoverflow.com/questions/38981491/installing-kivy-in-anaconda) you can install it via:_
+```
+conda install --channel https://conda.anaconda.org/jiayi_anaconda kivy
+```
+
 The app uses the stopwords data-set from the nltk-package. Download it with the command:
 ```
 python3
