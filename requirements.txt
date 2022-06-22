@@ -7,7 +7,7 @@ clipboard==0.0.4
 clyent #==1.2.2
 nltk==3.6.6
 scipy==0.18.1
-numpy==1.21.0
+numpy==1.22.0
 pandas #==0.18.1
 prettytable==0.7.2
 requests==2.20.0
