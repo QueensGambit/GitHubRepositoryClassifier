@@ -6,7 +6,7 @@ Kivy_Garden==0.1.4
 clipboard==0.0.4
 clyent #==1.2.2
 nltk==3.6.6
-scipy==0.18.1
+scipy==1.10.0
 numpy==1.22.0
 pandas #==0.18.1
 prettytable==0.7.2
